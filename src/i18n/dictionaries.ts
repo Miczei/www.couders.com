@@ -3,11 +3,11 @@ import type { Locale } from "./config";
 type Card = { title: string; body: string };
 type ChatMsg = { from: "bot" | "user"; text: string };
 type Step = { no: string; title: string; body: string };
-type Project = { title: string; category: string };
+type GlobeRegion = { id: string; tab: string; heading: string; text: string };
 
 export type Dictionary = {
   nav: {
-    work: string;
+    reach: string;
     capabilities: string;
     aiChatbots: string;
     process: string;
@@ -35,7 +35,12 @@ export type Dictionary = {
       chat: { title: string; messages: ChatMsg[]; placeholder: string };
     };
     process: { label: string; title: string; steps: Step[] };
-    work: { label: string; title: string; projects: Project[] };
+    globe: {
+      label: string;
+      title: string;
+      regions: GlobeRegion[];
+      locations: string[];
+    };
     contact: {
       label: string;
       title: string;
@@ -50,7 +55,7 @@ export type Dictionary = {
 
 const en: Dictionary = {
   nav: {
-    work: "Work",
+    reach: "Global",
     capabilities: "Capabilities",
     aiChatbots: "AI Chatbots",
     process: "Process",
@@ -140,14 +145,36 @@ const en: Dictionary = {
         },
       ],
     },
-    work: {
-      label: "Selected Work",
-      title: "Recent builds.",
-      projects: [
-        { title: "Lumen Finance", category: "Fintech, AI Support" },
-        { title: "Atlas Studio", category: "Portfolio, Interactive" },
-        { title: "Verde Market", category: "E-commerce, Chatbot" },
-        { title: "Nimbus SaaS", category: "SaaS, Web App" },
+    globe: {
+      label: "Global Reach",
+      title: "We work across borders.",
+      regions: [
+        {
+          id: "dach",
+          tab: "DACH",
+          heading: "Working with DACH",
+          text: "German-speaking teams in Germany, Austria and Switzerland. We build in a German-oriented environment and business culture.",
+        },
+        {
+          id: "na",
+          tab: "North America",
+          heading: "Working with North America",
+          text: "From New York to Toronto, we partner with US and Canadian teams across time zones.",
+        },
+        {
+          id: "global",
+          tab: "Global",
+          heading: "Working worldwide",
+          text: "Wherever your customers are, we ship fast, accessible sites with AI built in.",
+        },
+      ],
+      locations: [
+        "Poland",
+        "Germany",
+        "Austria",
+        "Switzerland",
+        "United States",
+        "Canada",
       ],
     },
     contact: {
@@ -171,7 +198,7 @@ const en: Dictionary = {
 
 const pl: Dictionary = {
   nav: {
-    work: "Realizacje",
+    reach: "Zasięg",
     capabilities: "Możliwości",
     aiChatbots: "Chatboty AI",
     process: "Proces",
@@ -261,14 +288,36 @@ const pl: Dictionary = {
         },
       ],
     },
-    work: {
-      label: "Wybrane realizacje",
-      title: "Ostatnie wdrożenia.",
-      projects: [
-        { title: "Lumen Finance", category: "Fintech, wsparcie AI" },
-        { title: "Atlas Studio", category: "Portfolio, interaktywne" },
-        { title: "Verde Market", category: "E-commerce, chatbot" },
-        { title: "Nimbus SaaS", category: "SaaS, aplikacja web" },
+    globe: {
+      label: "Zasięg globalny",
+      title: "Pracujemy ponad granicami.",
+      regions: [
+        {
+          id: "dach",
+          tab: "DACH",
+          heading: "Współpraca z DACH",
+          text: "Zespoły niemieckojęzyczne w Niemczech, Austrii i Szwajcarii. Pracujemy w środowisku i kulturze biznesowej zorientowanej na język niemiecki.",
+        },
+        {
+          id: "na",
+          tab: "Ameryka Płn.",
+          heading: "Współpraca z Ameryką Północną",
+          text: "Od Nowego Jorku po Toronto, współpracujemy z zespołami z USA i Kanady w różnych strefach czasowych.",
+        },
+        {
+          id: "global",
+          tab: "Świat",
+          heading: "Współpraca na całym świecie",
+          text: "Gdziekolwiek są Twoi klienci, dostarczamy szybkie, dostępne strony z wbudowanym AI.",
+        },
+      ],
+      locations: [
+        "Polska",
+        "Niemcy",
+        "Austria",
+        "Szwajcaria",
+        "USA",
+        "Kanada",
       ],
     },
     contact: {

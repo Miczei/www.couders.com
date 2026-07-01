@@ -3,7 +3,7 @@ import Hero from "@/components/Hero";
 import Capabilities from "@/components/Capabilities";
 import ChatbotShowcase from "@/components/ChatbotShowcase";
 import Process from "@/components/Process";
-import Work from "@/components/Work";
+import InteractiveGlobe from "@/components/InteractiveGlobe";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -32,7 +32,7 @@ export default async function Home({
       <Capabilities dict={dict} />
       <ChatbotShowcase dict={dict} />
       <Process dict={dict} />
-      <Work dict={dict} />
+      <InteractiveGlobe dict={dict} />
       <Contact dict={dict} />
       <Footer dict={dict} />
     </main>

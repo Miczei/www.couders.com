@@ -87,7 +87,7 @@ export default function Hero({ dict }: { dict: Dictionary }) {
             <a className="btn btn--primary" href="#contact">
               {t.ctaPrimary}
             </a>
-            <a className="btn btn--ghost" href="#work">
+            <a className="btn btn--ghost" href="#globe">
               {t.ctaSecondary}
             </a>
           </div>

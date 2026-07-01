@@ -33,10 +33,10 @@ export default function Navbar({
       </Link>
 
       <nav className="nav__links" aria-label="Primary">
-        <a href="#work">{dict.nav.work}</a>
         <a href="#capabilities">{dict.nav.capabilities}</a>
         <a href="#agents">{dict.nav.aiChatbots}</a>
         <a href="#process">{dict.nav.process}</a>
+        <a href="#globe">{dict.nav.reach}</a>
       </nav>
 
       <div className="nav__right">

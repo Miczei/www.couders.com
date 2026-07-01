@@ -658,76 +658,116 @@ main {
 }
 
 /* ============================================================
-   05 Work — project grid
+   05 Global Reach — interactive 3D globe (dark contrast band)
    ============================================================ */
-.work {
-  background: var(--bg);
+.globe {
+  position: relative;
+  z-index: 1;
+  background: #06070b;
+  color: #fff;
   border-top: 1px solid var(--line);
+  overflow: hidden;
   padding: 120px 0;
 }
 
-.work__grid {
-  margin-top: 48px;
+.globe__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 28px;
+  gap: 40px;
+  align-items: center;
 }
 
-@media (min-width: 700px) {
-  .work__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+@media (min-width: 960px) {
+  .globe__grid {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 56px;
   }
 }
 
-.work-card {
-  cursor: pointer;
+.globe__eyebrow {
+  color: rgba(255, 255, 255, 0.55);
 }
 
-.work-card__thumb {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #fafafa;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  transition: border-color 0.3s var(--ease-out), transform 0.4s var(--ease-out);
+.globe__eyebrow .idx {
+  color: #fff;
 }
 
-.work-card__thumb span {
-  font-family: var(--font-display), sans-serif;
-  font-weight: 600;
-  font-size: clamp(3rem, 8vw, 5rem);
-  color: rgba(0, 0, 0, 0.06);
+.globe__title {
+  color: #fff;
 }
 
-.work-card:hover .work-card__thumb {
-  transform: translateY(-4px);
-  border-color: var(--fg);
-}
-
-.work-card__meta {
+.globe__tabs {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 16px;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 28px 0 26px;
 }
 
-.work-card__title {
+.globe__tab {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: color 0.25s var(--ease-out), background 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out);
+}
+
+.globe__tab:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.globe__tab.is-active {
+  color: #06070b;
+  background: #fff;
+  border-color: #fff;
+}
+
+.globe__subhead {
   font-family: var(--font-display), sans-serif;
   font-weight: 600;
-  font-size: 1.25rem;
-  margin: 0;
-  color: var(--fg);
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  color: #fff;
 }
 
-.work-card__cat {
-  color: var(--muted);
-  font-size: 14px;
-  text-align: right;
+.globe__body {
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.65;
+  max-width: 44ch;
+  margin: 0;
+}
+
+.globe__canvas {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 52vw, 560px);
+}
+
+.globe__placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+/* Location pill labels rendered inside the WebGL scene via drei <Html> */
+.globe-label {
+  position: relative;
+  transform: translate(-50%, -150%);
+  background: rgba(255, 255, 255, 0.95);
+  color: #06070b;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 4px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-out);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
 }
 
 /* ============================================================

@@ -32,7 +32,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         touchMultiplier: 1.6,
-        anchors: true, // smooth-scroll in-page nav links (#work, #process, ...)
+        anchors: true, // smooth-scroll in-page nav links (#globe, #process, ...)
       });
       lenis.on("scroll", ScrollTrigger.update);
       raf = (time: number) => lenis!.raf(time * 1000);

@@ -16,10 +16,10 @@ export default function Footer({ dict }: { dict: Dictionary }) {
         </div>
 
         <nav className="footer__links" aria-label="Footer">
-          <a href="#work">{dict.nav.work}</a>
           <a href="#capabilities">{dict.nav.capabilities}</a>
           <a href="#agents">{dict.nav.aiChatbots}</a>
           <a href="#process">{dict.nav.process}</a>
+          <a href="#globe">{dict.nav.reach}</a>
         </nav>
 
         <div className="footer__meta">
