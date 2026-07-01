@@ -7,14 +7,22 @@ import Work from "@/components/Work";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { getDictionary } from "@/i18n/dictionaries";
-import type { Locale } from "@/i18n/config";
+import { locales, defaultLocale, type Locale } from "@/i18n/config";
+
+// See layout.tsx: params must be typed as `string` to match the type Next.js
+// generates from generateStaticParams; narrow to Locale here instead.
+function toLocale(value: string): Locale {
+  return (locales as readonly string[]).includes(value)
+    ? (value as Locale)
+    : defaultLocale;
+}
 
 export default async function Home({
   params,
 }: {
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
+  const locale = toLocale((await params).locale);
   const dict = getDictionary(locale);
 
   return (

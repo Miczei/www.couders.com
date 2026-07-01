@@ -4,7 +4,17 @@ import "../globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import MatrixRain from "@/components/MatrixRain";
 import { getDictionary } from "@/i18n/dictionaries";
-import { locales, type Locale } from "@/i18n/config";
+import { locales, defaultLocale, type Locale } from "@/i18n/config";
+
+// Next.js's generated route types check generateStaticParams's return type
+// against this page's params, which widens to `string`. Narrow it back to
+// Locale here instead of typing params as Locale directly (that mismatch is
+// what breaks `next build`'s typed-routes check).
+function toLocale(value: string): Locale {
+  return (locales as readonly string[]).includes(value)
+    ? (value as Locale)
+    : defaultLocale;
+}
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"], // latin-ext covers Polish diacritics
@@ -31,9 +41,9 @@ const SITE_URL = "https://nova-studio.example";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const locale = toLocale((await params).locale);
   const dict = getDictionary(locale);
 
   return {
@@ -64,9 +74,9 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
+  const locale = toLocale((await params).locale);
 
   return (
     <html lang={locale} className={`${inter.variable} ${display.variable}`}>
