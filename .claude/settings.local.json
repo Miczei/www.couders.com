@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(pnpm -v)",
+      "mcp__7976cb1e-c70b-49d0-88d8-d11d0fe7c320__models_explore",
+      "mcp__7976cb1e-c70b-49d0-88d8-d11d0fe7c320__generate_image",
+      "mcp__7976cb1e-c70b-49d0-88d8-d11d0fe7c320__job_display",
+      "Bash(curl -sL \"https://d8j0ntlcm91z4.cloudfront.net/user_3EEZ349vb2hYuQSi2PFqqt9YMev/hf_20260701_111137_0e60aa21-95a7-41fe-b34b-f5b57e5f47aa.png\" -o /tmp/hero-src.png)",
+      "Read(//tmp/**)",
+      "Bash(sips -s format jpeg -s formatOptions 88 /tmp/hero-src.png --out /Users/michalsobieraj/biznes/public/hero-poster.jpg)",
+      "mcp__7976cb1e-c70b-49d0-88d8-d11d0fe7c320__generate_video",
+      "Bash(command -v brew)",
+      "Bash(brew --version)",
+      "Bash(xcode-select -p)",
+      "Read(//Users/michalsobieraj/**)",
+      "Bash(HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1 brew install node)",
+      "Bash(/opt/homebrew/bin/node -v)",
+      "Bash(/opt/homebrew/bin/npm -v)",
+      "Bash(brew update *)",
+      "Bash(HOMEBREW_NO_INSTALL_CLEANUP=1 brew install node)",
+      "Bash(kill 20680)",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill -9)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s -o /dev/null -w \"status=%{http_code} redirect=%{redirect_url}\\\\n\" http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/en)",
+      "Bash(curl -s http://localhost:3000/pl)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/en)",
+      "Bash(curl -s -o /dev/null -w \"status=%{http_code}\\\\n\" http://localhost:3000/en)"
+    ]
+  }
+}
