@@ -1764,6 +1764,10 @@ main {
     grid-template-columns: 1.05fr 0.95fr;
     gap: 64px;
   }
+  /* Video hero: media drops full-width UNDER the text instead of beside it. */
+  .sub__hero--stacked {
+    grid-template-columns: 1fr;
+  }
 }
 
 .sub__h1 {

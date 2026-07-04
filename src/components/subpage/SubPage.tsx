@@ -42,8 +42,9 @@ export default function SubPage({
               <span>{page.breadcrumb}</span>
             </nav>
 
-            {/* Hero */}
-            <header className="sub__hero">
+            {/* Hero. With a video, the media stacks full-width UNDER the text
+                (not beside it) via the --stacked modifier. */}
+            <header className={`sub__hero${video ? " sub__hero--stacked" : ""}`}>
               <div className="sub__heroText">
                 <p className="section-eyebrow">
                   <span>{page.eyebrow}</span>
