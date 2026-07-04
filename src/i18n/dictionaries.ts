@@ -7,10 +7,14 @@ type GlobeRegion = { id: string; tab: string; heading: string; text: string };
 
 export type Dictionary = {
   nav: {
+    home: string;
     reach: string;
     capabilities: string;
     aiChatbots: string;
     process: string;
+    aiEngine: string;
+    securityData: string;
+    methodology: string;
     cta: string;
     languageLabel: string;
   };
@@ -78,10 +82,14 @@ export type Dictionary = {
 
 const en: Dictionary = {
   nav: {
+    home: "Home",
     reach: "Global",
     capabilities: "Capabilities",
     aiChatbots: "AI Chatbots",
     process: "Process",
+    aiEngine: "AI Engine",
+    securityData: "Security",
+    methodology: "Methodology",
     cta: "Start a project",
     languageLabel: "Language",
   },
@@ -302,10 +310,14 @@ const en: Dictionary = {
 
 const pl: Dictionary = {
   nav: {
+    home: "Start",
     reach: "Zasięg",
     capabilities: "Możliwości",
     aiChatbots: "Chatboty AI",
     process: "Proces",
+    aiEngine: "Silnik AI",
+    securityData: "Bezpieczeństwo",
+    methodology: "Metodologia",
     cta: "Rozpocznij projekt",
     languageLabel: "Język",
   },

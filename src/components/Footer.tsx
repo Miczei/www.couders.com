@@ -1,11 +1,21 @@
+import Link from "next/link";
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 /**
- * Footer — server component. Caps the page with brand, nav, and copyright.
+ * Footer — server component. Caps the page with brand, cross-silo links, and
+ * copyright. Section anchors are locale-prefixed so they work from any page.
  */
-export default function Footer({ dict }: { dict: Dictionary }) {
+export default function Footer({
+  dict,
+  locale,
+}: {
+  dict: Dictionary;
+  locale: Locale;
+}) {
   const f = dict.sections.footer;
   const year = new Date().getFullYear();
+  const home = `/${locale}`;
 
   return (
     <footer className="footer">
@@ -16,10 +26,10 @@ export default function Footer({ dict }: { dict: Dictionary }) {
         </div>
 
         <nav className="footer__links" aria-label="Footer">
-          <a href="#capabilities">{dict.nav.capabilities}</a>
-          <a href="#agents">{dict.nav.aiChatbots}</a>
-          <a href="#process">{dict.nav.process}</a>
-          <a href="#globe">{dict.nav.reach}</a>
+          <Link href={`${home}/services/ai-engine`}>{dict.nav.aiEngine}</Link>
+          <Link href={`${home}/services/security-data`}>{dict.nav.securityData}</Link>
+          <Link href={`${home}/methodology`}>{dict.nav.methodology}</Link>
+          <a href={`${home}#capabilities`}>{dict.nav.capabilities}</a>
         </nav>
 
         <div className="footer__meta">

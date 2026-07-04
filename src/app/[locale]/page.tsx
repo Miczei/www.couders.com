@@ -36,7 +36,7 @@ export default async function Home({
       <Process dict={dict} />
       <InteractiveGlobe dict={dict} />
       <Contact dict={dict} />
-      <Footer dict={dict} />
+      <Footer dict={dict} locale={locale} />
     </main>
   );
 }

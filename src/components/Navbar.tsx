@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { Locale } from "@/i18n/config";
+import { usePathname } from "next/navigation";
+import { locales, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 /**
- * Transparent, sticky navbar. Glass-blurs in once the user leaves the hero top.
- * The "PL / EN" toggle in the top-right is real locale links (SEO-friendly) —
- * switching language navigates between /pl and /en.
+ * Transparent, sticky navbar. Links the topical-silo pages and (home) section
+ * anchors. The PL / EN toggle preserves the current path across languages, so
+ * switching on /en/methodology lands on /pl/methodology (SEO-friendly).
  */
 export default function Navbar({
   locale,
@@ -18,6 +19,7 @@ export default function Navbar({
   dict: Dictionary;
 }) {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname() || `/${locale}`;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -26,23 +28,32 @@ export default function Navbar({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Path without the leading locale segment, so the toggle can re-prefix it.
+  let rest = pathname;
+  for (const l of locales) {
+    if (pathname === `/${l}`) rest = "";
+    else if (pathname.startsWith(`/${l}/`)) rest = pathname.slice(l.length + 1);
+  }
+  const home = `/${locale}`;
+
   return (
     <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
-      <Link className="nav__brand" href={`/${locale}`}>
+      <Link className="nav__brand" href={home}>
         NOVA
       </Link>
 
       <nav className="nav__links" aria-label="Primary">
-        <a href="#capabilities">{dict.nav.capabilities}</a>
-        <a href="#agents">{dict.nav.aiChatbots}</a>
-        <a href="#process">{dict.nav.process}</a>
-        <a href="#globe">{dict.nav.reach}</a>
+        <Link href={home}>{dict.nav.home}</Link>
+        <Link href={`${home}/services/ai-engine`}>{dict.nav.aiEngine}</Link>
+        <Link href={`${home}/services/security-data`}>{dict.nav.securityData}</Link>
+        <Link href={`${home}/methodology`}>{dict.nav.methodology}</Link>
+        <a href={`${home}#capabilities`}>{dict.nav.capabilities}</a>
       </nav>
 
       <div className="nav__right">
         <div className="lang-toggle" role="group" aria-label={dict.nav.languageLabel}>
           <Link
-            href="/pl"
+            href={`/pl${rest}`}
             hrefLang="pl"
             aria-current={locale === "pl" ? "true" : undefined}
             className={`lang ${locale === "pl" ? "lang--active" : ""}`}
@@ -53,7 +64,7 @@ export default function Navbar({
             /
           </span>
           <Link
-            href="/en"
+            href={`/en${rest}`}
             hrefLang="en"
             aria-current={locale === "en" ? "true" : undefined}
             className={`lang ${locale === "en" ? "lang--active" : ""}`}
@@ -62,7 +73,7 @@ export default function Navbar({
           </Link>
         </div>
 
-        <a className="nav__cta" href="#contact">
+        <a className="nav__cta" href={`${home}#contact`}>
           {dict.nav.cta}
         </a>
       </div>
