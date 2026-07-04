@@ -1684,6 +1684,14 @@ main {
 .sub-shell .section-title {
   color: var(--d-text);
 }
+/* The base .sub__h1 / .sub__intro use the light-theme --fg / --muted, which are
+   near-black and invisible on the dark shell. Flip them to bright dark-theme ink. */
+.sub-shell .sub__h1 {
+  color: #fff;
+}
+.sub-shell .sub__intro {
+  color: var(--d-muted);
+}
 .sub-shell .btn--primary {
   background: #fff;
   color: #0b0b0c;

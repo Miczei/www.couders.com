@@ -10,7 +10,7 @@
 export default function FaceCodeVideo({ src }: { src: string }) {
   return (
     <div
-      className="relative w-full aspect-square overflow-hidden rounded-3xl bg-black"
+      className="relative flex h-full min-h-[500px] w-full overflow-hidden rounded-3xl bg-black lg:min-h-[650px]"
       aria-hidden="true"
     >
       <video
