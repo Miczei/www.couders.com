@@ -1676,6 +1676,12 @@ main {
 .couders-marquee {
   animation: couders-marquee 28s linear infinite;
 }
+.couders-marquee--reverse {
+  animation-direction: reverse;
+}
+.couders-marquee--slow {
+  animation-duration: 36s;
+}
 @media (prefers-reduced-motion: reduce) {
   .couders-marquee {
     animation: none;

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import NeuralConstellation from "./NeuralConstellation";
+import MatrixReveal from "./MatrixReveal";
 import type { CoudersContent } from "@/i18n/couders";
 
 export default function CoreEngine({
@@ -62,6 +63,7 @@ export default function CoreEngine({
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="relative min-h-[420px] overflow-hidden rounded-2xl border border-white/[0.08] bg-[#050506] lg:min-h-full"
         >
+          <MatrixReveal className="absolute inset-0 h-full w-full" />
           <NeuralConstellation
             ariaLabel={content.canvasAria}
             className="absolute inset-0 h-full w-full"

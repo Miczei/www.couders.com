@@ -3,8 +3,8 @@
 import { motion } from "framer-motion";
 import type { CoudersContent } from "@/i18n/couders";
 
-/* Minimalist white placeholder marks, sized 48x48. Swap each <svg> for the
-   official press-kit asset before launch; the marquee accepts any SVG. */
+/* Minimalist white placeholder marks, 48x48. Swap for official press-kit
+   assets before launch; the marquee accepts any SVG. */
 
 function OpenAIMark() {
   return (
@@ -55,17 +55,90 @@ function MetaMark() {
   );
 }
 
-const PROVIDERS = [
+function OpenClawMark() {
+  return (
+    <svg viewBox="0 0 48 48" className="h-8 w-8" aria-hidden="true">
+      <g fill="none" stroke="white" strokeWidth="4" strokeLinecap="round">
+        <path d="M10 8c8 6 11 16 9 32" />
+        <path d="M24 6c6 8 8 18 5 34" opacity="0.85" />
+        <path d="M37 10c3 9 3 19-2 28" opacity="0.7" />
+      </g>
+    </svg>
+  );
+}
+
+function OllamaMark() {
+  return (
+    <svg viewBox="0 0 48 48" className="h-8 w-8" aria-hidden="true">
+      <g fill="none" stroke="white" strokeWidth="3.5" strokeLinecap="round">
+        <rect x="14" y="16" width="20" height="26" rx="9" />
+        <path d="M18 15c-2-6 0-10 2-10s3 4 3 9" />
+        <path d="M30 15c2-6 0-10-2-10s-3 4-3 9" />
+      </g>
+      <circle cx="20" cy="28" r="1.8" fill="white" />
+      <circle cx="28" cy="28" r="1.8" fill="white" />
+    </svg>
+  );
+}
+
+function LangChainMark() {
+  return (
+    <svg viewBox="0 0 48 48" className="h-8 w-8" aria-hidden="true">
+      <g fill="none" stroke="white" strokeWidth="4" strokeLinecap="round">
+        <rect x="4" y="17" width="22" height="14" rx="7" />
+        <rect x="22" y="17" width="22" height="14" rx="7" />
+      </g>
+    </svg>
+  );
+}
+
+function N8nMark() {
+  return (
+    <svg viewBox="0 0 48 48" className="h-8 w-8" aria-hidden="true">
+      <g fill="none" stroke="white" strokeWidth="3.5">
+        <circle cx="8" cy="30" r="4.5" />
+        <circle cx="24" cy="17" r="4.5" />
+        <circle cx="40" cy="30" r="4.5" />
+        <path d="M12 27l8-7M28 20l8 7" strokeLinecap="round" />
+      </g>
+    </svg>
+  );
+}
+
+function PineconeMark() {
+  return (
+    <svg viewBox="0 0 48 48" className="h-8 w-8" aria-hidden="true">
+      <g fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 12l8-7 8 7" />
+        <path d="M13 24l11-9 11 9" />
+        <path d="M16 36l8-8 8 8" />
+        <path d="M24 36v8" />
+      </g>
+    </svg>
+  );
+}
+
+type Provider = { name: string; sub: string; Mark: () => React.JSX.Element };
+
+const MODELS: Provider[] = [
   { name: "OpenAI", sub: "GPT · ChatGPT", Mark: OpenAIMark },
   { name: "Anthropic", sub: "Claude", Mark: AnthropicMark },
   { name: "Google", sub: "Gemini", Mark: GeminiMark },
   { name: "Meta", sub: "Llama", Mark: MetaMark },
+  { name: "OpenClaw", sub: "AI Models", Mark: OpenClawMark },
+  { name: "Ollama", sub: "Local LLMs", Mark: OllamaMark },
 ];
 
-function MarqueeRow() {
+const INFRA: Provider[] = [
+  { name: "LangChain", sub: "AI Orchestration", Mark: LangChainMark },
+  { name: "n8n", sub: "Workflow Automation", Mark: N8nMark },
+  { name: "Pinecone", sub: "Vector Database", Mark: PineconeMark },
+];
+
+function MarqueeRow({ items }: { items: Provider[] }) {
   return (
     <div className="flex shrink-0 items-center">
-      {PROVIDERS.map((p) => (
+      {items.map((p) => (
         <div key={p.name} className="mx-12 flex items-center gap-4 md:mx-16">
           <p.Mark />
           <div>
@@ -78,6 +151,42 @@ function MarqueeRow() {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+const MASK = {
+  maskImage:
+    "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+  WebkitMaskImage:
+    "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+} as const;
+
+function MarqueeBand({
+  label,
+  items,
+  reverse,
+}: {
+  label: string;
+  items: Provider[];
+  reverse?: boolean;
+}) {
+  return (
+    <div className="py-8">
+      <p className="mx-auto mb-6 max-w-6xl px-6 font-mono text-[10px] uppercase tracking-[0.28em] text-zinc-600">
+        {label}
+      </p>
+      <div className="overflow-hidden" style={MASK}>
+        <div
+          className={`couders-marquee flex w-max ${
+            reverse ? "couders-marquee--reverse couders-marquee--slow" : ""
+          }`}
+        >
+          <MarqueeRow items={items} />
+          <MarqueeRow items={items} />
+          <MarqueeRow items={items} />
+        </div>
+      </div>
     </div>
   );
 }
@@ -120,19 +229,10 @@ export default function AiAgnostic({
         transition={{ duration: 1 }}
         role="img"
         aria-label={content.marqueeAria}
-        className="mt-20 overflow-hidden border-y border-white/[0.08] py-10"
-        style={{
-          maskImage:
-            "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
-        }}
+        className="mt-20 divide-y divide-white/[0.08] border-y border-white/[0.08]"
       >
-        <div className="couders-marquee flex w-max">
-          <MarqueeRow />
-          <MarqueeRow />
-          <MarqueeRow />
-        </div>
+        <MarqueeBand label={content.rowModels} items={MODELS} />
+        <MarqueeBand label={content.rowInfra} items={INFRA} reverse />
       </motion.div>
     </section>
   );
