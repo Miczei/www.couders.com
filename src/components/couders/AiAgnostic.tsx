@@ -118,6 +118,32 @@ function PineconeMark() {
   );
 }
 
+function ManusMark() {
+  return (
+    <svg viewBox="0 0 48 48" className="h-8 w-8" aria-hidden="true">
+      <path
+        d="M24 5l16 9v20l-16 9-16-9V14z"
+        fill="none"
+        stroke="white"
+        strokeWidth="3.5"
+        strokeLinejoin="round"
+      />
+      <circle cx="24" cy="24" r="4.5" fill="white" />
+    </svg>
+  );
+}
+
+function CopilotMark() {
+  return (
+    <svg viewBox="0 0 48 48" className="h-8 w-8" aria-hidden="true">
+      <g fill="none" stroke="white" strokeWidth="4" strokeLinecap="round">
+        <path d="M10 30c0-10 6-16 14-12 8 4 14-2 14 0" />
+        <path d="M10 20c0 10 6 16 14 12 8-4 14 2 14 0" opacity="0.8" />
+      </g>
+    </svg>
+  );
+}
+
 type Provider = { name: string; sub: string; Mark: () => React.JSX.Element };
 
 const MODELS: Provider[] = [
@@ -125,12 +151,14 @@ const MODELS: Provider[] = [
   { name: "Anthropic", sub: "Claude", Mark: AnthropicMark },
   { name: "Google", sub: "Gemini", Mark: GeminiMark },
   { name: "Meta", sub: "Llama", Mark: MetaMark },
+  { name: "Manus", sub: "Autonomous AI Agents", Mark: ManusMark },
   { name: "OpenClaw", sub: "AI Models", Mark: OpenClawMark },
   { name: "Ollama", sub: "Local LLMs", Mark: OllamaMark },
 ];
 
 const INFRA: Provider[] = [
   { name: "LangChain", sub: "AI Orchestration", Mark: LangChainMark },
+  { name: "Copilot", sub: "AI Assistant Integration", Mark: CopilotMark },
   { name: "n8n", sub: "Workflow Automation", Mark: N8nMark },
   { name: "Pinecone", sub: "Vector Database", Mark: PineconeMark },
 ];
