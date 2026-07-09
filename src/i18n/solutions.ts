@@ -53,9 +53,9 @@ export type SolutionsContent = {
 
 const en: SolutionsContent = {
   slug: "methodology",
-  metaTitle: "Automation & AI Solutions: Scraping, Workflows, Growth | NOVA",
+  metaTitle: "Automation & AI Solutions: Scraping, Workflows, Growth | Couders",
   metaDescription:
-    "NOVA builds scraping, marketing automation and n8n workflow systems that replace manual work with measurable ROI. Proof of concept in days, not quarters.",
+    "Couders builds scraping, marketing automation and n8n workflow systems that replace manual work with measurable ROI. Proof of concept in days, not quarters.",
   keywords: [
     "workflow automation agency",
     "web scraping at scale",
@@ -65,7 +65,7 @@ const en: SolutionsContent = {
   ],
   breadcrumb: "Methodology",
   hero: {
-    eyebrow: "NOVA Studio, AI & Automation",
+    eyebrow: "Couders Studio, AI & Automation",
     h1: "You're paying people to do work code finishes in a second.",
     sub: "We design and ship automation systems that replace manual busywork in weeks, not quarters. No theory. No slide decks. Working code from day one.",
     ctaPrimary: "Book a free Automation Audit",
@@ -187,9 +187,9 @@ const en: SolutionsContent = {
 
 const pl: SolutionsContent = {
   slug: "methodology",
-  metaTitle: "Automatyzacja i AI: Scraping, Workflow, Wzrost | NOVA",
+  metaTitle: "Automatyzacja i AI: Scraping, Workflow, Wzrost | Couders",
   metaDescription:
-    "NOVA buduje systemy scrapingu, automatyzacji marketingu i orkiestracji n8n, które zastępują ręczną pracę mierzalnym ROI. Proof of concept w dni, nie kwartały.",
+    "Couders buduje systemy scrapingu, automatyzacji marketingu i orkiestracji n8n, które zastępują ręczną pracę mierzalnym ROI. Proof of concept w dni, nie kwartały.",
   keywords: [
     "automatyzacja procesów agencja",
     "web scraping na skalę",
@@ -199,7 +199,7 @@ const pl: SolutionsContent = {
   ],
   breadcrumb: "Metodologia",
   hero: {
-    eyebrow: "NOVA Studio, AI i automatyzacja",
+    eyebrow: "Couders Studio, AI i automatyzacja",
     h1: "Płacisz ludziom za pracę, którą kod wykona w sekundę.",
     sub: "Projektujemy i wdrażamy systemy automatyzacji, które zastępują ręczną robotę w tygodnie, nie kwartały. Bez teorii. Bez slajdów. Działający kod od pierwszego dnia.",
     ctaPrimary: "Zarezerwuj darmowy Audyt Automatyzacji",

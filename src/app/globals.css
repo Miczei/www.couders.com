@@ -1688,6 +1688,31 @@ main {
   }
 }
 
+/* AI Engine page: skeleton shimmer that resolves into data */
+@keyframes engine-shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+.engine-shimmer {
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.04) 35%,
+    rgba(199, 204, 214, 0.14) 50%,
+    rgba(255, 255, 255, 0.04) 65%
+  );
+  background-size: 200% 100%;
+  animation: engine-shimmer 1.8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .engine-shimmer {
+    animation: none;
+  }
+}
+
 /* Navbar / footer / buttons flipped to dark within the shell */
 .sub-shell .nav__brand,
 .sub-shell .nav__links a {

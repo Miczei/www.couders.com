@@ -33,9 +33,9 @@ export type AboutContent = {
 
 const en: AboutContent = {
   slug: "about",
-  metaTitle: "About NOVA: The Kraków Engineers Behind Enterprise AI | NOVA",
+  metaTitle: "About Couders: The Kraków Engineers Behind Enterprise AI | Couders",
   metaDescription:
-    "Meet NOVA, a close-knit team of engineers from Kraków building enterprise AI development, autonomous agents and full-stack engineering. The origin story of an AI-native studio.",
+    "Meet Couders, a close-knit team of engineers from Kraków building enterprise AI development, autonomous agents and full-stack engineering. The origin story of an AI-native studio.",
   keywords: [
     "enterprise AI development",
     "autonomous agents",
@@ -44,17 +44,17 @@ const en: AboutContent = {
     "AI-native web studio",
   ],
   breadcrumb: "About us",
-  eyebrow: "About NOVA",
+  eyebrow: "About Couders",
   h1: "The Kraków engineers redefining enterprise AI.",
-  lead: "NOVA is a close-knit collective of computer science and engineering minds from Kraków, building full-stack AI systems and autonomous agents for companies that refuse to settle for a chatbot. We architect the interface, the engine and the guardrails as one.",
+  lead: "Couders is a close-knit collective of computer science and engineering minds from Kraków, building full-stack AI systems and autonomous agents for companies that refuse to settle for a chatbot. We architect the interface, the engine and the guardrails as one.",
   storyH2: "The idea was born late at night, over a high-stakes game of cards.",
   story: [
     "It did not start in a boardroom. It started at a table in Kraków, long past midnight, mid-game, when a hand of cards turned into a whiteboard argument about why enterprise AI keeps breaking the moment it leaves the demo. By sunrise the core architecture had a name and a shape.",
     "We were the students everyone assumed would disappear into the big research labs. We chose the harder problem instead: autonomous agents that enterprises can actually trust, wrapped in hardcoded business rules, human approval checkpoints and real full-stack engineering behind every single decision.",
-    "That late-night session became NOVA. Same obsession, same small team, now shipping production AI infrastructure and elite web experiences for clients across Europe and beyond.",
+    "That late-night session became Couders. Same obsession, same small team, now shipping production AI infrastructure and elite web experiences for clients across Europe and beyond.",
   ],
   imageAlt:
-    "Detailed engraving of the Kraków skyline with Wawel Castle, the home city of the NOVA engineering team.",
+    "Detailed engraving of the Kraków skyline with Wawel Castle, the home city of the Couders engineering team.",
   valuesH2: "What we actually build",
   values: [
     {
@@ -80,9 +80,9 @@ const en: AboutContent = {
 
 const pl: AboutContent = {
   slug: "about",
-  metaTitle: "O NOVA: krakowscy inżynierowie enterprise AI | NOVA",
+  metaTitle: "O Couders: krakowscy inżynierowie enterprise AI | Couders",
   metaDescription:
-    "Poznaj NOVA, zżyty zespół inżynierów z Krakowa budujący enterprise AI development, autonomicznych agentów i full-stack engineering. Historia studia AI-native.",
+    "Poznaj Couders, zżyty zespół inżynierów z Krakowa budujący enterprise AI development, autonomicznych agentów i full-stack engineering. Historia studia AI-native.",
   keywords: [
     "enterprise AI development",
     "autonomiczni agenci",
@@ -91,17 +91,17 @@ const pl: AboutContent = {
     "studio webowe AI",
   ],
   breadcrumb: "O nas",
-  eyebrow: "O NOVA",
+  eyebrow: "O Couders",
   h1: "Krakowscy inżynierowie, którzy redefiniują enterprise AI.",
-  lead: "NOVA to zżyty zespół umysłów informatyki i inżynierii z Krakowa, budujący full-stackowe systemy AI i autonomicznych agentów dla firm, które nie godzą się na zwykłego chatbota. Projektujemy interfejs, silnik i zabezpieczenia jako jedną całość.",
+  lead: "Couders to zżyty zespół umysłów informatyki i inżynierii z Krakowa, budujący full-stackowe systemy AI i autonomicznych agentów dla firm, które nie godzą się na zwykłego chatbota. Projektujemy interfejs, silnik i zabezpieczenia jako jedną całość.",
   storyH2: "Pomysł narodził się późną nocą, przy partii kart o wysoką stawkę.",
   story: [
     "To nie zaczęło się w sali konferencyjnej. Zaczęło się przy stole w Krakowie, długo po północy, w trakcie gry, gdy rozdanie kart zamieniło się w spór przy tablicy o to, dlaczego enterprise AI wykłada się w chwili, gdy wychodzi z demo. Do świtu rdzeń architektury miał już nazwę i kształt.",
     "Byliśmy tymi studentami, o których wszyscy zakładali, że znikną w wielkich laboratoriach badawczych. Wybraliśmy trudniejszy problem: autonomicznych agentów, którym enterprise naprawdę może zaufać, otoczonych twardo zakodowanymi regułami biznesowymi, punktami akceptacji przez człowieka i prawdziwą full-stackową inżynierią za każdą decyzją.",
-    "Tamta nocna sesja stała się NOVA. Ta sama obsesja, ten sam mały zespół, dziś dostarczający produkcyjną infrastrukturę AI i elitarne doświadczenia webowe klientom w Europie i poza nią.",
+    "Tamta nocna sesja stała się Couders. Ta sama obsesja, ten sam mały zespół, dziś dostarczający produkcyjną infrastrukturę AI i elitarne doświadczenia webowe klientom w Europie i poza nią.",
   ],
   imageAlt:
-    "Szczegółowy sztych panoramy Krakowa z Wawelem, rodzinnego miasta zespołu inżynierów NOVA.",
+    "Szczegółowy sztych panoramy Krakowa z Wawelem, rodzinnego miasta zespołu inżynierów Couders.",
   valuesH2: "Co naprawdę budujemy",
   values: [
     {

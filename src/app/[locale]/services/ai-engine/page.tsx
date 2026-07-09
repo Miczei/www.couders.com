@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import SubPage from "@/components/subpage/SubPage";
+import EnginePage from "@/components/engine/EnginePage";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getPages } from "@/i18n/pages";
+import { getEngineUi } from "@/i18n/engine";
 import { siloMetadata } from "@/lib/siloMeta";
 import { buildPageSchema } from "@/lib/schema";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
@@ -27,6 +28,7 @@ export default async function Page({
   const locale = toLocale((await params).locale);
   const dict = getDictionary(locale);
   const page = getPages(locale).aiEngine;
+  const ui = getEngineUi(locale);
 
   return (
     <>
@@ -34,7 +36,7 @@ export default async function Page({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildPageSchema(locale, page)) }}
       />
-      <SubPage locale={locale} dict={dict} page={page} image="/images/ai-engine.jpg" />
+      <EnginePage locale={locale} dict={dict} page={page} ui={ui} />
     </>
   );
 }

@@ -48,9 +48,9 @@ const en: PagesDict = {
   servicesLabel: "Services",
   aiEngine: {
     slug: "services/ai-engine",
-    metaTitle: "AI Engine & Agent Orchestration | Full-Stack AI Development | NOVA",
+    metaTitle: "AI Engine & Agent Orchestration | Full-Stack AI Development | Couders",
     metaDescription:
-      "Multi-agent orchestration, long-term context and memory, connected tools and dynamic LLM routing. NOVA builds the reasoning core behind production AI, not a thin chatbot wrapper.",
+      "Multi-agent orchestration, long-term context and memory, connected tools and dynamic LLM routing. Couders builds the reasoning core behind production AI, not a thin chatbot wrapper.",
     keywords: [
       "agent orchestration",
       "LLM routing",
@@ -62,14 +62,14 @@ const en: PagesDict = {
     eyebrow: "AI Solutions & Orchestration",
     h1: "The AI engine that thinks, routes, and remembers.",
     intro:
-      "Under every premium interface sits the part clients never see and competitors underestimate: the engine. NOVA builds multi-agent orchestration, persistent memory, tool connectivity and dynamic model routing, the reasoning layer that turns a demo into a system your business can run on.",
+      "Under every premium interface sits the part clients never see and competitors underestimate: the engine. Couders builds multi-agent orchestration, persistent memory, tool connectivity and dynamic model routing, the reasoning layer that turns a demo into a system your business can run on.",
     imageAlt:
       "Dark-mode 3D visualization of an interconnected multi-agent AI orchestration network with glowing nodes",
     fomoH2: "What separates a real AI engine from a wrapper?",
     fomoIntro:
       "Most agencies ship a single prompt in front of one model and call it AI. It answers one question, forgets the next, and cannot touch your systems. When a competitor deploys real orchestration with memory and routing, that gap becomes visible in weeks, not years.",
     contrastBeginnerLabel: "Beginner AI wrapper",
-    contrastFullstackLabel: "NOVA full-stack AI",
+    contrastFullstackLabel: "Couders full-stack AI",
     contrast: [
       {
         beginner: "One prompt, one model, no fallback when it fails.",
@@ -100,7 +100,7 @@ const en: PagesDict = {
         no: 4,
         title: "Context & Memory",
         question: "Why does AI memory matter for business?",
-        body: "Without memory an agent restarts from zero on every message. NOVA gives agents short-term working context and long-term memory in a vector store, so the system recalls a customer's history, preferences and past decisions and responds like a team that knows them.",
+        body: "Without memory an agent restarts from zero on every message. Couders gives agents short-term working context and long-term memory in a vector store, so the system recalls a customer's history, preferences and past decisions and responds like a team that knows them.",
       },
       {
         no: 6,
@@ -128,9 +128,9 @@ const en: PagesDict = {
   },
   securityData: {
     slug: "services/security-data",
-    metaTitle: "Enterprise AI Security & Data Foundation | Guardrails & Access | NOVA",
+    metaTitle: "Enterprise AI Security & Data Foundation | Guardrails & Access | Couders",
     metaDescription:
-      "Hardcoded business rules, encrypted vector data foundation, human-in-the-loop approval checkpoints and strict access controls. NOVA builds AI enterprises can actually trust.",
+      "Hardcoded business rules, encrypted vector data foundation, human-in-the-loop approval checkpoints and strict access controls. Couders builds AI enterprises can actually trust.",
     keywords: [
       "enterprise AI security",
       "AI guardrails",
@@ -142,14 +142,14 @@ const en: PagesDict = {
     eyebrow: "Enterprise Security & Data",
     h1: "AI your enterprise can actually trust.",
     intro:
-      "An AI that can act is an AI that can act wrongly. NOVA wraps every agent in hardcoded business rules, encrypted data foundations, human approval checkpoints and strict access controls, so autonomy never means losing control of your business.",
+      "An AI that can act is an AI that can act wrongly. Couders wraps every agent in hardcoded business rules, encrypted data foundations, human approval checkpoints and strict access controls, so autonomy never means losing control of your business.",
     imageAlt:
       "Dark-mode 3D render of a metallic security vault protecting an encrypted data core with glowing lattice",
     fomoH2: "Why is unsecured AI a liability, not an asset?",
     fomoIntro:
       "A wrapper with your API keys and no guardrails is one bad prompt away from leaking data, approving a refund it should not, or acting on a hallucination. As regulators and enterprise buyers demand proof of control, ungoverned AI stops being a feature and becomes a reason you lose the deal.",
     contrastBeginnerLabel: "Ungoverned AI",
-    contrastFullstackLabel: "NOVA governed AI",
+    contrastFullstackLabel: "Couders governed AI",
     contrast: [
       {
         beginner: "The model decides the rules on the fly.",
@@ -212,9 +212,9 @@ const pl: PagesDict = {
   servicesLabel: "Usługi",
   aiEngine: {
     slug: "services/ai-engine",
-    metaTitle: "Silnik AI i orkiestracja agentów | Full-Stack AI | NOVA",
+    metaTitle: "Silnik AI i orkiestracja agentów | Full-Stack AI | Couders",
     metaDescription:
-      "Orkiestracja wielu agentów, długoterminowy kontekst i pamięć, podłączone narzędzia i dynamiczny routing modeli LLM. NOVA buduje rdzeń rozumowania produkcyjnego AI, a nie cienką nakładkę na chatbota.",
+      "Orkiestracja wielu agentów, długoterminowy kontekst i pamięć, podłączone narzędzia i dynamiczny routing modeli LLM. Couders buduje rdzeń rozumowania produkcyjnego AI, a nie cienką nakładkę na chatbota.",
     keywords: [
       "orkiestracja agentów",
       "routing LLM",
@@ -226,14 +226,14 @@ const pl: PagesDict = {
     eyebrow: "Rozwiązania AI i orkiestracja",
     h1: "Silnik AI, który myśli, routuje i pamięta.",
     intro:
-      "Pod każdym dopracowanym interfejsem jest część, której klienci nie widzą, a konkurencja ją lekceważy: silnik. NOVA buduje orkiestrację wielu agentów, trwałą pamięć, łączność z narzędziami i dynamiczny routing modeli, czyli warstwę rozumowania, która zamienia demo w system, na którym firma może polegać.",
+      "Pod każdym dopracowanym interfejsem jest część, której klienci nie widzą, a konkurencja ją lekceważy: silnik. Couders buduje orkiestrację wielu agentów, trwałą pamięć, łączność z narzędziami i dynamiczny routing modeli, czyli warstwę rozumowania, która zamienia demo w system, na którym firma może polegać.",
     imageAlt:
       "Ciemna wizualizacja 3D połączonej sieci orkiestracji wielu agentów AI ze świecącymi węzłami",
     fomoH2: "Co odróżnia prawdziwy silnik AI od nakładki?",
     fomoIntro:
       "Większość agencji stawia jeden prompt przed jednym modelem i nazywa to AI. Odpowie na jedno pytanie, zapomni kolejne i nie dotknie Twoich systemów. Gdy konkurent wdroży prawdziwą orkiestrację z pamięcią i routingiem, ta różnica staje się widoczna w tygodnie, nie lata.",
     contrastBeginnerLabel: "Nakładka dla początkujących",
-    contrastFullstackLabel: "Full-stack AI od NOVA",
+    contrastFullstackLabel: "Full-stack AI od Couders",
     contrast: [
       {
         beginner: "Jeden prompt, jeden model, brak planu B przy awarii.",
@@ -264,7 +264,7 @@ const pl: PagesDict = {
         no: 4,
         title: "Kontekst i pamięć",
         question: "Dlaczego pamięć AI jest ważna dla biznesu?",
-        body: "Bez pamięci agent zaczyna od zera przy każdej wiadomości. NOVA daje agentom krótkoterminowy kontekst roboczy i długoterminową pamięć w bazie wektorowej, więc system przywołuje historię klienta, preferencje i decyzje, i odpowiada jak zespół, który go zna.",
+        body: "Bez pamięci agent zaczyna od zera przy każdej wiadomości. Couders daje agentom krótkoterminowy kontekst roboczy i długoterminową pamięć w bazie wektorowej, więc system przywołuje historię klienta, preferencje i decyzje, i odpowiada jak zespół, który go zna.",
       },
       {
         no: 6,
@@ -292,9 +292,9 @@ const pl: PagesDict = {
   },
   securityData: {
     slug: "services/security-data",
-    metaTitle: "Bezpieczeństwo AI i fundament danych enterprise | NOVA",
+    metaTitle: "Bezpieczeństwo AI i fundament danych enterprise | Couders",
     metaDescription:
-      "Twarde reguły biznesowe w kodzie, szyfrowany fundament danych wektorowych, punkty akceptacji z człowiekiem w pętli i ścisła kontrola dostępu. NOVA buduje AI, któremu enterprise faktycznie ufa.",
+      "Twarde reguły biznesowe w kodzie, szyfrowany fundament danych wektorowych, punkty akceptacji z człowiekiem w pętli i ścisła kontrola dostępu. Couders buduje AI, któremu enterprise faktycznie ufa.",
     keywords: [
       "bezpieczeństwo AI enterprise",
       "guardrails AI",
@@ -306,14 +306,14 @@ const pl: PagesDict = {
     eyebrow: "Bezpieczeństwo i dane enterprise",
     h1: "AI, któremu firma naprawdę może zaufać.",
     intro:
-      "AI, które potrafi działać, potrafi też zadziałać źle. NOVA otacza każdego agenta twardymi regułami biznesowymi, szyfrowanym fundamentem danych, punktami akceptacji przez człowieka i ścisłą kontrolą dostępu, więc autonomia nigdy nie oznacza utraty kontroli nad firmą.",
+      "AI, które potrafi działać, potrafi też zadziałać źle. Couders otacza każdego agenta twardymi regułami biznesowymi, szyfrowanym fundamentem danych, punktami akceptacji przez człowieka i ścisłą kontrolą dostępu, więc autonomia nigdy nie oznacza utraty kontroli nad firmą.",
     imageAlt:
       "Ciemny render 3D metalicznego sejfu chroniącego zaszyfrowany rdzeń danych ze świecącą siatką",
     fomoH2: "Dlaczego niezabezpieczone AI to obciążenie, nie atut?",
     fomoIntro:
       "Nakładka z Twoimi kluczami API i bez zabezpieczeń jest o jeden zły prompt od wycieku danych, zatwierdzenia zwrotu, którego nie powinna, albo działania na halucynacji. Gdy regulatorzy i kupujący z enterprise żądają dowodu kontroli, AI bez ładu przestaje być funkcją, a staje się powodem przegranej oferty.",
     contrastBeginnerLabel: "AI bez ładu",
-    contrastFullstackLabel: "AI z ładem od NOVA",
+    contrastFullstackLabel: "AI z ładem od Couders",
     contrast: [
       {
         beginner: "Model ustala reguły w locie.",

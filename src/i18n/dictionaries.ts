@@ -162,9 +162,9 @@ const en: Dictionary = {
         "Hands off to your team when needed",
       ],
       chat: {
-        title: "NOVA Assistant",
+        title: "Couders Assistant",
         messages: [
-          { from: "bot", text: "Hi, welcome to NOVA. What are you building?" },
+          { from: "bot", text: "Hi, welcome to Couders. What are you building?" },
           { from: "user", text: "Do you make multilingual sites with AI chat?" },
           {
             from: "bot",
@@ -391,9 +391,9 @@ const pl: Dictionary = {
         "Przekazuje rozmowę zespołowi, gdy trzeba",
       ],
       chat: {
-        title: "Asystent NOVA",
+        title: "Asystent Couders",
         messages: [
-          { from: "bot", text: "Cześć, witaj w NOVA. Co budujesz?" },
+          { from: "bot", text: "Cześć, witaj w Couders. Co budujesz?" },
           { from: "user", text: "Robicie wielojęzyczne strony z czatem AI?" },
           {
             from: "bot",
