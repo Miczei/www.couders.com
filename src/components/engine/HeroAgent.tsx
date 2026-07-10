@@ -107,11 +107,7 @@ export default function HeroAgent({ className }: { className?: string }) {
           transformBox: "view-box",
         }}
       >
-        <motion.circle
-          cx={FLOWER.cx}
-          cy={FLOWER.cy}
-          r={FLOWER.r}
-          fill={FLOWER_COLOR}
+        <motion.g
           initial={reduced ? false : { scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 1.8, duration: 0.7, ease: EASE }}
@@ -119,7 +115,54 @@ export default function HeroAgent({ className }: { className?: string }) {
             transformOrigin: `${stemBase.x}px ${stemBase.y}px`,
             transformBox: "view-box",
           }}
-        />
+        >
+          {/* Bloom silhouette */}
+          <path
+            d={`M ${FLOWER.cx - FLOWER.r} ${FLOWER.cy}
+                C ${FLOWER.cx - FLOWER.r} ${FLOWER.cy - FLOWER.r * 0.58} ${FLOWER.cx - FLOWER.r * 0.58} ${FLOWER.cy - FLOWER.r} ${FLOWER.cx} ${FLOWER.cy - FLOWER.r}
+                C ${FLOWER.cx + FLOWER.r * 0.58} ${FLOWER.cy - FLOWER.r} ${FLOWER.cx + FLOWER.r} ${FLOWER.cy - FLOWER.r * 0.58} ${FLOWER.cx + FLOWER.r} ${FLOWER.cy}
+                C ${FLOWER.cx + FLOWER.r} ${FLOWER.cy + FLOWER.r * 0.52} ${FLOWER.cx + FLOWER.r * 0.56} ${FLOWER.cy + FLOWER.r * 0.92} ${FLOWER.cx} ${FLOWER.cy + FLOWER.r * 0.92}
+                C ${FLOWER.cx - FLOWER.r * 0.56} ${FLOWER.cy + FLOWER.r * 0.92} ${FLOWER.cx - FLOWER.r} ${FLOWER.cy + FLOWER.r * 0.52} ${FLOWER.cx - FLOWER.r} ${FLOWER.cy} Z`}
+            fill={FLOWER_COLOR}
+          />
+          {/* Inner petal spiral */}
+          <path
+            d={`M ${FLOWER.cx + FLOWER.r * 0.04} ${FLOWER.cy + FLOWER.r * 0.12}
+                C ${FLOWER.cx + FLOWER.r * 0.3} ${FLOWER.cy - FLOWER.r * 0.04} ${FLOWER.cx + FLOWER.r * 0.16} ${FLOWER.cy - FLOWER.r * 0.34} ${FLOWER.cx - FLOWER.r * 0.12} ${FLOWER.cy - FLOWER.r * 0.22}
+                C ${FLOWER.cx - FLOWER.r * 0.42} ${FLOWER.cy - FLOWER.r * 0.08} ${FLOWER.cx - FLOWER.r * 0.3} ${FLOWER.cy + FLOWER.r * 0.3} ${FLOWER.cx + FLOWER.r * 0.04} ${FLOWER.cy + FLOWER.r * 0.42}
+                C ${FLOWER.cx + FLOWER.r * 0.46} ${FLOWER.cy + FLOWER.r * 0.54} ${FLOWER.cx + FLOWER.r * 0.72} ${FLOWER.cy + FLOWER.r * 0.16} ${FLOWER.cx + FLOWER.r * 0.54} ${FLOWER.cy - FLOWER.r * 0.26}`}
+            fill="none"
+            stroke={LINE_COLOR}
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+          {/* Side petals */}
+          <path
+            d={`M ${FLOWER.cx - FLOWER.r * 0.88} ${FLOWER.cy + FLOWER.r * 0.34}
+                C ${FLOWER.cx - FLOWER.r * 0.7} ${FLOWER.cy - FLOWER.r * 0.1} ${FLOWER.cx - FLOWER.r * 0.46} ${FLOWER.cy - FLOWER.r * 0.5} ${FLOWER.cx - FLOWER.r * 0.1} ${FLOWER.cy - FLOWER.r * 0.72}`}
+            fill="none"
+            stroke={LINE_COLOR}
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+          <path
+            d={`M ${FLOWER.cx + FLOWER.r * 0.88} ${FLOWER.cy + FLOWER.r * 0.34}
+                C ${FLOWER.cx + FLOWER.r * 0.7} ${FLOWER.cy - FLOWER.r * 0.1} ${FLOWER.cx + FLOWER.r * 0.46} ${FLOWER.cy - FLOWER.r * 0.5} ${FLOWER.cx + FLOWER.r * 0.1} ${FLOWER.cy - FLOWER.r * 0.72}`}
+            fill="none"
+            stroke={LINE_COLOR}
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+          {/* Bottom petal cup */}
+          <path
+            d={`M ${FLOWER.cx - FLOWER.r * 0.55} ${FLOWER.cy + FLOWER.r * 0.74}
+                Q ${FLOWER.cx} ${FLOWER.cy + FLOWER.r * 1.02} ${FLOWER.cx + FLOWER.r * 0.55} ${FLOWER.cy + FLOWER.r * 0.74}`}
+            fill="none"
+            stroke={LINE_COLOR}
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+        </motion.g>
       </motion.g>
 
       <g mask="url(#agent-reveal)">
