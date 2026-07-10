@@ -1,63 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  animate,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-
-/**
- * FluidMorph: one continuous silver line on pure black that first draws an
- * abstract human profile (with a subtle smile), then unravels and re-forms as
- * the "Couders" wordmark. Coded SVG only, no video.
- *
- * Technique: both source paths are hidden in the SVG. On mount each is
- * resampled into N equidistant points (getPointAtLength), normalized to the
- * viewBox center. Every frame we rebuild the visible path from interpolated
- * points. Each point carries its own staggered progress (head of the line
- * morphs first), plus a sine lift and a traveling ripple, so the line reads
- * as a string flowing through space rather than a crossfade.
- */
+import { animate, useReducedMotion } from "framer-motion";
 
 const VB_W = 1440;
 const VB_H = 560;
 const SAMPLES = 260;
-/** How far the head of the line runs ahead of the tail (0 = rigid morph). */
 const LAG = 0.55;
-/** Vertical arc the line travels through mid-morph, in viewBox units. */
 const DRIFT = 64;
-/** Amplitude of the fluid ripple mid-morph. */
 const RIPPLE = 10;
 
-/**
- * Abstract profile, one open stroke: forehead, brow, nose, lips (raised in a
- * slight smile), chin, jaw, then a long sweep back over the skull.
- */
-const FACE_D = `
-M 356 78
-C 306 108 290 158 302 204
-C 308 228 300 240 286 254
-C 272 270 264 288 276 299
-C 285 307 287 317 279 324
-C 293 332 311 333 324 326
-C 312 343 296 348 287 346
-C 300 358 309 371 303 386
-C 293 412 262 424 236 415
-C 198 402 183 371 190 336
-C 152 322 140 236 176 178
-C 208 126 296 84 356 78
-C 376 76 396 80 412 90
-`;
+const DRAW_DURATION = 1.1;
+const HOLD = 0.45;
+const MORPH_DURATION = 2.8;
 
-/**
- * "Couders" as bespoke monoline cursive lettering, one continuous stroke.
- * This path IS the logotype: the same line that drew the face becomes the
- * brand name. Baseline y=330, x-height 90 (waist y=240), ascender y=168.
- */
+const C_D = "M 840 160 A 170 170 0 1 0 840 400";
+
 const WORD_D = `
 M 344 208
 C 328 176 284 160 244 172
@@ -116,7 +74,6 @@ function easeInOutCubic(t: number) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-/** Resample a path element into n+1 equidistant [x0,y0,x1,y1,...] points. */
 function samplePath(el: SVGPathElement, n: number): number[] {
   const total = el.getTotalLength();
   const pts = new Array<number>((n + 1) * 2);
@@ -128,11 +85,6 @@ function samplePath(el: SVGPathElement, n: number): number[] {
   return pts;
 }
 
-/**
- * Light Laplacian smoothing over the resampled polyline. Softens the corner
- * kinks left by hand-authored bezier junctions so the string reads as one
- * continuous, tensioned line. Endpoints stay pinned.
- */
 function smoothPoints(pts: number[], passes: number): number[] {
   const out = pts.slice();
   const n = out.length / 2;
@@ -146,7 +98,6 @@ function smoothPoints(pts: number[], passes: number): number[] {
   return out;
 }
 
-/** Scale a point set to fit a fraction of the viewBox and center it. */
 function fitToViewBox(pts: number[], fracW: number, fracH: number): number[] {
   let minX = Infinity,
     maxX = -Infinity,
@@ -169,15 +120,12 @@ function fitToViewBox(pts: number[], fracW: number, fracH: number): number[] {
   return out;
 }
 
-/** Build the visible line for morph progress t in [0,1]. */
 function morphD(a: number[], b: number[], t: number): string {
   const parts = new Array<string>(SAMPLES + 1);
   for (let i = 0; i <= SAMPLES; i++) {
     const u = i / SAMPLES;
-    // Head-first unravel: the start of the string leaves the face early,
-    // the tail follows. Eased per point so each segment glides.
     const p = easeInOutCubic(clamp01(t * (1 + LAG) - LAG * u));
-    const swell = Math.sin(p * Math.PI); // 0 at rest, 1 mid-flight
+    const swell = Math.sin(p * Math.PI);
     const lift = swell * DRIFT * Math.sin(u * Math.PI);
     const ripple = swell * RIPPLE * Math.sin(u * 16 + t * 9);
     const x = a[i * 2] + (b[i * 2] - a[i * 2]) * p;
@@ -188,54 +136,35 @@ function morphD(a: number[], b: number[], t: number): string {
 }
 
 export default function FluidMorph({
-  /** External 0..1 morph driver (scroll progress of the hero). */
-  scrollTargetRef,
-  /** Freeze at a fixed progress (design review / lab use). */
   debugProgress,
   ariaLabel,
   className,
 }: {
-  scrollTargetRef?: React.RefObject<HTMLElement | null>;
   debugProgress?: number;
   ariaLabel?: string;
   className?: string;
 }) {
-  const faceRef = useRef<SVGPathElement>(null);
+  const cRef = useRef<SVGPathElement>(null);
   const wordRef = useRef<SVGPathElement>(null);
   const lineRef = useRef<SVGPathElement>(null);
   const shapes = useRef<{ a: number[]; b: number[] } | null>(null);
   const [ready, setReady] = useState(false);
   const reduced = useReducedMotion();
 
-  // Scroll drives the morph across the hero's scrub range; a spring smooths
-  // it so the line glides without friction instead of tracking the wheel 1:1.
-  const { scrollYProgress } = useScroll(
-    scrollTargetRef
-      ? { target: scrollTargetRef, offset: ["start start", "end end"] }
-      : undefined
-  );
-  const raw = useTransform(scrollYProgress, [0.08, 0.62], [0, 1]);
-  const progress = useSpring(raw, { stiffness: 64, damping: 19, mass: 0.9 });
-
   const render = (t: number) => {
     const s = shapes.current;
     if (s && lineRef.current) lineRef.current.setAttribute("d", morphD(s.a, s.b, t));
   };
 
-  useMotionValueEvent(progress, "change", (t) => {
-    if (debugProgress === undefined && !reduced) render(t);
-  });
-
   useEffect(() => {
-    if (!faceRef.current || !wordRef.current) return;
+    if (!cRef.current || !wordRef.current) return;
     shapes.current = {
-      a: fitToViewBox(smoothPoints(samplePath(faceRef.current, SAMPLES), 1), 0.34, 0.86),
+      a: fitToViewBox(samplePath(cRef.current, SAMPLES), 0.32, 0.8),
       b: fitToViewBox(smoothPoints(samplePath(wordRef.current, SAMPLES), 1), 0.88, 0.62),
     };
     setReady(true);
 
     if (reduced) {
-      // Reduced motion: skip the theatrics, show the wordmark.
       render(1);
       return;
     }
@@ -244,23 +173,39 @@ export default function FluidMorph({
       return;
     }
 
-    // Beat 1: the string draws the face in from nothing.
     render(0);
     const el = lineRef.current;
     if (!el) return;
+
     const len = el.getTotalLength();
     el.style.strokeDasharray = `${len}`;
     el.style.strokeDashoffset = `${len}`;
+
+    let morph: ReturnType<typeof animate> | null = null;
+    let holdTimer = 0;
+
     const draw = animate(len, 0, {
-      duration: 1.9,
+      duration: DRAW_DURATION,
       ease: [0.16, 1, 0.3, 1],
       onUpdate: (v) => (el.style.strokeDashoffset = `${v}`),
       onComplete: () => {
         el.style.strokeDasharray = "none";
         el.style.strokeDashoffset = "0";
+        holdTimer = window.setTimeout(() => {
+          morph = animate(0, 1, {
+            duration: MORPH_DURATION,
+            ease: [0.7, 0, 0.18, 1],
+            onUpdate: render,
+          });
+        }, HOLD * 1000);
       },
     });
-    return () => draw.stop();
+
+    return () => {
+      draw.stop();
+      morph?.stop();
+      clearTimeout(holdTimer);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debugProgress, reduced]);
 
@@ -271,7 +216,7 @@ export default function FluidMorph({
       className={className}
       aria-label={
         ariaLabel ??
-        "A single continuous line morphing from an abstract face into the Couders wordmark"
+        "A single continuous line drawing a C and expanding into the Couders wordmark"
       }
       role="img"
     >
@@ -282,7 +227,6 @@ export default function FluidMorph({
           <stop offset="0.62" stopColor="#9BA1AB" />
           <stop offset="0.85" stopColor="#EDEFF3" />
           <stop offset="1" stopColor="#FFFFFF" />
-          {/* Slow specular sweep along the stroke. */}
           <animateTransform
             attributeName="gradientTransform"
             type="translate"
@@ -296,11 +240,9 @@ export default function FluidMorph({
         </filter>
       </defs>
 
-      {/* Hidden morph sources (never displayed, only measured). */}
-      <path ref={faceRef} d={FACE_D} style={{ visibility: "hidden" }} />
+      <path ref={cRef} d={C_D} style={{ visibility: "hidden" }} />
       <path ref={wordRef} d={WORD_D} style={{ visibility: "hidden" }} />
 
-      {/* Soft chrome halo behind the line. */}
       {ready && (
         <use
           href="#fluid-line"

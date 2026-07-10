@@ -1,9 +1,11 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import FluidMorph from "./FluidMorph";
 import type { CoudersContent } from "@/i18n/couders";
+
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const COPY_DELAY = 3.9;
 
 export default function CoudersHero({
   content,
@@ -12,35 +14,31 @@ export default function CoudersHero({
   content: CoudersContent["hero"];
   debugProgress?: number;
 }) {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-  const smooth = useSpring(scrollYProgress, { stiffness: 64, damping: 19 });
-
-  const forced = debugProgress !== undefined;
-  const copyOpacity = useTransform(smooth, [0.6, 0.78], [0, 1]);
-  const copyY = useTransform(smooth, [0.6, 0.78], [28, 0]);
-  const cueOpacity = useTransform(smooth, [0, 0.12], [1, 0]);
+  const reduced = useReducedMotion();
+  const still = debugProgress !== undefined || reduced;
 
   return (
-    <section ref={sectionRef} className="relative z-10 h-[260vh] bg-black">
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden pt-16">
-        <p className="mb-2 px-6 text-center font-mono text-[10px] uppercase tracking-[0.26em] text-zinc-500 sm:text-[11px] sm:tracking-[0.32em]">
+    <section className="relative z-10 bg-black">
+      <div className="flex min-h-screen flex-col items-center justify-center overflow-hidden px-0 pb-24 pt-24 sm:pb-28">
+        <motion.p
+          initial={still ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mb-2 px-6 text-center font-mono text-[10px] uppercase tracking-[0.26em] text-zinc-500 sm:text-[11px] sm:tracking-[0.32em]"
+        >
           {content.eyebrow}
-        </p>
+        </motion.p>
 
         <FluidMorph
-          scrollTargetRef={sectionRef}
           debugProgress={debugProgress}
           ariaLabel={content.morphAria}
           className="w-[min(94vw,1160px)]"
         />
 
         <motion.div
-          style={forced ? undefined : { opacity: copyOpacity, y: copyY }}
+          initial={still ? false : { opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: COPY_DELAY, ease: EASE }}
           className="flex max-w-2xl flex-col items-center px-6 text-center"
         >
           <h1
@@ -69,7 +67,9 @@ export default function CoudersHero({
         </motion.div>
 
         <motion.div
-          style={forced ? undefined : { opacity: cueOpacity }}
+          initial={still ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: COPY_DELAY + 0.5 }}
           className="absolute bottom-8 flex flex-col items-center gap-2.5 text-zinc-600"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.28em]">
