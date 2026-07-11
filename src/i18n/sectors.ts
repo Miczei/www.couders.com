@@ -1,9 +1,19 @@
 import type { Locale } from "./config";
 
-export type SectorTile = { title: string; body: string; span: string };
+export type DeepDiveStep = { title: string; body: string };
+
+export type SectorTile = {
+  title: string;
+  body: string;
+  span: string;
+  /** Tier 1 hook: jargon-free business outcome shown on the card. */
+  outcome?: string;
+  /** Tier 2: expandable plain-English walkthrough. Cards without it don't expand. */
+  deepDive?: { intro: string; steps: DeepDiveStep[] };
+};
 
 export type Sector = {
-  id: "healthcare" | "legal" | "industrial";
+  id: "healthcare" | "legal" | "industrial" | "ecommerce" | "finance";
   label: string;
   h2: string;
   lead: string;
@@ -21,6 +31,9 @@ export type SectorsContent = {
   h1: string;
   intro: string;
   cta: string;
+  expandHint: string;
+  close: string;
+  flow: { from: string; via: string; to: string };
   sectors: Sector[];
 };
 
@@ -42,6 +55,9 @@ const en: SectorsContent = {
   intro:
     "Generic chatbots break on domain reality. Couders builds sector-tuned agents on private data, hard business rules and human checkpoints, ready for the regulations and edge cases of your field.",
   cta: "Scope an agent for your sector",
+  expandHint: "See how it works",
+  close: "Close",
+  flow: { from: "Customer request", via: "Agent reasoning", to: "Business outcome" },
   sectors: [
     {
       id: "healthcare",
@@ -130,6 +146,121 @@ const en: SectorsContent = {
         },
       ],
     },
+    {
+      id: "ecommerce",
+      label: "E-commerce",
+      h2: "Retail that reads minds.",
+      lead: "Agents that sell, stock and retain around the clock, wired into your catalogue, margins and promises.",
+      visualAria: "A continuous line drawing a shopping cart flowing into a spark",
+      tiles: [
+        {
+          title: "Autonomous personal shoppers",
+          outcome: "Turn midnight browsers into buyers with a concierge that knows your catalogue better than your best salesperson.",
+          body: "A conversational agent that guides every visitor from vague idea to confident checkout, in their language, on brand, within your pricing rules.",
+          span: "md:col-span-2",
+          deepDive: {
+            intro: "Imagine a customer landing at 2 AM with a screenshot, a rough budget and no product name. Here is what happens in the next ninety seconds.",
+            steps: [
+              {
+                title: "Understand",
+                body: "The agent asks two clarifying questions, reads the screenshot, and extracts size, style, budget and urgency without a single form field.",
+              },
+              {
+                title: "Match",
+                body: "It cross-references live inventory, review scores and return rates, then shortlists three products it can actually deliver on time.",
+              },
+              {
+                title: "Close",
+                body: "It assembles the cart, applies the one promo that fits your margin rules, and books the delivery slot. Upsell happens only when it genuinely helps.",
+              },
+            ],
+          },
+        },
+        {
+          title: "Dynamic inventory prediction",
+          outcome: "Reorder before the shelf empties and kill dead stock before it lands in your warehouse.",
+          body: "SKU-level demand forecasting wired into your purchasing flow, so buying decisions stop being gut feel.",
+          span: "md:col-span-2",
+          deepDive: {
+            intro: "Your bestseller sells out every fourth Friday and nobody knows why. The agent does.",
+            steps: [
+              {
+                title: "Watch",
+                body: "It ingests sales velocity, seasonality, campaign calendars and supplier lead times across every channel, continuously.",
+              },
+              {
+                title: "Predict",
+                body: "It builds SKU-level demand curves with confidence bands, flagging both the stockout next week and the overstock next quarter.",
+              },
+              {
+                title: "Act",
+                body: "It drafts purchase orders with quantities and timing attached. Your buyer reviews the reasoning and approves in one click.",
+              },
+            ],
+          },
+        },
+        {
+          title: "Hyper-personalized retention",
+          outcome: "Win customers back before they even know they are leaving.",
+          body: "Churn signals detected per customer, offers composed per history and margin, outcomes fed back into the next campaign.",
+          span: "md:col-span-2",
+          deepDive: {
+            intro: "A loyal customer quietly stops opening your emails. Most shops notice three months later. Yours notices the same week.",
+            steps: [
+              {
+                title: "Detect",
+                body: "The agent tracks engagement drop-off per cohort and flags the customers whose behavior just changed, not everyone at once.",
+              },
+              {
+                title: "Compose",
+                body: "For each flagged customer it picks the channel, timing and offer from their history, within discount floors your CFO signed off.",
+              },
+              {
+                title: "Learn",
+                body: "Every response feeds the next decision, so the win-back playbook sharpens with each campaign instead of going stale.",
+              },
+            ],
+          },
+        },
+        {
+          title: "Margin guardrails",
+          body: "Every discount, bundle and shipping promise stays inside hardcoded pricing floors. The agent sells hard, but never below the line your finance team drew.",
+          span: "md:col-span-6",
+        },
+      ],
+    },
+    {
+      id: "finance",
+      label: "Finance",
+      h2: "Money that defends itself.",
+      lead: "Agents auditing every transaction in real time, so your analysts spend their day on judgment calls, not queues.",
+      visualAria: "A rising market line coiling into a secure lock",
+      tiles: [
+        {
+          title: "Real-time fraud neutralization",
+          outcome: "Block fraudulent transactions in milliseconds, not after the chargeback lands.",
+          body: "Scoring agents watch every transaction against behavioral baselines and known patterns, freezing only what deserves freezing.",
+          span: "md:col-span-2",
+        },
+        {
+          title: "Automated compliance auditing",
+          outcome: "Every transaction screened against AML and KYC rules, with an audit trail regulators can replay.",
+          body: "Continuous screening instead of quarterly panic, with each decision logged, sourced and explainable.",
+          span: "md:col-span-2",
+        },
+        {
+          title: "Intelligent wealth assistants",
+          outcome: "Portfolio insight in plain language, with every figure sourced and every action behind client consent.",
+          body: "Assistants that explain positions, risks and scenarios conversationally, and never execute anything on their own.",
+          span: "md:col-span-2",
+        },
+        {
+          title: "Human sign-off, always",
+          body: "Anything that moves money crosses a human checkpoint. The agent prepares the decision, a person makes it.",
+          span: "md:col-span-6",
+        },
+      ],
+    },
   ],
 };
 
@@ -151,6 +282,9 @@ const pl: SectorsContent = {
   intro:
     "Generyczne chatboty wykładają się na realiach domeny. Couders buduje agentów dostrojonych do sektora: na prywatnych danych, twardych regułach biznesowych i punktach kontroli człowieka, gotowych na regulacje i przypadki brzegowe Twojego pola.",
   cta: "Zaprojektuj agenta dla swojej branży",
+  expandHint: "Zobacz, jak to działa",
+  close: "Zamknij",
+  flow: { from: "Zapytanie klienta", via: "Rozumowanie agenta", to: "Wynik biznesowy" },
   sectors: [
     {
       id: "healthcare",
@@ -235,6 +369,121 @@ const pl: SectorsContent = {
         {
           title: "Zabezpieczenia hali produkcyjnej",
           body: "Agenci działają w twardo zakodowanych kopertach bezpieczeństwa, a wszystko, co dotyka maszyn produkcyjnych, wymaga zatwierdzenia operatora.",
+          span: "md:col-span-6",
+        },
+      ],
+    },
+    {
+      id: "ecommerce",
+      label: "E-commerce",
+      h2: "Handel, który czyta w myślach.",
+      lead: "Agenci, którzy sprzedają, zatowarowują i zatrzymują klientów całą dobę, wpięci w Twój katalog, marże i obietnice.",
+      visualAria: "Ciągła linia rysująca koszyk zakupowy przechodzący w iskrę",
+      tiles: [
+        {
+          title: "Autonomiczni osobiści doradcy zakupowi",
+          outcome: "Zamień nocnych przeglądaczy w kupujących dzięki konsjerżowi, który zna Twój katalog lepiej niż najlepszy sprzedawca.",
+          body: "Konwersacyjny agent prowadzi każdego odwiedzającego od mglistego pomysłu do pewnego zakupu, w jego języku, w tonie marki, w granicach Twoich reguł cenowych.",
+          span: "md:col-span-2",
+          deepDive: {
+            intro: "Wyobraź sobie klienta, który wchodzi o 2 w nocy ze zrzutem ekranu, przybliżonym budżetem i bez nazwy produktu. Oto co dzieje się przez następne dziewięćdziesiąt sekund.",
+            steps: [
+              {
+                title: "Zrozumienie",
+                body: "Agent zadaje dwa doprecyzowujące pytania, odczytuje zrzut ekranu i wyciąga rozmiar, styl, budżet oraz pilność bez ani jednego pola formularza.",
+              },
+              {
+                title: "Dopasowanie",
+                body: "Zestawia żywy stan magazynu, oceny i wskaźniki zwrotów, po czym wybiera trzy produkty, które naprawdę dowiezie na czas.",
+              },
+              {
+                title: "Domknięcie",
+                body: "Składa koszyk, nakłada tę jedną promocję, która mieści się w regułach marży, i rezerwuje termin dostawy. Dosprzedaż pojawia się tylko wtedy, gdy faktycznie pomaga.",
+              },
+            ],
+          },
+        },
+        {
+          title: "Dynamiczna predykcja zapasów",
+          outcome: "Zamawiaj, zanim półka się opróżni, i zabijaj martwy zapas, zanim trafi do magazynu.",
+          body: "Prognozowanie popytu na poziomie SKU wpięte w Twój proces zakupowy, żeby decyzje przestały być zgadywaniem.",
+          span: "md:col-span-2",
+          deepDive: {
+            intro: "Twój bestseller wyprzedaje się w każdy czwarty piątek i nikt nie wie dlaczego. Agent wie.",
+            steps: [
+              {
+                title: "Obserwacja",
+                body: "Nieprzerwanie pobiera tempo sprzedaży, sezonowość, kalendarz kampanii i czasy dostaw od dostawców ze wszystkich kanałów.",
+              },
+              {
+                title: "Predykcja",
+                body: "Buduje krzywe popytu per SKU z przedziałami ufności, wskazując zarówno brak towaru za tydzień, jak i nadmiar za kwartał.",
+              },
+              {
+                title: "Działanie",
+                body: "Przygotowuje zamówienia z ilościami i terminami oraz uzasadnieniem. Twój kupiec przegląda i zatwierdza jednym kliknięciem.",
+              },
+            ],
+          },
+        },
+        {
+          title: "Hiperpersonalizowana retencja",
+          outcome: "Odzyskuj klientów, zanim sami zauważą, że odchodzą.",
+          body: "Sygnały odejścia wykrywane per klient, oferty komponowane według historii i marży, wyniki zasilające kolejną kampanię.",
+          span: "md:col-span-2",
+          deepDive: {
+            intro: "Lojalna klientka po cichu przestaje otwierać Twoje maile. Większość sklepów zauważa po trzech miesiącach. Twój zauważa w tym samym tygodniu.",
+            steps: [
+              {
+                title: "Wykrycie",
+                body: "Agent śledzi spadek zaangażowania per kohorta i oznacza klientów, których zachowanie właśnie się zmieniło, a nie wszystkich naraz.",
+              },
+              {
+                title: "Kompozycja",
+                body: "Dla każdego oznaczonego klienta dobiera kanał, moment i ofertę na bazie historii, w granicach progów rabatowych zatwierdzonych przez CFO.",
+              },
+              {
+                title: "Uczenie",
+                body: "Każda odpowiedź zasila kolejną decyzję, więc playbook odzyskiwania wyostrza się z każdą kampanią, zamiast się starzeć.",
+              },
+            ],
+          },
+        },
+        {
+          title: "Strażnicy marży",
+          body: "Każdy rabat, pakiet i obietnica dostawy mieści się w twardo zakodowanych progach cenowych. Agent sprzedaje odważnie, ale nigdy poniżej linii, którą wyznaczył Twój dział finansów.",
+          span: "md:col-span-6",
+        },
+      ],
+    },
+    {
+      id: "finance",
+      label: "Finanse",
+      h2: "Pieniądze, które same się bronią.",
+      lead: "Agenci audytują każdą transakcję w czasie rzeczywistym, więc Twoi analitycy zajmują się osądem, a nie kolejką.",
+      visualAria: "Rosnąca linia notowań zwijająca się w bezpieczny zamek",
+      tiles: [
+        {
+          title: "Neutralizacja fraudu w czasie rzeczywistym",
+          outcome: "Blokuj podejrzane transakcje w milisekundy, a nie po chargebacku.",
+          body: "Agenci scoringowi porównują każdą transakcję z profilem behawioralnym i znanymi wzorcami, mrożąc tylko to, co na to zasługuje.",
+          span: "md:col-span-2",
+        },
+        {
+          title: "Automatyczny audyt zgodności",
+          outcome: "Każda transakcja prześwietlona pod AML i KYC, ze ścieżką audytu, którą regulator może odtworzyć.",
+          body: "Ciągły screening zamiast kwartalnej paniki, z każdą decyzją zalogowaną, źródłowaną i wyjaśnialną.",
+          span: "md:col-span-2",
+        },
+        {
+          title: "Inteligentni asystenci majątkowi",
+          outcome: "Wgląd w portfel prostym językiem, z każdą liczbą źródłowaną i każdą akcją za zgodą klienta.",
+          body: "Asystenci tłumaczą pozycje, ryzyka i scenariusze w rozmowie, a niczego nie wykonują samodzielnie.",
+          span: "md:col-span-2",
+        },
+        {
+          title: "Podpis człowieka, zawsze",
+          body: "Wszystko, co przesuwa pieniądze, przechodzi przez ludzki punkt kontrolny. Agent przygotowuje decyzję, człowiek ją podejmuje.",
           span: "md:col-span-6",
         },
       ],
