@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import SolutionsPage from "@/components/solutions/SolutionsPage";
+import SectorsPage from "@/components/sectors/SectorsPage";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getSolutions } from "@/i18n/solutions";
+import { getSectors } from "@/i18n/sectors";
 import { siloMetadata } from "@/lib/siloMeta";
-import { buildSolutionsSchema } from "@/lib/schema";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
 
 function toLocale(v: string): Locale {
@@ -16,7 +15,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const locale = toLocale((await params).locale);
-  return siloMetadata(locale, getSolutions(locale));
+  return siloMetadata(locale, getSectors(locale));
 }
 
 export default async function Page({
@@ -26,15 +25,7 @@ export default async function Page({
 }) {
   const locale = toLocale((await params).locale);
   const dict = getDictionary(locale);
-  const solutions = getSolutions(locale);
+  const content = getSectors(locale);
 
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildSolutionsSchema(locale, solutions)) }}
-      />
-      <SolutionsPage locale={locale} dict={dict} solutions={solutions} />
-    </>
-  );
+  return <SectorsPage locale={locale} dict={dict} content={content} />;
 }
