@@ -185,7 +185,9 @@ export default function EnginePage({
               </motion.div>
             </div>
 
-            <HeroAgent className="mx-auto mt-14 block w-44 sm:w-52 lg:mx-0 lg:mt-0 lg:w-56 xl:w-64" />
+            <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
+              <HeroAgent className="mx-auto mt-14 block w-44 sm:w-52 lg:mx-0 lg:mt-0 lg:w-56 xl:w-64" />
+            </div>
           </div>
         </section>
 

@@ -11,11 +11,36 @@ import {
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-/* Flower fill position in final viewBox coordinates (0 0 600 595 space).
-   The traced artwork already draws the tulip outline; this terracotta disc
-   sits BEHIND it and fills the bowl, like the reference render. */
-const FLOWER = { cx: 281, cy: 193, r: 52 };
+/* Flower position in final viewBox coordinates (0 0 600 595 space),
+   centered on the traced bloom so the rose caps the stem. */
+const FLOWER = { cx: 281, cy: 200, r: 56 };
 const STEM_DROP = 30;
+
+/* Five-petal scalloped rose silhouette around (cx, cy). */
+function roseSilhouette(cx: number, cy: number, R: number): string {
+  const petals = 5;
+  const pts = Array.from({ length: petals }, (_, i) => {
+    const a = ((-90 + (360 / petals) * i) * Math.PI) / 180;
+    return [cx + R * Math.cos(a), cy + R * Math.sin(a)];
+  });
+  const arc = (2 * R * Math.sin(Math.PI / petals) * 0.62).toFixed(1);
+  let d = `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for (let i = 1; i <= petals; i++) {
+    const [x, y] = pts[i % petals];
+    d += ` A ${arc} ${arc} 0 0 1 ${x.toFixed(1)} ${y.toFixed(1)}`;
+  }
+  return `${d} Z`;
+}
+
+/* Single inward petal spiral around (cx, cy). */
+function roseSpiral(cx: number, cy: number, r: number): string {
+  return (
+    `M ${cx + r * 0.44} ${cy + r * 0.12}` +
+    ` C ${cx + r * 0.44} ${cy - r * 0.4}, ${cx - r * 0.48} ${cy - r * 0.4}, ${cx - r * 0.48} ${cy + r * 0.02}` +
+    ` C ${cx - r * 0.48} ${cy + r * 0.36}, ${cx + r * 0.14} ${cy + r * 0.42}, ${cx + r * 0.16} ${cy + r * 0.06}` +
+    ` C ${cx + r * 0.17} ${cy - r * 0.16}, ${cx - r * 0.14} ${cy - r * 0.18}, ${cx - r * 0.16} ${cy + r * 0.02}`
+  );
+}
 
 export default function HeroAgent({ className }: { className?: string }) {
   const reduced = useReducedMotion();
@@ -116,50 +141,29 @@ export default function HeroAgent({ className }: { className?: string }) {
             transformBox: "view-box",
           }}
         >
-          {/* Bloom silhouette */}
+          {/* Backdrop patch: hides the traced bloom so the rose reads clean. */}
+          <circle cx={FLOWER.cx} cy={FLOWER.cy + 6} r={FLOWER.r * 1.5} fill="#000" />
+          {/* Petal silhouette */}
           <path
-            d={`M ${FLOWER.cx - FLOWER.r} ${FLOWER.cy}
-                C ${FLOWER.cx - FLOWER.r} ${FLOWER.cy - FLOWER.r * 0.58} ${FLOWER.cx - FLOWER.r * 0.58} ${FLOWER.cy - FLOWER.r} ${FLOWER.cx} ${FLOWER.cy - FLOWER.r}
-                C ${FLOWER.cx + FLOWER.r * 0.58} ${FLOWER.cy - FLOWER.r} ${FLOWER.cx + FLOWER.r} ${FLOWER.cy - FLOWER.r * 0.58} ${FLOWER.cx + FLOWER.r} ${FLOWER.cy}
-                C ${FLOWER.cx + FLOWER.r} ${FLOWER.cy + FLOWER.r * 0.52} ${FLOWER.cx + FLOWER.r * 0.56} ${FLOWER.cy + FLOWER.r * 0.92} ${FLOWER.cx} ${FLOWER.cy + FLOWER.r * 0.92}
-                C ${FLOWER.cx - FLOWER.r * 0.56} ${FLOWER.cy + FLOWER.r * 0.92} ${FLOWER.cx - FLOWER.r} ${FLOWER.cy + FLOWER.r * 0.52} ${FLOWER.cx - FLOWER.r} ${FLOWER.cy} Z`}
+            d={roseSilhouette(FLOWER.cx, FLOWER.cy, FLOWER.r)}
             fill={FLOWER_COLOR}
+            stroke={LINE_COLOR}
+            strokeWidth="4"
+            strokeLinejoin="round"
           />
-          {/* Inner petal spiral */}
+          {/* Single inner spiral */}
           <path
-            d={`M ${FLOWER.cx + FLOWER.r * 0.04} ${FLOWER.cy + FLOWER.r * 0.12}
-                C ${FLOWER.cx + FLOWER.r * 0.3} ${FLOWER.cy - FLOWER.r * 0.04} ${FLOWER.cx + FLOWER.r * 0.16} ${FLOWER.cy - FLOWER.r * 0.34} ${FLOWER.cx - FLOWER.r * 0.12} ${FLOWER.cy - FLOWER.r * 0.22}
-                C ${FLOWER.cx - FLOWER.r * 0.42} ${FLOWER.cy - FLOWER.r * 0.08} ${FLOWER.cx - FLOWER.r * 0.3} ${FLOWER.cy + FLOWER.r * 0.3} ${FLOWER.cx + FLOWER.r * 0.04} ${FLOWER.cy + FLOWER.r * 0.42}
-                C ${FLOWER.cx + FLOWER.r * 0.46} ${FLOWER.cy + FLOWER.r * 0.54} ${FLOWER.cx + FLOWER.r * 0.72} ${FLOWER.cy + FLOWER.r * 0.16} ${FLOWER.cx + FLOWER.r * 0.54} ${FLOWER.cy - FLOWER.r * 0.26}`}
+            d={roseSpiral(FLOWER.cx, FLOWER.cy, FLOWER.r)}
             fill="none"
             stroke={LINE_COLOR}
             strokeWidth="4"
             strokeLinecap="round"
           />
-          {/* Side petals */}
+          {/* Stem bridge from the rose down to the traced stem. */}
           <path
-            d={`M ${FLOWER.cx - FLOWER.r * 0.88} ${FLOWER.cy + FLOWER.r * 0.34}
-                C ${FLOWER.cx - FLOWER.r * 0.7} ${FLOWER.cy - FLOWER.r * 0.1} ${FLOWER.cx - FLOWER.r * 0.46} ${FLOWER.cy - FLOWER.r * 0.5} ${FLOWER.cx - FLOWER.r * 0.1} ${FLOWER.cy - FLOWER.r * 0.72}`}
-            fill="none"
+            d={`M ${FLOWER.cx} ${FLOWER.cy + FLOWER.r} L ${FLOWER.cx} ${FLOWER.cy + FLOWER.r * 1.55}`}
             stroke={LINE_COLOR}
-            strokeWidth="4"
-            strokeLinecap="round"
-          />
-          <path
-            d={`M ${FLOWER.cx + FLOWER.r * 0.88} ${FLOWER.cy + FLOWER.r * 0.34}
-                C ${FLOWER.cx + FLOWER.r * 0.7} ${FLOWER.cy - FLOWER.r * 0.1} ${FLOWER.cx + FLOWER.r * 0.46} ${FLOWER.cy - FLOWER.r * 0.5} ${FLOWER.cx + FLOWER.r * 0.1} ${FLOWER.cy - FLOWER.r * 0.72}`}
-            fill="none"
-            stroke={LINE_COLOR}
-            strokeWidth="4"
-            strokeLinecap="round"
-          />
-          {/* Bottom petal cup */}
-          <path
-            d={`M ${FLOWER.cx - FLOWER.r * 0.55} ${FLOWER.cy + FLOWER.r * 0.74}
-                Q ${FLOWER.cx} ${FLOWER.cy + FLOWER.r * 1.02} ${FLOWER.cx + FLOWER.r * 0.55} ${FLOWER.cy + FLOWER.r * 0.74}`}
-            fill="none"
-            stroke={LINE_COLOR}
-            strokeWidth="4"
+            strokeWidth="5"
             strokeLinecap="round"
           />
         </motion.g>
