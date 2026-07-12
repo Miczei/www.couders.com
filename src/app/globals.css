@@ -1657,6 +1657,15 @@ main {
   --d-soft: #6b7180;
 }
 
+/* Hide scrollbar while keeping the element scrollable (modal bodies). */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Couders homepage: same dark shell chrome, but pure black. */
 .couders-shell {
   background: #000;

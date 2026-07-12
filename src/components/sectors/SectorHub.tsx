@@ -278,13 +278,14 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-end justify-center bg-black/75 p-0 backdrop-blur-sm sm:items-center sm:p-6"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md sm:p-6"
             onClick={() => setOpenTile(null)}
           >
             <motion.div
               layoutId={`tile-${sector.id}-${openTile.title}`}
               onClick={(e) => e.stopPropagation()}
-              className="max-h-[85vh] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-t-2xl border border-white/[0.15] bg-[#0A0A0B] p-6 sm:rounded-2xl sm:p-10"
+              data-lenis-prevent
+              className="no-scrollbar relative max-h-[85vh] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-2xl border border-[#222] bg-[#0a0a0a] p-6 sm:p-10"
             >
               <div className="flex items-start justify-between gap-6">
                 <h3
