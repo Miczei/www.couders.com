@@ -17,6 +17,17 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ACCENT = "#C06C4C";
 const SILVER = "#C7CCD6";
 
+/* Shared text-reveal variants, matching the AI Engine page's elegant
+   fade-and-slide-up with staggered children. */
+const revealGroup = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.08 } },
+};
+const revealItem = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE } },
+};
+
 /* Continuous single-stroke hero paths per sector (viewBox 0 0 320 130). */
 const VISUALS: Record<Sector["id"], string> = {
   healthcare:
@@ -285,15 +296,19 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
               layoutId={`tile-${sector.id}-${openTile.title}`}
               onClick={(e) => e.stopPropagation()}
               data-lenis-prevent
+              variants={revealGroup}
+              initial={reduced ? false : "hidden"}
+              animate="show"
               className="no-scrollbar relative max-h-[85vh] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-2xl border border-[#222] bg-[#0a0a0a] p-6 sm:p-10"
             >
               <div className="flex items-start justify-between gap-6">
-                <h3
+                <motion.h3
+                  variants={revealItem}
                   className="text-2xl font-semibold tracking-[-0.02em] text-[#F5F5F7] sm:text-3xl"
                   style={{ fontFamily: "var(--font-display), sans-serif" }}
                 >
                   {openTile.title}
-                </h3>
+                </motion.h3>
                 <button
                   onClick={() => setOpenTile(null)}
                   aria-label={content.close}
@@ -303,24 +318,22 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                 </button>
               </div>
 
-              <p className="mt-3 text-[15px] font-medium" style={{ color: SILVER }}>
+              <motion.p variants={revealItem} className="mt-3 text-[15px] font-medium" style={{ color: SILVER }}>
                 {openTile.outcome}
-              </p>
-              <p className="mt-5 text-sm leading-relaxed text-zinc-400 sm:text-[15px]">
+              </motion.p>
+              <motion.p variants={revealItem} className="mt-5 text-sm leading-relaxed text-zinc-400 sm:text-[15px]">
                 {openTile.deepDive.intro}
-              </p>
+              </motion.p>
 
               <div className="mt-8 rounded-xl border border-white/[0.08] bg-black p-5">
                 <SectorFlow sector={sector.id} flow={openTile.flow} labels={content.flow} />
               </div>
 
-              <div className="mt-8 space-y-0">
+              <motion.div variants={revealGroup} className="mt-8 space-y-0">
                 {openTile.deepDive.steps.map((s, i) => (
                   <motion.div
                     key={s.title}
-                    initial={reduced ? false : { opacity: 0, x: -14 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 0.15 + i * 0.12, ease: EASE }}
+                    variants={revealItem}
                     className="flex gap-5 border-t border-white/[0.08] py-5 last:border-b"
                   >
                     <span
@@ -336,7 +349,7 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                     </div>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}
