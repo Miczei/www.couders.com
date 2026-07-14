@@ -10,9 +10,9 @@ const LAG = 0.55;
 const DRIFT = 64;
 const RIPPLE = 10;
 
-const DRAW_DURATION = 1.1;
-const HOLD = 0.45;
-const MORPH_DURATION = 2.8;
+const DRAW_DURATION = 0.3;
+const HOLD = 0.1;
+const MORPH_DURATION = 0.55;
 
 const C_D = "M 840 160 A 170 170 0 1 0 840 400";
 

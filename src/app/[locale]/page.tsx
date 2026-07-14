@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CoudersHero from "@/components/couders/CoudersHero";
-import CapabilitiesBento from "@/components/couders/CapabilitiesBento";
 import CoreEngine from "@/components/couders/CoreEngine";
 import AiAgnostic from "@/components/couders/AiAgnostic";
 import ProcessSection from "@/components/couders/ProcessSection";
@@ -34,7 +33,6 @@ export default async function Home({
       <Navbar locale={locale} dict={dict} />
       <main>
         <CoudersHero content={couders.hero} />
-        <CapabilitiesBento content={couders.capabilities} />
         <CoreEngine content={couders.engine} />
         <AiAgnostic content={couders.agnostic} />
         <ProcessSection content={couders.process} />

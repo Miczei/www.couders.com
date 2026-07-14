@@ -64,7 +64,10 @@ export default function ProcessSection({
   const fill = useSpring(scrollYProgress, { stiffness: 60, damping: 22, restDelta: 0.001 });
 
   return (
-    <section id="process" className="relative z-10 bg-black px-5 py-16 sm:px-6 sm:py-24 md:py-40">
+    <section
+      id="process"
+      className="relative z-10 overflow-x-hidden bg-black px-5 py-16 sm:px-6 sm:py-24 md:py-40"
+    >
       <div className="mx-auto max-w-6xl">
         <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-zinc-500 sm:text-[11px] sm:tracking-[0.32em]">
           {content.eyebrow}

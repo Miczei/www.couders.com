@@ -3,7 +3,8 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "../globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import MatrixRain from "@/components/MatrixRain";
-import ChatWidget from "@/components/ChatWidget";
+import ChatProvider from "@/components/chat/ChatProvider";
+import ChatLauncher from "@/components/chat/ChatLauncher";
 import { getDictionary } from "@/i18n/dictionaries";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
 
@@ -82,9 +83,11 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${inter.variable} ${display.variable}`}>
       <body>
-        <MatrixRain />
-        <SmoothScroll>{children}</SmoothScroll>
-        <ChatWidget />
+        <ChatProvider locale={locale}>
+          <MatrixRain />
+          <SmoothScroll>{children}</SmoothScroll>
+          <ChatLauncher />
+        </ChatProvider>
       </body>
     </html>
   );
