@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
@@ -14,6 +15,9 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
  * computed against the final layout.
  */
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+  const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
+
   useEffect(() => {
     const refresh = () => ScrollTrigger.refresh();
     if (document.fonts?.ready) document.fonts.ready.then(refresh);
@@ -23,19 +27,19 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    let lenis: Lenis | null = null;
     let raf: ((time: number) => void) | null = null;
 
     if (!prefersReduced) {
-      lenis = new Lenis({
+      const lenis = new Lenis({
         duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         touchMultiplier: 1.6,
         anchors: true, // smooth-scroll in-page nav links (#globe, #process, ...)
       });
+      lenisRef.current = lenis;
       lenis.on("scroll", ScrollTrigger.update);
-      raf = (time: number) => lenis!.raf(time * 1000);
+      raf = (time: number) => lenis.raf(time * 1000);
       gsap.ticker.add(raf);
       gsap.ticker.lagSmoothing(0);
     }
@@ -43,9 +47,25 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     return () => {
       window.removeEventListener("load", refresh);
       if (raf) gsap.ticker.remove(raf);
-      if (lenis) lenis.destroy();
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
     };
   }, []);
+
+  // This component wraps the whole app in the root layout and never
+  // remounts on client-side navigation, so the Lenis instance above
+  // persists across route changes too. Lenis drives scroll from its own
+  // cached target on every animation frame, which fights and overrides
+  // Next's default scroll-to-top-on-navigation the moment the next frame
+  // runs. Resync Lenis (or fall back to a native scroll) on every pathname
+  // change so the new page always actually lands at the top, instantly.
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
 
   return <>{children}</>;
 }
