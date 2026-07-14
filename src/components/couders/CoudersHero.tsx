@@ -40,7 +40,7 @@ export default function CoudersHero({
           initial={still ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: COPY_DELAY, ease: EASE }}
-          className="mt-1 max-w-xl text-balance px-6 text-center text-xl font-semibold tracking-[-0.03em] text-[#F5F5F7] sm:max-w-3xl sm:whitespace-nowrap sm:text-2xl md:text-3xl"
+          className="mt-1 max-w-xl text-balance px-6 text-center text-xl font-semibold tracking-[-0.03em] text-[#F5F5F7] sm:max-w-2xl sm:text-2xl lg:w-max lg:max-w-none lg:whitespace-nowrap lg:text-3xl"
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
           {content.h1}
