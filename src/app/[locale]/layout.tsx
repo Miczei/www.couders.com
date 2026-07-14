@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "../globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import MatrixRain from "@/components/MatrixRain";
+import ChatWidget from "@/components/ChatWidget";
 import { getDictionary } from "@/i18n/dictionaries";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
 
@@ -83,6 +84,7 @@ export default async function LocaleLayout({
       <body>
         <MatrixRain />
         <SmoothScroll>{children}</SmoothScroll>
+        <ChatWidget />
       </body>
     </html>
   );
