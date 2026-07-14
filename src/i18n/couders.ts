@@ -52,6 +52,11 @@ export type CoudersContent = {
     tiles: { title: string; sub: string; body: string; span: string }[];
     stat: { value: string; label: string; span: string };
   };
+  commitments: {
+    eyebrow: string;
+    h2: string;
+    stats: { value: number; suffix: string; label: string; body: string; span: string }[];
+  };
   cta: {
     h2: string;
     body: string;
@@ -208,6 +213,33 @@ const en: CoudersContent = {
       span: "md:col-span-2",
     },
   },
+  commitments: {
+    eyebrow: "What You Can Hold Us To",
+    h2: "Commitments, not marketing numbers.",
+    stats: [
+      {
+        value: 0,
+        suffix: "",
+        label: "Vendor lock-in",
+        body: "The model layer stays swappable. When a better model ships, we re-benchmark and swap the engine — no rebuild, no renegotiation.",
+        span: "md:col-span-2",
+      },
+      {
+        value: 100,
+        suffix: "%",
+        label: "Grounded, cited answers",
+        body: "Retrieval with citations plus hardcoded business rules. When the data doesn't support an answer, the agent says so or escalates, instead of inventing one.",
+        span: "md:col-span-2",
+      },
+      {
+        value: 30,
+        suffix: "+",
+        label: "Markets, one knowledge core",
+        body: "Polish, German, English or thirty markets at once, on the same private knowledge core, with no separate systems to maintain.",
+        span: "md:col-span-2",
+      },
+    ],
+  },
   cta: {
     h2: "Let's build something intelligent.",
     body: "Tell us what should never be answered slowly again. We will scope your first agent end to end.",
@@ -363,6 +395,33 @@ const pl: CoudersContent = {
       label: "Każda strefa czasowa pokryta. Agenci, którzy nigdy nie przekazują zmiany.",
       span: "md:col-span-2",
     },
+  },
+  commitments: {
+    eyebrow: "Za co możesz nas rozliczyć",
+    h2: "Zobowiązania, nie liczby marketingowe.",
+    stats: [
+      {
+        value: 0,
+        suffix: "",
+        label: "Uzależnienia od dostawcy",
+        span: "md:col-span-2",
+        body: "Warstwa modeli pozostaje wymienna. Gdy wyjdzie lepszy model, robimy ponowny benchmark i wymieniamy silnik — bez przebudowy, bez renegocjacji.",
+      },
+      {
+        value: 100,
+        suffix: "%",
+        label: "Odpowiedzi ugruntowane i cytowane",
+        span: "md:col-span-2",
+        body: "Wyszukiwanie z cytowaniami plus twarde reguły biznesowe w kodzie. Gdy dane nie potwierdzają odpowiedzi, agent mówi to wprost albo przekazuje sprawę dalej, zamiast zmyślać.",
+      },
+      {
+        value: 30,
+        suffix: "+",
+        label: "Rynków, jeden rdzeń wiedzy",
+        span: "md:col-span-2",
+        body: "Polski, niemiecki, angielski albo trzydzieści rynków naraz, na tym samym prywatnym rdzeniu wiedzy, bez osobnych systemów do utrzymania.",
+      },
+    ],
   },
   cta: {
     h2: "Zbudujmy coś inteligentnego.",

@@ -6,6 +6,7 @@ import CoreEngine from "@/components/couders/CoreEngine";
 import AiAgnostic from "@/components/couders/AiAgnostic";
 import ProcessSection from "@/components/couders/ProcessSection";
 import ReachBento from "@/components/couders/ReachBento";
+import Commitments from "@/components/couders/Commitments";
 import CtaSection from "@/components/couders/CtaSection";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCouders } from "@/i18n/couders";
@@ -38,6 +39,7 @@ export default async function Home({
         <AiAgnostic content={couders.agnostic} />
         <ProcessSection content={couders.process} />
         <ReachBento content={couders.reach} />
+        <Commitments content={couders.commitments} />
         <CtaSection content={couders.cta} email={dict.sections.contact.email} />
       </main>
       <Footer dict={dict} locale={locale} />
