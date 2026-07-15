@@ -10,7 +10,7 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
  * chat as ChatLauncher (shares ChatProvider, so the conversation is one
  * thread regardless of which surface you type into).
  */
-export default function HeroChat({ delay = 3.1 }: { delay?: number }) {
+export default function HeroChat({ delay = 2.73 }: { delay?: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
