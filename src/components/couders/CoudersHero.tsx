@@ -6,7 +6,7 @@ import HeroChat from "./HeroChat";
 import type { CoudersContent } from "@/i18n/couders";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const COPY_DELAY = 2.6; // right as the (now ~2.6s) logo morph finishes
+const COPY_DELAY = 3.1; // 0.5s after the (~2.6s) logo morph finishes
 
 export default function CoudersHero({
   content,
@@ -47,7 +47,7 @@ export default function CoudersHero({
         </motion.h1>
 
         <div className="w-full max-w-4xl px-6">
-          <HeroChat />
+          <HeroChat delay={COPY_DELAY} />
         </div>
 
         <motion.div
