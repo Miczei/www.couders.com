@@ -34,17 +34,18 @@ export function useChat() {
   return ctx;
 }
 
-// Temporary shim: the Make.com scenario currently concatenates an empty
-// variable into the reply, so answers arrive with a literal "null"/"undefined"
-// glued on (e.g. "...potrzeby Państwa gabinetunull."). Strip it here until the
-// scenario's output mapping is fixed at the source, then this can be removed.
+// Temporary shim: the Make.com scenario concatenates an empty variable, so a
+// literal "null"/"undefined" gets glued into the reply, anywhere in the text,
+// e.g. "...praktyki specjalistycznenull. W czym..." or "...gabinetunull.".
+// Strip the token wherever it sits right before whitespace, punctuation, or the
+// end of the string. The lookahead means real words like "nullable" (null + a
+// letter) are left untouched. Remove this once Make's output mapping is fixed.
 function sanitizeReply(text: string): string {
   return text
-    // trailing "null"/"undefined", preserving following punctuation:
-    // "...gabinetunull." -> "...gabinetu."
-    .replace(/(?:null|undefined)(\p{P}*)\s*$/iu, "$1")
-    // standalone " null" / " undefined" tokens mid-text
-    .replace(/\s+(?:null|undefined)\b/giu, "")
+    .replace(/(?:null|undefined)(?=[\s\p{P}]|$)/giu, "")
+    // tidy up any doubled space or space-before-punctuation left behind
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/[ \t]+([.,!?;:])/g, "$1")
     .trim();
 }
 
