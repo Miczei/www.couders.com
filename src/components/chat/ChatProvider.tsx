@@ -34,6 +34,20 @@ export function useChat() {
   return ctx;
 }
 
+// Temporary shim: the Make.com scenario currently concatenates an empty
+// variable into the reply, so answers arrive with a literal "null"/"undefined"
+// glued on (e.g. "...potrzeby Państwa gabinetunull."). Strip it here until the
+// scenario's output mapping is fixed at the source, then this can be removed.
+function sanitizeReply(text: string): string {
+  return text
+    // trailing "null"/"undefined", preserving following punctuation:
+    // "...gabinetunull." -> "...gabinetu."
+    .replace(/(?:null|undefined)(\p{P}*)\s*$/iu, "$1")
+    // standalone " null" / " undefined" tokens mid-text
+    .replace(/\s+(?:null|undefined)\b/giu, "")
+    .trim();
+}
+
 export default function ChatProvider({
   locale,
   children,
@@ -112,6 +126,8 @@ export default function ChatProvider({
           console.warn("[Chat] Response wasn't valid JSON, using raw text as the reply.", parseError);
           reply = raw.trim();
         }
+
+        reply = sanitizeReply(reply);
 
         if (!reply) {
           console.error("[Chat] Empty reply — check the Webhook Response module in Make.");

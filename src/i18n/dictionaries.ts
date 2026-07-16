@@ -296,7 +296,7 @@ const en: Dictionary = {
       title: "Let's build something intelligent.",
       cta: "Start a project",
       emailLabel: "Or email us",
-      email: "hello@nova.studio",
+      email: "contact@couders.com",
     },
     footer: {
       tagline: "Bespoke AI systems.",
@@ -525,7 +525,7 @@ const pl: Dictionary = {
       title: "Zbudujmy coś inteligentnego.",
       cta: "Rozpocznij projekt",
       emailLabel: "Albo napisz do nas",
-      email: "hello@nova.studio",
+      email: "contact@couders.com",
     },
     footer: {
       tagline: "Systemy AI na zamówienie.",
