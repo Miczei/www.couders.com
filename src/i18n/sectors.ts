@@ -11,7 +11,7 @@ export type SectorTile = {
   /** Tier 2: expandable plain-English walkthrough. Cards without it don't expand. */
   deepDive?: { intro: string; steps: DeepDiveStep[] };
   /** Overrides the sector's default deep-dive visual with a bespoke one. */
-  flow?: "wealth";
+  flow?: "wealth" | "fraud" | "shopper" | "inventory";
 };
 
 export type Sector = {
@@ -160,6 +160,7 @@ const en: SectorsContent = {
           outcome: "Turn midnight browsers into buyers with a concierge that knows your catalogue better than your best salesperson.",
           body: "A conversational agent that guides every visitor from vague idea to confident checkout, in their language, on brand, within your pricing rules.",
           span: "md:col-span-2",
+          flow: "shopper",
           deepDive: {
             intro: "Imagine a customer landing at 2 AM with a screenshot, a rough budget and no product name. Here is what happens in the next ninety seconds.",
             steps: [
@@ -183,6 +184,7 @@ const en: SectorsContent = {
           outcome: "Reorder before the shelf empties and kill dead stock before it lands in your warehouse.",
           body: "SKU-level demand forecasting wired into your purchasing flow, so buying decisions stop being gut feel.",
           span: "md:col-span-2",
+          flow: "inventory",
           deepDive: {
             intro: "Your bestseller sells out every fourth Friday and nobody knows why. The agent does.",
             steps: [
@@ -243,6 +245,7 @@ const en: SectorsContent = {
           outcome: "Block fraudulent transactions in milliseconds, not after the chargeback lands.",
           body: "Scoring agents watch every transaction against behavioral baselines and known patterns, freezing only what deserves freezing.",
           span: "md:col-span-2",
+          flow: "fraud",
           deepDive: {
             intro: "A stolen card tries three stores in ninety seconds. A traditional fraud queue reviews it tomorrow. Your agent reviews it now.",
             steps: [
@@ -439,6 +442,7 @@ const pl: SectorsContent = {
           outcome: "Zamień nocnych przeglądaczy w kupujących dzięki konsjerżowi, który zna Twój katalog lepiej niż najlepszy sprzedawca.",
           body: "Konwersacyjny agent prowadzi każdego odwiedzającego od mglistego pomysłu do pewnego zakupu, w jego języku, w tonie marki, w granicach Twoich reguł cenowych.",
           span: "md:col-span-2",
+          flow: "shopper",
           deepDive: {
             intro: "Wyobraź sobie klienta, który wchodzi o 2 w nocy ze zrzutem ekranu, przybliżonym budżetem i bez nazwy produktu. Oto co dzieje się przez następne dziewięćdziesiąt sekund.",
             steps: [
@@ -461,6 +465,7 @@ const pl: SectorsContent = {
           title: "Dynamiczna predykcja zapasów",
           outcome: "Zamawiaj, zanim półka się opróżni, i zabijaj martwy zapas, zanim trafi do magazynu.",
           body: "Prognozowanie popytu na poziomie SKU wpięte w Twój proces zakupowy, żeby decyzje przestały być zgadywaniem.",
+          flow: "inventory",
           span: "md:col-span-2",
           deepDive: {
             intro: "Twój bestseller wyprzedaje się w każdy czwarty piątek i nikt nie wie dlaczego. Agent wie.",
@@ -522,6 +527,7 @@ const pl: SectorsContent = {
           outcome: "Blokuj podejrzane transakcje w milisekundy, a nie po chargebacku.",
           body: "Agenci scoringowi porównują każdą transakcję z profilem behawioralnym i znanymi wzorcami, mrożąc tylko to, co na to zasługuje.",
           span: "md:col-span-2",
+          flow: "fraud",
           deepDive: {
             intro: "Skradziona karta próbuje trzech sklepów w dziewięćdziesiąt sekund. Tradycyjna kolejka antyfraudowa sprawdzi to jutro. Twój agent sprawdza teraz.",
             steps: [
