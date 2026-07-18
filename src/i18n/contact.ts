@@ -72,7 +72,7 @@ const pl: ContactContent = {
   firstNameLabel: "Imię*",
   lastNameLabel: "Nazwisko*",
   emailLabel: "E-mail służbowy*",
-  messageLabel: "Wiadomość (opcjonalnie)",
+  messageLabel: "Wiadomość",
   messagePlaceholder: "Napisz kilka słów o swoim projekcie lub problemie do rozwiązania...",
   submitLabel: "Wyślij wiadomość ➔",
   sendingLabel: "Wysyłanie...",
