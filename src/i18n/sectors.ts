@@ -23,8 +23,8 @@ export type SectorTile = {
     | "caselaw"
     | "compliance"
     | "supply"
-    | "maintenance"
-    | "vision";
+    | "orders"
+    | "knowledge";
 };
 
 export type Sector = {
@@ -34,6 +34,8 @@ export type Sector = {
   lead: string;
   visualAria: string;
   tiles: SectorTile[];
+  /** Professional delivery-standard strip rendered under the tile grid. */
+  assurance: { label: string; body: string };
 };
 
 export type SectorsContent = {
@@ -56,13 +58,13 @@ const en: SectorsContent = {
   slug: "methodology",
   metaTitle: "Specialized AI Agents by Industry: Healthcare, Legal, Industrial | Couders",
   metaDescription:
-    "Industry-specific AI agents from Couders: medical triage and patient monitoring bots, contract analysis and case-law research agents, predictive maintenance and QA vision systems.",
+    "Industry-specific AI agents from Couders: medical triage and patient monitoring bots, contract analysis and case-law research agents, order automation and technical knowledge agents for manufacturers.",
   keywords: [
     "healthcare AI agents",
     "legal AI contract analysis",
-    "industrial predictive maintenance AI",
+    "manufacturing order automation AI",
     "AI triage bot",
-    "QA vision agents",
+    "technical knowledge base AI",
   ],
   breadcrumb: "Solutions",
   eyebrow: "Specialized Agents",
@@ -79,6 +81,10 @@ const en: SectorsContent = {
       label: "Healthcare",
       h2: "Medicine that never sleeps.",
       lead: "Built for private practices, dental studios and clinics: agents that take the load off your team while keeping every decision auditable and a doctor in the loop.",
+      assurance: {
+        label: "Delivery standard",
+        body: "Fully remote delivery under a written contract and an Art. 28 GDPR data processing agreement, with AI labeling that meets the AI Act. No recommendation bypasses the doctor, and every decision leaves an audit trail.",
+      },
       visualAria: "A heart-rate line morphing into a neural network node",
       tiles: [
         {
@@ -165,6 +171,10 @@ const en: SectorsContent = {
       label: "Legal",
       h2: "Counsel at machine speed.",
       lead: "Research and review agents that read everything, cite everything and never bill an hour.",
+      assurance: {
+        label: "Delivery standard",
+        body: "A written contract, staged payments and fully remote delivery. We start with a pilot on your own documents, and every agent finding traces back to its source paragraph.",
+      },
       visualAria: "An abstract scales-of-justice drawn with one continuous line",
       tiles: [
         {
@@ -250,7 +260,11 @@ const en: SectorsContent = {
       id: "industrial",
       label: "Industrial",
       h2: "The factory that predicts itself.",
-      lead: "Agents wired into your lines and sensors, turning telemetry into decisions before downtime happens.",
+      lead: "Agents wired into your ERP, inboxes and documentation, turning operational data into decisions before downtime happens.",
+      assurance: {
+        label: "Delivery standard",
+        body: "We work 100% remotely, on the data and systems you already run: your ERP, inboxes and documentation. No hardware installs, no production stops. We plug in, measure the result and report it.",
+      },
       visualAria: "Interlocking parametric gears drawn with one continuous line",
       tiles: [
         {
@@ -278,49 +292,49 @@ const en: SectorsContent = {
           },
         },
         {
-          title: "Predictive maintenance",
-          outcome: "Service happens the week before the breakdown, not the night after.",
-          body: "Vibration, temperature and cycle data feed models that schedule service before failure, not after.",
+          title: "Order & RFQ automation",
+          outcome: "Purchase orders typed by nobody: from inbox to ERP in minutes, error-free.",
+          body: "Agents read incoming orders, RFQs and confirmations from email and PDF, extract every field and enter them into your ERP under your rules.",
           span: "md:col-span-2",
-          flow: "maintenance",
+          flow: "orders",
           deepDive: {
-            intro: "Bearing vibration creeps up two percent a day. Nobody hears it yet. The model has already scheduled the fix.",
+            intro: "Forty orders arrive as PDFs and email threads every morning. Nobody retypes them anymore. Here is the new routine.",
             steps: [
               {
-                title: "Listen",
-                body: "Vibration, temperature and cycle data stream from your machines into models tuned per asset, not per catalogue average.",
+                title: "Read",
+                body: "The agent reads emails, PDFs and scans in any format and language, pulling out items, quantities, prices, dates and terms.",
               },
               {
-                title: "Predict",
-                body: "The model spots the degradation curve early and estimates time to failure with a confidence level attached.",
+                title: "Validate",
+                body: "Every extracted order is checked against your price lists, stock and customer rules. Anything unusual is set aside for a human.",
               },
               {
-                title: "Schedule",
-                body: "Service lands in the calendar at the cheapest possible moment: planned downtime, parts in stock, line still running.",
+                title: "Enter",
+                body: "Clean orders land in your ERP automatically, with confirmations drafted. Your team handles exceptions, not retyping.",
               },
             ],
           },
         },
         {
-          title: "QA vision agents",
-          outcome: "Every unit inspected, every defect caught on the line, not in a customer email.",
-          body: "Camera-based inspection tuned to your defect catalogue, flagging anomalies in real time on the line.",
+          title: "Technical knowledge agents",
+          outcome: "Every manual, procedure and spec answers back in seconds, on any shift.",
+          body: "Agents trained on your machine docs, procedures and service history answer operators and engineers instantly, with the source page attached.",
           span: "md:col-span-2",
-          flow: "vision",
+          flow: "knowledge",
           deepDive: {
-            intro: "Unit 4096 has a hairline defect no tired eye would catch on a Friday shift. Here is what happens instead.",
+            intro: "It is the night shift and the line stops over an error code nobody remembers. Here is what happens instead of a 4 AM phone call.",
             steps: [
               {
-                title: "See",
-                body: "Cameras inspect every unit against your defect catalogue in real time, at line speed, without slowing production.",
+                title: "Ask",
+                body: "The operator asks in plain language, in any language. No digging through binders or network drives.",
               },
               {
-                title: "Flag",
-                body: "A defect gets classified and photographed, and the unit is diverted off the line before it reaches packing.",
+                title: "Answer",
+                body: "The agent answers from your manuals, procedures and service history, quoting the exact page it drew from.",
               },
               {
-                title: "Learn",
-                body: "Every confirmed catch refines the model, so the rare defect of today becomes the routine catch of tomorrow.",
+                title: "Improve",
+                body: "Every resolved question feeds the knowledge base, so the next shift gets the same answer even faster.",
               },
             ],
           },
@@ -337,6 +351,10 @@ const en: SectorsContent = {
       label: "E-commerce",
       h2: "Retail that reads minds.",
       lead: "Agents that sell, stock and retain around the clock, wired into your catalogue, margins and promises.",
+      assurance: {
+        label: "Delivery standard",
+        body: "Delivery without touching your live store: a pilot on a copy of your data, hard price and margin rules, launch only after your sign-off. A written contract and staged payments.",
+      },
       visualAria: "A continuous line drawing a shopping cart flowing into a spark",
       tiles: [
         {
@@ -422,6 +440,10 @@ const en: SectorsContent = {
       label: "Finance",
       h2: "Money that defends itself.",
       lead: "Agents auditing every transaction in real time, so your analysts spend their day on judgment calls, not queues.",
+      assurance: {
+        label: "Delivery standard",
+        body: "Every agent decision is logged and auditable, high-stakes actions always cross a human, and data never leaves your infrastructure. Remote delivery under a written contract with staged payments.",
+      },
       visualAria: "A rising market line coiling into a secure lock",
       tiles: [
         {
@@ -509,13 +531,13 @@ const pl: SectorsContent = {
   slug: "methodology",
   metaTitle: "Wyspecjalizowani agenci AI dla branż: medycyna, prawo, przemysł | Couders",
   metaDescription:
-    "Branżowi agenci AI od Couders: boty triage i monitoring pacjentów, analiza umów i research orzecznictwa, predykcyjne utrzymanie ruchu i wizyjna kontrola jakości.",
+    "Branżowi agenci AI od Couders: boty triage i monitoring pacjentów, analiza umów i research orzecznictwa, automatyzacja zamówień i techniczna baza wiedzy dla producentów.",
   keywords: [
     "agenci AI medycyna",
     "AI analiza umów",
-    "predykcyjne utrzymanie ruchu AI",
+    "automatyzacja zamówień AI",
     "bot triage",
-    "wizyjna kontrola jakości AI",
+    "techniczna baza wiedzy AI",
   ],
   breadcrumb: "Rozwiązania",
   eyebrow: "Wyspecjalizowani agenci",
@@ -532,6 +554,10 @@ const pl: SectorsContent = {
       label: "Medycyna",
       h2: "Medycyna, która nie śpi.",
       lead: "Dla prywatnych praktyk, gabinetów stomatologicznych i klinik: agenci odciążają Twój zespół, a każda decyzja pozostaje audytowalna i z lekarzem w pętli.",
+      assurance: {
+        label: "Standard wdrożenia",
+        body: "Wdrożenie w pełni zdalne, na pisemnej umowie i umowie powierzenia danych zgodnej z art. 28 RODO, z oznaczeniem systemu AI według wymogów AI Act. Żadna rekomendacja nie omija lekarza, a każda decyzja zostawia ślad audytowy.",
+      },
       visualAria: "Linia EKG przechodząca w węzeł sieci neuronowej",
       tiles: [
         {
@@ -618,6 +644,10 @@ const pl: SectorsContent = {
       label: "Prawo",
       h2: "Kancelaria w tempie maszyny.",
       lead: "Agenci researchu i przeglądu, którzy czytają wszystko, cytują wszystko i nie wystawiają faktur za godziny.",
+      assurance: {
+        label: "Standard wdrożenia",
+        body: "Pisemna umowa, płatność etapami i wdrożenie w pełni zdalne. Zaczynamy od pilota na Twoich dokumentach, a każdy wniosek agenta można prześledzić do akapitu źródłowego.",
+      },
       visualAria: "Abstrakcyjna waga sprawiedliwości narysowana jedną ciągłą linią",
       tiles: [
         {
@@ -703,7 +733,11 @@ const pl: SectorsContent = {
       id: "industrial",
       label: "Przemysł",
       h2: "Fabryka, która przewiduje samą siebie.",
-      lead: "Agenci wpięci w Twoje linie i czujniki, zamieniający telemetrię w decyzje, zanim zdarzy się przestój.",
+      lead: "Agenci wpięci w Twój ERP, skrzynki i dokumentację, zamieniający dane operacyjne w decyzje, zanim zdarzy się przestój.",
+      assurance: {
+        label: "Standard wdrożenia",
+        body: "Pracujemy w 100% zdalnie, na danych i systemach, które już masz: ERP, skrzynki, dokumentacja. Nie montujemy sprzętu i nie zatrzymujemy produkcji, wpinamy się, mierzymy efekt i oddajemy raport.",
+      },
       visualAria: "Zazębiające się parametryczne koła zębate narysowane jedną linią",
       tiles: [
         {
@@ -731,49 +765,49 @@ const pl: SectorsContent = {
           },
         },
         {
-          title: "Predykcyjne utrzymanie ruchu",
-          outcome: "Serwis dzieje się tydzień przed awarią, a nie noc po niej.",
-          body: "Dane o wibracjach, temperaturze i cyklach zasilają modele, które planują serwis przed awarią, nie po niej.",
+          title: "Automatyzacja zamówień i ofert",
+          outcome: "Zamówienia, których nikt nie przepisuje: ze skrzynki do ERP w minuty, bez błędów.",
+          body: "Agenci czytają przychodzące zamówienia, zapytania ofertowe i potwierdzenia z maili oraz PDF-ów, wyciągają każde pole i wprowadzają je do Twojego ERP według Twoich reguł.",
           span: "md:col-span-2",
-          flow: "maintenance",
+          flow: "orders",
           deepDive: {
-            intro: "Wibracje łożyska rosną o dwa procent dziennie. Nikt jeszcze tego nie słyszy. Model już zaplanował naprawę.",
+            intro: "Czterdzieści zamówień dziennie przychodzi jako PDF-y i wątki mailowe. Nikt już ich nie przepisuje. Oto nowa rutyna.",
             steps: [
               {
-                title: "Nasłuch",
-                body: "Wibracje, temperatura i dane cykli płyną z Twoich maszyn do modeli strojonych per maszyna, a nie per średnia z katalogu.",
+                title: "Odczyt",
+                body: "Agent czyta maile, PDF-y i skany w dowolnym formacie i języku, wyciągając pozycje, ilości, ceny, terminy i warunki.",
               },
               {
-                title: "Predykcja",
-                body: "Model wcześnie wychwytuje krzywą degradacji i szacuje czas do awarii wraz z poziomem pewności.",
+                title: "Walidacja",
+                body: "Każde odczytane zamówienie jest sprawdzane z cennikami, stanami i regułami klienta. Wszystko nietypowe odkłada się do decyzji człowieka.",
               },
               {
-                title: "Harmonogram",
-                body: "Serwis trafia do kalendarza w najtańszym możliwym momencie: planowany przestój, części na stanie, linia wciąż pracuje.",
+                title: "Wprowadzenie",
+                body: "Czyste zamówienia trafiają do ERP automatycznie, z gotowym szkicem potwierdzenia. Twój zespół obsługuje wyjątki, a nie przepisywanie.",
               },
             ],
           },
         },
         {
-          title: "Wizyjni agenci QA",
-          outcome: "Każda sztuka sprawdzona, każda wada złapana na linii, a nie w mailu od klienta.",
-          body: "Inspekcja kamerowa dostrojona do Twojego katalogu wad, oznaczająca anomalie na linii w czasie rzeczywistym.",
+          title: "Techniczna baza wiedzy 24/7",
+          outcome: "Każda instrukcja, procedura i DTR odpowiada w sekundy, na każdej zmianie.",
+          body: "Agenci wytrenowani na Twojej dokumentacji maszyn, procedurach i historii serwisowej odpowiadają operatorom i inżynierom od ręki, z podpiętą stroną źródłową.",
           span: "md:col-span-2",
-          flow: "vision",
+          flow: "knowledge",
           deepDive: {
-            intro: "Sztuka numer 4096 ma włosową wadę, której zmęczone oko nie wychwyci na piątkowej zmianie. Oto co dzieje się zamiast tego.",
+            intro: "Nocna zmiana, linia staje przez kod błędu, którego nikt nie pamięta. Oto co dzieje się zamiast telefonu o 4 rano.",
             steps: [
               {
-                title: "Widzenie",
-                body: "Kamery sprawdzają każdą sztukę z Twoim katalogiem wad w czasie rzeczywistym, w tempie linii, bez spowalniania produkcji.",
+                title: "Pytanie",
+                body: "Operator pyta zwykłym językiem, w dowolnym języku. Bez przekopywania segregatorów i dysków sieciowych.",
               },
               {
-                title: "Flaga",
-                body: "Wada zostaje sklasyfikowana i sfotografowana, a sztuka zjeżdża z linii, zanim dotrze do pakowania.",
+                title: "Odpowiedź",
+                body: "Agent odpowiada z Twoich instrukcji, procedur i historii serwisowej, cytując dokładnie stronę, z której korzysta.",
               },
               {
-                title: "Nauka",
-                body: "Każde potwierdzone trafienie doszkala model, więc rzadka wada z dziś staje się rutynowym wychwytem jutra.",
+                title: "Doskonalenie",
+                body: "Każde rozwiązane pytanie zasila bazę wiedzy, więc następna zmiana dostaje tę samą odpowiedź jeszcze szybciej.",
               },
             ],
           },
@@ -790,6 +824,10 @@ const pl: SectorsContent = {
       label: "E-commerce",
       h2: "Handel, który czyta w myślach.",
       lead: "Agenci, którzy sprzedają, zatowarowują i zatrzymują klientów całą dobę, wpięci w Twój katalog, marże i obietnice.",
+      assurance: {
+        label: "Standard wdrożenia",
+        body: "Wdrożenie bez dotykania sklepu na produkcji: pilot na kopii danych, twarde reguły cen i marż, start dopiero po Twojej akceptacji. Pisemna umowa i płatność etapami.",
+      },
       visualAria: "Ciągła linia rysująca koszyk zakupowy przechodzący w iskrę",
       tiles: [
         {
@@ -875,6 +913,10 @@ const pl: SectorsContent = {
       label: "Finanse",
       h2: "Pieniądze, które same się bronią.",
       lead: "Agenci audytują każdą transakcję w czasie rzeczywistym, więc Twoi analitycy zajmują się osądem, a nie kolejką.",
+      assurance: {
+        label: "Standard wdrożenia",
+        body: "Każda decyzja agenta jest logowana i audytowalna, działania wysokiego ryzyka zawsze przechodzą przez człowieka, a dane nie opuszczają Twojej infrastruktury. Wdrożenie zdalne, na pisemnej umowie i płatności etapami.",
+      },
       visualAria: "Rosnąca linia notowań zwijająca się w bezpieczny zamek",
       tiles: [
         {

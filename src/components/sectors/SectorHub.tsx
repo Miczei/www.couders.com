@@ -276,6 +276,21 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                   )}
                 </MagneticCard>
               ))}
+
+              {/* Delivery-standard strip: quieter than the tiles (hairline
+                  border, no card background), closing each sector on a
+                  professional note. */}
+              <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.08] px-6 py-5 sm:flex-row sm:items-baseline sm:gap-8 sm:px-8 md:col-span-6">
+                <span
+                  className="shrink-0 font-mono text-[10px] uppercase tracking-[0.2em]"
+                  style={{ color: ACCENT }}
+                >
+                  {sector.assurance.label}
+                </span>
+                <p className="text-sm leading-relaxed text-zinc-500 sm:text-[15px]">
+                  {sector.assurance.body}
+                </p>
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>

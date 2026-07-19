@@ -1572,230 +1572,194 @@ function SupplyFlow() {
 }
 
 /* ---------------------------------------------------------------------------
-   PREDICTIVE MAINTENANCE: a machine-health gauge. The needle creeps toward
-   the terracotta zone, the alert fires BEFORE it gets there, a service slot
-   is booked and the needle eases back to safe. Gauge-needle mechanic.
+   ORDER & RFQ AUTOMATION: an envelope on the left, an ERP form on the right.
+   Terracotta field chips fly out of the mail and fill the form slots one by
+   one; a check seals the entry. Field-extraction mechanic.
    --------------------------------------------------------------------------- */
-function MaintenanceFlow() {
+function OrdersFlow() {
   const reduced = useReducedMotion();
-  const DUR = 8;
-  const C = { x: 160, y: 100 };
-  const R = 56;
-  const pt = (deg: number, r: number) => {
-    const a = (deg * Math.PI) / 180;
-    return { x: C.x + r * Math.sin(a), y: C.y - r * Math.cos(a) };
-  };
-  const a0 = pt(-80, R);
-  const a1 = pt(80, R);
-  const red0 = pt(40, R);
-  const ticks = [-80, -40, 0, 40, 80].map((d) => ({ o: pt(d, R - 6), i: pt(d, R + 2) }));
+  const DUR = 7;
+  const ENV = { x: 34, y: 52, w: 60, h: 42 };
+  const FORM = { x: 198, y: 38, w: 94, h: 76 };
+  // Form rows: label (static) + value slot (fills when its chip lands).
+  const ROWS = [
+    { y: 56, t: 0.16 },
+    { y: 76, t: 0.36 },
+    { y: 96, t: 0.56 },
+  ];
 
-  const dial = (
+  const scene = (
     <>
-      <path d={`M ${a0.x} ${a0.y} A ${R} ${R} 0 0 1 ${a1.x} ${a1.y}`} stroke={SILVER} strokeOpacity="0.3" strokeWidth="2" />
-      <path d={`M ${red0.x} ${red0.y} A ${R} ${R} 0 0 1 ${a1.x} ${a1.y}`} stroke={ACCENT} strokeOpacity="0.55" strokeWidth="3" />
-      {ticks.map((t, i) => (
-        <line key={i} x1={t.o.x} y1={t.o.y} x2={t.i.x} y2={t.i.y} stroke={SILVER} strokeOpacity="0.3" strokeWidth="1" />
+      <rect x={ENV.x} y={ENV.y} width={ENV.w} height={ENV.h} rx="3" stroke={SILVER} strokeOpacity="0.4" strokeWidth="1.5" />
+      <path
+        d={`M ${ENV.x} ${ENV.y + 2} L ${ENV.x + ENV.w / 2} ${ENV.y + 22} L ${ENV.x + ENV.w} ${ENV.y + 2}`}
+        stroke={SILVER}
+        strokeOpacity="0.4"
+        strokeWidth="1.5"
+      />
+      <rect x={FORM.x} y={FORM.y} width={FORM.w} height={FORM.h} rx="4" stroke={SILVER} strokeOpacity="0.35" strokeWidth="1.5" />
+      {ROWS.map((r) => (
+        <line key={r.y} x1={FORM.x + 8} y1={r.y} x2={FORM.x + 34} y2={r.y} stroke={SILVER} strokeOpacity="0.25" strokeWidth="1.5" />
       ))}
-      <circle cx={C.x} cy={C.y} r="3" fill={SILVER} fillOpacity="0.6" />
     </>
-  );
-  const serviceChip = (
-    <g>
-      <rect x="238" y="24" width="40" height="22" rx="4" stroke={ACCENT} strokeOpacity="0.8" strokeWidth="1.2" fill="#0A0A0B" />
-      <path d="M 249 35 l 3 3.4 l 6.5 -7.4" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    </g>
   );
 
   if (reduced) {
-    const tip = pt(28, R - 8);
     return (
       <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
-        {dial}
-        <line x1={C.x} y1={C.y} x2={tip.x} y2={tip.y} stroke={SILVER} strokeWidth="2" strokeLinecap="round" />
-        <circle cx={tip.x} cy={tip.y} r="9" stroke={ACCENT} strokeOpacity="0.7" strokeWidth="1.5" strokeDasharray="3 3" />
-        {serviceChip}
+        {scene}
+        {ROWS.map((r) => (
+          <line key={r.y} x1={FORM.x + 42} y1={r.y} x2={FORM.x + 84} y2={r.y} stroke={SILVER} strokeOpacity="0.7" strokeWidth="1.5" />
+        ))}
+        <circle cx="280" cy="126" r="9" stroke={ACCENT} strokeOpacity="0.8" strokeWidth="1.5" />
+        <path d="M 276 126 l 2.6 3 l 5 -6" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
   }
 
   return (
     <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
-      {dial}
+      {scene}
 
-      {/* Needle: creeps toward the red zone, then service brings it back */}
+      {/* Field chips fly from the envelope into consecutive form rows */}
+      {ROWS.map((r) => (
+        <motion.rect
+          key={`chip-${r.y}`}
+          width="16"
+          height="7"
+          rx="2"
+          fill={ACCENT}
+          initial={{ x: ENV.x + 22, y: ENV.y + 18, opacity: 0 }}
+          animate={{
+            x: [ENV.x + 22, ENV.x + 22, (ENV.x + FORM.x) / 2 + 10, FORM.x + 42, FORM.x + 42],
+            y: [ENV.y + 18, ENV.y + 18, r.y - 30, r.y - 4, r.y - 4],
+            opacity: [0, 0, 1, 0.9, 0],
+          }}
+          transition={{
+            duration: DUR,
+            times: [0, r.t, r.t + 0.06, r.t + 0.12, r.t + 0.14],
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
+      {/* Value slots fill as their chip lands */}
+      {ROWS.map((r) => (
+        <motion.line
+          key={`val-${r.y}`}
+          x1={FORM.x + 42}
+          y1={r.y}
+          x2={FORM.x + 84}
+          y2={r.y}
+          stroke={SILVER}
+          strokeWidth="1.5"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0, 0.7, 0.7, 0] }}
+          transition={{ duration: DUR, times: [0, r.t + 0.11, r.t + 0.14, 0.9, 1], repeat: Infinity }}
+        />
+      ))}
+
+      {/* Entry accepted: terracotta check pops once every field is in */}
       <motion.g
-        initial={{ rotate: -70 }}
-        animate={{ rotate: [-70, -70, 34, 34, -55, -55] }}
-        transition={{ duration: DUR, times: [0, 0.06, 0.45, 0.66, 0.85, 1], repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformBox: "view-box", transformOrigin: `${C.x}px ${C.y}px` }}
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={{ opacity: [0, 0, 0.95, 0.95, 0], scale: [0.6, 0.6, 1, 1, 1] }}
+        transition={{ duration: DUR, times: [0, 0.74, 0.78, 0.9, 1], repeat: Infinity }}
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
       >
-        <line x1={C.x} y1={C.y} x2={C.x} y2={C.y - (R - 8)} stroke={SILVER} strokeWidth="2" strokeLinecap="round" />
-      </motion.g>
-
-      {/* Early-warning ring where the needle is heading, fired pre-redline */}
-      <motion.circle
-        cx={pt(34, R - 8).x}
-        cy={pt(34, R - 8).y}
-        r="9"
-        fill="none"
-        stroke={ACCENT}
-        strokeWidth="1.5"
-        strokeDasharray="3 3"
-        initial={{ scale: 0.5, opacity: 0 }}
-        animate={{ scale: [0.5, 0.5, 0.8, 1.8, 1.8], opacity: [0, 0, 0.85, 0, 0] }}
-        transition={{ duration: DUR, times: [0, 0.46, 0.52, 0.68, 1], repeat: Infinity, ease: "easeOut" }}
-        style={{ transformBox: "view-box", transformOrigin: `${pt(34, R - 8).x}px ${pt(34, R - 8).y}px` }}
-      />
-
-      {/* Service slot booked: chip with a check pops before the needle relaxes */}
-      <motion.g
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 0, 0.95, 0.95, 0] }}
-        transition={{ duration: DUR, times: [0, 0.6, 0.66, 0.94, 1], repeat: Infinity }}
-      >
-        {serviceChip}
+        <circle cx="280" cy="126" r="9" stroke={ACCENT} strokeWidth="1.5" fill="none" />
+        <path d="M 276 126 l 2.6 3 l 5 -6" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </motion.g>
     </svg>
   );
 }
 
 /* ---------------------------------------------------------------------------
-   QA VISION: units ride a conveyor under a camera. Good units pass with a
-   quiet tick; the defective one is locked by terracotta brackets and
-   diverted off the line into the reject tray. Conveyor-inspection mechanic.
+   TECHNICAL KNOWLEDGE: a chat exchange. A question bubble slides in from the
+   operator, typing dots think, and the agent's answer bubble lands with a
+   terracotta source tag citing the manual page. Conversation mechanic, the
+   only chat-shaped visual in the set.
    --------------------------------------------------------------------------- */
-function VisionFlow() {
+function KnowledgeFlow() {
   const reduced = useReducedMotion();
-  const DUR = 8;
-  const BELT_Y = 104;
-  const ITEM_Y = 94;
-  const SCAN_X = 160;
+  const DUR = 7;
+  const Q = { x: 190, y: 24, w: 98, h: 26 };
+  const A = { x: 36, y: 64, w: 156, h: 50 };
 
-  const camera = (
-    <g stroke={SILVER} strokeOpacity="0.55" strokeWidth="1.5" fill="none">
-      <rect x="148" y="18" width="24" height="16" rx="3" />
-      <circle cx="160" cy="26" r="4" />
-      <line x1="160" y1="34" x2="160" y2="48" strokeDasharray="2 4" />
-    </g>
+  const bubbles = (
+    <>
+      <rect x={Q.x} y={Q.y} width={Q.w} height={Q.h} rx="9" stroke={SILVER} strokeOpacity="0.45" strokeWidth="1.5" />
+      <line x1={Q.x + 12} y1={Q.y + 13} x2={Q.x + 74} y2={Q.y + 13} stroke={SILVER} strokeOpacity="0.5" strokeWidth="1.5" />
+    </>
   );
-  const brackets = (color: string, opacity: number) => (
-    <g stroke={color} strokeOpacity={opacity} strokeWidth="1.5" fill="none">
-      <path d="M 146 76 h 6 M 146 76 v 6" />
-      <path d="M 174 76 h -6 M 174 76 v 6" />
-      <path d="M 146 106 h 6 M 146 106 v -6" />
-      <path d="M 174 106 h -6 M 174 106 v -6" />
-    </g>
+  const answerContent = (
+    <>
+      <rect x={A.x} y={A.y} width={A.w} height={A.h} rx="9" stroke={SILVER} strokeOpacity="0.45" strokeWidth="1.5" />
+      <line x1={A.x + 12} y1={A.y + 14} x2={A.x + 138} y2={A.y + 14} stroke={SILVER} strokeOpacity="0.6" strokeWidth="1.5" />
+      <line x1={A.x + 12} y1={A.y + 24} x2={A.x + 112} y2={A.y + 24} stroke={SILVER} strokeOpacity="0.4" strokeWidth="1.5" />
+    </>
   );
-  const tray = (
-    <path d="M 150 124 L 150 134 L 178 134 L 178 124" stroke={SILVER} strokeOpacity="0.35" strokeWidth="1.5" fill="none" />
+  const sourceTag = (
+    <g>
+      <rect x={A.x + 12} y={A.y + 32} width="46" height="11" rx="2.5" stroke={ACCENT} strokeOpacity="0.8" strokeWidth="1" fill="#0A0A0B" />
+      <line x1={A.x + 17} y1={A.y + 37.5} x2={A.x + 52} y2={A.y + 37.5} stroke={ACCENT} strokeOpacity="0.8" strokeWidth="1.2" />
+    </g>
   );
 
   if (reduced) {
     return (
       <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
-        <line x1="10" y1={BELT_Y} x2="310" y2={BELT_Y} stroke={SILVER} strokeOpacity="0.25" strokeWidth="1.5" strokeDasharray="6 10" />
-        {camera}
-        {brackets(ACCENT, 0.9)}
-        {tray}
-        <rect x="70" y={ITEM_Y - 8} width="16" height="16" rx="2" stroke={SILVER} strokeOpacity="0.6" strokeWidth="1.5" />
-        <rect x={SCAN_X - 8} y={ITEM_Y - 8} width="16" height="16" rx="2" stroke={ACCENT} strokeOpacity="0.9" strokeWidth="1.5" />
-        <rect x="248" y={ITEM_Y - 8} width="16" height="16" rx="2" stroke={SILVER} strokeOpacity="0.6" strokeWidth="1.5" />
+        {bubbles}
+        {answerContent}
+        {sourceTag}
       </svg>
     );
   }
 
-  // Items are phase-shifted copies of the same 8s journey; the third one is
-  // defective and gets pulled off the line at the scanner.
-  const good = [0, 0.33];
-  const DEFECT_DELAY = 0.66;
-
   return (
     <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
-      {/* Belt with drifting dashes */}
-      <motion.line
-        x1="10"
-        y1={BELT_Y}
-        x2="310"
-        y2={BELT_Y}
-        stroke={SILVER}
-        strokeOpacity="0.25"
-        strokeWidth="1.5"
-        strokeDasharray="6 10"
-        animate={{ strokeDashoffset: [0, -32] }}
-        transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-      />
-      {camera}
-      {tray}
-
-      {/* Scan brackets breathe on the cadence of arriving units */}
+      {/* Question slides in from the operator's side */}
       <motion.g
-        animate={{ opacity: [0.35, 0.75, 0.35] }}
-        transition={{ duration: DUR / 3, repeat: Infinity, ease: "easeInOut" }}
+        initial={{ x: 14, opacity: 0 }}
+        animate={{ x: [14, 0, 0, 0], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: DUR, times: [0.04, 0.1, 0.9, 1], repeat: Infinity, ease: "easeOut" }}
       >
-        {brackets(SILVER, 1)}
+        {bubbles}
       </motion.g>
 
-      {/* Good units: cross the scanner, collect a quiet tick, roll on */}
-      {good.map((phase) => (
-        <g key={phase}>
-          <motion.rect
-            width="16"
-            height="16"
-            rx="2"
-            stroke={SILVER}
-            strokeOpacity="0.6"
-            strokeWidth="1.5"
-            fill="#0A0A0B"
-            initial={{ x: -24, y: ITEM_Y - 8, opacity: 0 }}
-            animate={{ x: [-24, 336], opacity: [0, 0.9, 0.9, 0] }}
-            transition={{
-              duration: DUR,
-              delay: phase * DUR,
-              repeat: Infinity,
-              ease: "linear",
-              opacity: { duration: DUR, delay: phase * DUR, times: [0, 0.06, 0.94, 1], repeat: Infinity },
-            }}
-          />
-          <motion.path
-            d="M 172 62 l 3 3.4 l 6.5 -7.4"
-            stroke={SILVER}
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0, 0.8, 0, 0] }}
-            transition={{ duration: DUR, delay: phase * DUR, times: [0, 0.5, 0.54, 0.62, 1], repeat: Infinity }}
-          />
-        </g>
+      {/* Typing dots while the agent reads the manuals */}
+      {[0, 1, 2].map((i) => (
+        <motion.circle
+          key={i}
+          cx={A.x + 16 + i * 11}
+          cy={A.y + 25}
+          r="2.4"
+          fill={SILVER}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0, 0.7, 0.2, 0.7, 0, 0] }}
+          transition={{
+            duration: DUR,
+            times: [0, 0.2 + i * 0.02, 0.26 + i * 0.02, 0.32 + i * 0.02, 0.38 + i * 0.02, 0.44, 1],
+            repeat: Infinity,
+          }}
+        />
       ))}
 
-      {/* The defective unit: locked at the scanner, diverted into the tray */}
+      {/* Answer lands, then the source tag cites the exact page */}
       <motion.g
-        initial={{ x: -24, y: 0, opacity: 0 }}
-        animate={{
-          x: [-24, SCAN_X - 8, SCAN_X - 8, SCAN_X - 6, SCAN_X - 6],
-          y: [0, 0, 0, 32, 32],
-          opacity: [0, 0.95, 0.95, 0.95, 0],
-        }}
-        transition={{
-          duration: DUR,
-          delay: DEFECT_DELAY * DUR,
-          times: [0, 0.5, 0.6, 0.72, 0.8],
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        initial={{ y: 8, opacity: 0 }}
+        animate={{ y: [8, 0, 0, 0], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: DUR, times: [0.46, 0.54, 0.9, 1], repeat: Infinity, ease: "easeOut" }}
       >
-        <rect y={ITEM_Y - 8} width="16" height="16" rx="2" stroke={ACCENT} strokeOpacity="0.95" strokeWidth="1.5" fill="#0A0A0B" />
-        <line x1="4" y1={ITEM_Y - 4} x2="12" y2={ITEM_Y + 4} stroke={ACCENT} strokeOpacity="0.7" strokeWidth="1" />
+        {answerContent}
       </motion.g>
       <motion.g
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 0, 0.95, 0.95, 0] }}
-        transition={{ duration: DUR, delay: DEFECT_DELAY * DUR, times: [0, 0.5, 0.53, 0.68, 0.74], repeat: Infinity }}
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={{ opacity: [0, 0, 0.95, 0.95, 0], scale: [0.7, 0.7, 1, 1, 1] }}
+        transition={{ duration: DUR, times: [0, 0.6, 0.65, 0.9, 1], repeat: Infinity }}
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
       >
-        {brackets(ACCENT, 1)}
+        {sourceTag}
       </motion.g>
     </svg>
   );
@@ -1869,8 +1833,8 @@ export default function SectorFlow({
   if (flow === "caselaw") return <CaselawFlow />;
   if (flow === "compliance") return <ComplianceFlow />;
   if (flow === "supply") return <SupplyFlow />;
-  if (flow === "maintenance") return <MaintenanceFlow />;
-  if (flow === "vision") return <VisionFlow />;
+  if (flow === "orders") return <OrdersFlow />;
+  if (flow === "knowledge") return <KnowledgeFlow />;
   if (sector === "finance") return <FinanceFlow labels={labels} />;
   return <GenericFlow labels={labels} />;
 }
