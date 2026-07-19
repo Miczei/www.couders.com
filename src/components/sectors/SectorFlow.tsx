@@ -1057,6 +1057,368 @@ function MonitoringFlow() {
 }
 
 /* ---------------------------------------------------------------------------
+   CONTRACT ANALYSIS: a document page whose text lines are swept by a scan
+   band, clause by clause. Two deviating clauses flip terracotta and get wired
+   to redline note chips beside the page. Document line-scan mechanic.
+   --------------------------------------------------------------------------- */
+function ContractFlow() {
+  const reduced = useReducedMotion();
+  const DUR = 6;
+  const PAGE = { x: 36, y: 16, w: 112, h: 108 };
+  // Text lines: y position and right end (start is fixed at x=48).
+  const LINES = [
+    { y: 30, x2: 128 },
+    { y: 42, x2: 136 },
+    { y: 54, x2: 120, flagged: true, chipY: 34, t: 0.35 },
+    { y: 66, x2: 132 },
+    { y: 78, x2: 124 },
+    { y: 90, x2: 136, flagged: true, chipY: 78, t: 0.77 },
+    { y: 102, x2: 118 },
+    { y: 114, x2: 100 },
+  ];
+  const CHIP = { x: 196, w: 92, h: 26 };
+
+  const page = (
+    <>
+      <rect x={PAGE.x} y={PAGE.y} width={PAGE.w} height={PAGE.h} rx="4" stroke={SILVER} strokeOpacity="0.35" strokeWidth="1.5" />
+      {LINES.map((l) => (
+        <line key={l.y} x1="48" y1={l.y} x2={l.x2} y2={l.y} stroke={SILVER} strokeOpacity="0.25" strokeWidth="1.5" />
+      ))}
+    </>
+  );
+
+  const chip = (l: (typeof LINES)[number]) => (
+    <g key={`chip-${l.y}`}>
+      <line x1={l.x2 + 4} y1={l.y} x2={CHIP.x} y2={l.chipY! + CHIP.h / 2} stroke={ACCENT} strokeOpacity="0.5" strokeWidth="1" strokeDasharray="3 3" />
+      <rect x={CHIP.x} y={l.chipY} width={CHIP.w} height={CHIP.h} rx="4" stroke={SILVER} strokeOpacity="0.3" strokeWidth="1" fill="#0A0A0B" />
+      <line x1={CHIP.x + 10} y1={l.chipY! + 10} x2={CHIP.x + 62} y2={l.chipY! + 10} stroke={ACCENT} strokeOpacity="0.8" strokeWidth="1.5" />
+      <line x1={CHIP.x + 10} y1={l.chipY! + 17} x2={CHIP.x + 48} y2={l.chipY! + 17} stroke={SILVER} strokeOpacity="0.3" strokeWidth="1" />
+    </g>
+  );
+
+  if (reduced) {
+    return (
+      <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
+        {page}
+        {LINES.filter((l) => l.flagged).map((l) => (
+          <g key={l.y}>
+            <line x1="48" y1={l.y} x2={l.x2} y2={l.y} stroke={ACCENT} strokeOpacity="0.9" strokeWidth="1.5" />
+            {chip(l)}
+          </g>
+        ))}
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
+      {page}
+
+      {/* Scan band sweeping down the page */}
+      <motion.rect
+        x={PAGE.x + 6}
+        width={PAGE.w - 12}
+        height="10"
+        rx="2"
+        fill={SILVER}
+        initial={{ y: PAGE.y + 6, opacity: 0 }}
+        animate={{ y: [PAGE.y + 6, PAGE.y + PAGE.h - 16], opacity: [0, 0.1, 0.1, 0] }}
+        transition={{
+          duration: DUR,
+          repeat: Infinity,
+          ease: "linear",
+          opacity: { duration: DUR, times: [0, 0.05, 0.9, 1], repeat: Infinity },
+        }}
+      />
+
+      {/* Deviating clauses flip terracotta as the scan crosses them, and a
+          redline chip pops beside the page, wired to the exact line. */}
+      {LINES.filter((l) => l.flagged).map((l) => (
+        <g key={`flag-${l.y}`}>
+          <motion.line
+            x1="48"
+            y1={l.y}
+            x2={l.x2}
+            y2={l.y}
+            stroke={ACCENT}
+            strokeWidth="1.5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 0, 0.95, 0.95, 0] }}
+            transition={{ duration: DUR, times: [0, l.t!, l.t! + 0.03, 0.93, 1], repeat: Infinity }}
+          />
+          <motion.g
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 0, 0.95, 0.95, 0] }}
+            transition={{ duration: DUR, times: [0, l.t! + 0.02, l.t! + 0.06, 0.93, 1], repeat: Infinity }}
+          >
+            {chip(l)}
+          </motion.g>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   CASE-LAW RESEARCH: a query node fans dashed rays out to a stack of source
+   volumes; terracotta citation dots travel back down the rays into a memo
+   that builds itself line by line. Round-trip retrieval mechanic.
+   --------------------------------------------------------------------------- */
+function CaselawFlow() {
+  const reduced = useReducedMotion();
+  const DUR = 6.5;
+  const QUERY = { x: 40, y: 38 };
+  const MEMO = { x: 20, y: 70, w: 66, h: 48 };
+  // Source volumes on the right, with the moment their citation lands.
+  const SOURCES = [
+    { x: 252, y: 20, t: 0.45 },
+    { x: 252, y: 58, t: 0.6 },
+    { x: 252, y: 96, t: 0.75 },
+  ];
+  const memoLines = [
+    { y: 84, x2: 76 },
+    { y: 94, x2: 70 },
+    { y: 104, x2: 62 },
+  ];
+
+  const scene = (
+    <>
+      <circle cx={QUERY.x} cy={QUERY.y} r="4.5" fill="#0A0A0B" stroke={SILVER} strokeWidth="1.5" />
+      <rect x={MEMO.x} y={MEMO.y} width={MEMO.w} height={MEMO.h} rx="3" stroke={SILVER} strokeOpacity="0.4" strokeWidth="1.5" />
+      {SOURCES.map((s) => (
+        <g key={s.y}>
+          <rect x={s.x} y={s.y} width="44" height="24" rx="3" stroke={SILVER} strokeOpacity="0.35" strokeWidth="1.5" />
+          <line x1={s.x + 8} y1={s.y + 4} x2={s.x + 8} y2={s.y + 20} stroke={SILVER} strokeOpacity="0.3" strokeWidth="1" />
+        </g>
+      ))}
+    </>
+  );
+
+  if (reduced) {
+    return (
+      <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
+        {scene}
+        {SOURCES.map((s) => (
+          <line key={s.y} x1={QUERY.x + 6} y1={QUERY.y} x2={s.x} y2={s.y + 12} stroke={SILVER} strokeOpacity="0.25" strokeWidth="1" strokeDasharray="3 4" />
+        ))}
+        {memoLines.map((m) => (
+          <line key={m.y} x1={MEMO.x + 8} y1={m.y} x2={m.x2} y2={m.y} stroke={SILVER} strokeOpacity="0.5" strokeWidth="1.5" />
+        ))}
+        <line x1={MEMO.x + 8} y1={MEMO.y + 42} x2={MEMO.x + 40} y2={MEMO.y + 42} stroke={ACCENT} strokeOpacity="0.8" strokeWidth="1.5" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
+      <defs>
+        <filter id="law-glow" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="2" />
+        </filter>
+      </defs>
+
+      {scene}
+
+      {/* Query pulse at the start of each cycle */}
+      <motion.circle
+        cx={QUERY.x}
+        cy={QUERY.y}
+        r="7"
+        fill="none"
+        stroke={SILVER}
+        strokeWidth="1"
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ scale: [0.5, 0.5, 1.8, 1.8], opacity: [0, 0.7, 0, 0] }}
+        transition={{ duration: DUR, times: [0, 0.03, 0.16, 1], repeat: Infinity, ease: "easeOut" }}
+        style={{ transformBox: "view-box", transformOrigin: `${QUERY.x}px ${QUERY.y}px` }}
+      />
+
+      {/* Rays draw out to the sources in sequence */}
+      {SOURCES.map((s, i) => (
+        <motion.line
+          key={`ray-${s.y}`}
+          x1={QUERY.x + 6}
+          y1={QUERY.y}
+          x2={s.x}
+          y2={s.y + 12}
+          stroke={SILVER}
+          strokeOpacity="0.3"
+          strokeWidth="1"
+          strokeDasharray="3 4"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: [0, 0, 1, 1], opacity: [0, 0, 1, 1, 0] }}
+          transition={{
+            duration: DUR,
+            times: [0, 0.06 + i * 0.08, 0.2 + i * 0.08, 1],
+            repeat: Infinity,
+            ease: "easeOut",
+            opacity: { duration: DUR, times: [0, 0.06 + i * 0.08, 0.1 + i * 0.08, 0.93, 1], repeat: Infinity },
+          }}
+        />
+      ))}
+
+      {/* Citations travel back from each source into the memo */}
+      {SOURCES.map((s) => (
+        <motion.circle
+          key={`cit-${s.y}`}
+          r="2.6"
+          fill={ACCENT}
+          filter="url(#law-glow)"
+          initial={{ x: s.x, y: s.y + 12, opacity: 0 }}
+          animate={{
+            x: [s.x, s.x, MEMO.x + MEMO.w, MEMO.x + MEMO.w],
+            y: [s.y + 12, s.y + 12, MEMO.y + 24, MEMO.y + 24],
+            opacity: [0, 0, 1, 0],
+          }}
+          transition={{
+            duration: DUR,
+            times: [0, s.t - 0.12, s.t, s.t + 0.02],
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
+      {/* Memo builds line by line as citations land; terracotta seal at the end */}
+      {memoLines.map((m, i) => (
+        <motion.line
+          key={`memo-${m.y}`}
+          x1={MEMO.x + 8}
+          y1={m.y}
+          x2={m.x2}
+          y2={m.y}
+          stroke={SILVER}
+          strokeWidth="1.5"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0, 0.6, 0.6, 0] }}
+          transition={{ duration: DUR, times: [0, SOURCES[i].t, SOURCES[i].t + 0.03, 0.93, 1], repeat: Infinity }}
+        />
+      ))}
+      <motion.line
+        x1={MEMO.x + 8}
+        y1={MEMO.y + 42}
+        x2={MEMO.x + 40}
+        y2={MEMO.y + 42}
+        stroke={ACCENT}
+        strokeWidth="1.5"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 0, 0.9, 0.9, 0] }}
+        transition={{ duration: DUR, times: [0, 0.8, 0.84, 0.93, 1], repeat: Infinity }}
+      />
+    </svg>
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   RISK & COMPLIANCE: a regulatory checklist ticks itself item by item; one
+   row fails with a terracotta cross, a dashed connector fires across to the
+   counsel figure and rings them. Checklist mechanic.
+   --------------------------------------------------------------------------- */
+function ComplianceFlow() {
+  const reduced = useReducedMotion();
+  const DUR = 7;
+  const PANEL = { x: 30, y: 22, w: 140, h: 96 };
+  const COUNSEL = { x: 262, y: 70 };
+  // Checklist rows: box + text line; one row is the violation.
+  const ROWS = [
+    { y: 36, x2: 152, t: 0.12 },
+    { y: 53, x2: 138, t: 0.24 },
+    { y: 70, x2: 156, t: 0.36, violation: true },
+    { y: 87, x2: 132, t: 0.48 },
+    { y: 104, x2: 146, t: 0.6 },
+  ];
+
+  const tick = (y: number, color: string) => (
+    <path d={`M 42 ${y} l 2.6 3 l 5 -6.4`} stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+  );
+  const cross = (y: number) => (
+    <g stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round">
+      <line x1="42" y1={y - 3} x2="49" y2={y + 4} />
+      <line x1="49" y1={y - 3} x2="42" y2={y + 4} />
+    </g>
+  );
+
+  const scene = (
+    <>
+      <rect x={PANEL.x} y={PANEL.y} width={PANEL.w} height={PANEL.h} rx="4" stroke={SILVER} strokeOpacity="0.3" strokeWidth="1.5" />
+      {ROWS.map((r) => (
+        <g key={r.y}>
+          <rect x="40" y={r.y - 5} width="11" height="11" rx="2" stroke={r.violation ? ACCENT : SILVER} strokeOpacity={r.violation ? 0.8 : 0.4} strokeWidth="1.2" />
+          <line x1="60" y1={r.y} x2={r.x2} y2={r.y} stroke={SILVER} strokeOpacity="0.25" strokeWidth="1.5" />
+        </g>
+      ))}
+      {/* Counsel figure: head + shoulders */}
+      <g stroke={SILVER} strokeOpacity="0.55" strokeWidth="1.5" fill="none">
+        <circle cx={COUNSEL.x} cy={COUNSEL.y - 9} r="4.5" />
+        <path d={`M ${COUNSEL.x - 10} ${COUNSEL.y + 8} Q ${COUNSEL.x} ${COUNSEL.y - 3} ${COUNSEL.x + 10} ${COUNSEL.y + 8}`} />
+      </g>
+    </>
+  );
+
+  if (reduced) {
+    return (
+      <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
+        {scene}
+        {ROWS.map((r) => (r.violation ? <g key={r.y}>{cross(r.y)}</g> : <g key={r.y}>{tick(r.y, SILVER)}</g>))}
+        <line x1={PANEL.x + PANEL.w} y1="70" x2={COUNSEL.x - 16} y2="70" stroke={ACCENT} strokeOpacity="0.5" strokeWidth="1" strokeDasharray="3 4" />
+        <circle cx={COUNSEL.x} cy={COUNSEL.y - 2} r="14" stroke={ACCENT} strokeOpacity="0.6" strokeWidth="1.5" fill="none" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 320 140" fill="none" aria-hidden="true" className="w-full">
+      {scene}
+
+      {/* Rows tick in sequence; the violation gets a cross instead */}
+      {ROWS.map((r) => (
+        <motion.g
+          key={`mark-${r.y}`}
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: [0, 0, 1, 1, 0], scale: [0.6, 0.6, 1, 1, 1] }}
+          transition={{ duration: DUR, times: [0, r.t, r.t + 0.03, 0.92, 1], repeat: Infinity }}
+          style={{ transformBox: "fill-box", transformOrigin: "center" }}
+        >
+          {r.violation ? cross(r.y) : tick(r.y, SILVER)}
+        </motion.g>
+      ))}
+
+      {/* The failed check fires across to the counsel and rings them */}
+      <motion.line
+        x1={PANEL.x + PANEL.w}
+        y1="70"
+        x2={COUNSEL.x - 16}
+        y2="70"
+        stroke={ACCENT}
+        strokeWidth="1"
+        strokeDasharray="3 4"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: [0, 0, 1, 1], opacity: [0, 0, 0.7, 0.7, 0] }}
+        transition={{
+          duration: DUR,
+          times: [0, 0.4, 0.5, 1],
+          repeat: Infinity,
+          ease: "easeOut",
+          opacity: { duration: DUR, times: [0, 0.4, 0.44, 0.92, 1], repeat: Infinity },
+        }}
+      />
+      <motion.circle
+        cx={COUNSEL.x}
+        cy={COUNSEL.y - 2}
+        r="12"
+        fill="none"
+        stroke={ACCENT}
+        strokeWidth="1.5"
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ scale: [0.5, 0.5, 0.7, 1.8, 1.8], opacity: [0, 0, 0.85, 0, 0] }}
+        transition={{ duration: DUR, times: [0, 0.52, 0.58, 0.75, 1], repeat: Infinity, ease: "easeOut" }}
+        style={{ transformBox: "view-box", transformOrigin: `${COUNSEL.x}px ${COUNSEL.y - 2}px` }}
+      />
+    </svg>
+  );
+}
+
+/* ---------------------------------------------------------------------------
    Generic request -> reasoning -> outcome timeline. Placeholder for the
    sectors whose bespoke visuals are not built yet (healthcare, legal,
    industrial, e-commerce).
@@ -1120,6 +1482,9 @@ export default function SectorFlow({
   if (flow === "triage") return <TriageFlow />;
   if (flow === "diagnostics") return <DiagnosticsFlow />;
   if (flow === "monitoring") return <MonitoringFlow />;
+  if (flow === "contract") return <ContractFlow />;
+  if (flow === "caselaw") return <CaselawFlow />;
+  if (flow === "compliance") return <ComplianceFlow />;
   if (sector === "finance") return <FinanceFlow labels={labels} />;
   return <GenericFlow labels={labels} />;
 }

@@ -11,7 +11,17 @@ export type SectorTile = {
   /** Tier 2: expandable plain-English walkthrough. Cards without it don't expand. */
   deepDive?: { intro: string; steps: DeepDiveStep[] };
   /** Overrides the sector's default deep-dive visual with a bespoke one. */
-  flow?: "wealth" | "fraud" | "shopper" | "inventory" | "triage" | "diagnostics" | "monitoring";
+  flow?:
+    | "wealth"
+    | "fraud"
+    | "shopper"
+    | "inventory"
+    | "triage"
+    | "diagnostics"
+    | "monitoring"
+    | "contract"
+    | "caselaw"
+    | "compliance";
 };
 
 export type Sector = {
@@ -156,18 +166,75 @@ const en: SectorsContent = {
       tiles: [
         {
           title: "Automated contract analysis",
+          outcome: "Every contract reviewed against your playbook in minutes, with every finding linked to its source paragraph.",
           body: "Clause extraction, deviation detection against your playbook and redline suggestions, with every finding linked to the source paragraph.",
           span: "md:col-span-2",
+          flow: "contract",
+          deepDive: {
+            intro: "An eighty-page agreement lands at 6 PM with a signature deadline tomorrow. Here is what happens in the next ten minutes.",
+            steps: [
+              {
+                title: "Extract",
+                body: "The agent reads the full document and maps every clause: parties, terms, liabilities, obligations. No paragraph gets skipped because it is late.",
+              },
+              {
+                title: "Compare",
+                body: "Each clause is checked against your playbook. Deviations, missing protections and unusual terms get flagged with a severity attached.",
+              },
+              {
+                title: "Redline",
+                body: "It drafts suggested edits, each linked to the exact source paragraph, so the lawyer reviews with one click instead of one evening.",
+              },
+            ],
+          },
         },
         {
           title: "Instant case-law research",
+          outcome: "A cited answer in minutes, not a day lost in the archives.",
           body: "Grounded retrieval across statutes, rulings and your own matter history, returning cited answers instead of confident guesses.",
           span: "md:col-span-2",
+          flow: "caselaw",
+          deepDive: {
+            intro: "A client asks a question nobody on the team has litigated before. Here is how the answer comes back grounded, not guessed.",
+            steps: [
+              {
+                title: "Retrieve",
+                body: "The agent searches statutes, rulings and your own matter history at once, pulling only the passages that actually match the question.",
+              },
+              {
+                title: "Cite",
+                body: "Every statement in the draft answer carries its citation. If a source does not exist, neither does the sentence.",
+              },
+              {
+                title: "Deliver",
+                body: "The lawyer gets a structured memo with sources attached, ready to verify paragraph by paragraph and send on with confidence.",
+              },
+            ],
+          },
         },
         {
           title: "Risk & compliance bots",
+          outcome: "A regulatory change is caught the week it lands, not at the annual audit.",
           body: "Continuous screening of documents and processes against regulatory checklists, with alerts routed to the responsible counsel.",
           span: "md:col-span-2",
+          flow: "compliance",
+          deepDive: {
+            intro: "A regulation changes on Monday. By Tuesday every affected document in the firm is flagged. Here is how.",
+            steps: [
+              {
+                title: "Watch",
+                body: "The agent tracks the regulatory lists you care about and continuously re-checks your documents and processes against them.",
+              },
+              {
+                title: "Flag",
+                body: "Anything that falls out of compliance is flagged with the rule it violates and the exact place where it violates it.",
+              },
+              {
+                title: "Escalate",
+                body: "Findings are routed to the responsible lawyer with context attached, ordered by severity, never as a raw dump.",
+              },
+            ],
+          },
         },
         {
           title: "Privilege preserved",
@@ -495,18 +562,75 @@ const pl: SectorsContent = {
       tiles: [
         {
           title: "Automatyczna analiza umów",
+          outcome: "Każda umowa sprawdzona z Twoim playbookiem w minuty, a każde znalezisko podlinkowane do akapitu źródłowego.",
           body: "Ekstrakcja klauzul, wykrywanie odstępstw od Twojego playbooka i propozycje poprawek, z każdym wnioskiem podlinkowanym do akapitu źródłowego.",
           span: "md:col-span-2",
+          flow: "contract",
+          deepDive: {
+            intro: "Osiemdziesięciostronicowa umowa wpada o 18:00, podpis ma być jutro. Oto co dzieje się przez następne dziesięć minut.",
+            steps: [
+              {
+                title: "Ekstrakcja",
+                body: "Agent czyta cały dokument i mapuje każdą klauzulę: strony, terminy, odpowiedzialność, zobowiązania. Żaden akapit nie przepada dlatego, że jest późno.",
+              },
+              {
+                title: "Porównanie",
+                body: "Każda klauzula jest sprawdzana z Twoim playbookiem. Odstępstwa, brakujące zabezpieczenia i nietypowe zapisy dostają flagę z wagą.",
+              },
+              {
+                title: "Redline",
+                body: "Agent proponuje poprawki, każdą podlinkowaną do akapitu źródłowego, więc prawnik robi przegląd jednym kliknięciem, a nie jednym wieczorem.",
+              },
+            ],
+          },
         },
         {
           title: "Błyskawiczny research orzecznictwa",
+          outcome: "Odpowiedź z cytatami w minuty, a nie dzień stracony w archiwach.",
           body: "Ugruntowane wyszukiwanie po ustawach, orzeczeniach i historii Twoich spraw, zwracające odpowiedzi z cytatami zamiast pewnych siebie domysłów.",
           span: "md:col-span-2",
+          flow: "caselaw",
+          deepDive: {
+            intro: "Klient zadaje pytanie, jakiego nikt w zespole wcześniej nie prowadził. Oto jak odpowiedź wraca ugruntowana, a nie zgadywana.",
+            steps: [
+              {
+                title: "Wyszukanie",
+                body: "Agent przeszukuje naraz ustawy, orzeczenia i historię Twoich spraw, wyciągając tylko te fragmenty, które naprawdę pasują do pytania.",
+              },
+              {
+                title: "Cytowanie",
+                body: "Każde zdanie szkicu odpowiedzi niesie swój cytat. Jeśli źródło nie istnieje, zdanie też nie.",
+              },
+              {
+                title: "Dostarczenie",
+                body: "Prawnik dostaje ustrukturyzowane memo z podpiętymi źródłami, gotowe do weryfikacji akapit po akapicie i przekazania dalej z pewnością.",
+              },
+            ],
+          },
         },
         {
           title: "Boty ryzyka i compliance",
+          outcome: "Zmiana regulacyjna wychwycona w tygodniu, w którym wchodzi, a nie przy dorocznym audycie.",
           body: "Ciągły przegląd dokumentów i procesów pod kątem list regulacyjnych, z alertami kierowanymi do odpowiedzialnego prawnika.",
           span: "md:col-span-2",
+          flow: "compliance",
+          deepDive: {
+            intro: "Regulacja zmienia się w poniedziałek. We wtorek każdy dotknięty dokument w kancelarii ma flagę. Oto jak.",
+            steps: [
+              {
+                title: "Obserwacja",
+                body: "Agent śledzi listy regulacyjne, na których Ci zależy, i bez przerwy sprawdza z nimi Twoje dokumenty oraz procesy.",
+              },
+              {
+                title: "Flaga",
+                body: "Wszystko, co wypada ze zgodności, dostaje flagę z regułą, którą narusza, i dokładnym miejscem naruszenia.",
+              },
+              {
+                title: "Eskalacja",
+                body: "Znaleziska trafiają do odpowiedzialnego prawnika z kontekstem, uporządkowane według wagi, nigdy jako surowy zrzut.",
+              },
+            ],
+          },
         },
         {
           title: "Tajemnica zachowana",
