@@ -277,6 +277,39 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                 </MagneticCard>
               ))}
 
+              {/* Breadth block: the sector's fuller range beyond the three
+                  headline tiles, plus a confident closer. Full-width. */}
+              <div className="rounded-2xl border border-white/[0.12] bg-[#0A0A0B] p-6 sm:p-8 md:col-span-6 md:p-10">
+                <span
+                  className="font-mono text-[10px] uppercase tracking-[0.2em]"
+                  style={{ color: ACCENT }}
+                >
+                  {sector.more.label}
+                </span>
+                <h3
+                  className="mt-3 max-w-2xl text-xl font-semibold tracking-[-0.01em] text-[#F5F5F7] sm:text-2xl"
+                  style={{ fontFamily: "var(--font-display), sans-serif" }}
+                >
+                  {sector.more.title}
+                </h3>
+                <ul className="mt-7 grid gap-x-10 gap-y-3.5 sm:grid-cols-2">
+                  {sector.more.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-3 text-sm leading-relaxed text-zinc-300 sm:text-[15px]"
+                    >
+                      <span aria-hidden="true" className="select-none" style={{ color: ACCENT }}>
+                        +
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-8 max-w-3xl text-pretty text-sm leading-relaxed text-zinc-400 sm:text-[15px]">
+                  {sector.more.closer}
+                </p>
+              </div>
+
               {/* Delivery-standard strip: quieter than the tiles (hairline
                   border, no card background), closing each sector on a
                   professional note. */}

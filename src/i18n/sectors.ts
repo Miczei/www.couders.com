@@ -36,6 +36,8 @@ export type Sector = {
   tiles: SectorTile[];
   /** Professional delivery-standard strip rendered under the tile grid. */
   assurance: { label: string; body: string };
+  /** Breadth block: the sector's fuller range of use cases + a confident closer. */
+  more: { label: string; title: string; items: string[]; closer: string };
 };
 
 export type SectorsContent = {
@@ -84,6 +86,22 @@ const en: SectorsContent = {
       assurance: {
         label: "Delivery standard",
         body: "Fully remote delivery under a written contract and an Art. 28 GDPR data processing agreement, with AI labeling that meets the AI Act. No recommendation bypasses the doctor, and every decision leaves an audit trail.",
+      },
+      more: {
+        label: "The full picture",
+        title: "Everything a private practice can hand to AI.",
+        items: [
+          "Appointment booking, reminders and no-show recovery",
+          "Pricing, insurance and preparation questions answered 24/7",
+          "Multilingual patient intake and pre-visit forms",
+          "Post-treatment follow-up and aftercare check-ins",
+          "Review requests and online reputation management",
+          "Referral routing between specialists and locations",
+          "Waitlist filling the moment a slot opens up",
+          "Internal Q&A over your protocols, prices and policies",
+        ],
+        closer:
+          "And this is a starting point, not the full list. If your practice repeats a task or answers the same question twice, it can be an agent. From a single chatbot to a network of autonomous agents, whatever AI your practice needs, we design, build and run it end to end.",
       },
       visualAria: "A heart-rate line morphing into a neural network node",
       tiles: [
@@ -175,6 +193,22 @@ const en: SectorsContent = {
         label: "Delivery standard",
         body: "A written contract, staged payments and fully remote delivery. We start with a pilot on your own documents, and every agent finding traces back to its source paragraph.",
       },
+      more: {
+        label: "The full picture",
+        title: "Everything a firm can put on rails.",
+        items: [
+          "NDA and standard-contract drafting from your templates",
+          "Deadline, docket and limitation-period tracking",
+          "Client intake, conflict checks and qualification",
+          "Document and correspondence translation",
+          "Due-diligence and data-room summarization",
+          "Billing narratives and time-entry assistance",
+          "Precedent and clause-library search",
+          "First-pass e-discovery and disclosure triage",
+        ],
+        closer:
+          "And that is a starting point, not the ceiling. If a task in your firm is repetitive, rule-based or buried in documents, it can be an agent. Whatever AI your practice demands, from one assistant to a coordinated network of agents, we build and run it end to end.",
+      },
       visualAria: "An abstract scales-of-justice drawn with one continuous line",
       tiles: [
         {
@@ -264,6 +298,22 @@ const en: SectorsContent = {
       assurance: {
         label: "Delivery standard",
         body: "We work 100% remotely, on the data and systems you already run: your ERP, inboxes and documentation. No hardware installs, no production stops. We plug in, measure the result and report it.",
+      },
+      more: {
+        label: "The full picture",
+        title: "Everything your operation can offload.",
+        items: [
+          "Supplier and customer inbox management",
+          "Quote and proposal generation from specs",
+          "Production and shift-report summaries",
+          "Shift-handover notes written for you",
+          "Warranty and complaint claim processing",
+          "Spare-parts and documentation lookup",
+          "Onboarding and training assistants for new operators",
+          "Q&A over certificates, specs and compliance documents",
+        ],
+        closer:
+          "And that is where we start, not where we stop. If a process runs on email, documents or your ERP, it can be an agent. Whatever AI requirement your operation has, from a single bot to autonomous agents across departments, we deliver it end to end, fully remotely.",
       },
       visualAria: "Interlocking parametric gears drawn with one continuous line",
       tiles: [
@@ -355,6 +405,22 @@ const en: SectorsContent = {
         label: "Delivery standard",
         body: "Delivery without touching your live store: a pilot on a copy of your data, hard price and margin rules, launch only after your sign-off. A written contract and staged payments.",
       },
+      more: {
+        label: "The full picture",
+        title: "Everything a store can automate.",
+        items: [
+          "Returns, RMA and complaint handling",
+          "Product descriptions and catalogue copy at scale",
+          "Review responses and reputation management",
+          "Abandoned-cart and win-back sequences",
+          "Size, fit and product-match advisors",
+          "Loyalty, retention and re-order flows",
+          "Multilingual catalogue and support translation",
+          "Supplier onboarding and PIM data cleanup",
+        ],
+        closer:
+          "And that is a starting point, not a catalogue. If a task repeats across your store, it can be an agent. Whatever AI your business needs, from one chatbot to a network of autonomous agents, we build and run it end to end.",
+      },
       visualAria: "A continuous line drawing a shopping cart flowing into a spark",
       tiles: [
         {
@@ -443,6 +509,22 @@ const en: SectorsContent = {
       assurance: {
         label: "Delivery standard",
         body: "Every agent decision is logged and auditable, high-stakes actions always cross a human, and data never leaves your infrastructure. Remote delivery under a written contract with staged payments.",
+      },
+      more: {
+        label: "The full picture",
+        title: "Everything a finance team can delegate.",
+        items: [
+          "KYC and onboarding document checks",
+          "Transaction categorization and reconciliation",
+          "Regulatory and management-report drafting",
+          "Customer dispute and chargeback handling",
+          "Statement and portfolio Q&A for clients",
+          "AML alert triage and case preparation",
+          "Credit-memo and application summarization",
+          "Internal policy and procedure assistants",
+        ],
+        closer:
+          "And that is a floor, not a ceiling. If a process is rule-bound, document-heavy or drowning in queues, it can be an agent. Whatever AI your institution requires, from a single assistant to coordinated autonomous agents, we deliver it end to end.",
       },
       visualAria: "A rising market line coiling into a secure lock",
       tiles: [
@@ -558,6 +640,22 @@ const pl: SectorsContent = {
         label: "Standard wdrożenia",
         body: "Wdrożenie w pełni zdalne, na pisemnej umowie i umowie powierzenia danych zgodnej z art. 28 RODO, z oznaczeniem systemu AI według wymogów AI Act. Żadna rekomendacja nie omija lekarza, a każda decyzja zostawia ślad audytowy.",
       },
+      more: {
+        label: "Pełny zakres",
+        title: "Wszystko, co prywatny gabinet może oddać AI.",
+        items: [
+          "Rezerwacja wizyt, przypomnienia i odzysk po no-show",
+          "Pytania o ceny, ubezpieczenia i przygotowanie do wizyty, 24/7",
+          "Wielojęzyczny wywiad i formularze przed wizytą",
+          "Opieka pozabiegowa i check-iny kontrolne",
+          "Prośby o opinie i zarządzanie reputacją online",
+          "Kierowanie między specjalistami i lokalizacjami",
+          "Zapełnianie listy rezerwowej, gdy zwolni się termin",
+          "Wewnętrzne Q&A po Twoich protokołach, cennikach i zasadach",
+        ],
+        closer:
+          "A to punkt wyjścia, nie pełna lista. Jeśli gabinet powtarza jakąś czynność albo dwa razy odpowiada na to samo pytanie, może to być agent. Od pojedynczego chatbota po sieć autonomicznych agentów, jakiegokolwiek AI potrzebujesz, projektujemy je, budujemy i prowadzimy od początku do końca.",
+      },
       visualAria: "Linia EKG przechodząca w węzeł sieci neuronowej",
       tiles: [
         {
@@ -647,6 +745,22 @@ const pl: SectorsContent = {
       assurance: {
         label: "Standard wdrożenia",
         body: "Pisemna umowa, płatność etapami i wdrożenie w pełni zdalne. Zaczynamy od pilota na Twoich dokumentach, a każdy wniosek agenta można prześledzić do akapitu źródłowego.",
+      },
+      more: {
+        label: "Pełny zakres",
+        title: "Wszystko, co kancelaria może wpiąć w tory.",
+        items: [
+          "Tworzenie NDA i umów standardowych z Twoich szablonów",
+          "Pilnowanie terminów, wokandy i okresów przedawnienia",
+          "Przyjęcie klienta, badanie konfliktów i kwalifikacja",
+          "Tłumaczenie dokumentów i korespondencji",
+          "Streszczenia due diligence i data roomów",
+          "Opisy do faktur i wsparcie w rejestracji czasu",
+          "Wyszukiwanie w bibliotece precedensów i klauzul",
+          "Wstępny triage e-discovery i ujawnień",
+        ],
+        closer:
+          "A to punkt wyjścia, nie sufit. Jeśli zadanie w kancelarii jest powtarzalne, regułowe albo zakopane w dokumentach, może być agentem. Jakiegokolwiek AI wymaga Twoja praktyka, od jednego asystenta po skoordynowaną sieć agentów, budujemy je i prowadzimy od początku do końca.",
       },
       visualAria: "Abstrakcyjna waga sprawiedliwości narysowana jedną ciągłą linią",
       tiles: [
@@ -738,6 +852,22 @@ const pl: SectorsContent = {
         label: "Standard wdrożenia",
         body: "Pracujemy w 100% zdalnie, na danych i systemach, które już masz: ERP, skrzynki, dokumentacja. Nie montujemy sprzętu i nie zatrzymujemy produkcji, wpinamy się, mierzymy efekt i oddajemy raport.",
       },
+      more: {
+        label: "Pełny zakres",
+        title: "Wszystko, co Twoja firma może zdjąć z ludzi.",
+        items: [
+          "Obsługa skrzynek od dostawców i klientów",
+          "Generowanie ofert i wycen z parametrów",
+          "Streszczenia raportów produkcyjnych i zmianowych",
+          "Notatki z przekazania zmiany pisane za Ciebie",
+          "Obsługa reklamacji i zgłoszeń gwarancyjnych",
+          "Wyszukiwanie części zamiennych i dokumentacji",
+          "Asystenci wdrożenia i szkolenia nowych operatorów",
+          "Q&A po certyfikatach, specyfikacjach i dokumentach zgodności",
+        ],
+        closer:
+          "A to miejsce, w którym zaczynamy, nie kończymy. Jeśli proces działa na mailach, dokumentach albo Twoim ERP, może być agentem. Jakikolwiek wymóg AI ma Twoja firma, od jednego bota po autonomicznych agentów w wielu działach, dowozimy go od początku do końca, w pełni zdalnie.",
+      },
       visualAria: "Zazębiające się parametryczne koła zębate narysowane jedną linią",
       tiles: [
         {
@@ -828,6 +958,22 @@ const pl: SectorsContent = {
         label: "Standard wdrożenia",
         body: "Wdrożenie bez dotykania sklepu na produkcji: pilot na kopii danych, twarde reguły cen i marż, start dopiero po Twojej akceptacji. Pisemna umowa i płatność etapami.",
       },
+      more: {
+        label: "Pełny zakres",
+        title: "Wszystko, co sklep może zautomatyzować.",
+        items: [
+          "Obsługa zwrotów, RMA i reklamacji",
+          "Opisy produktów i copy katalogowe na skalę",
+          "Odpowiedzi na opinie i zarządzanie reputacją",
+          "Sekwencje po porzuconym koszyku i win-back",
+          "Doradcy rozmiaru, dopasowania i doboru produktu",
+          "Programy lojalnościowe, retencja i ponowne zamówienia",
+          "Wielojęzyczne tłumaczenie katalogu i wsparcia",
+          "Onboarding dostawców i porządkowanie danych PIM",
+        ],
+        closer:
+          "A to punkt wyjścia, nie katalog. Jeśli jakieś zadanie powtarza się w sklepie, może być agentem. Jakiegokolwiek AI potrzebuje Twój biznes, od jednego chatbota po sieć autonomicznych agentów, budujemy je i prowadzimy od początku do końca.",
+      },
       visualAria: "Ciągła linia rysująca koszyk zakupowy przechodzący w iskrę",
       tiles: [
         {
@@ -916,6 +1062,22 @@ const pl: SectorsContent = {
       assurance: {
         label: "Standard wdrożenia",
         body: "Każda decyzja agenta jest logowana i audytowalna, działania wysokiego ryzyka zawsze przechodzą przez człowieka, a dane nie opuszczają Twojej infrastruktury. Wdrożenie zdalne, na pisemnej umowie i płatności etapami.",
+      },
+      more: {
+        label: "Pełny zakres",
+        title: "Wszystko, co zespół finansowy może oddelegować.",
+        items: [
+          "Weryfikacja dokumentów KYC i onboardingu",
+          "Kategoryzacja transakcji i uzgodnienia",
+          "Szkice raportów regulacyjnych i zarządczych",
+          "Obsługa sporów i chargebacków klientów",
+          "Q&A do wyciągów i portfeli dla klientów",
+          "Triage alertów AML i przygotowanie spraw",
+          "Streszczenia wniosków i memo kredytowych",
+          "Asystenci wewnętrznych polityk i procedur",
+        ],
+        closer:
+          "A to podłoga, nie sufit. Jeśli proces jest regułowy, ciężki od dokumentów albo tonie w kolejkach, może być agentem. Jakiegokolwiek AI wymaga Twoja instytucja, od jednego asystenta po skoordynowanych autonomicznych agentów, dowozimy je od początku do końca.",
       },
       visualAria: "Rosnąca linia notowań zwijająca się w bezpieczny zamek",
       tiles: [
