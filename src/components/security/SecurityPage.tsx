@@ -151,7 +151,7 @@ export default function SecurityPage({
       <main className="relative z-10 overflow-x-hidden bg-black">
         <MiniAgent statuses={ui.agentStatuses} label={ui.agentLabel} />
 
-        <section className="pb-20 pt-32 sm:pt-40 md:pb-32 md:pt-48">
+        <section className="pb-20 pt-28 sm:pt-32 md:pb-32">
           <div className="mx-auto max-w-6xl px-5 sm:px-6">
             <nav
               aria-label="Breadcrumb"

@@ -27,7 +27,7 @@ export default function SectorsPage({
       <Navbar locale={locale} dict={dict} />
 
       <main className="relative z-10 overflow-x-hidden bg-black">
-        <section className="px-5 pb-14 pt-32 sm:px-6 sm:pb-16 sm:pt-40 md:pt-48">
+        <section className="px-5 pb-12 pt-28 sm:px-6 sm:pb-14 sm:pt-32">
           <div className="mx-auto max-w-6xl">
             <nav
               aria-label="Breadcrumb"

@@ -137,7 +137,7 @@ export default function EnginePage({
       <main className="relative z-10 overflow-x-hidden bg-black">
         <MiniAgent statuses={ui.agentStatuses} label={ui.agentLabel} />
 
-        <section className="px-5 pb-20 pt-32 sm:px-6 sm:pt-40 md:pb-32 md:pt-48">
+        <section className="px-5 pb-20 pt-28 sm:px-6 sm:pt-32 md:pb-32">
           <div className="mx-auto max-w-6xl lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-16">
             <div>
               <nav
