@@ -4,7 +4,13 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState } from 
 import type { Locale } from "@/i18n/config";
 import { getChatUi, type ChatUi } from "@/i18n/chat";
 
-const WEBHOOK_URL = "https://hook.eu1.make.com/0krgthjdn9jelek8s8edykmzqis7nttj";
+// Default is the n8n Chat Trigger. The request carries both payload shapes and
+// the reader accepts both replies, so to roll back to the old Make scenario set
+// NEXT_PUBLIC_CHAT_WEBHOOK_URL=https://hook.eu1.make.com/0krgthjdn9jelek8s8edykmzqis7nttj
+// (or revert this commit) — no other code change needed.
+const WEBHOOK_URL =
+  process.env.NEXT_PUBLIC_CHAT_WEBHOOK_URL ??
+  "https://couders.app.n8n.cloud/webhook/obrotni-demo-czat/chat";
 const TIMEOUT_MS = 90000; // an assistant that also reads PDFs can be slower
 
 export type ChatMessage = {
@@ -87,42 +93,59 @@ export default function ChatProvider({
     setMessages((m) => [...m, { id: idRef.current++, text, sender: "user" }]);
     setIsWaiting(true);
 
+    // n8n keys its conversation memory off sessionId and never sends one back,
+    // so the client owns it. Mint it on the first message and keep it for the
+    // whole visit, otherwise every turn starts a fresh, amnesiac thread.
+    if (!threadIdRef.current) {
+      threadIdRef.current =
+        globalThis.crypto?.randomUUID?.() ?? `sess-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      try {
+        sessionStorage.setItem("aiw_thread_id", threadIdRef.current);
+      } catch {
+        // private browsing
+      }
+    }
+
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
-    
+
     fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       signal: controller.signal,
+      // Both protocols in one body: n8n's Chat Trigger reads action/chatInput/
+      // sessionId, the Make scenario reads message/thread_id/page_url. Each
+      // ignores the other's fields, so one client works with either backend.
       body: JSON.stringify({
+        action: "sendMessage",
+        chatInput: text,
+        sessionId: threadIdRef.current,
         message: text,
-        thread_id: threadIdRef.current || "",
+        thread_id: threadIdRef.current,
         page_url: window.location.href,
       }),
     })
       .then((res) => {
         console.log("[Chat] HTTP status:", res.status, "| Content-Type:", res.headers.get("content-type"));
         if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.text(); // read as text first — Make doesn't always return strict JSON
+        return res.text(); // read as text first, so a non-JSON body is still usable
       })
       .then((raw) => {
         clearTimeout(timer);
-        console.log("[Chat] Raw response from Make:", raw);
+        console.log("[Chat] Raw response:", raw);
 
         let reply = "";
         try {
           const data = JSON.parse(raw);
-          if (data && typeof data.reply === "string" && data.reply.trim()) {
-            reply = data.reply.trim();
-          }
-          if (data && data.thread_id) {
-            threadIdRef.current = data.thread_id;
-            try {
-              sessionStorage.setItem("aiw_thread_id", data.thread_id);
-            } catch {
-              // private browsing
-            }
-          }
+          // n8n Chat Trigger returns { output }. "reply" is kept as a fallback so
+          // pointing NEXT_PUBLIC_CHAT_WEBHOOK_URL back at the old endpoint still works.
+          const candidate =
+            typeof data?.output === "string"
+              ? data.output
+              : typeof data?.reply === "string"
+                ? data.reply
+                : "";
+          if (candidate.trim()) reply = candidate.trim();
         } catch (parseError) {
           console.warn("[Chat] Response wasn't valid JSON, using raw text as the reply.", parseError);
           reply = raw.trim();
@@ -131,7 +154,7 @@ export default function ChatProvider({
         reply = sanitizeReply(reply);
 
         if (!reply) {
-          console.error("[Chat] Empty reply — check the Webhook Response module in Make.");
+          console.error("[Chat] Empty reply — check that the n8n workflow is Active and its last node returns output.");
         }
         setMessages((m) => [
           ...m,
@@ -142,7 +165,7 @@ export default function ChatProvider({
         clearTimeout(timer);
         console.error("[Chat] Network/connection error:", error);
         if (error?.name === "AbortError") {
-          console.error("[Chat] Timed out after " + TIMEOUT_MS + " ms — Make scenario may be too slow or missing Webhook Response.");
+          console.error("[Chat] Timed out after " + TIMEOUT_MS + " ms — the n8n workflow may be inactive, slow, or blocked by CORS.");
         }
         setMessages((m) => [...m, { id: idRef.current++, text: ui.errorMessage, sender: "error" }]);
       })
