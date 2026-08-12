@@ -15,7 +15,7 @@ export type ChatUi = {
 
 const en: ChatUi = {
   botName: "Obrotni Nieruchomości",
-  botSubtitle: "Real estate in the Tri-City",
+  botSubtitle: "AI Assistant",
   online: "Online",
   welcomeMessage: "Hi! \u{1F44B} How can we help you today?",
   placeholder: "Type a message…",
@@ -32,7 +32,7 @@ const en: ChatUi = {
 
 const pl: ChatUi = {
   botName: "Obrotni Nieruchomości",
-  botSubtitle: "Nieruchomości w Trójmieście",
+  botSubtitle: "Asystent AI",
   online: "Online",
   welcomeMessage: "Dzień dobry! \u{1F44B} Jak możemy Ci dziś pomóc?",
   placeholder: "Napisz wiadomość…",

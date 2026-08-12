@@ -55,7 +55,10 @@ export function ChatMessages({ className }: { className?: string }) {
   }, [messages, isWaiting]);
 
   return (
-    <div className={`flex flex-col gap-2.5 overflow-y-auto ${className ?? ""}`}>
+    <div
+      data-lenis-prevent
+      className={`flex flex-col gap-2.5 overflow-y-auto overscroll-contain ${className ?? ""}`}
+    >
       {messages.map((m) => (
         <div
           key={m.id}
