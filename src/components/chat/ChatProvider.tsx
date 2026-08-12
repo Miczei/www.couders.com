@@ -4,13 +4,13 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState } from 
 import type { Locale } from "@/i18n/config";
 import { getChatUi, type ChatUi } from "@/i18n/chat";
 
-// Default stays on the existing Make endpoint so a deploy without the env var
-// changes nothing. Point NEXT_PUBLIC_CHAT_WEBHOOK_URL at the n8n Chat Trigger
-// to switch backends; the request carries both payload shapes and the response
-// reader accepts both replies, so no code change is needed either way.
+// Default is the n8n Chat Trigger. The request carries both payload shapes and
+// the reader accepts both replies, so to roll back to the old Make scenario set
+// NEXT_PUBLIC_CHAT_WEBHOOK_URL=https://hook.eu1.make.com/0krgthjdn9jelek8s8edykmzqis7nttj
+// (or revert this commit) — no other code change needed.
 const WEBHOOK_URL =
   process.env.NEXT_PUBLIC_CHAT_WEBHOOK_URL ??
-  "https://hook.eu1.make.com/0krgthjdn9jelek8s8edykmzqis7nttj";
+  "https://couders.app.n8n.cloud/webhook/obrotni-demo-czat/chat";
 const TIMEOUT_MS = 90000; // an assistant that also reads PDFs can be slower
 
 export type ChatMessage = {
