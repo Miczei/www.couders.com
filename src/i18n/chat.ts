@@ -14,16 +14,16 @@ export type ChatUi = {
 };
 
 const en: ChatUi = {
-  botName: "Couders AI Assistant",
-  botSubtitle: "We usually reply within seconds",
+  botName: "Obrotni Nieruchomości",
+  botSubtitle: "Real estate in the Tri-City",
   online: "Online",
-  welcomeMessage: "Hi! \u{1F44B} I'm the Couders assistant. How can I help?",
+  welcomeMessage: "Hi! \u{1F44B} How can we help you today?",
   placeholder: "Type a message…",
   errorMessage: "Sorry, something went wrong on our end. Please try again in a moment.",
   quickReplies: [
-    "How does the AI engine work?",
-    "Get a project quote",
-    "How long does deployment take?",
+    "I'm looking for an apartment",
+    "I have a question about a listing",
+    "I'd like to leave my contact info",
   ],
   openLabel: "Open chat",
   closeLabel: "Close chat",
@@ -31,13 +31,13 @@ const en: ChatUi = {
 };
 
 const pl: ChatUi = {
-  botName: "Couders AI Assistant",
-  botSubtitle: "Zwykle odpowiadamy w kilka sekund",
+  botName: "Obrotni Nieruchomości",
+  botSubtitle: "Nieruchomości w Trójmieście",
   online: "Online",
-  welcomeMessage: "Dzień dobry! \u{1F44B} Jestem asystentem Couders. W czym mogę pomóc?",
+  welcomeMessage: "Dzień dobry! \u{1F44B} Jak możemy Ci dziś pomóc?",
   placeholder: "Napisz wiadomość…",
   errorMessage: "Przepraszamy, wystąpił problem z połączeniem. Spróbuj ponownie za chwilę.",
-  quickReplies: ["Jak działa silnik AI?", "Wycena projektu", "Ile trwa wdrożenie?"],
+  quickReplies: ["Szukam mieszkania", "Mam pytanie o ofertę", "Chcę zostawić kontakt"],
   openLabel: "Otwórz czat",
   closeLabel: "Zamknij czat",
   sendLabel: "Wyślij wiadomość",
