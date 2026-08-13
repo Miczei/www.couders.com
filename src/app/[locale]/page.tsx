@@ -1,12 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CoudersHero from "@/components/couders/CoudersHero";
-import ImpactTelemetry from "@/components/couders/ImpactTelemetry";
-import ProcessSection from "@/components/couders/ProcessSection";
+import ProblemSection from "@/components/couders/ProblemSection";
+import ThreePillars from "@/components/couders/ThreePillars";
 import LogoTicker from "@/components/couders/LogoTicker";
-import RoiEstimator from "@/components/couders/RoiEstimator";
-import ReachBento from "@/components/couders/ReachBento";
-import Commitments from "@/components/couders/Commitments";
+import IndustriesSection from "@/components/couders/IndustriesSection";
 import CtaSection from "@/components/couders/CtaSection";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getCouders } from "@/i18n/couders";
@@ -33,13 +31,11 @@ export default async function Home({
     <div className="sub-shell couders-shell">
       <Navbar locale={locale} dict={dict} />
       <main>
-        <CoudersHero content={couders.hero} />
-        <ProcessSection content={couders.process} />
-        <ImpactTelemetry content={couders.telemetry} />
+        <CoudersHero content={couders.hero} locale={locale} />
+        <ProblemSection content={couders.problem} />
+        <ThreePillars content={couders.pillars} />
         <LogoTicker content={couders.logoTicker} />
-        <RoiEstimator content={couders.roiEstimator} locale={locale} />
-        <ReachBento content={couders.reach} />
-        <Commitments content={couders.commitments} />
+        <IndustriesSection content={couders.industries} />
         <CtaSection
           content={couders.cta}
           email={dict.sections.contact.email}

@@ -29,9 +29,6 @@ export default function CtaSection({
         >
           {content.h2}
         </h2>
-        <p className="mt-5 max-w-xl text-pretty text-sm leading-relaxed text-zinc-400 sm:mt-6 sm:text-base">
-          {content.body}
-        </p>
         <Link
           href={`/${locale}/contact`}
           className="mt-8 w-full max-w-xs rounded-full bg-white px-9 py-4 text-center text-[15px] font-medium text-black transition-transform duration-300 hover:-translate-y-0.5 sm:mt-10 sm:w-auto sm:max-w-none"

@@ -22,7 +22,7 @@ export default function LabClient() {
 
   return (
     <div className="relative z-10 bg-black">
-      <CoudersHero content={couders.hero} debugProgress={debugProgress} />
+      <CoudersHero content={couders.hero} locale="en" debugProgress={debugProgress} />
       <ImpactTelemetry content={couders.telemetry} />
     </div>
   );
