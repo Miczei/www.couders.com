@@ -66,23 +66,14 @@ export default function CoudersHero({
           {content.h1}
         </motion.h1>
 
-        <motion.p
-          initial={still ? false : { opacity: 0, y: 16 }}
-          animate={logoReveal ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
-          className="mt-4 max-w-xl text-pretty px-6 text-center text-sm leading-relaxed text-zinc-400 sm:max-w-2xl sm:text-base"
-        >
-          {content.h2}
-        </motion.p>
-
         <motion.div
           initial={still ? false : { opacity: 0, y: 16 }}
           animate={logoReveal ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.7, delay: 0.18, ease: EASE }}
+          transition={{ duration: 0.7, delay: 0.12, ease: EASE }}
         >
           <Link
             href={`/${locale}/contact`}
-            className="mt-7 inline-block rounded-full bg-white px-9 py-4 text-center text-[15px] font-medium text-black transition-transform duration-300 hover:-translate-y-0.5"
+            className="mt-6 inline-block rounded-full bg-white px-9 py-4 text-center text-[15px] font-medium text-black transition-transform duration-300 hover:-translate-y-0.5"
           >
             {content.ctaButton}
           </Link>
@@ -91,14 +82,14 @@ export default function CoudersHero({
         <motion.p
           initial={still ? false : { opacity: 0 }}
           animate={{ opacity: logoReveal ? 1 : 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mb-3 mt-10 px-6 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 sm:text-[11px]"
+          transition={{ duration: 0.8, delay: 0.28 }}
+          className="mb-3 mt-9 px-6 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 sm:text-[11px]"
         >
           {content.chatSubtitle}
         </motion.p>
 
-        <div className="w-full max-w-4xl px-6">
-          <HeroChat ready={logoReveal} />
+        <div className="w-full px-6">
+          <HeroChat ready={logoReveal} badges={content.badges} />
         </div>
 
         <motion.div

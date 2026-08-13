@@ -12,13 +12,28 @@ export type CoudersTelemetryCard = {
   accent: boolean;
 };
 
+export type CoudersTimelineStep = { time: string; text: string };
+
+export type CoudersPillar = {
+  title: string;
+  teaser: string;
+  modal: string;
+  detailsLabel: string;
+  modalCta: string;
+};
+
+export type CoudersIndustry = {
+  title: string;
+  points: string[];
+};
+
 export type CoudersContent = {
   hero: {
     eyebrow: string;
     h1: string;
-    h2: string;
     ctaButton: string;
     chatSubtitle: string;
+    badges: string[];
     scroll: string;
     morphAria: string;
   };
@@ -36,18 +51,19 @@ export type CoudersContent = {
   problem: {
     eyebrow: string;
     h2: string;
-    body: string;
-    points: string[];
+    before: { title: string; steps: CoudersTimelineStep[] };
+    after: { title: string; steps: CoudersTimelineStep[] };
   };
   pillars: {
     eyebrow: string;
     h2: string;
-    items: { title: string; body: string }[];
+    closeLabel: string;
+    items: CoudersPillar[];
   };
   industries: {
     eyebrow: string;
     h2: string;
-    items: string[];
+    items: CoudersIndustry[];
   };
   cta: {
     h2: string;
@@ -60,9 +76,9 @@ const en: CoudersContent = {
   hero: {
     eyebrow: "B2B Sales Automation",
     h1: "Automate customer service and sales in your company.",
-    h2: "We build AI assistants that know your pricing, product catalogs, and technical specs by heart. They answer clients in 60 seconds — at night, on weekends, and during holidays.",
     ctaButton: "Book a 15-minute demo",
     chatSubtitle: "Test below how our assistant talks to a client.",
+    badges: ["60s Response", "24/7 Active"],
     scroll: "Scroll",
     morphAria:
       "A single continuous line morphing from an abstract face into the Couders wordmark",
@@ -112,24 +128,56 @@ const en: CoudersContent = {
   problem: {
     eyebrow: "The problem",
     h2: "You're losing leads after hours.",
-    body: "Expensive leads slip away after hours. Clients ask about machinery or materials in the evening. Before your office replies in the morning, they buy from competitors.",
-    points: ["Evening inquiry", "Silence until morning", "Client goes to a competitor"],
+    before: {
+      title: "Traditional Sales",
+      steps: [
+        { time: "Friday, 9:00 PM", text: "Client sends an inquiry." },
+        { time: "Weekend", text: "Silence." },
+        {
+          time: "Monday, 10:00 AM",
+          text: "Sales rep replies. Result? The client already bought from a competitor.",
+        },
+      ],
+    },
+    after: {
+      title: "Sales with Couders",
+      steps: [
+        { time: "Friday, 9:00 PM", text: "Client sends an inquiry." },
+        { time: "Friday, 9:01 PM", text: "The AI assistant qualifies the lead and checks pricing." },
+        { time: "Friday, 9:15 PM", text: "Client books a demo directly on the calendar." },
+      ],
+    },
   },
   pillars: {
     eyebrow: "Product",
     h2: "Three ways it works.",
+    closeLabel: "Close",
     items: [
       {
         title: "Corporate Sales Assistant",
-        body: "Sits on your website, knows the catalog, answers 24/7, and collects leads.",
+        teaser: "Sits on your website, knows the catalog, answers 24/7, and collects leads.",
+        modal:
+          "Knows your prospects and pricing by heart. Answers at any hour. A client writes “Looking for machine X under 100k PLN,” and the assistant instantly sends the spec sheet and captures their contact.",
+        detailsLabel: "See details →",
+        modalCta: "Book a demo",
       },
       {
         title: "Instant Lead Qualifier",
-        body: "Reaches out to new ad leads in 60 seconds, qualifies budget, and books meetings in the sales calendar.",
+        teaser:
+          "Reaches out to new ad leads in 60 seconds, qualifies budget, and books meetings in the sales calendar.",
+        modal:
+          "Stop wasting time calling window-shoppers. Our assistant messages ad leads within 1 minute, checks budget and intent. Serious buyers get a link straight to your sales calendar.",
+        detailsLabel: "See details →",
+        modalCta: "Book a demo",
       },
       {
         title: "B2B Proposal Generator",
-        body: "Sales reps input 3 sentences after a call, and the system generates a tailored, branded PDF proposal in 15 minutes.",
+        teaser:
+          "Sales reps input 3 sentences after a call, and the system generates a tailored, branded PDF proposal in 15 minutes.",
+        modal:
+          "After a meeting, the rep fills a short form on their phone (what the client looked at, their concerns). In 15 minutes the system generates a personalized, branded PDF proposal ready to send.",
+        detailsLabel: "See details →",
+        modalCta: "Book a demo",
       },
     ],
   },
@@ -137,10 +185,22 @@ const en: CoudersContent = {
     eyebrow: "Industries",
     h2: "Who we build this for.",
     items: [
-      "Manufacturing & Machinery",
-      "Construction Materials",
-      "Real Estate Developers",
-      "B2B Services",
+      {
+        title: "Manufacturing & Machinery",
+        points: ["Fast quoting", "Machine pricing", "24/7 inquiry handling"],
+      },
+      {
+        title: "Construction Materials",
+        points: ["Stock availability", "Bulk pricing", "24/7 ordering"],
+      },
+      {
+        title: "Real Estate Developers",
+        points: ["24/7 pricing answers", "Buyer qualification", "Contact capture"],
+      },
+      {
+        title: "B2B Services",
+        points: ["RFQ responses", "Lead qualification", "PDF proposal generation"],
+      },
     ],
   },
   cta: {
@@ -154,9 +214,9 @@ const pl: CoudersContent = {
   hero: {
     eyebrow: "Automatyzacja Sprzedaży B2B",
     h1: "Zautomatyzuj obsługę klienta i sprzedaż w swojej firmie.",
-    h2: "Wdrażamy asystentów AI, którzy znają Twoje cenniki, katalogi produktów i specyfikacje techniczne. Odpowiadają klientom w minutę — w nocy, w weekendy i w święta.",
     ctaButton: "Umów 15-minutowe demo",
     chatSubtitle: "Przetestuj poniżej, jak nasz asystent rozmawia z klientem.",
+    badges: ["Odpowiedź w 60s", "Działa 24/7"],
     scroll: "Przewiń",
     morphAria:
       "Pojedyncza ciągła linia przekształcająca się z abstrakcyjnej twarzy w logotyp Couders",
@@ -206,24 +266,56 @@ const pl: CoudersContent = {
   problem: {
     eyebrow: "Problem",
     h2: "Tracisz leady po godzinach pracy.",
-    body: "Drogie leady uciekają po godzinach pracy. Klienci pytają o maszyny lub materiały wieczorem. Zanim Twoje biuro odpowie rano, klient kupuje u konkurencji.",
-    points: ["Wieczorne zapytanie", "Cisza do rana", "Klient u konkurencji"],
+    before: {
+      title: "Tradycyjna Sprzedaż",
+      steps: [
+        { time: "Piątek, 21:00", text: "Klient wysyła zapytanie." },
+        { time: "Weekend", text: "Cisza." },
+        {
+          time: "Poniedziałek, 10:00",
+          text: "Handlowiec odpisuje. Efekt? Klient kupił u konkurencji.",
+        },
+      ],
+    },
+    after: {
+      title: "Sprzedaż z Couders",
+      steps: [
+        { time: "Piątek, 21:00", text: "Klient wysyła zapytanie." },
+        { time: "Piątek, 21:01", text: "Asystent AI kwalifikuje leada i sprawdza cennik." },
+        { time: "Piątek, 21:15", text: "Klient umawia demo bezpośrednio w kalendarzu." },
+      ],
+    },
   },
   pillars: {
     eyebrow: "Produkt",
     h2: "Trzy sposoby, jak to działa.",
+    closeLabel: "Zamknij",
     items: [
       {
         title: "Firmowy Asystent Sprzedaży",
-        body: "Siedzi na Twojej stronie, zna katalog produktów, odpowiada 24/7 i zbiera leady.",
+        teaser: "Siedzi na Twojej stronie, zna katalog produktów, odpowiada 24/7 i zbiera leady.",
+        modal:
+          "Zna Twój prospekt i cennik na pamięć. Odpowiada o każdej porze. Klient pisze „Szukam maszyny X do 100 tys. zł”, a asystent natychmiast wysyła specyfikację i zbiera kontakt.",
+        detailsLabel: "Poznaj szczegóły →",
+        modalCta: "Zarezerwuj demo",
       },
       {
         title: "Błyskawiczny Kwalifikator Zapytań",
-        body: "Odzywa się do nowych leadów z reklam w 60 sekund, kwalifikuje budżet i umawia spotkania w kalendarzu sprzedaży.",
+        teaser:
+          "Odzywa się do nowych leadów z reklam w 60 sekund, kwalifikuje budżet i umawia spotkania w kalendarzu sprzedaży.",
+        modal:
+          "Nie trać czasu na dzwonienie do „ciekawskich”. Nasz asystent pisze do leada z reklamy w 1 minutę. Bada budżet i intencję. Poważni klienci dostają link do kalendarza handlowca.",
+        detailsLabel: "Poznaj szczegóły →",
+        modalCta: "Zarezerwuj demo",
       },
       {
         title: "Generator Ofert B2B",
-        body: "Handlowiec wpisuje 3 zdania po rozmowie, a system generuje dopasowaną, firmową ofertę PDF w 15 minut.",
+        teaser:
+          "Handlowiec wpisuje 3 zdania po rozmowie, a system generuje dopasowaną, firmową ofertę PDF w 15 minut.",
+        modal:
+          "Po spotkaniu handlowiec uzupełnia krótki formularz na telefonie (np. co klient oglądał i czego się obawia). W 15 minut system generuje spersonalizowaną, designerską ofertę PDF gotową do wysłania.",
+        detailsLabel: "Poznaj szczegóły →",
+        modalCta: "Zarezerwuj demo",
       },
     ],
   },
@@ -231,10 +323,22 @@ const pl: CoudersContent = {
     eyebrow: "Branże",
     h2: "Dla kogo to budujemy.",
     items: [
-      "Przemysł i Maszyny",
-      "Materiały Budowlane i Hurtownie",
-      "Deweloperzy i Nieruchomości",
-      "Usługi B2B",
+      {
+        title: "Przemysł i Maszyny",
+        points: ["Szybkie ofertowanie", "Wycena maszyn", "Obsługa zapytań 24/7"],
+      },
+      {
+        title: "Materiały Budowlane i Hurtownie",
+        points: ["Dostępność magazynowa", "Wycena partii", "Zamówienia 24/7"],
+      },
+      {
+        title: "Deweloperzy i Nieruchomości",
+        points: ["Odpowiedzi o cenach 24/7", "Kwalifikacja kupujących", "Zbieranie kontaktów"],
+      },
+      {
+        title: "Usługi B2B",
+        points: ["Odpowiedzi na zapytania ofertowe", "Kwalifikacja leadów", "Generowanie ofert PDF"],
+      },
     ],
   },
   cta: {
