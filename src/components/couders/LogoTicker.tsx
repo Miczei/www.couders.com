@@ -163,7 +163,7 @@ const INFRA: Provider[] = [
   { name: "Pinecone", sub: "Vector Database", Mark: PineconeMark },
 ];
 
-function MarqueeRow({ items }: { items: Provider[] }) {
+function MarqueeRow({ items, light }: { items: Provider[]; light?: boolean }) {
   return (
     <div className="flex shrink-0 items-center">
       {items.map((p, i) => (
@@ -171,14 +171,26 @@ function MarqueeRow({ items }: { items: Provider[] }) {
           key={`${p.name}-${i}`}
           className="group mx-8 flex items-center gap-3 opacity-40 transition-opacity duration-500 hover:opacity-100 sm:mx-12 sm:gap-4 md:mx-16"
         >
-          <span className="text-[#C7CCD6] transition-[color,filter] duration-500 group-hover:text-[#C06C4C] group-hover:drop-shadow-[0_0_10px_rgba(192,108,76,0.55)]">
+          <span
+            className={`transition-[color,filter] duration-500 group-hover:text-[#C06C4C] group-hover:drop-shadow-[0_0_10px_rgba(192,108,76,0.55)] ${
+              light ? "text-slate-600" : "text-[#C7CCD6]"
+            }`}
+          >
             <p.Mark />
           </span>
           <div>
-            <span className="block text-base font-medium tracking-[-0.01em] text-[#C7CCD6] transition-colors duration-500 group-hover:text-[#C06C4C] sm:text-lg">
+            <span
+              className={`block text-base font-medium tracking-[-0.01em] transition-colors duration-500 group-hover:text-[#C06C4C] sm:text-lg ${
+                light ? "text-slate-700" : "text-[#C7CCD6]"
+              }`}
+            >
               {p.name}
             </span>
-            <span className="block font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+            <span
+              className={`block font-mono text-[10px] uppercase tracking-[0.22em] ${
+                light ? "text-slate-500" : "text-zinc-500"
+              }`}
+            >
               {p.sub}
             </span>
           </div>
@@ -199,14 +211,20 @@ function MarqueeBand({
   label,
   items,
   reverse,
+  light,
 }: {
   label: string;
   items: Provider[];
   reverse?: boolean;
+  light?: boolean;
 }) {
   return (
     <div className="py-6 sm:py-8">
-      <p className="mx-auto mb-5 max-w-6xl px-5 font-mono text-[9px] uppercase tracking-[0.24em] text-zinc-600 sm:mb-6 sm:px-6 sm:text-[10px] sm:tracking-[0.28em]">
+      <p
+        className={`mx-auto mb-5 max-w-6xl px-5 font-mono text-[9px] uppercase tracking-[0.24em] sm:mb-6 sm:px-6 sm:text-[10px] sm:tracking-[0.28em] ${
+          light ? "text-slate-400" : "text-zinc-600"
+        }`}
+      >
         {label}
       </p>
       <div className="overflow-hidden" style={MASK}>
@@ -215,9 +233,9 @@ function MarqueeBand({
             reverse ? "couders-marquee--reverse couders-marquee--slow" : ""
           }`}
         >
-          <MarqueeRow items={items} />
-          <MarqueeRow items={items} />
-          <MarqueeRow items={items} />
+          <MarqueeRow items={items} light={light} />
+          <MarqueeRow items={items} light={light} />
+          <MarqueeRow items={items} light={light} />
         </div>
       </div>
     </div>
@@ -226,11 +244,16 @@ function MarqueeBand({
 
 export default function LogoTicker({
   content,
+  light,
 }: {
   content: CoudersContent["logoTicker"];
+  light?: boolean;
 }) {
   return (
-    <section id="tech-ticker" className="relative z-10 overflow-x-hidden bg-black py-10 sm:py-14">
+    <section
+      id="tech-ticker"
+      className={`relative z-10 overflow-x-hidden py-10 sm:py-14 ${light ? "bg-white" : "bg-black"}`}
+    >
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -238,10 +261,10 @@ export default function LogoTicker({
         transition={{ duration: 1 }}
         role="img"
         aria-label={content.marqueeAria}
-        className="divide-y divide-white/[0.08] border-y border-white/[0.08]"
+        className={light ? "divide-y divide-black/[0.08] border-y border-black/[0.08]" : "divide-y divide-white/[0.08] border-y border-white/[0.08]"}
       >
-        <MarqueeBand label={content.rowModels} items={MODELS} />
-        <MarqueeBand label={content.rowInfra} items={INFRA} reverse />
+        <MarqueeBand label={content.rowModels} items={MODELS} light={light} />
+        <MarqueeBand label={content.rowInfra} items={INFRA} reverse light={light} />
       </motion.div>
     </section>
   );

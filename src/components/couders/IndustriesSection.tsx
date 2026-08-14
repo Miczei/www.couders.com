@@ -39,14 +39,27 @@ const GRADIENTS = [
   "radial-gradient(120% 100% at 0% 100%, rgba(192,108,76,0.16), transparent 60%)",
 ];
 
-export default function IndustriesSection({ content }: { content: CoudersContent["industries"] }) {
+export default function IndustriesSection({
+  content,
+  light,
+}: {
+  content: CoudersContent["industries"];
+  light?: boolean;
+}) {
   const [active, setActive] = useState(0);
   const item = content.items[active];
 
   return (
-    <section id="industries" className="relative z-10 bg-black px-5 py-16 sm:px-6 sm:py-24 md:py-32">
+    <section
+      id="industries"
+      className={`relative z-10 px-5 py-16 sm:px-6 sm:py-24 md:py-32 ${light ? "bg-white" : "bg-black"}`}
+    >
       <div className="mx-auto max-w-6xl">
-        <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-zinc-500 sm:text-[11px] sm:tracking-[0.32em]">
+        <p
+          className={`font-mono text-[10px] uppercase tracking-[0.26em] sm:text-[11px] sm:tracking-[0.32em] ${
+            light ? "text-slate-500" : "text-zinc-500"
+          }`}
+        >
           {content.eyebrow}
         </p>
         <motion.h2
@@ -54,7 +67,9 @@ export default function IndustriesSection({ content }: { content: CoudersContent
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, ease: EASE }}
-          className="mt-4 max-w-2xl text-balance text-2xl font-semibold tracking-[-0.03em] text-white sm:text-3xl md:text-5xl"
+          className={`mt-4 max-w-2xl text-balance text-2xl font-semibold tracking-[-0.03em] sm:text-3xl md:text-5xl ${
+            light ? "text-slate-900" : "text-white"
+          }`}
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
           {content.h2}
@@ -73,12 +88,14 @@ export default function IndustriesSection({ content }: { content: CoudersContent
                   className={`min-w-[200px] flex-none snap-start rounded-2xl border px-5 py-4 text-left transition-colors duration-300 md:min-w-0 ${
                     isActive
                       ? "border-[#C06C4C]/70 bg-[#C06C4C]/10 shadow-[0_0_24px_rgba(192,108,76,0.25)]"
-                      : "border-white/10 bg-white/[0.02] hover:border-white/25"
+                      : light
+                        ? "border-slate-200 bg-black/[0.02] hover:border-slate-300"
+                        : "border-white/10 bg-white/[0.02] hover:border-white/25"
                   }`}
                 >
                   <span
                     className={`text-[15px] font-medium tracking-[-0.01em] sm:text-base ${
-                      isActive ? "text-white" : "text-zinc-400"
+                      isActive ? (light ? "text-slate-900" : "text-white") : light ? "text-slate-500" : "text-zinc-400"
                     }`}
                     style={{ fontFamily: "var(--font-display), sans-serif" }}
                   >
@@ -91,7 +108,11 @@ export default function IndustriesSection({ content }: { content: CoudersContent
 
           {/* Dynamic display area — fixed height so tab switches never jump
               the section's height; the paragraph scrolls internally instead. */}
-          <div className="relative h-[400px] overflow-hidden rounded-2xl border border-white/10 sm:h-[380px] md:col-span-3">
+          <div
+            className={`relative h-[400px] overflow-hidden rounded-2xl border sm:h-[380px] md:col-span-3 ${
+              light ? "border-slate-200" : "border-white/10"
+            }`}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -100,9 +121,14 @@ export default function IndustriesSection({ content }: { content: CoudersContent
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.4, ease: EASE }}
                 className="absolute inset-0 flex flex-col p-6 sm:p-10"
-                style={{ background: GRADIENTS[active % GRADIENTS.length] }}
+                style={{ background: light ? "white" : undefined }}
               >
-                <div className="flex flex-none items-center gap-4">
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{ background: GRADIENTS[active % GRADIENTS.length] }}
+                  aria-hidden="true"
+                />
+                <div className="relative flex flex-none items-center gap-4">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -114,14 +140,20 @@ export default function IndustriesSection({ content }: { content: CoudersContent
                     {ICONS[active % ICONS.length]}
                   </svg>
                   <p
-                    className="text-lg font-semibold tracking-[-0.02em] text-white sm:text-2xl"
+                    className={`text-lg font-semibold tracking-[-0.02em] sm:text-2xl ${
+                      light ? "text-slate-900" : "text-white"
+                    }`}
                     style={{ fontFamily: "var(--font-display), sans-serif" }}
                   >
                     {item.title}
                   </p>
                 </div>
-                <div className="mt-5 flex-1 overflow-y-auto pr-1">
-                  <p className="text-pretty text-sm leading-relaxed text-zinc-300 sm:text-[15px]">
+                <div className="relative mt-5 flex-1 overflow-y-auto pr-1">
+                  <p
+                    className={`text-pretty text-sm leading-relaxed sm:text-[15px] ${
+                      light ? "text-slate-700" : "text-zinc-300"
+                    }`}
+                  >
                     {item.description}
                   </p>
                 </div>

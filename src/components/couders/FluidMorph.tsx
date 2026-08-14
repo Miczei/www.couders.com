@@ -147,6 +147,7 @@ export default function FluidMorph({
   ariaLabel,
   className,
   onReveal,
+  light,
 }: {
   debugProgress?: number;
   ariaLabel?: string;
@@ -154,6 +155,9 @@ export default function FluidMorph({
   /** Fires early — at REVEAL_THRESHOLD of the morph, not at its true end —
    *  so the caller can overlap its own entrance with the morph's tail. */
   onReveal?: () => void;
+  /** The "chrome" gradient is white-forward — invisible on a white hero
+   *  background unless swapped for a dark variant. */
+  light?: boolean;
 }) {
   const cRef = useRef<SVGPathElement>(null);
   const wordRef = useRef<SVGPathElement>(null);
@@ -239,11 +243,23 @@ export default function FluidMorph({
     >
       <defs>
         <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="0.25">
-          <stop offset="0" stopColor="#FFFFFF" />
-          <stop offset="0.35" stopColor="#D7DBE2" />
-          <stop offset="0.62" stopColor="#9BA1AB" />
-          <stop offset="0.85" stopColor="#EDEFF3" />
-          <stop offset="1" stopColor="#FFFFFF" />
+          {light ? (
+            <>
+              <stop offset="0" stopColor="#0F172A" />
+              <stop offset="0.35" stopColor="#475569" />
+              <stop offset="0.62" stopColor="#1E293B" />
+              <stop offset="0.85" stopColor="#64748B" />
+              <stop offset="1" stopColor="#0F172A" />
+            </>
+          ) : (
+            <>
+              <stop offset="0" stopColor="#FFFFFF" />
+              <stop offset="0.35" stopColor="#D7DBE2" />
+              <stop offset="0.62" stopColor="#9BA1AB" />
+              <stop offset="0.85" stopColor="#EDEFF3" />
+              <stop offset="1" stopColor="#FFFFFF" />
+            </>
+          )}
           <animateTransform
             attributeName="gradientTransform"
             type="translate"
@@ -264,8 +280,8 @@ export default function FluidMorph({
         <use
           href="#fluid-line"
           filter="url(#lineGlow)"
-          stroke="#C7CCD6"
-          strokeOpacity="0.22"
+          stroke={light ? "#334155" : "#C7CCD6"}
+          strokeOpacity={light ? "0.16" : "0.22"}
           strokeWidth="6"
         />
       )}

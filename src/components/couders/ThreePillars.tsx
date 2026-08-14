@@ -18,13 +18,34 @@ const OPEN_ANCHOR_CLASS = [
   "sm:left-auto sm:right-0",
 ];
 
-export default function ThreePillars({ content }: { content: CoudersContent["pillars"] }) {
+export default function ThreePillars({
+  content,
+  light,
+}: {
+  content: CoudersContent["pillars"];
+  light?: boolean;
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+  // A section with its own z-index creates a stacking context: a z-20 card
+  // inside a z-10 section still loses to a *sibling* z-10 section that comes
+  // later in the DOM (the marquee), because descendant z-index never leaks
+  // out to compete with sibling stacking contexts. Bumping this section's
+  // own z-index above the marquee's while a card is open is what actually
+  // lets the expanded card float above it instead of getting painted under.
   return (
-    <section id="pillars" className="relative z-10 bg-black px-5 py-16 sm:px-6 sm:py-24 md:py-32">
+    <section
+      id="pillars"
+      className={`relative px-5 py-16 sm:px-6 sm:py-24 md:py-32 ${light ? "bg-white" : "bg-black"} ${
+        openIndex !== null ? "z-40" : "z-10"
+      }`}
+    >
       <div className="mx-auto max-w-6xl">
-        <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-zinc-500 sm:text-[11px] sm:tracking-[0.32em]">
+        <p
+          className={`font-mono text-[10px] uppercase tracking-[0.26em] sm:text-[11px] sm:tracking-[0.32em] ${
+            light ? "text-slate-500" : "text-zinc-500"
+          }`}
+        >
           {content.eyebrow}
         </p>
         <motion.h2
@@ -32,7 +53,9 @@ export default function ThreePillars({ content }: { content: CoudersContent["pil
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, ease: EASE }}
-          className="mt-4 max-w-2xl text-balance text-2xl font-semibold tracking-[-0.03em] text-white sm:text-3xl md:text-5xl"
+          className={`mt-4 max-w-2xl text-balance text-2xl font-semibold tracking-[-0.03em] sm:text-3xl md:text-5xl ${
+            light ? "text-slate-900" : "text-white"
+          }`}
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
           {content.h2}
@@ -53,8 +76,10 @@ export default function ThreePillars({ content }: { content: CoudersContent["pil
                 <div
                   className={`absolute inset-x-0 top-0 flex flex-col rounded-2xl border p-6 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:p-8 ${
                     open
-                      ? `z-20 border-[#C06C4C]/60 bg-[#0A0A0B] shadow-2xl sm:w-[130%] ${OPEN_ANCHOR_CLASS[i]}`
-                      : "z-0 border-white/10 bg-black/40 hover:border-[#C06C4C]/40 sm:w-full"
+                      ? `z-20 border-[#C06C4C]/60 shadow-2xl sm:w-[130%] ${light ? "bg-white" : "bg-[#0A0A0B]"} ${OPEN_ANCHOR_CLASS[i]}`
+                      : light
+                        ? "z-0 border-slate-200 bg-black/[0.02] hover:border-[#C06C4C]/50 sm:w-full"
+                        : "z-0 border-white/10 bg-black/40 hover:border-[#C06C4C]/40 sm:w-full"
                   }`}
                 >
                   <button
@@ -63,20 +88,30 @@ export default function ThreePillars({ content }: { content: CoudersContent["pil
                     className="flex flex-col text-left"
                   >
                     <span
-                      className="bg-gradient-to-b from-white via-[#C7CCD6] to-[#6E7178] bg-clip-text font-mono text-sm text-transparent"
+                      className={`bg-clip-text font-mono text-sm text-transparent ${
+                        light
+                          ? "bg-gradient-to-b from-slate-900 via-slate-600 to-slate-400"
+                          : "bg-gradient-to-b from-white via-[#C7CCD6] to-[#6E7178]"
+                      }`}
                       aria-hidden="true"
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3
-                      className={`mt-4 text-lg font-semibold tracking-[-0.01em] text-[#F5F5F7] transition-transform duration-500 sm:text-xl ${
+                      className={`mt-4 text-lg font-semibold tracking-[-0.01em] transition-transform duration-500 sm:text-xl ${
                         open ? "scale-[1.03]" : ""
-                      }`}
+                      } ${light ? "text-slate-900" : "text-[#F5F5F7]"}`}
                       style={{ fontFamily: "var(--font-display), sans-serif", transformOrigin: "left" }}
                     >
                       {item.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-zinc-400 sm:text-[15px]">{item.teaser}</p>
+                    <p
+                      className={`mt-3 text-sm leading-relaxed sm:text-[15px] ${
+                        light ? "text-slate-600" : "text-zinc-400"
+                      }`}
+                    >
+                      {item.teaser}
+                    </p>
                     {!open && (
                       <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#C06C4C]">
                         {content.detailsLabel}
@@ -90,7 +125,13 @@ export default function ThreePillars({ content }: { content: CoudersContent["pil
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="text-sm leading-relaxed text-zinc-300 sm:text-[15px]">{item.expanded}</p>
+                      <p
+                        className={`text-sm leading-relaxed sm:text-[15px] ${
+                          light ? "text-slate-700" : "text-zinc-300"
+                        }`}
+                      >
+                        {item.expanded}
+                      </p>
                       <button
                         type="button"
                         onClick={() => setOpenIndex(null)}

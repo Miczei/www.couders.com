@@ -15,10 +15,14 @@ export default function CoudersHero({
   content,
   locale,
   debugProgress,
+  light,
 }: {
   content: CoudersContent["hero"];
   locale: Locale;
   debugProgress?: number;
+  /** Homepage-only light-theme experiment — see page.tsx. Defaults to the
+   *  normal dark hero everywhere else (including /lab). */
+  light?: boolean;
 }) {
   const reduced = useReducedMotion();
   const still = debugProgress !== undefined || !!reduced;
@@ -28,7 +32,7 @@ export default function CoudersHero({
   const [logoReveal, setLogoReveal] = useState(still);
 
   return (
-    <section className="relative z-10 overflow-hidden bg-black">
+    <section className={`relative z-10 overflow-hidden ${light ? "bg-white" : "bg-black"}`}>
       <AmbientGlow
         className="left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2"
         color="rgba(192,108,76,0.12)"
@@ -46,27 +50,32 @@ export default function CoudersHero({
           ariaLabel={content.morphAria}
           className="w-[min(72vw,620px)]"
           onReveal={() => setLogoReveal(true)}
+          light={light}
         />
 
         <motion.h1
           initial={still ? false : { opacity: 0, y: 20 }}
           animate={logoReveal ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.7, delay: 0, ease: EASE }}
-          className="mt-1 max-w-xl text-balance px-6 text-center text-xl font-semibold tracking-[-0.03em] text-white sm:max-w-2xl sm:text-2xl lg:w-max lg:max-w-none lg:whitespace-nowrap lg:text-3xl"
+          className={`mt-1 max-w-xl text-balance px-6 text-center text-xl font-semibold tracking-[-0.03em] sm:max-w-2xl sm:text-2xl lg:w-max lg:max-w-none lg:whitespace-nowrap lg:text-3xl ${
+            light ? "text-slate-900" : "text-white"
+          }`}
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
           {content.h1}
         </motion.h1>
 
         <div className="mt-8 w-full max-w-4xl px-6">
-          <HeroChat ready={logoReveal} />
+          <HeroChat ready={logoReveal} light={light} />
         </div>
 
         <motion.p
           initial={still ? false : { opacity: 0 }}
           animate={{ opacity: logoReveal ? 1 : 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-5 px-6 text-center text-sm uppercase tracking-wider text-zinc-400"
+          className={`mt-5 px-6 text-center text-sm uppercase tracking-wider ${
+            light ? "text-slate-500" : "text-zinc-400"
+          }`}
         >
           {content.chatSubtitle}
         </motion.p>
@@ -78,7 +87,9 @@ export default function CoudersHero({
         >
           <Link
             href={`/${locale}/contact`}
-            className="mt-6 inline-block rounded-full bg-white px-9 py-4 text-center text-[15px] font-medium text-black transition-transform duration-300 hover:-translate-y-0.5"
+            className={`mt-6 inline-block rounded-full px-9 py-4 text-center text-[15px] font-medium transition-transform duration-300 hover:-translate-y-0.5 ${
+              light ? "bg-[#C06C4C] text-white" : "bg-white text-black"
+            }`}
           >
             {content.ctaButton}
           </Link>
@@ -88,14 +99,18 @@ export default function CoudersHero({
           initial={still ? false : { opacity: 0 }}
           animate={{ opacity: logoReveal ? 1 : 0 }}
           transition={{ duration: 0.8, delay: logoReveal ? 0.9 : 0 }}
-          className="mt-auto flex flex-col items-center gap-2.5 pt-10 text-zinc-600"
+          className={`mt-auto flex flex-col items-center gap-2.5 pt-10 ${
+            light ? "text-slate-400" : "text-zinc-600"
+          }`}
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.28em]">
             {content.scroll}
           </span>
-          <span className="relative block h-9 w-px overflow-hidden bg-white/15">
+          <span
+            className={`relative block h-9 w-px overflow-hidden ${light ? "bg-black/15" : "bg-white/15"}`}
+          >
             <motion.span
-              className="absolute left-0 top-0 h-3 w-px bg-white/70"
+              className={`absolute left-0 top-0 h-3 w-px ${light ? "bg-black/60" : "bg-white/70"}`}
               animate={{ y: [-12, 36] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             />

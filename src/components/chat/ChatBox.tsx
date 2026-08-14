@@ -3,13 +3,17 @@
 import { useEffect, useRef } from "react";
 import { useChat } from "./ChatProvider";
 
-function TypingDots() {
+function TypingDots({ light }: { light?: boolean }) {
   return (
-    <div className="flex items-center gap-1 self-start rounded-2xl rounded-bl-sm bg-white/[0.06] px-4 py-3">
+    <div
+      className={`flex items-center gap-1 self-start rounded-2xl rounded-bl-sm px-4 py-3 ${
+        light ? "bg-slate-900/5" : "bg-white/[0.06]"
+      }`}
+    >
       {[0, 1, 2].map((i) => (
         <span
           key={i}
-          className="h-1.5 w-1.5 animate-pulse rounded-full bg-zinc-400"
+          className={`h-1.5 w-1.5 animate-pulse rounded-full ${light ? "bg-slate-400" : "bg-zinc-400"}`}
           style={{ animationDelay: `${i * 0.15}s` }}
         />
       ))}
@@ -17,15 +21,23 @@ function TypingDots() {
   );
 }
 
-export function ChatHeader() {
+export function ChatHeader({ light }: { light?: boolean }) {
   const { ui } = useChat();
   return (
-    <div className="flex flex-none items-center gap-3 border-b border-white/10 px-4 py-3.5">
-      <span className="relative flex h-9 w-9 flex-none items-center justify-center rounded-full bg-white/[0.06]">
+    <div
+      className={`flex flex-none items-center gap-3 border-b px-4 py-3.5 ${
+        light ? "border-slate-200" : "border-white/10"
+      }`}
+    >
+      <span
+        className={`relative flex h-9 w-9 flex-none items-center justify-center rounded-full ${
+          light ? "bg-slate-900/5" : "bg-white/[0.06]"
+        }`}
+      >
         <svg
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#C7CCD6"
+          stroke={light ? "#475569" : "#C7CCD6"}
           strokeWidth="1.6"
           strokeLinejoin="round"
           className="h-5 w-5"
@@ -35,10 +47,16 @@ export function ChatHeader() {
         </svg>
       </span>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-white">{ui.botName}</p>
-        <p className="truncate text-xs text-zinc-500">{ui.botSubtitle}</p>
+        <p className={`truncate text-sm font-medium ${light ? "text-slate-900" : "text-white"}`}>
+          {ui.botName}
+        </p>
+        <p className={`truncate text-xs ${light ? "text-slate-500" : "text-zinc-500"}`}>{ui.botSubtitle}</p>
       </div>
-      <span className="flex flex-none items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-emerald-300">
+      <span
+        className={`flex flex-none items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide ${
+          light ? "border-emerald-600/20 bg-emerald-50 text-emerald-700" : "border-emerald-400/20 bg-emerald-400/10 text-emerald-300"
+        }`}
+      >
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(74,222,128,0.8)]" />
         {ui.online}
       </span>
@@ -46,7 +64,7 @@ export function ChatHeader() {
   );
 }
 
-export function ChatMessages({ className }: { className?: string }) {
+export function ChatMessages({ className, light }: { className?: string; light?: boolean }) {
   const { messages, isWaiting } = useChat();
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -66,30 +84,40 @@ export function ChatMessages({ className }: { className?: string }) {
             m.sender === "user"
               ? "self-end rounded-br-sm bg-[#C06C4C] text-white"
               : m.sender === "error"
-                ? "self-start rounded-bl-sm bg-red-500/10 text-red-200"
-                : "self-start rounded-bl-sm bg-white/[0.06] text-zinc-200"
+                ? light
+                  ? "self-start rounded-bl-sm bg-red-50 text-red-700"
+                  : "self-start rounded-bl-sm bg-red-500/10 text-red-200"
+                : light
+                  ? "self-start rounded-bl-sm bg-slate-900/5 text-slate-800"
+                  : "self-start rounded-bl-sm bg-white/[0.06] text-zinc-200"
           }`}
         >
           {m.text}
         </div>
       ))}
-      {isWaiting && <TypingDots />}
+      {isWaiting && <TypingDots light={light} />}
       <div ref={endRef} />
     </div>
   );
 }
 
-export function QuickReplies() {
+export function QuickReplies({ light }: { light?: boolean }) {
   const { ui, sendMessage, isWaiting } = useChat();
   return (
-    <div className="flex flex-none flex-wrap gap-2 border-t border-white/10 px-3 pt-3">
+    <div
+      className={`flex flex-none flex-wrap gap-2 border-t px-3 pt-3 ${light ? "border-slate-200" : "border-white/10"}`}
+    >
       {ui.quickReplies.map((q) => (
         <button
           key={q}
           type="button"
           disabled={isWaiting}
           onClick={() => sendMessage(q)}
-          className="rounded-full border border-white/15 bg-white/[0.03] px-3 py-1.5 text-xs text-zinc-300 transition-colors duration-300 hover:border-[#C06C4C]/60 hover:text-white disabled:opacity-40"
+          className={`rounded-full border px-3 py-1.5 text-xs transition-colors duration-300 hover:border-[#C06C4C]/60 disabled:opacity-40 ${
+            light
+              ? "border-slate-200 bg-slate-900/[0.02] text-slate-600 hover:text-slate-900"
+              : "border-white/15 bg-white/[0.03] text-zinc-300 hover:text-white"
+          }`}
         >
           {q}
         </button>
@@ -98,7 +126,7 @@ export function QuickReplies() {
   );
 }
 
-export function ChatInput({ autoFocus }: { autoFocus?: boolean }) {
+export function ChatInput({ autoFocus, light }: { autoFocus?: boolean; light?: boolean }) {
   const { ui, isWaiting, sendMessage } = useChat();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -111,7 +139,7 @@ export function ChatInput({ autoFocus }: { autoFocus?: boolean }) {
   }
 
   return (
-    <div className="flex flex-none items-end gap-2 border-t border-white/10 p-3">
+    <div className={`flex flex-none items-end gap-2 border-t p-3 ${light ? "border-slate-200" : "border-white/10"}`}>
       <textarea
         ref={inputRef}
         rows={1}
@@ -120,7 +148,11 @@ export function ChatInput({ autoFocus }: { autoFocus?: boolean }) {
         placeholder={ui.placeholder}
         disabled={isWaiting}
         aria-label={ui.placeholder}
-        className="max-h-24 flex-1 resize-none rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[13.5px] text-white outline-none transition-colors duration-300 placeholder:text-zinc-500 focus:border-white/30 disabled:opacity-50"
+        className={`max-h-24 flex-1 resize-none rounded-xl border px-3 py-2 text-[13.5px] outline-none transition-colors duration-300 disabled:opacity-50 ${
+          light
+            ? "border-slate-200 bg-slate-900/[0.03] text-slate-900 placeholder:text-slate-400 focus:border-slate-400"
+            : "border-white/10 bg-white/[0.04] text-white placeholder:text-zinc-500 focus:border-white/30"
+        }`}
         onInput={(e) => {
           const el = e.currentTarget;
           el.style.height = "auto";
