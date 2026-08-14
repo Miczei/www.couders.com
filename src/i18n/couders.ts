@@ -166,19 +166,35 @@ const en: CoudersContent = {
     items: [
       {
         title: "Manufacturing & Machinery",
-        points: ["Fast quoting", "Machine pricing", "24/7 inquiry handling"],
+        points: [
+          "Technical machine parameter selection",
+          "Automated quoting and pricing",
+          "Handling complex specifications 24/7",
+        ],
       },
       {
         title: "Construction Materials",
-        points: ["Stock availability", "Bulk pricing", "24/7 ordering"],
+        points: [
+          "Instant stock availability checks",
+          "Bulk pricing and discounts",
+          "Handling inquiries from contractors and crews",
+        ],
       },
       {
         title: "Real Estate Developers",
-        points: ["24/7 pricing answers", "Buyer qualification", "Contact capture"],
+        points: [
+          "24/7 listing, pricing, and floor-plan presentation",
+          "Inquiry filtering",
+          "Automatic meeting booking in the advisor's calendar",
+        ],
       },
       {
         title: "B2B Services",
-        points: ["RFQ responses", "Lead qualification", "PDF proposal generation"],
+        points: [
+          "Qualifying inbound inquiries",
+          "Pre-meeting discovery calls",
+          "Time savings for the sales team",
+        ],
       },
     ],
   },
@@ -284,19 +300,35 @@ const pl: CoudersContent = {
     items: [
       {
         title: "Przemysł i Maszyny",
-        points: ["Szybkie ofertowanie", "Wycena maszyn", "Obsługa zapytań 24/7"],
+        points: [
+          "Dobór parametrów technicznych maszyn",
+          "Automatyczne wyceny i ofertowanie",
+          "Odpowiadanie na skomplikowane specyfikacje 24/7",
+        ],
       },
       {
-        title: "Materiały Budowlane i Hurtownie",
-        points: ["Dostępność magazynowa", "Wycena partii", "Zamówienia 24/7"],
+        title: "Materiały Budowlane",
+        points: [
+          "Błyskawiczne sprawdzanie dostępności w magazynie",
+          "Cenniki hurtowe i rabatowanie",
+          "Obsługa zapytań od wykonawców i ekip budowlanych",
+        ],
       },
       {
         title: "Deweloperzy i Nieruchomości",
-        points: ["Odpowiedzi o cenach 24/7", "Kwalifikacja kupujących", "Zbieranie kontaktów"],
+        points: [
+          "Prezentacja mieszkań, cenników i rzutów 24/7",
+          "Odsiewanie zapytań",
+          "Automatyczne umawianie spotkań w kalendarzu doradcy",
+        ],
       },
       {
         title: "Usługi B2B",
-        points: ["Odpowiedzi na zapytania ofertowe", "Kwalifikacja leadów", "Generowanie ofert PDF"],
+        points: [
+          "Kwalifikacja przychodzących zapytań",
+          "Wstępny wywiad przed spotkaniem",
+          "Oszczędność czasu dla działu handlowego",
+        ],
       },
     ],
   },

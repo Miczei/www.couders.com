@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import type { CoudersContent } from "@/i18n/couders";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -31,7 +32,17 @@ const ICONS: React.ReactNode[] = [
   </g>,
 ];
 
+const GRADIENTS = [
+  "radial-gradient(120% 100% at 0% 0%, rgba(192,108,76,0.16), transparent 60%)",
+  "radial-gradient(120% 100% at 100% 0%, rgba(192,108,76,0.16), transparent 60%)",
+  "radial-gradient(120% 100% at 100% 100%, rgba(192,108,76,0.16), transparent 60%)",
+  "radial-gradient(120% 100% at 0% 100%, rgba(192,108,76,0.16), transparent 60%)",
+];
+
 export default function IndustriesSection({ content }: { content: CoudersContent["industries"] }) {
+  const [active, setActive] = useState(0);
+  const item = content.items[active];
+
   return (
     <section id="industries" className="relative z-10 bg-black px-5 py-16 sm:px-6 sm:py-24 md:py-32">
       <div className="mx-auto max-w-6xl">
@@ -49,46 +60,74 @@ export default function IndustriesSection({ content }: { content: CoudersContent
           {content.h2}
         </motion.h2>
 
-        <div className="mt-10 grid grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-          {content.items.map((item, i) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: EASE }}
-              className="group relative min-h-[220px] overflow-hidden rounded-2xl border border-white/[0.08] p-6 transition-colors duration-500 hover:border-[#C06C4C]/50 sm:p-7"
-              style={{
-                background: "linear-gradient(160deg, #17171A 0%, #0A0A0B 55%, #0A0A0B 100%)",
-              }}
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#C06C4C"
-                strokeWidth="1.5"
-                className="h-9 w-9 transition-transform duration-500 sm:group-hover:-translate-y-1"
-                aria-hidden="true"
-              >
-                {ICONS[i]}
-              </svg>
-              <p
-                className="mt-5 text-lg font-medium tracking-[-0.01em] text-[#F5F5F7] transition-transform duration-500 sm:group-hover:-translate-y-1"
-                style={{ fontFamily: "var(--font-display), sans-serif" }}
-              >
-                {item.title}
-              </p>
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-14 md:grid-cols-5 md:gap-6">
+          {/* Tabs: horizontal scroll-snap row on mobile, vertical stack from md: up. */}
+          <div className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 md:col-span-2 md:mx-0 md:flex-col md:gap-3 md:overflow-visible md:px-0 md:pb-0">
+            {content.items.map((tab, i) => {
+              const isActive = i === active;
+              return (
+                <button
+                  key={tab.title}
+                  type="button"
+                  onClick={() => setActive(i)}
+                  className={`min-w-[200px] flex-none snap-start rounded-2xl border px-5 py-4 text-left transition-colors duration-300 md:min-w-0 ${
+                    isActive
+                      ? "border-[#C06C4C]/70 bg-[#C06C4C]/10 shadow-[0_0_24px_rgba(192,108,76,0.25)]"
+                      : "border-white/10 bg-white/[0.02] hover:border-white/25"
+                  }`}
+                >
+                  <span
+                    className={`text-[15px] font-medium tracking-[-0.01em] sm:text-base ${
+                      isActive ? "text-white" : "text-zinc-400"
+                    }`}
+                    style={{ fontFamily: "var(--font-display), sans-serif" }}
+                  >
+                    {tab.title}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
 
-              <ul className="mt-4 space-y-1.5 opacity-100 transition-all duration-500 sm:mt-0 sm:max-h-0 sm:translate-y-2 sm:opacity-0 sm:group-hover:mt-4 sm:group-hover:max-h-40 sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
-                {item.points.map((point) => (
-                  <li key={point} className="flex items-center gap-2 text-xs text-zinc-400 sm:text-[13px]">
-                    <span className="h-1 w-1 flex-none rounded-full bg-[#C06C4C]" />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+          {/* Dynamic display area */}
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 md:col-span-3">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.4, ease: EASE }}
+                className="relative flex min-h-[280px] flex-col justify-center p-6 sm:p-10"
+                style={{ background: GRADIENTS[active % GRADIENTS.length] }}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#C06C4C"
+                  strokeWidth="1.4"
+                  className="h-10 w-10"
+                  aria-hidden="true"
+                >
+                  {ICONS[active % ICONS.length]}
+                </svg>
+                <p
+                  className="mt-5 text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl"
+                  style={{ fontFamily: "var(--font-display), sans-serif" }}
+                >
+                  {item.title}
+                </p>
+                <ul className="mt-5 space-y-2.5">
+                  {item.points.map((point) => (
+                    <li key={point} className="flex items-start gap-2.5 text-sm text-zinc-300 sm:text-[15px]">
+                      <span className="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-[#C06C4C]" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>
