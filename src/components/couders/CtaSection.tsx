@@ -41,7 +41,7 @@ export default function CtaSection({
         <Link
           href={`/${locale}/contact`}
           className={`mt-8 w-full max-w-xs rounded-full px-9 py-4 text-center text-[15px] font-medium transition-transform duration-300 hover:-translate-y-0.5 sm:mt-10 sm:w-auto sm:max-w-none ${
-            light ? "bg-[#C06C4C] text-white" : "bg-white text-black"
+            light ? "bg-[#0EA5E9] text-white" : "bg-white text-black"
           }`}
         >
           {content.button}

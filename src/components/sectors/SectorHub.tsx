@@ -14,7 +14,7 @@ import type { Sector, SectorTile, SectorsContent } from "@/i18n/sectors";
 import SectorFlow from "./SectorFlow";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const ACCENT = "#C06C4C";
+const ACCENT = "#0EA5E9";
 const SILVER = "#C7CCD6";
 
 /* Shared text-reveal variants, matching the AI Engine page's elegant

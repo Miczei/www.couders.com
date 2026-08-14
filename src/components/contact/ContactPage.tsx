@@ -29,7 +29,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function inputClass(hasError: boolean) {
   const border = hasError
     ? "border-red-400/70 focus:border-red-400"
-    : "border-white/10 focus:border-[#C06C4C]";
+    : "border-white/10 focus:border-[#0EA5E9]";
   return `w-full rounded-lg border ${border} bg-black/50 p-3.5 text-base text-white outline-none transition-all placeholder:text-zinc-500`;
 }
 
@@ -122,7 +122,7 @@ export default function ContactPage({
             <div className="relative lg:col-span-5 lg:pt-6">
               <AmbientGlow
                 className="-left-24 -top-24 h-[380px] w-[380px]"
-                color="rgba(192,108,76,0.18)"
+                color="rgba(14,165,233,0.18)"
               />
               <AmbientGlow
                 className="bottom-[-10%] right-0 h-[320px] w-[320px]"
@@ -267,7 +267,7 @@ export default function ContactPage({
                   ref={submitRef}
                   type="submit"
                   disabled={status === "sending"}
-                  className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-[#C06C4C] px-7 py-3.5 text-center text-[15px] font-medium text-white transition-transform duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                  className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-[#0EA5E9] px-7 py-3.5 text-center text-[15px] font-medium text-white transition-transform duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
                 >
                   {status === "sending" ? content.sendingLabel : content.submitLabel}
                 </button>

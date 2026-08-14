@@ -33,7 +33,7 @@ function MockPanel({
       {chip && (
         <span
           className={`absolute -right-3 -top-3 z-10 rounded-full border px-3 py-1.5 text-[11px] font-medium shadow-lg backdrop-blur-md sm:-right-4 sm:-top-4 ${
-            light ? "border-[#C06C4C]/40 bg-white text-[#9A4E30]" : "border-[#C06C4C]/40 bg-black/90 text-[#E8B8A2]"
+            light ? "border-[#0EA5E9]/40 bg-white text-[#9A4E30]" : "border-[#0EA5E9]/40 bg-black/90 text-[#E8B8A2]"
           }`}
         >
           {chip}
@@ -72,14 +72,14 @@ function ConnectorOrb({ light }: { light?: boolean }) {
       <motion.span
         animate={{ scale: [1, 1.12, 1], opacity: [0.7, 1, 0.7] }}
         transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-        className={`flex h-12 w-12 items-center justify-center rounded-full border border-[#C06C4C]/50 shadow-[0_0_36px_rgba(192,108,76,0.55)] ${
+        className={`flex h-12 w-12 items-center justify-center rounded-full border border-[#0EA5E9]/50 shadow-[0_0_36px_rgba(14,165,233,0.55)] ${
           light ? "bg-white" : "bg-black"
         }`}
       >
         <svg
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#C06C4C"
+          stroke="#0EA5E9"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -165,7 +165,7 @@ export default function ProblemSection({
           >
             <ClientBubble text={content.clientMessage} light={light} />
             <div
-              className={`max-w-[90%] self-end whitespace-pre-wrap rounded-2xl rounded-br-sm border border-[#C06C4C]/30 bg-[#C06C4C]/15 px-4 py-3 text-[13.5px] leading-relaxed ${
+              className={`max-w-[90%] self-end whitespace-pre-wrap rounded-2xl rounded-br-sm border border-[#0EA5E9]/30 bg-[#0EA5E9]/15 px-4 py-3 text-[13.5px] leading-relaxed ${
                 light ? "text-slate-900" : "text-zinc-100"
               }`}
             >

@@ -82,7 +82,7 @@ export function ChatMessages({ className, light }: { className?: string; light?:
           key={m.id}
           className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-[13.5px] leading-relaxed ${
             m.sender === "user"
-              ? "self-end rounded-br-sm bg-[#C06C4C] text-white"
+              ? "self-end rounded-br-sm bg-[#0EA5E9] text-white"
               : m.sender === "error"
                 ? light
                   ? "self-start rounded-bl-sm bg-red-50 text-red-700"
@@ -113,7 +113,7 @@ export function QuickReplies({ light }: { light?: boolean }) {
           type="button"
           disabled={isWaiting}
           onClick={() => sendMessage(q)}
-          className={`rounded-full border px-3 py-1.5 text-xs transition-colors duration-300 hover:border-[#C06C4C]/60 disabled:opacity-40 ${
+          className={`rounded-full border px-3 py-1.5 text-xs transition-colors duration-300 hover:border-[#0EA5E9]/60 disabled:opacity-40 ${
             light
               ? "border-slate-200 bg-slate-900/[0.02] text-slate-600 hover:text-slate-900"
               : "border-white/15 bg-white/[0.03] text-zinc-300 hover:text-white"
@@ -170,7 +170,7 @@ export function ChatInput({ autoFocus, light }: { autoFocus?: boolean; light?: b
         aria-label={ui.sendLabel}
         disabled={isWaiting}
         onClick={handleSend}
-        className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[#C06C4C] text-white transition-opacity duration-300 hover:opacity-90 disabled:opacity-40"
+        className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[#0EA5E9] text-white transition-opacity duration-300 hover:opacity-90 disabled:opacity-40"
       >
         <svg
           viewBox="0 0 24 24"

@@ -35,7 +35,7 @@ export default function CoudersHero({
     <section className={`relative z-10 overflow-hidden ${light ? "bg-white" : "bg-black"}`}>
       <AmbientGlow
         className="left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2"
-        color="rgba(192,108,76,0.12)"
+        color="rgba(14,165,233,0.12)"
       />
       <AmbientGlow
         className="bottom-0 right-[6%] h-[420px] w-[420px]"
@@ -88,7 +88,7 @@ export default function CoudersHero({
           <Link
             href={`/${locale}/contact`}
             className={`mt-6 inline-block rounded-full px-9 py-4 text-center text-[15px] font-medium transition-transform duration-300 hover:-translate-y-0.5 ${
-              light ? "bg-[#C06C4C] text-white" : "bg-white text-black"
+              light ? "bg-[#0EA5E9] text-white" : "bg-white text-black"
             }`}
           >
             {content.ctaButton}

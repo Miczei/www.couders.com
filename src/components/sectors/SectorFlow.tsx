@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { Sector, SectorTile } from "@/i18n/sectors";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const ACCENT = "#C06C4C";
+const ACCENT = "#0EA5E9";
 const SILVER = "#C7CCD6";
 
 type FlowLabels = { from: string; via: string; to: string };

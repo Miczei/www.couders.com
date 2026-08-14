@@ -19,9 +19,10 @@ function toLocale(value: string): Locale {
 }
 
 // Experimental homepage-only light theme. Every couders/ section accepts a
-// `light` prop with dark as the default, so flipping this back to false (or
-// just deleting the prop passes below) fully reverts to the dark homepage —
-// nothing else on the site reads this flag.
+// `light` prop (dark by default), and the wrapper's `couders-light` class
+// re-lightens the shared Navbar/Footer via scoped rules in globals.css.
+// Flipping this back to false fully reverts to the dark homepage — nothing
+// else on the site reads this flag.
 const LIGHT_MODE_EXPERIMENT = true;
 
 export default async function Home({
@@ -34,7 +35,7 @@ export default async function Home({
   const couders = getCouders(locale);
 
   return (
-    <div className="sub-shell couders-shell">
+    <div className={`sub-shell couders-shell ${LIGHT_MODE_EXPERIMENT ? "couders-light" : ""}`}>
       <Navbar locale={locale} dict={dict} />
       <main>
         <CoudersHero content={couders.hero} locale={locale} light={LIGHT_MODE_EXPERIMENT} />

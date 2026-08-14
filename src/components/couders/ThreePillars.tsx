@@ -76,10 +76,10 @@ export default function ThreePillars({
                 <div
                   className={`absolute inset-x-0 top-0 flex flex-col rounded-2xl border p-6 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:p-8 ${
                     open
-                      ? `z-20 border-[#C06C4C]/60 shadow-2xl sm:w-[130%] ${light ? "bg-white" : "bg-[#0A0A0B]"} ${OPEN_ANCHOR_CLASS[i]}`
+                      ? `z-20 border-[#0EA5E9]/60 shadow-2xl sm:w-[130%] ${light ? "bg-white" : "bg-[#0A0A0B]"} ${OPEN_ANCHOR_CLASS[i]}`
                       : light
-                        ? "z-0 border-slate-200 bg-black/[0.02] hover:border-[#C06C4C]/50 sm:w-full"
-                        : "z-0 border-white/10 bg-black/40 hover:border-[#C06C4C]/40 sm:w-full"
+                        ? "z-0 border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
+                        : "z-0 border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
                   }`}
                 >
                   <button
@@ -113,7 +113,7 @@ export default function ThreePillars({
                       {item.teaser}
                     </p>
                     {!open && (
-                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#C06C4C]">
+                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#0EA5E9]">
                         {content.detailsLabel}
                       </span>
                     )}
@@ -135,7 +135,7 @@ export default function ThreePillars({
                       <button
                         type="button"
                         onClick={() => setOpenIndex(null)}
-                        className="mt-4 text-sm font-medium text-[#C06C4C]"
+                        className="mt-4 text-sm font-medium text-[#0EA5E9]"
                       >
                         {content.closeLabel}
                       </button>

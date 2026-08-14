@@ -172,7 +172,7 @@ function MarqueeRow({ items, light }: { items: Provider[]; light?: boolean }) {
           className="group mx-8 flex items-center gap-3 opacity-40 transition-opacity duration-500 hover:opacity-100 sm:mx-12 sm:gap-4 md:mx-16"
         >
           <span
-            className={`transition-[color,filter] duration-500 group-hover:text-[#C06C4C] group-hover:drop-shadow-[0_0_10px_rgba(192,108,76,0.55)] ${
+            className={`transition-[color,filter] duration-500 group-hover:text-[#0EA5E9] group-hover:drop-shadow-[0_0_10px_rgba(14,165,233,0.55)] ${
               light ? "text-slate-600" : "text-[#C7CCD6]"
             }`}
           >
@@ -180,7 +180,7 @@ function MarqueeRow({ items, light }: { items: Provider[]; light?: boolean }) {
           </span>
           <div>
             <span
-              className={`block text-base font-medium tracking-[-0.01em] transition-colors duration-500 group-hover:text-[#C06C4C] sm:text-lg ${
+              className={`block text-base font-medium tracking-[-0.01em] transition-colors duration-500 group-hover:text-[#0EA5E9] sm:text-lg ${
                 light ? "text-slate-700" : "text-[#C7CCD6]"
               }`}
             >

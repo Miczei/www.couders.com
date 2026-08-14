@@ -47,7 +47,7 @@ function TelemetryCard({ card, index }: { card: CoudersTelemetryCard; index: num
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, delay: index * 0.09, ease: EASE }}
-      className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-md transition-colors duration-500 hover:border-[#C06C4C]/60 sm:p-8 md:p-10 ${card.span}`}
+      className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-md transition-colors duration-500 hover:border-[#0EA5E9]/60 sm:p-8 md:p-10 ${card.span}`}
     >
       {/* Card 3's always-on highlight: a soft terracotta glow, dimmer than the hover state. */}
       {card.accent && (
@@ -56,7 +56,7 @@ function TelemetryCard({ card, index }: { card: CoudersTelemetryCard; index: num
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(480px circle at 15% 0%, rgba(192,108,76,0.16), transparent 65%)",
+              "radial-gradient(480px circle at 15% 0%, rgba(14,165,233,0.16), transparent 65%)",
           }}
         />
       )}
@@ -68,13 +68,13 @@ function TelemetryCard({ card, index }: { card: CoudersTelemetryCard; index: num
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
-            "radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(192,108,76,0.2), transparent 65%)",
+            "radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(14,165,233,0.2), transparent 65%)",
         }}
       />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -inset-6 -z-10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60"
-        style={{ background: "radial-gradient(circle at 50% 50%, rgba(192,108,76,0.35), transparent 70%)" }}
+        style={{ background: "radial-gradient(circle at 50% 50%, rgba(14,165,233,0.35), transparent 70%)" }}
       />
 
       <span
@@ -105,7 +105,7 @@ export default function ImpactTelemetry({ content }: { content: CoudersContent["
     >
       <AmbientGlow
         className="-top-24 right-[10%] h-[460px] w-[460px]"
-        color="rgba(192,108,76,0.14)"
+        color="rgba(14,165,233,0.14)"
       />
       <AmbientGlow
         className="bottom-[-10%] left-[4%] h-[380px] w-[380px]"

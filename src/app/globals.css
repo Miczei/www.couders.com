@@ -1838,6 +1838,31 @@ main {
   background: #000;
 }
 
+/* Homepage-only light-theme experiment: Navbar/Footer text already reads
+   from --fg/--muted (dark by default, defined once in :root and never
+   overridden), so the only thing actually forcing them dark here is the
+   black background above. Scoped under .couders-light (added to the page
+   wrapper only when LIGHT_MODE_EXPERIMENT is true in page.tsx) so every
+   other page — which never gets this class — keeps its normal chrome. */
+.couders-light {
+  background: #fff;
+}
+.couders-light .nav {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px) saturate(120%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.couders-light .nav__links a:hover,
+.couders-light .nav__links a.nav__link--active,
+.couders-light .lang-toggle .lang:hover,
+.couders-light .lang-toggle .lang--active {
+  color: #0ea5e9;
+}
+.couders-light .footer {
+  background: #f8fafc;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 @keyframes couders-marquee {
   from {
     transform: translateX(0);

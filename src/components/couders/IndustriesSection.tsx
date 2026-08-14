@@ -33,10 +33,10 @@ const ICONS: React.ReactNode[] = [
 ];
 
 const GRADIENTS = [
-  "radial-gradient(120% 100% at 0% 0%, rgba(192,108,76,0.16), transparent 60%)",
-  "radial-gradient(120% 100% at 100% 0%, rgba(192,108,76,0.16), transparent 60%)",
-  "radial-gradient(120% 100% at 100% 100%, rgba(192,108,76,0.16), transparent 60%)",
-  "radial-gradient(120% 100% at 0% 100%, rgba(192,108,76,0.16), transparent 60%)",
+  "radial-gradient(120% 100% at 0% 0%, rgba(14,165,233,0.16), transparent 60%)",
+  "radial-gradient(120% 100% at 100% 0%, rgba(14,165,233,0.16), transparent 60%)",
+  "radial-gradient(120% 100% at 100% 100%, rgba(14,165,233,0.16), transparent 60%)",
+  "radial-gradient(120% 100% at 0% 100%, rgba(14,165,233,0.16), transparent 60%)",
 ];
 
 export default function IndustriesSection({
@@ -87,7 +87,7 @@ export default function IndustriesSection({
                   onClick={() => setActive(i)}
                   className={`min-w-[200px] flex-none snap-start rounded-2xl border px-5 py-4 text-left transition-colors duration-300 md:min-w-0 ${
                     isActive
-                      ? "border-[#C06C4C]/70 bg-[#C06C4C]/10 shadow-[0_0_24px_rgba(192,108,76,0.25)]"
+                      ? "border-[#0EA5E9]/70 bg-[#0EA5E9]/10 shadow-[0_0_24px_rgba(14,165,233,0.25)]"
                       : light
                         ? "border-slate-200 bg-black/[0.02] hover:border-slate-300"
                         : "border-white/10 bg-white/[0.02] hover:border-white/25"
@@ -132,7 +132,7 @@ export default function IndustriesSection({
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#C06C4C"
+                    stroke="#0EA5E9"
                     strokeWidth="1.4"
                     className="h-9 w-9 flex-none"
                     aria-hidden="true"
