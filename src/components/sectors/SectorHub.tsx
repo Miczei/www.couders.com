@@ -15,7 +15,8 @@ import SectorFlow from "./SectorFlow";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ACCENT = "#0EA5E9";
-const SILVER = "#C7CCD6";
+const SILVER = "#475569";
+const MUTED = "#94A3B8";
 
 /* Shared text-reveal variants, matching the AI Engine page's elegant
    fade-and-slide-up with staggered children. */
@@ -128,7 +129,7 @@ function MagneticCard({
       onMouseLeave={onLeave}
       onClick={onClick}
       style={{ x, y }}
-      className={`group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0A0A0B] transition-colors duration-500 hover:border-white/[0.22] ${
+      className={`group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-colors duration-500 hover:border-slate-300 ${
         onClick ? "cursor-pointer" : ""
       } ${className ?? ""}`}
     >
@@ -173,7 +174,7 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
   }, [openTile]);
 
   return (
-    <section ref={rootRef} className="relative z-10 bg-black px-5 pb-24 sm:px-6 sm:pb-32">
+    <section ref={rootRef} className="relative z-10 bg-white px-5 pb-24 sm:px-6 sm:pb-32">
       {/* Parallax depth layer */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         <motion.svg
@@ -199,7 +200,7 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
         <div
           role="tablist"
           aria-label={content.eyebrow}
-          className="inline-flex flex-wrap gap-1 rounded-full border border-white/[0.1] bg-[#0A0A0B] p-1"
+          className="inline-flex flex-wrap gap-1 rounded-full border border-slate-200 bg-slate-50 p-1"
         >
           {content.sectors.map((s) => (
             <button
@@ -208,12 +209,12 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
               aria-selected={active === s.id}
               onClick={() => setActive(s.id)}
               className="relative rounded-full px-3.5 py-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors duration-300 sm:px-5 sm:py-2.5 sm:text-[11px] sm:tracking-[0.2em]"
-              style={{ color: active === s.id ? SILVER : "#52525B" }}
+              style={{ color: active === s.id ? "#0F172A" : MUTED }}
             >
               {active === s.id && (
                 <motion.span
                   layoutId="sector-pill"
-                  className="absolute inset-0 rounded-full border border-white/[0.18] bg-white/[0.06]"
+                  className="absolute inset-0 rounded-full border border-slate-200 bg-white shadow-sm"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
@@ -233,15 +234,15 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
             className="mt-10 sm:mt-14"
           >
             <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-6">
-              <div className="flex flex-col justify-between rounded-2xl border border-white/[0.12] bg-[#0A0A0B] p-6 sm:p-8 md:col-span-6 md:flex-row md:items-center md:gap-12 md:p-10">
+              <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-8 md:col-span-6 md:flex-row md:items-center md:gap-12 md:p-10">
                 <div className="max-w-md">
                   <h2
-                    className="text-2xl font-semibold tracking-[-0.02em] text-[#F5F5F7] sm:text-3xl"
+                    className="text-2xl font-semibold tracking-[-0.02em] text-slate-900 sm:text-3xl"
                     style={{ fontFamily: "var(--font-display), sans-serif" }}
                   >
                     {sector.h2}
                   </h2>
-                  <p className="mt-4 text-sm leading-relaxed text-zinc-400 sm:text-[15px]">
+                  <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
                     {sector.lead}
                   </p>
                 </div>
@@ -258,12 +259,12 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                   className={`p-6 sm:p-8 ${t.span}`}
                 >
                   <h3
-                    className="text-lg font-semibold tracking-[-0.01em] text-[#F5F5F7] sm:text-xl"
+                    className="text-lg font-semibold tracking-[-0.01em] text-slate-900 sm:text-xl"
                     style={{ fontFamily: "var(--font-display), sans-serif" }}
                   >
                     {t.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-zinc-400 sm:text-[15px]">
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
                     {t.outcome ?? t.body}
                   </p>
                   {t.deepDive && (
@@ -279,7 +280,7 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
 
               {/* Breadth block: the sector's fuller range beyond the three
                   headline tiles, plus a confident closer. Full-width. */}
-              <div className="rounded-2xl border border-white/[0.12] bg-[#0A0A0B] p-6 sm:p-8 md:col-span-6 md:p-10">
+              <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-8 md:col-span-6 md:p-10">
                 <span
                   className="font-mono text-[10px] uppercase tracking-[0.2em]"
                   style={{ color: ACCENT }}
@@ -287,7 +288,7 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                   {sector.more.label}
                 </span>
                 <h3
-                  className="mt-3 max-w-2xl text-xl font-semibold tracking-[-0.01em] text-[#F5F5F7] sm:text-2xl"
+                  className="mt-3 max-w-2xl text-xl font-semibold tracking-[-0.01em] text-slate-900 sm:text-2xl"
                   style={{ fontFamily: "var(--font-display), sans-serif" }}
                 >
                   {sector.more.title}
@@ -296,7 +297,7 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                   {sector.more.items.map((item) => (
                     <li
                       key={item}
-                      className="flex gap-3 text-sm leading-relaxed text-zinc-300 sm:text-[15px]"
+                      className="flex gap-3 text-sm leading-relaxed text-slate-700 sm:text-[15px]"
                     >
                       <span aria-hidden="true" className="select-none" style={{ color: ACCENT }}>
                         +
@@ -305,7 +306,7 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-8 max-w-3xl text-pretty text-sm leading-relaxed text-zinc-400 sm:text-[15px]">
+                <p className="mt-8 max-w-3xl text-pretty text-sm leading-relaxed text-slate-600 sm:text-[15px]">
                   {sector.more.closer}
                 </p>
               </div>
@@ -313,14 +314,14 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
               {/* Delivery-standard strip: quieter than the tiles (hairline
                   border, no card background), closing each sector on a
                   professional note. */}
-              <div className="flex flex-col gap-3 rounded-2xl border border-white/[0.08] px-6 py-5 sm:flex-row sm:items-baseline sm:gap-8 sm:px-8 md:col-span-6">
+              <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 px-6 py-5 sm:flex-row sm:items-baseline sm:gap-8 sm:px-8 md:col-span-6">
                 <span
                   className="shrink-0 font-mono text-[10px] uppercase tracking-[0.2em]"
                   style={{ color: ACCENT }}
                 >
                   {sector.assurance.label}
                 </span>
-                <p className="text-sm leading-relaxed text-zinc-500 sm:text-[15px]">
+                <p className="text-sm leading-relaxed text-slate-500 sm:text-[15px]">
                   {sector.assurance.body}
                 </p>
               </div>
@@ -347,12 +348,12 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
               variants={revealGroup}
               initial={reduced ? false : "hidden"}
               animate="show"
-              className="no-scrollbar relative max-h-[85vh] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-2xl border border-[#222] bg-[#0a0a0a] p-6 sm:p-10"
+              className="no-scrollbar relative max-h-[85vh] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl sm:p-10"
             >
               <div className="flex items-start justify-between gap-6">
                 <motion.h3
                   variants={revealItem}
-                  className="text-2xl font-semibold tracking-[-0.02em] text-[#F5F5F7] sm:text-3xl"
+                  className="text-2xl font-semibold tracking-[-0.02em] text-slate-900 sm:text-3xl"
                   style={{ fontFamily: "var(--font-display), sans-serif" }}
                 >
                   {openTile.title}
@@ -360,7 +361,7 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                 <button
                   onClick={() => setOpenTile(null)}
                   aria-label={content.close}
-                  className="rounded-full border border-white/[0.15] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-400 transition-colors hover:border-white/40 hover:text-white"
+                  className="rounded-full border border-slate-300 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 transition-colors hover:border-slate-900 hover:text-slate-900"
                 >
                   {content.close}
                 </button>
@@ -369,10 +370,14 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
               <motion.p variants={revealItem} className="mt-3 text-[15px] font-medium" style={{ color: SILVER }}>
                 {openTile.outcome}
               </motion.p>
-              <motion.p variants={revealItem} className="mt-5 text-sm leading-relaxed text-zinc-400 sm:text-[15px]">
+              <motion.p variants={revealItem} className="mt-5 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
                 {openTile.deepDive.intro}
               </motion.p>
 
+              {/* Deliberately dark: SectorFlow's line art is colored for a
+                  black canvas (silver/accent strokes, near-black node
+                  cutouts), so this panel stays a terminal-style dark inset
+                  rather than following the page's light theme. */}
               <div className="mt-8 rounded-xl border border-white/[0.08] bg-black p-5">
                 <SectorFlow sector={sector.id} flow={openTile.flow} labels={content.flow} />
               </div>
@@ -382,7 +387,7 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                   <motion.div
                     key={s.title}
                     variants={revealItem}
-                    className="flex gap-5 border-t border-white/[0.08] py-5 last:border-b"
+                    className="flex gap-5 border-t border-slate-200 py-5 last:border-b"
                   >
                     <span
                       className="font-mono text-sm"
@@ -392,8 +397,8 @@ export default function SectorHub({ content }: { content: SectorsContent }) {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
-                      <h4 className="font-medium text-[#F5F5F7]">{s.title}</h4>
-                      <p className="mt-1.5 text-sm leading-relaxed text-zinc-400">{s.body}</p>
+                      <h4 className="font-medium text-slate-900">{s.title}</h4>
+                      <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{s.body}</p>
                     </div>
                   </motion.div>
                 ))}

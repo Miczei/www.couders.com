@@ -32,7 +32,7 @@ function HeroTitle({ text }: { text: string }) {
   return (
     <h1
       aria-label={text}
-      className="mt-5 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.04em] text-[#F5F5F7] sm:mt-6 sm:text-5xl sm:leading-[1.02] md:text-6xl"
+      className="mt-5 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.04em] text-slate-900 sm:mt-6 sm:text-5xl sm:leading-[1.02] md:text-6xl"
       style={{ fontFamily: "var(--font-display), sans-serif" }}
     >
       {words.map((w, i) => (
@@ -56,13 +56,13 @@ function StreamDivider() {
   return (
     <div aria-hidden="true" className="mx-auto max-w-6xl px-5 sm:px-6">
       <svg width="100%" height="2" className="block">
-        <line x1="0" y1="1" x2="100%" y2="1" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+        <line x1="0" y1="1" x2="100%" y2="1" stroke="rgba(15,23,42,0.08)" strokeWidth="1" />
         <line
           x1="0"
           y1="1"
           x2="100%"
           y2="1"
-          stroke="#C7CCD6"
+          stroke="#0EA5E9"
           strokeWidth="1"
           strokeDasharray="14 140"
           opacity="0.45"
@@ -84,7 +84,7 @@ function PillarTile({ pillar, span, delay }: { pillar: Pillar; span: string; del
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: EASE }}
-      className={`relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0A0A0B] p-6 transition-colors duration-500 hover:border-white/[0.22] sm:p-8 md:p-10 ${span}`}
+      className={`relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-colors duration-500 hover:border-slate-300 sm:p-8 md:p-10 ${span}`}
     >
       <motion.div
         aria-hidden="true"
@@ -103,23 +103,23 @@ function PillarTile({ pillar, span, delay }: { pillar: Pillar; span: string; del
         transition={{ duration: 0.6, ease: EASE }}
       >
         <div className="flex items-baseline justify-between gap-4">
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500 sm:text-[11px] sm:tracking-[0.26em]">
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500 sm:text-[11px] sm:tracking-[0.26em]">
             {pillar.title}
           </span>
           <span
             aria-hidden="true"
-            className="bg-gradient-to-b from-white via-[#C7CCD6] to-[#6E7178] bg-clip-text font-mono text-sm text-transparent"
+            className="bg-gradient-to-b from-slate-900 via-slate-600 to-slate-400 bg-clip-text font-mono text-sm text-transparent"
           >
             {String(pillar.no).padStart(2, "0")}
           </span>
         </div>
         <h3
-          className="mt-5 text-lg font-semibold tracking-[-0.02em] text-[#F5F5F7] sm:mt-6 sm:text-xl md:text-2xl"
+          className="mt-5 text-lg font-semibold tracking-[-0.02em] text-slate-900 sm:mt-6 sm:text-xl md:text-2xl"
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
           {pillar.question}
         </h3>
-        <p className="mt-3 max-w-xl text-sm leading-relaxed text-zinc-400 sm:mt-4 sm:text-[15px]">
+        <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600 sm:mt-4 sm:text-[15px]">
           {pillar.body}
         </p>
       </motion.div>
@@ -145,35 +145,35 @@ export default function SecurityPage({
   const spans = ["md:col-span-4", "md:col-span-2", "md:col-span-2", "md:col-span-4"];
 
   return (
-    <div className="sub-shell couders-shell">
+    <div className="sub-shell">
       <Navbar locale={locale} dict={dict} />
 
-      <main className="relative z-10 overflow-x-hidden bg-black">
+      <main className="relative z-10 overflow-x-hidden bg-white">
         <MiniAgent statuses={ui.agentStatuses} label={ui.agentLabel} />
 
         <section className="pb-20 pt-28 sm:pt-32 md:pb-32">
           <div className="mx-auto max-w-6xl px-5 sm:px-6">
             <nav
               aria-label="Breadcrumb"
-              className="mb-8 flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-600 sm:mb-10"
+              className="mb-8 flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 sm:mb-10"
             >
-              <Link href={home} className="pointer-events-auto transition-colors hover:text-white">
+              <Link href={home} className="pointer-events-auto transition-colors hover:text-slate-900">
                 Couders
               </Link>
               <span aria-hidden="true">/</span>
-              <span className="text-zinc-400">{page.breadcrumb}</span>
+              <span className="text-slate-600">{page.breadcrumb}</span>
             </nav>
 
             <DecodeText
               text={page.eyebrow}
-              className="font-mono text-[10px] uppercase tracking-[0.26em] text-zinc-500 sm:text-[11px] sm:tracking-[0.32em]"
+              className="font-mono text-[10px] uppercase tracking-[0.26em] text-slate-500 sm:text-[11px] sm:tracking-[0.32em]"
             />
             <HeroTitle text={page.h1} />
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7, ease: EASE }}
-              className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-zinc-400 sm:mt-7 md:text-lg"
+              className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-slate-600 sm:mt-7 md:text-lg"
             >
               {page.intro}
             </motion.p>
@@ -185,13 +185,13 @@ export default function SecurityPage({
             >
               <Link
                 href={`${home}/contact`}
-                className="w-full rounded-full bg-white px-6 py-3 text-center text-[15px] font-medium text-black transition-transform duration-300 hover:-translate-y-0.5 sm:w-auto sm:px-7 sm:py-3.5"
+                className="w-full rounded-full bg-sky-500 hover:bg-sky-600 px-6 py-3 text-center text-[15px] font-medium text-white transition-transform duration-300 hover:-translate-y-0.5 sm:w-auto sm:px-7 sm:py-3.5"
               >
                 {page.ctaPrimary}
               </Link>
               <Link
                 href={secondaryHref}
-                className="w-full rounded-full border border-white/20 px-6 py-3 text-center text-[15px] font-medium text-white transition-colors duration-300 hover:border-white/60 sm:w-auto sm:px-7 sm:py-3.5"
+                className="w-full rounded-full border border-slate-300 px-6 py-3 text-center text-[15px] font-medium text-slate-900 transition-colors duration-300 hover:border-slate-900 sm:w-auto sm:px-7 sm:py-3.5"
               >
                 {page.ctaSecondary}
               </Link>
@@ -213,12 +213,12 @@ export default function SecurityPage({
         <section className="px-5 py-16 sm:px-6 sm:py-24 md:py-32">
           <div className="mx-auto max-w-6xl">
             <h2
-              className="max-w-2xl text-balance text-2xl font-semibold tracking-[-0.03em] text-[#F5F5F7] sm:text-3xl md:text-5xl"
+              className="max-w-2xl text-balance text-2xl font-semibold tracking-[-0.03em] text-slate-900 sm:text-3xl md:text-5xl"
               style={{ fontFamily: "var(--font-display), sans-serif" }}
             >
               {page.fomoH2}
             </h2>
-            <p className="mt-5 max-w-2xl text-pretty text-sm leading-relaxed text-zinc-400 sm:mt-6 sm:text-base">
+            <p className="mt-5 max-w-2xl text-pretty text-sm leading-relaxed text-slate-600 sm:mt-6 sm:text-base">
               {page.fomoIntro}
             </p>
 
@@ -228,9 +228,9 @@ export default function SecurityPage({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-70px" }}
                 transition={{ duration: 0.7, ease: EASE }}
-                className="rounded-2xl border border-white/[0.06] bg-[#050506] p-6 sm:p-8 md:p-10"
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10"
               >
-                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-600 sm:text-[11px] sm:tracking-[0.26em]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500 sm:text-[11px] sm:tracking-[0.26em]">
                   {page.contrastBeginnerLabel}
                 </span>
                 <ul className="mt-6 space-y-4 sm:mt-8 sm:space-y-5">
@@ -241,9 +241,9 @@ export default function SecurityPage({
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: i * 0.08, ease: EASE }}
-                      className="flex gap-3 text-sm leading-relaxed text-zinc-500 sm:gap-4 sm:text-[15px]"
+                      className="flex gap-3 text-sm leading-relaxed text-slate-500 sm:gap-4 sm:text-[15px]"
                     >
-                      <span aria-hidden="true" className="mt-0.5 text-zinc-700">
+                      <span aria-hidden="true" className="mt-0.5 text-slate-400">
                         ×
                       </span>
                       {c.beginner}
@@ -257,13 +257,13 @@ export default function SecurityPage({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-70px" }}
                 transition={{ duration: 0.7, delay: 0.12, ease: EASE }}
-                className="relative overflow-hidden rounded-2xl border border-white/[0.18] bg-[#0A0A0B] p-6 sm:p-8 md:p-10"
+                className="relative overflow-hidden rounded-2xl border border-sky-200 bg-white shadow-sm p-6 sm:p-8 md:p-10"
               >
                 <div
                   aria-hidden="true"
-                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#E8EAEE] to-transparent opacity-60"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-300 to-transparent opacity-60"
                 />
-                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-300 sm:text-[11px] sm:tracking-[0.26em]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-slate-700 sm:text-[11px] sm:tracking-[0.26em]">
                   {page.contrastFullstackLabel}
                 </span>
                 <ul className="mt-6 space-y-4 sm:mt-8 sm:space-y-5">
@@ -274,11 +274,11 @@ export default function SecurityPage({
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: i * 0.08, ease: EASE }}
-                      className="flex gap-3 text-sm leading-relaxed text-zinc-200 sm:gap-4 sm:text-[15px]"
+                      className="flex gap-3 text-sm leading-relaxed text-slate-800 sm:gap-4 sm:text-[15px]"
                     >
                       <span
                         aria-hidden="true"
-                        className="mt-0.5 bg-gradient-to-b from-white to-[#6E7178] bg-clip-text text-transparent"
+                        className="mt-0.5 bg-gradient-to-b from-sky-500 to-sky-700 bg-clip-text text-transparent"
                       >
                         +
                       </span>
@@ -297,10 +297,10 @@ export default function SecurityPage({
           <div className="mx-auto max-w-6xl">
             <DecodeText
               text={ui.specIndex}
-              className="font-mono text-[10px] uppercase tracking-[0.26em] text-zinc-500 sm:text-[11px] sm:tracking-[0.32em]"
+              className="font-mono text-[10px] uppercase tracking-[0.26em] text-slate-500 sm:text-[11px] sm:tracking-[0.32em]"
             />
             <h2
-              className="mt-4 max-w-2xl text-balance text-2xl font-semibold tracking-[-0.03em] text-[#F5F5F7] sm:text-3xl md:text-5xl"
+              className="mt-4 max-w-2xl text-balance text-2xl font-semibold tracking-[-0.03em] text-slate-900 sm:text-3xl md:text-5xl"
               style={{ fontFamily: "var(--font-display), sans-serif" }}
             >
               {page.pillarsH2}
@@ -325,24 +325,24 @@ export default function SecurityPage({
             className="mx-auto flex max-w-3xl flex-col items-center text-center"
           >
             <h2
-              className="text-balance bg-gradient-to-b from-white via-[#E8EAEE] to-[#9BA1AB] bg-clip-text text-3xl font-semibold tracking-[-0.04em] text-transparent sm:text-4xl md:text-5xl"
+              className="text-balance bg-gradient-to-b from-slate-900 via-slate-700 to-slate-500 bg-clip-text text-3xl font-semibold tracking-[-0.04em] text-transparent sm:text-4xl md:text-5xl"
               style={{ fontFamily: "var(--font-display), sans-serif" }}
             >
               {page.ctaH2}
             </h2>
-            <p className="mt-5 max-w-xl text-pretty text-sm leading-relaxed text-zinc-400 sm:mt-6 sm:text-base">
+            <p className="mt-5 max-w-xl text-pretty text-sm leading-relaxed text-slate-600 sm:mt-6 sm:text-base">
               {page.ctaBody}
             </p>
             <div className="mt-8 flex w-full flex-wrap items-center justify-center gap-3 sm:mt-10 sm:w-auto sm:gap-3.5">
               <Link
                 href={`${home}/contact`}
-                className="w-full rounded-full bg-white px-7 py-3.5 text-center text-[15px] font-medium text-black transition-transform duration-300 hover:-translate-y-0.5 sm:w-auto sm:px-8 sm:py-4"
+                className="w-full rounded-full bg-sky-500 hover:bg-sky-600 px-7 py-3.5 text-center text-[15px] font-medium text-white transition-transform duration-300 hover:-translate-y-0.5 sm:w-auto sm:px-8 sm:py-4"
               >
                 {page.ctaPrimary}
               </Link>
               <Link
                 href={secondaryHref}
-                className="w-full rounded-full border border-white/20 px-7 py-3.5 text-center text-[15px] font-medium text-white transition-colors duration-300 hover:border-white/60 sm:w-auto sm:px-8 sm:py-4"
+                className="w-full rounded-full border border-slate-300 px-7 py-3.5 text-center text-[15px] font-medium text-slate-900 transition-colors duration-300 hover:border-slate-900 sm:w-auto sm:px-8 sm:py-4"
               >
                 {page.ctaSecondary}
               </Link>
@@ -352,7 +352,7 @@ export default function SecurityPage({
 
         <section className="px-5 pb-24 sm:px-6 sm:pb-32">
           <div className="mx-auto max-w-6xl">
-            <h2 className="font-mono text-[10px] uppercase tracking-[0.26em] text-zinc-500 sm:text-[11px] sm:tracking-[0.32em]">
+            <h2 className="font-mono text-[10px] uppercase tracking-[0.26em] text-slate-500 sm:text-[11px] sm:tracking-[0.32em]">
               {page.relatedH2}
             </h2>
             <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-2">
@@ -366,17 +366,17 @@ export default function SecurityPage({
                 >
                   <Link
                     href={`/${locale}/${r.slug}`}
-                    className="group flex items-center justify-between rounded-2xl border border-white/[0.08] bg-[#0A0A0B] p-5 transition-colors duration-500 hover:border-white/[0.25] sm:p-7"
+                    className="group flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-500 hover:border-slate-300 sm:p-7"
                   >
                     <span
-                      className="text-base font-medium tracking-[-0.01em] text-[#F5F5F7] sm:text-lg"
+                      className="text-base font-medium tracking-[-0.01em] text-slate-900 sm:text-lg"
                       style={{ fontFamily: "var(--font-display), sans-serif" }}
                     >
                       {r.label}
                     </span>
                     <span
                       aria-hidden="true"
-                      className="text-zinc-500 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white"
+                      className="text-slate-500 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-slate-900"
                     >
                       →
                     </span>

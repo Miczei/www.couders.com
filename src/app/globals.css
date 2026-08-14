@@ -423,12 +423,12 @@ main {
 
 .btn--primary {
   color: #fff;
-  background: var(--fg);
+  background: #0ea5e9;
 }
 
 .btn--primary:hover {
   transform: translateY(-2px);
-  background: #26262b;
+  background: #0284c7;
 }
 
 .btn--ghost {
@@ -1805,20 +1805,22 @@ main {
 }
 
 /* ============================================================
-   Topical-silo sub-pages — premium DARK theme (scoped to .sub-shell
-   so the white-minimalist homepage is untouched)
+   Topical-silo sub-pages — now permanent LIGHT theme (site-wide).
+   .sub-shell used to be a dark shell; the --d-* tokens below are kept
+   (same names) so every component that reads them via var(--d-*) just
+   picks up light values automatically, with no per-component edits.
    ============================================================ */
 .sub-shell {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  background: #06070b;
-  --d-panel: #0f1118;
-  --d-line: rgba(255, 255, 255, 0.09);
-  --d-line-strong: rgba(255, 255, 255, 0.18);
-  --d-text: #eef1f6;
-  --d-muted: #99a0ae;
-  --d-soft: #6b7180;
+  background: #ffffff;
+  --d-panel: #f8fafc;
+  --d-line: rgba(15, 23, 42, 0.08);
+  --d-line-strong: rgba(15, 23, 42, 0.16);
+  --d-text: #0b0b0c;
+  --d-muted: #5b6472;
+  --d-soft: #94a3b8;
 }
 
 /* Hide scrollbar while keeping the element scrollable (modal bodies). */
@@ -1830,91 +1832,93 @@ main {
   display: none;
 }
 
-/* Couders homepage: same dark shell chrome, but pure black. */
-.couders-shell {
-  background: #000;
-}
-.couders-shell .footer {
-  background: #000;
-}
-
-/* Homepage-only light-theme experiment: Navbar/Footer text already reads
-   from --fg/--muted (dark by default, defined once in :root and never
-   overridden), so the only thing actually forcing them dark here is the
-   black background above. Scoped under .couders-light (added to the page
-   wrapper only when LIGHT_MODE_EXPERIMENT is true in page.tsx) so every
-   other page — which never gets this class — keeps its normal chrome. */
-.couders-light {
-  background: #fff;
-}
-.couders-light .nav {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px) saturate(120%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-.couders-light .nav__links a:hover,
-.couders-light .nav__links a.nav__link--active,
-.couders-light .lang-toggle .lang:hover,
-.couders-light .lang-toggle .lang--active {
-  color: #0ea5e9;
-}
-.couders-light .footer {
-  background: #f8fafc;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-/* The page wrapper carries .sub-shell + .couders-shell + .couders-light
-   together. .sub-shell's generic dark nav/footer overrides (further below
-   in this file) tie in specificity with the rules above and win on source
-   order alone — that's what was turning the header dark on scroll and
-   leaving white/illegible nav+footer text. These compound selectors outrank
-   every .sub-shell rule unconditionally, so the header/footer stay
-   permanently white with dark text at every scroll position, without
-   touching Navbar.tsx/Footer.tsx (still shared by the dark sub-shell pages). */
-.couders-shell.couders-light .nav,
-.couders-shell.couders-light .nav--scrolled {
+/* Header/footer chrome, standardized light across every route (was
+   previously a dark override here; site-wide light mode retired the
+   need for a separate .couders-light experiment class). */
+.sub-shell .nav,
+.sub-shell .nav--scrolled {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px) saturate(120%);
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
-.couders-shell.couders-light .nav__brand {
+.sub-shell .nav__brand,
+.sub-shell .nav__links a {
   color: #0f172a;
 }
-.couders-shell.couders-light .nav__links a {
-  color: #334155;
-}
-.couders-shell.couders-light .nav__links a:hover,
-.couders-shell.couders-light .nav__links a.nav__link--active {
+.sub-shell .nav__links a:hover,
+.sub-shell .nav__links a.nav__link--active {
   color: #0ea5e9;
 }
-.couders-shell.couders-light .lang-toggle .lang {
+.sub-shell .lang-toggle .lang {
   color: #64748b;
 }
-.couders-shell.couders-light .lang-toggle .lang:hover,
-.couders-shell.couders-light .lang-toggle .lang--active {
+.sub-shell .lang-toggle .lang:hover,
+.sub-shell .lang-toggle .lang--active {
   color: #0ea5e9;
 }
-.couders-shell.couders-light .lang-toggle .lang-sep {
+.sub-shell .lang-toggle .lang-sep {
   color: rgba(15, 23, 42, 0.25);
 }
-.couders-shell.couders-light .nav__burger span {
+.sub-shell .nav__burger span {
   background: #0f172a;
 }
-.couders-shell.couders-light .footer {
-  background: #ffffff;
-  border-top: 1px solid rgba(15, 23, 42, 0.08);
+.sub-shell .nav__mobile-backdrop {
+  background: rgba(15, 23, 42, 0.45);
 }
-.couders-shell.couders-light .footer .nav__brand {
+.sub-shell .nav__mobile-panel {
+  background: #ffffff;
+  box-shadow: 4px 0 32px rgba(15, 23, 42, 0.14);
+}
+.sub-shell .nav__mobile-close {
   color: #0f172a;
 }
-.couders-shell.couders-light .footer__tagline,
-.couders-shell.couders-light .footer__meta {
+.sub-shell .nav__mobile-close:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+.sub-shell .nav__mobile-panel .nav__link {
+  color: #5b6472;
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+.sub-shell .nav__mobile-panel .nav__link:hover,
+.sub-shell .nav__mobile-panel .nav__link--active {
+  color: #0f172a;
+}
+.sub-shell .nav__mobile-lang .lang {
   color: #64748b;
 }
-.couders-shell.couders-light .footer__links a {
+.sub-shell .nav__mobile-lang .lang--active {
+  color: #0f172a;
+}
+.sub-shell .nav__mobile-lang .lang-sep {
+  color: rgba(15, 23, 42, 0.25);
+}
+.sub-shell .section-eyebrow {
+  color: var(--d-muted);
+}
+.sub-shell .section-title {
+  color: var(--d-text);
+}
+.sub-shell .sub__h1 {
+  color: #0b0b0c;
+}
+.sub-shell .sub__intro {
+  color: var(--d-muted);
+}
+.sub-shell .footer {
+  background: #f8fafc;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+.sub-shell .footer .nav__brand {
+  color: #0f172a;
+}
+.sub-shell .footer__tagline,
+.sub-shell .footer__meta {
+  color: #64748b;
+}
+.sub-shell .footer__links a {
   color: #334155;
 }
-.couders-shell.couders-light .footer__links a:hover {
+.sub-shell .footer__links a:hover {
   color: #0ea5e9;
 }
 
@@ -1953,9 +1957,9 @@ main {
 .engine-shimmer {
   background: linear-gradient(
     100deg,
-    rgba(255, 255, 255, 0.04) 35%,
-    rgba(199, 204, 214, 0.14) 50%,
-    rgba(255, 255, 255, 0.04) 65%
+    rgba(15, 23, 42, 0.05) 35%,
+    rgba(100, 116, 139, 0.16) 50%,
+    rgba(15, 23, 42, 0.05) 65%
   );
   background-size: 200% 100%;
   animation: engine-shimmer 1.8s linear infinite;
@@ -1964,113 +1968,6 @@ main {
   .engine-shimmer {
     animation: none;
   }
-}
-
-/* Navbar / footer / buttons flipped to dark within the shell */
-.sub-shell .nav__brand,
-.sub-shell .nav__links a {
-  color: rgba(255, 255, 255, 0.78);
-}
-.sub-shell .nav__links a:hover {
-  color: #fff;
-}
-.sub-shell .nav__links a.nav__link--active {
-  color: #fff;
-  font-weight: 600;
-}
-.sub-shell .nav--scrolled {
-  background: rgba(6, 7, 11, 0.72);
-  border-bottom-color: var(--d-line);
-}
-.sub-shell .lang-toggle .lang {
-  color: rgba(255, 255, 255, 0.55);
-}
-.sub-shell .lang-toggle .lang--active {
-  color: #fff;
-}
-.sub-shell .lang-toggle .lang-sep {
-  color: rgba(255, 255, 255, 0.28);
-}
-.sub-shell .nav__burger span {
-  background: #fff;
-}
-.sub-shell .nav__mobile-backdrop {
-  background: rgba(0, 0, 0, 0.65);
-}
-.sub-shell .nav__mobile-panel {
-  background: var(--d-panel);
-  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.5);
-}
-.sub-shell .nav__mobile-close {
-  color: #fff;
-}
-.sub-shell .nav__mobile-close:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-.sub-shell .nav__mobile-panel .nav__link {
-  color: var(--d-muted);
-  border-bottom-color: var(--d-line);
-}
-.sub-shell .nav__mobile-panel .nav__link:hover {
-  color: #fff;
-}
-.sub-shell .nav__mobile-panel .nav__link--active {
-  color: #fff;
-}
-.sub-shell .nav__mobile-lang .lang {
-  color: rgba(255, 255, 255, 0.55);
-}
-.sub-shell .nav__mobile-lang .lang--active {
-  color: #fff;
-}
-.sub-shell .nav__mobile-lang .lang-sep {
-  color: rgba(255, 255, 255, 0.28);
-}
-.sub-shell .section-eyebrow {
-  color: var(--d-muted);
-}
-.sub-shell .section-title {
-  color: var(--d-text);
-}
-/* The base .sub__h1 / .sub__intro use the light-theme --fg / --muted, which are
-   near-black and invisible on the dark shell. Flip them to bright dark-theme ink. */
-.sub-shell .sub__h1 {
-  color: #fff;
-}
-.sub-shell .sub__intro {
-  color: var(--d-muted);
-}
-.sub-shell .btn--primary {
-  background: #fff;
-  color: #0b0b0c;
-}
-.sub-shell .btn--primary:hover {
-  background: #e6e8ee;
-}
-.sub-shell .btn--ghost {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.22);
-}
-.sub-shell .btn--ghost:hover {
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.06);
-}
-.sub-shell .footer {
-  background: #06070b;
-  border-top-color: var(--d-line);
-}
-.sub-shell .footer .nav__brand {
-  color: #fff;
-}
-.sub-shell .footer__tagline,
-.sub-shell .footer__meta {
-  color: var(--d-muted);
-}
-.sub-shell .footer__links a {
-  color: rgba(255, 255, 255, 0.6);
-}
-.sub-shell .footer__links a:hover {
-  color: #fff;
 }
 
 .sub {
@@ -2096,7 +1993,7 @@ main {
 }
 
 .sub__crumbs a:hover {
-  color: #fff;
+  color: #0b0b0c;
 }
 
 .sub__hero {
@@ -2141,7 +2038,7 @@ main {
   height: auto;
   border-radius: 18px;
   border: 1px solid var(--line);
-  background: #06070b;
+  background: #f1f5f9;
   display: block;
 }
 
@@ -2167,7 +2064,7 @@ main {
   font-size: clamp(1.35rem, 3vw, 1.95rem);
   line-height: 1.18;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: #0b0b0c;
   margin: 44px 0 0;
   max-width: 24ch;
 }
@@ -2198,12 +2095,12 @@ main {
   border-radius: 24px;
   overflow: hidden;
   border: 1px solid var(--d-line);
-  background: #0b0d12;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04),
-    0 40px 90px -45px rgba(0, 0, 0, 0.85);
+  background: #f1f5f9;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.04),
+    0 40px 90px -45px rgba(15, 23, 42, 0.25);
 }
 
-/* Blends the image edges into the black page (matches the face-code look). */
+/* Blends the image edges into the white page (matches the face-code look). */
 .about__imgVignette {
   position: absolute;
   inset: 0;
@@ -2211,10 +2108,10 @@ main {
   border-radius: 24px;
   background: radial-gradient(
     ellipse at center,
-    rgba(6, 7, 11, 0) 52%,
-    rgba(6, 7, 11, 0.55) 100%
+    rgba(255, 255, 255, 0) 52%,
+    rgba(255, 255, 255, 0.55) 100%
   );
-  box-shadow: inset 0 0 70px 22px rgba(6, 7, 11, 0.9);
+  box-shadow: inset 0 0 70px 22px rgba(255, 255, 255, 0.9);
 }
 
 .about__values {
@@ -2246,7 +2143,7 @@ main {
   font-weight: 600;
   font-size: 1.12rem;
   letter-spacing: -0.01em;
-  color: #fff;
+  color: #0b0b0c;
   margin: 0 0 10px;
 }
 

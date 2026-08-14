@@ -49,7 +49,7 @@ export default function MiniAgent({
       >
         <path
           d={STANDBY_SPIRAL}
-          stroke="rgba(255,255,255,0.09)"
+          stroke="rgba(15,23,42,0.12)"
           strokeWidth="4"
           strokeLinecap="round"
         />

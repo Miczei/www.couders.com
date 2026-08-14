@@ -28,9 +28,9 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function inputClass(hasError: boolean) {
   const border = hasError
-    ? "border-red-400/70 focus:border-red-400"
-    : "border-white/10 focus:border-[#0EA5E9]";
-  return `w-full rounded-lg border ${border} bg-black/50 p-3.5 text-base text-white outline-none transition-all placeholder:text-zinc-500`;
+    ? "border-red-400 focus:border-red-500"
+    : "border-slate-300 focus:border-[#0EA5E9]";
+  return `w-full rounded-lg border ${border} bg-white p-3.5 text-base text-slate-900 outline-none transition-all placeholder:text-slate-400`;
 }
 
 export default function ContactPage({
@@ -109,7 +109,7 @@ export default function ContactPage({
     <div className="sub-shell">
       <Navbar locale={locale} dict={dict} />
 
-      <main className="sub relative overflow-hidden bg-black">
+      <main className="sub relative overflow-hidden bg-white">
         <div className="relative mx-auto max-w-7xl px-5 sm:px-6">
           <nav className="sub__crumbs" aria-label="Breadcrumb">
             <Link href={home}>Couders</Link>
@@ -133,7 +133,7 @@ export default function ContactPage({
                 initial={reduced ? false : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: EASE }}
-                className="relative max-w-lg text-balance text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl md:text-5xl"
+                className="relative max-w-lg text-balance text-3xl font-semibold tracking-[-0.03em] text-slate-900 sm:text-4xl md:text-5xl"
                 style={{ fontFamily: "var(--font-display), sans-serif" }}
               >
                 {content.h1}
@@ -143,7 +143,7 @@ export default function ContactPage({
                 initial={reduced ? false : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
-                className="relative mt-6 max-w-md text-pretty text-lg leading-relaxed text-[#C7CCD6]"
+                className="relative mt-6 max-w-md text-pretty text-lg leading-relaxed text-slate-600"
               >
                 {content.lead}
               </motion.p>
@@ -154,10 +154,10 @@ export default function ContactPage({
               initial={reduced ? false : { opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
-              className="relative overflow-hidden rounded-2xl border border-white/10 border-t-white/20 bg-[#0E1117]/90 p-6 shadow-2xl backdrop-blur-xl md:p-10 lg:col-span-7"
+              className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-900/5 md:p-10 lg:col-span-7"
             >
               <h2
-                className="text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl"
+                className="text-xl font-semibold tracking-[-0.02em] text-slate-900 sm:text-2xl"
                 style={{ fontFamily: "var(--font-display), sans-serif" }}
               >
                 {content.formH2}
@@ -166,7 +166,7 @@ export default function ContactPage({
               {status === "success" && (
                 <div
                   role="status"
-                  className="mt-6 rounded-lg border border-emerald-400/25 bg-emerald-400/10 p-4 text-sm text-emerald-200"
+                  className="mt-6 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700"
                 >
                   {content.successMessage}
                 </div>
@@ -174,7 +174,7 @@ export default function ContactPage({
               {status === "error" && (
                 <div
                   role="alert"
-                  className="mt-6 rounded-lg border border-red-500/25 bg-red-500/10 p-4 text-sm text-red-200"
+                  className="mt-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700"
                 >
                   {content.errorMessage}
                 </div>
@@ -183,7 +183,7 @@ export default function ContactPage({
               <form className="mt-6 flex flex-col gap-5" onSubmit={handleSubmit} noValidate>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="contact-firstName" className="mb-2 block text-sm text-zinc-300">
+                    <label htmlFor="contact-firstName" className="mb-2 block text-sm text-slate-600">
                       {content.firstNameLabel}
                     </label>
                     <input
@@ -198,13 +198,13 @@ export default function ContactPage({
                       aria-describedby={fieldErrors.firstName ? "contact-firstName-error" : undefined}
                     />
                     {fieldErrors.firstName && (
-                      <p id="contact-firstName-error" className="mt-1.5 text-xs text-red-400">
+                      <p id="contact-firstName-error" className="mt-1.5 text-xs text-red-500">
                         {content.errorRequired}
                       </p>
                     )}
                   </div>
                   <div>
-                    <label htmlFor="contact-lastName" className="mb-2 block text-sm text-zinc-300">
+                    <label htmlFor="contact-lastName" className="mb-2 block text-sm text-slate-600">
                       {content.lastNameLabel}
                     </label>
                     <input
@@ -219,7 +219,7 @@ export default function ContactPage({
                       aria-describedby={fieldErrors.lastName ? "contact-lastName-error" : undefined}
                     />
                     {fieldErrors.lastName && (
-                      <p id="contact-lastName-error" className="mt-1.5 text-xs text-red-400">
+                      <p id="contact-lastName-error" className="mt-1.5 text-xs text-red-500">
                         {content.errorRequired}
                       </p>
                     )}
@@ -227,7 +227,7 @@ export default function ContactPage({
                 </div>
 
                 <div>
-                  <label htmlFor="contact-email" className="mb-2 block text-sm text-zinc-300">
+                  <label htmlFor="contact-email" className="mb-2 block text-sm text-slate-600">
                     {content.emailLabel}
                   </label>
                   <input
@@ -242,14 +242,14 @@ export default function ContactPage({
                     aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
                   />
                   {fieldErrors.email && (
-                    <p id="contact-email-error" className="mt-1.5 text-xs text-red-400">
+                    <p id="contact-email-error" className="mt-1.5 text-xs text-red-500">
                       {content.errorRequired}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="contact-message" className="mb-2 block text-sm text-zinc-300">
+                  <label htmlFor="contact-message" className="mb-2 block text-sm text-slate-600">
                     {content.messageLabel}
                   </label>
                   <textarea

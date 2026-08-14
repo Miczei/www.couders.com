@@ -7,4 +7,4 @@ export const STANDBY_VIEWBOX = "0 0 100 100";
 
 export const FLOWER_COLOR = "#0EA5E9";
 
-export const LINE_COLOR = "#F5F5F7";
+export const LINE_COLOR = "#1E293B";
