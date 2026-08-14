@@ -33,7 +33,7 @@ export default async function Home({
       <main>
         <CoudersHero content={couders.hero} locale={locale} />
         <ProblemSection content={couders.problem} />
-        <ThreePillars content={couders.pillars} locale={locale} />
+        <ThreePillars content={couders.pillars} />
         <LogoTicker content={couders.logoTicker} />
         <IndustriesSection content={couders.industries} />
         <CtaSection

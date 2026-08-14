@@ -12,14 +12,10 @@ export type CoudersTelemetryCard = {
   accent: boolean;
 };
 
-export type CoudersTimelineStep = { time: string; text: string };
-
 export type CoudersPillar = {
   title: string;
   teaser: string;
-  modal: string;
-  detailsLabel: string;
-  modalCta: string;
+  expanded: string;
 };
 
 export type CoudersIndustry = {
@@ -33,7 +29,6 @@ export type CoudersContent = {
     h1: string;
     ctaButton: string;
     chatSubtitle: string;
-    badges: string[];
     scroll: string;
     morphAria: string;
   };
@@ -51,13 +46,15 @@ export type CoudersContent = {
   problem: {
     eyebrow: string;
     h2: string;
-    before: { title: string; steps: CoudersTimelineStep[] };
-    after: { title: string; steps: CoudersTimelineStep[] };
+    leftLabel: string;
+    rightLabel: string;
+    clientMessage: string;
+    officeStatus: string;
+    aiMessage: string;
   };
   pillars: {
     eyebrow: string;
     h2: string;
-    closeLabel: string;
     items: CoudersPillar[];
   };
   industries: {
@@ -78,7 +75,6 @@ const en: CoudersContent = {
     h1: "Automate customer service and sales in your company.",
     ctaButton: "Book a 15-minute demo",
     chatSubtitle: "Test below how our assistant talks to a client.",
-    badges: ["60s Response", "24/7 Active"],
     scroll: "Scroll",
     morphAria:
       "A single continuous line morphing from an abstract face into the Couders wordmark",
@@ -127,57 +123,36 @@ const en: CoudersContent = {
   },
   problem: {
     eyebrow: "The problem",
-    h2: "You're losing leads after hours.",
-    before: {
-      title: "Traditional Sales",
-      steps: [
-        { time: "Friday, 9:00 PM", text: "Client sends an inquiry." },
-        { time: "Weekend", text: "Silence." },
-        {
-          time: "Monday, 10:00 AM",
-          text: "Sales rep replies. Result? The client already bought from a competitor.",
-        },
-      ],
-    },
-    after: {
-      title: "Sales with Couders",
-      steps: [
-        { time: "Friday, 9:00 PM", text: "Client sends an inquiry." },
-        { time: "Friday, 9:01 PM", text: "The AI assistant qualifies the lead and checks pricing." },
-        { time: "Friday, 9:15 PM", text: "Client books a demo directly on the calendar." },
-      ],
-    },
+    h2: "Your client won't wait until Monday. AI responds instantly.",
+    leftLabel: "No Response",
+    rightLabel: "Response in 1 Minute",
+    clientMessage:
+      "Friday, 9:30 PM: Hi, I'm looking for a machine under 150k PLN. Is model X available?",
+    officeStatus: "Office reply: Monday, 10:00 AM (client already bought from a competitor)",
+    aiMessage:
+      "Friday, 9:31 PM: Hi there! Model X is available, and within that budget we also have a better option, model Y. Sending over the spec sheet. Would you like to discuss it in a short meeting on Monday?",
   },
   pillars: {
     eyebrow: "Product",
     h2: "Three ways it works.",
-    closeLabel: "Close",
     items: [
       {
-        title: "Corporate Sales Assistant",
-        teaser: "Sits on your website, knows the catalog, answers 24/7, and collects leads.",
-        modal:
-          "Knows your prospects and pricing by heart. Answers at any hour. A client writes “Looking for machine X under 100k PLN,” and the assistant instantly sends the spec sheet and captures their contact.",
-        detailsLabel: "See details →",
-        modalCta: "Book a demo",
+        title: "Corporate Sales Assistant (24/7)",
+        teaser: "An assistant on your website that knows your catalog and pricing. Collects leads while you sleep.",
+        expanded:
+          "This isn't a rigid button-based chatbot. Clients type naturally, and our assistant replies with real substance. It knows your prospectus, technical specs, and pricing by heart. It filters out questions already answered on the site, sends over PDFs, and instantly captures the phone number of anyone interested. It eliminates the 'dead hours' phenomenon on weekends and holidays. If it doesn't know something, it says so honestly and hands the contact off to a sales rep.",
       },
       {
         title: "Instant Lead Qualifier",
-        teaser:
-          "Reaches out to new ad leads in 60 seconds, qualifies budget, and books meetings in the sales calendar.",
-        modal:
-          "Stop wasting time calling window-shoppers. Our assistant messages ad leads within 1 minute, checks budget and intent. Serious buyers get a link straight to your sales calendar.",
-        detailsLabel: "See details →",
-        modalCta: "Book a demo",
+        teaser: "Reaches out to ad leads within 1 minute. Filters out window-shoppers, books real buyers.",
+        expanded:
+          "Most inquiries from ads come from people who clicked out of curiosity. Within 60 seconds of a form submission, our assistant contacts the lead by email or SMS. It checks their budget, purchase timeline, and preferences. It saves your sales reps dozens of hours - only vetted, serious buyers land on their desk, often with a meeting already booked on the calendar.",
       },
       {
         title: "B2B Proposal Generator",
-        teaser:
-          "Sales reps input 3 sentences after a call, and the system generates a tailored, branded PDF proposal in 15 minutes.",
-        modal:
-          "After a meeting, the rep fills a short form on their phone (what the client looked at, their concerns). In 15 minutes the system generates a personalized, branded PDF proposal ready to send.",
-        detailsLabel: "See details →",
-        modalCta: "Book a demo",
+        teaser: "A personalized, branded PDF proposal in the client's inbox 15 minutes after the meeting.",
+        expanded:
+          "No more wasting hours manually formatting in Word. After the meeting, your rep fills out a short form on their phone - noting what the client looked at and what concerns they raised. The AI assistant drafts copy tailored to that specific client, addressing their concerns directly. In 15 minutes it generates a polished, ready-to-send PDF in your company's branding. The client gets the proposal that same evening, while their buying emotions are at their peak.",
       },
     ],
   },
@@ -216,7 +191,6 @@ const pl: CoudersContent = {
     h1: "Zautomatyzuj obsługę klienta i sprzedaż w swojej firmie.",
     ctaButton: "Umów 15-minutowe demo",
     chatSubtitle: "Przetestuj poniżej, jak nasz asystent rozmawia z klientem.",
-    badges: ["Odpowiedź w 60s", "Działa 24/7"],
     scroll: "Przewiń",
     morphAria:
       "Pojedyncza ciągła linia przekształcająca się z abstrakcyjnej twarzy w logotyp Couders",
@@ -265,57 +239,36 @@ const pl: CoudersContent = {
   },
   problem: {
     eyebrow: "Problem",
-    h2: "Tracisz leady po godzinach pracy.",
-    before: {
-      title: "Tradycyjna Sprzedaż",
-      steps: [
-        { time: "Piątek, 21:00", text: "Klient wysyła zapytanie." },
-        { time: "Weekend", text: "Cisza." },
-        {
-          time: "Poniedziałek, 10:00",
-          text: "Handlowiec odpisuje. Efekt? Klient kupił u konkurencji.",
-        },
-      ],
-    },
-    after: {
-      title: "Sprzedaż z Couders",
-      steps: [
-        { time: "Piątek, 21:00", text: "Klient wysyła zapytanie." },
-        { time: "Piątek, 21:01", text: "Asystent AI kwalifikuje leada i sprawdza cennik." },
-        { time: "Piątek, 21:15", text: "Klient umawia demo bezpośrednio w kalendarzu." },
-      ],
-    },
+    h2: "Twój klient nie czeka do poniedziałku. AI odpowiada natychmiast.",
+    leftLabel: "Brak odpowiedzi",
+    rightLabel: "Odpowiedź w 1 minutę",
+    clientMessage:
+      "Piątek, 21:30: Witam, szukam maszyny do 150 tys. PLN. Czy model X jest dostępny?",
+    officeStatus: "Odpowiedź biura: Poniedziałek, 10:00 (klient kupił już u konkurencji)",
+    aiMessage:
+      "Piątek, 21:31: Dzień dobry! Model X jest dostępny, a w tym budżecie mamy też lepszą opcję Y. Podsyłam specyfikację. Czy chciałby Pan omówić to na krótkim spotkaniu w poniedziałek?",
   },
   pillars: {
     eyebrow: "Produkt",
     h2: "Trzy sposoby, jak to działa.",
-    closeLabel: "Zamknij",
     items: [
       {
-        title: "Firmowy Asystent Sprzedaży",
-        teaser: "Siedzi na Twojej stronie, zna katalog produktów, odpowiada 24/7 i zbiera leady.",
-        modal:
-          "Zna Twój prospekt i cennik na pamięć. Odpowiada o każdej porze. Klient pisze „Szukam maszyny X do 100 tys. zł”, a asystent natychmiast wysyła specyfikację i zbiera kontakt.",
-        detailsLabel: "Poznaj szczegóły →",
-        modalCta: "Zarezerwuj demo",
+        title: "Firmowy Asystent Sprzedaży (24/7)",
+        teaser: "Asystent na Twojej stronie, który zna katalog i cennik. Zbiera leady, gdy Ty śpisz.",
+        expanded:
+          "To nie jest sztywny chatbot z guzikami. Klient pisze naturalnie, a nasz asystent odpowiada merytorycznie. Zna na pamięć Twój prospekt, parametry techniczne i cennik. Odsiewa pytania, na które odpowiedź jest na stronie, podsyła PDFy, a od zainteresowanych natychmiast pobiera numer telefonu. Eliminuje zjawisko „martwych godzin” w weekendy i święta. Jeśli czegoś nie wie - uczciwie informuje i przekazuje kontakt do handlowca.",
       },
       {
-        title: "Błyskawiczny Kwalifikator Zapytań",
-        teaser:
-          "Odzywa się do nowych leadów z reklam w 60 sekund, kwalifikuje budżet i umawia spotkania w kalendarzu sprzedaży.",
-        modal:
-          "Nie trać czasu na dzwonienie do „ciekawskich”. Nasz asystent pisze do leada z reklamy w 1 minutę. Bada budżet i intencję. Poważni klienci dostają link do kalendarza handlowca.",
-        detailsLabel: "Poznaj szczegóły →",
-        modalCta: "Zarezerwuj demo",
+        title: "Błyskawiczny Kwalifikator Leadów",
+        teaser: "Odzywa się do leadów z reklam w 1 minutę. Odsiewa ciekawskich, umawia kupujących.",
+        expanded:
+          "Większość zapytań z reklam to osoby, które kliknęły „z ciekawości”. Nasi asystenci w ciągu 60 sekund od wysłania formularza kontaktują się z leadem mailem lub SMS-em. Badają budżet, termin zakupu i preferencje. Oszczędzają Twoim handlowcom dziesiątki godzin - na ich biurko trafiają wyłącznie wyselekcjonowani, poważni klienci, często z od razu zarezerwowanym terminem w kalendarzu.",
       },
       {
         title: "Generator Ofert B2B",
-        teaser:
-          "Handlowiec wpisuje 3 zdania po rozmowie, a system generuje dopasowaną, firmową ofertę PDF w 15 minut.",
-        modal:
-          "Po spotkaniu handlowiec uzupełnia krótki formularz na telefonie (np. co klient oglądał i czego się obawia). W 15 minut system generuje spersonalizowaną, designerską ofertę PDF gotową do wysłania.",
-        detailsLabel: "Poznaj szczegóły →",
-        modalCta: "Zarezerwuj demo",
+        teaser: "Spersonalizowana, firmowa oferta PDF w skrzynce klienta w 15 minut po spotkaniu.",
+        expanded:
+          "Koniec ze stratą godzin na ręczne formatowanie w Wordzie. Po spotkaniu Twój handlowiec wypełnia krótki formularz na telefonie - wpisuje, co klient oglądał i czego się obawia. Asystent AI redaguje tekst pod konkretnego klienta, odpowiadając na jego obawy. W 15 minut generuje piękny, gotowy plik PDF w szacie graficznej Twojej firmy. Klient dostaje ofertę jeszcze tego samego wieczoru, kiedy emocje zakupowe są najwyższe.",
       },
     ],
   },

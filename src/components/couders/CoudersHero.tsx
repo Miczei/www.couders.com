@@ -88,8 +88,8 @@ export default function CoudersHero({
           {content.chatSubtitle}
         </motion.p>
 
-        <div className="w-full px-6">
-          <HeroChat ready={logoReveal} badges={content.badges} />
+        <div className="w-full max-w-4xl px-6">
+          <HeroChat ready={logoReveal} />
         </div>
 
         <motion.div
