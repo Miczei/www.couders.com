@@ -25,7 +25,6 @@ export type CoudersIndustry = {
 
 export type CoudersContent = {
   hero: {
-    eyebrow: string;
     h1: string;
     ctaButton: string;
     chatSubtitle: string;
@@ -51,10 +50,13 @@ export type CoudersContent = {
     clientMessage: string;
     officeStatus: string;
     aiMessage: string;
+    metricChip: string;
   };
   pillars: {
     eyebrow: string;
     h2: string;
+    detailsLabel: string;
+    closeLabel: string;
     items: CoudersPillar[];
   };
   industries: {
@@ -71,10 +73,9 @@ export type CoudersContent = {
 
 const en: CoudersContent = {
   hero: {
-    eyebrow: "B2B Sales Automation",
     h1: "Automate customer service and sales in your company.",
-    ctaButton: "Book a 15-minute demo",
-    chatSubtitle: "Test below how our assistant talks to a client.",
+    ctaButton: "Book a demo",
+    chatSubtitle: "Test above how our assistant talks to a client.",
     scroll: "Scroll",
     morphAria:
       "A single continuous line morphing from an abstract face into the Couders wordmark",
@@ -123,7 +124,7 @@ const en: CoudersContent = {
   },
   problem: {
     eyebrow: "The problem",
-    h2: "Your client won't wait until Monday. AI responds instantly.",
+    h2: "Your client won't wait until Monday. Agent responds immediately.",
     leftLabel: "No Response",
     rightLabel: "Response in 1 Minute",
     clientMessage:
@@ -131,10 +132,13 @@ const en: CoudersContent = {
     officeStatus: "Office reply: Monday, 10:00 AM (client already bought from a competitor)",
     aiMessage:
       "Friday, 9:31 PM: Hi there! Model X is available, and within that budget we also have a better option, model Y. Sending over the spec sheet. Would you like to discuss it in a short meeting on Monday?",
+    metricChip: "Response time: 1 min",
   },
   pillars: {
     eyebrow: "Product",
     h2: "Three ways it works.",
+    detailsLabel: "See details →",
+    closeLabel: "Close",
     items: [
       {
         title: "Corporate Sales Assistant (24/7)",
@@ -187,10 +191,9 @@ const en: CoudersContent = {
 
 const pl: CoudersContent = {
   hero: {
-    eyebrow: "Automatyzacja Sprzedaży B2B",
     h1: "Zautomatyzuj obsługę klienta i sprzedaż w swojej firmie.",
-    ctaButton: "Umów 15-minutowe demo",
-    chatSubtitle: "Przetestuj poniżej, jak nasz asystent rozmawia z klientem.",
+    ctaButton: "Umów demo",
+    chatSubtitle: "Przetestuj powyżej, jak nasz asystent rozmawia z klientem.",
     scroll: "Przewiń",
     morphAria:
       "Pojedyncza ciągła linia przekształcająca się z abstrakcyjnej twarzy w logotyp Couders",
@@ -239,7 +242,7 @@ const pl: CoudersContent = {
   },
   problem: {
     eyebrow: "Problem",
-    h2: "Twój klient nie czeka do poniedziałku. AI odpowiada natychmiast.",
+    h2: "Twój klient nie czeka do poniedziałku. Agent odpowiada natychmiast.",
     leftLabel: "Brak odpowiedzi",
     rightLabel: "Odpowiedź w 1 minutę",
     clientMessage:
@@ -247,10 +250,13 @@ const pl: CoudersContent = {
     officeStatus: "Odpowiedź biura: Poniedziałek, 10:00 (klient kupił już u konkurencji)",
     aiMessage:
       "Piątek, 21:31: Dzień dobry! Model X jest dostępny, a w tym budżecie mamy też lepszą opcję Y. Podsyłam specyfikację. Czy chciałby Pan omówić to na krótkim spotkaniu w poniedziałek?",
+    metricChip: "Czas reakcji: 1 min",
   },
   pillars: {
     eyebrow: "Produkt",
     h2: "Trzy sposoby, jak to działa.",
+    detailsLabel: "Poznaj szczegóły →",
+    closeLabel: "Zamknij",
     items: [
       {
         title: "Firmowy Asystent Sprzedaży (24/7)",

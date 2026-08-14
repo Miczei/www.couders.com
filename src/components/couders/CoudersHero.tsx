@@ -38,17 +38,9 @@ export default function CoudersHero({
         color="rgba(90,120,150,0.1)"
       />
       {/* pt clears the fixed navbar on phones (burger + brand row is ~60px
-          tall); ≥768px the header is a single slim row so 64px is enough. */}
-      <div className="relative flex min-h-screen flex-col items-center overflow-hidden px-0 pb-16 pt-24 md:pt-16">
-        <motion.p
-          initial={still ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="mb-1 px-6 text-center font-mono text-[10px] uppercase tracking-[0.26em] text-zinc-500 sm:text-[11px] sm:tracking-[0.32em]"
-        >
-          {content.eyebrow}
-        </motion.p>
-
+          tall); ≥768px the header is a single slim row so 64px is the floor —
+          don't reduce md:pt below that or the H1 slides under the navbar. */}
+      <div className="relative flex min-h-screen flex-col items-center overflow-hidden px-0 pb-16 pt-20 md:pt-16">
         <FluidMorph
           debugProgress={debugProgress}
           ariaLabel={content.morphAria}
@@ -66,10 +58,23 @@ export default function CoudersHero({
           {content.h1}
         </motion.h1>
 
+        <div className="mt-8 w-full max-w-4xl px-6">
+          <HeroChat ready={logoReveal} />
+        </div>
+
+        <motion.p
+          initial={still ? false : { opacity: 0 }}
+          animate={{ opacity: logoReveal ? 1 : 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-5 px-6 text-center text-sm uppercase tracking-wider text-zinc-400"
+        >
+          {content.chatSubtitle}
+        </motion.p>
+
         <motion.div
           initial={still ? false : { opacity: 0, y: 16 }}
           animate={logoReveal ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.7, delay: 0.12, ease: EASE }}
+          transition={{ duration: 0.7, delay: 0.6, ease: EASE }}
         >
           <Link
             href={`/${locale}/contact`}
@@ -78,19 +83,6 @@ export default function CoudersHero({
             {content.ctaButton}
           </Link>
         </motion.div>
-
-        <motion.p
-          initial={still ? false : { opacity: 0 }}
-          animate={{ opacity: logoReveal ? 1 : 0 }}
-          transition={{ duration: 0.8, delay: 0.28 }}
-          className="mb-3 mt-9 px-6 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 sm:text-[11px]"
-        >
-          {content.chatSubtitle}
-        </motion.p>
-
-        <div className="w-full max-w-4xl px-6">
-          <HeroChat ready={logoReveal} />
-        </div>
 
         <motion.div
           initial={still ? false : { opacity: 0 }}
