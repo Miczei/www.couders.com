@@ -32,7 +32,7 @@ export default async function Home({
       <Navbar locale={locale} dict={dict} />
       <main>
         <CoudersHero content={couders.hero} locale={locale} light />
-        <ThreePillars content={couders.pillars} light />
+        <ThreePillars content={couders.pillars} locale={locale} light />
         <IndustriesSection content={couders.industries} light />
         <ProblemSection content={couders.problem} light />
         <LogoTicker content={couders.logoTicker} light />

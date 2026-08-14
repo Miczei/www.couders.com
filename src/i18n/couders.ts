@@ -56,7 +56,7 @@ export type CoudersContent = {
     eyebrow: string;
     h2: string;
     detailsLabel: string;
-    closeLabel: string;
+    ctaLabel: string;
     items: CoudersPillar[];
   };
   industries: {
@@ -138,7 +138,7 @@ const en: CoudersContent = {
     eyebrow: "Product",
     h2: "Three ways it works.",
     detailsLabel: "See details →",
-    closeLabel: "Close",
+    ctaLabel: "Find out more ➔",
     items: [
       {
         title: "Corporate Sales Assistant (24/7)",
@@ -260,7 +260,7 @@ const pl: CoudersContent = {
     eyebrow: "Produkt",
     h2: "Trzy sposoby, jak to działa.",
     detailsLabel: "Poznaj szczegóły →",
-    closeLabel: "Zamknij",
+    ctaLabel: "Dowiedz się więcej ➔",
     items: [
       {
         title: "Firmowy Asystent Sprzedaży (24/7)",

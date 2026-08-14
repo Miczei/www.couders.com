@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import type { CoudersContent } from "@/i18n/couders";
+import type { Locale } from "@/i18n/config";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -20,12 +22,15 @@ const OPEN_ANCHOR_CLASS = [
 
 export default function ThreePillars({
   content,
+  locale,
   light,
 }: {
   content: CoudersContent["pillars"];
+  locale: Locale;
   light?: boolean;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const solutionsHref = `/${locale}/methodology`;
 
   // A section with its own z-index creates a stacking context: a z-20 card
   // inside a z-10 section still loses to a *sibling* z-10 section that comes
@@ -61,6 +66,21 @@ export default function ThreePillars({
           {content.h2}
         </motion.h2>
 
+        {/* Click-outside-to-close backdrop. Sibling of the cards (not a
+            wrapper), so hit-testing alone already keeps clicks on the open
+            card from reaching it; stopPropagation on the card is a defensive
+            second layer. z-10 sits above closed cards (z-0) and below the
+            open one (z-20), and the section's own z-40-while-open bump (see
+            below) lifts this whole layer, backdrop included, above the rest
+            of the page. */}
+        {openIndex !== null && (
+          <div
+            aria-hidden="true"
+            onClick={() => setOpenIndex(null)}
+            className="fixed inset-0 z-10 bg-slate-900/20 backdrop-blur-[2px] transition-opacity duration-300"
+          />
+        )}
+
         <div className="mt-10 grid grid-cols-1 items-stretch gap-3 sm:mt-14 sm:grid-cols-3 sm:gap-4">
           {content.items.map((item, i) => {
             const open = openIndex === i;
@@ -74,6 +94,7 @@ export default function ThreePillars({
                 className="relative min-h-[230px] sm:min-h-[250px]"
               >
                 <div
+                  onClick={(e) => e.stopPropagation()}
                   className={`absolute inset-x-0 top-0 flex flex-col rounded-2xl border p-6 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:p-8 ${
                     open
                       ? `z-20 border-[#0EA5E9]/60 shadow-2xl sm:w-[130%] ${light ? "bg-white" : "bg-[#0A0A0B]"} ${OPEN_ANCHOR_CLASS[i]}`
@@ -85,35 +106,37 @@ export default function ThreePillars({
                   <button
                     type="button"
                     onClick={() => setOpenIndex(open ? null : i)}
-                    className="flex flex-1 flex-col text-left"
+                    className="flex flex-1 flex-col justify-between text-left"
                   >
-                    <span
-                      className={`bg-clip-text font-mono text-sm text-transparent ${
-                        light
-                          ? "bg-gradient-to-b from-slate-900 via-slate-600 to-slate-400"
-                          : "bg-gradient-to-b from-white via-[#C7CCD6] to-[#6E7178]"
-                      }`}
-                      aria-hidden="true"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3
-                      className={`mt-4 text-lg font-semibold tracking-[-0.01em] transition-transform duration-500 sm:text-xl ${
-                        open ? "scale-[1.03]" : ""
-                      } ${light ? "text-slate-900" : "text-[#F5F5F7]"}`}
-                      style={{ fontFamily: "var(--font-display), sans-serif", transformOrigin: "left" }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className={`mt-3 text-sm leading-relaxed sm:text-[15px] ${
-                        light ? "text-slate-600" : "text-zinc-400"
-                      }`}
-                    >
-                      {item.teaser}
-                    </p>
+                    <div>
+                      <span
+                        className={`bg-clip-text font-mono text-sm text-transparent ${
+                          light
+                            ? "bg-gradient-to-b from-slate-900 via-slate-600 to-slate-400"
+                            : "bg-gradient-to-b from-white via-[#C7CCD6] to-[#6E7178]"
+                        }`}
+                        aria-hidden="true"
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <h3
+                        className={`mt-4 text-lg font-semibold tracking-[-0.01em] transition-transform duration-500 sm:text-xl ${
+                          open ? "scale-[1.03]" : ""
+                        } ${light ? "text-slate-900" : "text-[#F5F5F7]"}`}
+                        style={{ fontFamily: "var(--font-display), sans-serif", transformOrigin: "left" }}
+                      >
+                        {item.title}
+                      </h3>
+                      <p
+                        className={`mt-3 text-sm leading-relaxed sm:text-[15px] ${
+                          light ? "text-slate-600" : "text-zinc-400"
+                        }`}
+                      >
+                        {item.teaser}
+                      </p>
+                    </div>
                     {!open && (
-                      <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-[#0EA5E9]">
+                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#0EA5E9]">
                         {content.detailsLabel}
                       </span>
                     )}
@@ -132,13 +155,12 @@ export default function ThreePillars({
                       >
                         {item.expanded}
                       </p>
-                      <button
-                        type="button"
-                        onClick={() => setOpenIndex(null)}
-                        className="mt-4 text-sm font-medium text-[#0EA5E9]"
+                      <Link
+                        href={solutionsHref}
+                        className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-600"
                       >
-                        {content.closeLabel}
-                      </button>
+                        {content.ctaLabel}
+                      </Link>
                     </div>
                   </div>
                 </div>
