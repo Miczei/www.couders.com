@@ -20,7 +20,7 @@ export type CoudersPillar = {
 
 export type CoudersIndustry = {
   title: string;
-  points: string[];
+  description: string;
 };
 
 export type CoudersContent = {
@@ -166,35 +166,23 @@ const en: CoudersContent = {
     items: [
       {
         title: "Manufacturing & Machinery",
-        points: [
-          "Technical machine parameter selection",
-          "Automated quoting and pricing",
-          "Handling complex specifications 24/7",
-        ],
+        description:
+          "B2B clients don't buy blind. They're after specific technical parameters, specifications, and performance figures. Instead of making them wait for a sales engineer to reply, our AI assistant analyzes the inquiry instantly. It knows your entire machine documentation by heart. It can match the right model to the client's needs, compare it against other units in the catalog, and provide a preliminary quote. What's more, it automatically captures contact details and hands the rep a ready-to-close lead complete with the full conversation history.",
       },
       {
         title: "Construction Materials",
-        points: [
-          "Instant stock availability checks",
-          "Bulk pricing and discounts",
-          "Handling inquiries from contractors and crews",
-        ],
+        description:
+          "In construction, time is money. Contractors and renovation crews often send inquiries about stock levels and wholesale pricing straight from the job site, frequently after your office has closed. Our system instantly checks assortment availability and converts requirements (e.g. square meters into packages). It automates the quoting process for regular B2B clients, factoring in their discount tiers. You save your sales reps hours they'd otherwise spend answering repetitive availability questions, freeing them to focus on landing new, large contracts.",
       },
       {
         title: "Real Estate Developers",
-        points: [
-          "24/7 listing, pricing, and floor-plan presentation",
-          "Inquiry filtering",
-          "Automatic meeting booking in the advisor's calendar",
-        ],
+        description:
+          "Every lead from a real estate portal costs a fortune, and most of them arrive on weekends or in the evening. By the time your sales office opens on Monday morning, the client has already browsed the competition's listings. We deploy a Virtual Investment Assistant that knows your prospectus, floor plans, and current price list by heart. It answers clients within 1 minute, any time of day or night. It filters out window-shoppers, and for anyone genuinely interested in buying, it immediately offers a slot in the advisor's calendar. After the meeting, the system generates a personalized, beautifully designed PDF proposal ready to send within 15 minutes.",
       },
       {
-        title: "B2B Services",
-        points: [
-          "Qualifying inbound inquiries",
-          "Pre-meeting discovery calls",
-          "Time savings for the sales team",
-        ],
+        title: "B2B Services & Consulting",
+        description:
+          "Selling services requires building trust and thoroughly understanding the client's needs before the first meeting. Our Instant Lead Qualifier reaches out to every new inquiry from ads within 60 seconds. It carries out a natural, intelligent conversation to establish budget, the scale of the problem, and expectations. Only vetted clients worth talking to land on your team's desk. No more wasting time on calls to people who 'just clicked out of curiosity.'",
       },
     ],
   },
@@ -300,35 +288,23 @@ const pl: CoudersContent = {
     items: [
       {
         title: "Przemysł i Maszyny",
-        points: [
-          "Dobór parametrów technicznych maszyn",
-          "Automatyczne wyceny i ofertowanie",
-          "Odpowiadanie na skomplikowane specyfikacje 24/7",
-        ],
+        description:
+          "Klienci B2B nie kupują w ciemno. Szukają konkretnych parametrów technicznych, specyfikacji i wydajności. Zamiast zmuszać ich do czekania na odpowiedź inżyniera sprzedaży, nasz asystent AI natychmiast analizuje zapytanie. Zna na pamięć całą dokumentację techniczną Twoich maszyn. Potrafi dobrać odpowiedni model do potrzeb klienta, porównać go z innymi urządzeniami z katalogu i podać wstępną wycenę. Co więcej, automatycznie zbiera dane kontaktowe i przekazuje handlowcowi gotowego leada wraz z całą historią rozmowy, gotowego do zamknięcia sprzedaży.",
       },
       {
         title: "Materiały Budowlane",
-        points: [
-          "Błyskawiczne sprawdzanie dostępności w magazynie",
-          "Cenniki hurtowe i rabatowanie",
-          "Obsługa zapytań od wykonawców i ekip budowlanych",
-        ],
+        description:
+          "W branży budowlanej czas to pieniądz. Wykonawcy i ekipy remontowe często wysyłają zapytania o stany magazynowe i cenniki hurtowe prosto z budowy, nierzadko po godzinach pracy Twojego biura. Nasz system natychmiast sprawdza dostępność asortymentu i przelicza zapotrzebowanie (np. ilość metrów kwadratowych na paczki). Automatyzuje proces wyceny dla stałych klientów B2B, uwzględniając ich progi rabatowe. Oszczędzasz godziny pracy handlowców, którzy zamiast odpowiadać na powtarzalne pytania o dostępność towaru, mogą skupić się na pozyskiwaniu nowych, dużych kontraktów.",
       },
       {
         title: "Deweloperzy i Nieruchomości",
-        points: [
-          "Prezentacja mieszkań, cenników i rzutów 24/7",
-          "Odsiewanie zapytań",
-          "Automatyczne umawianie spotkań w kalendarzu doradcy",
-        ],
+        description:
+          "Każdy lead z portalu nieruchomości kosztuje krocie, a większość z nich spływa w weekendy lub wieczorami. Zanim Twoje biuro sprzedaży otworzy się w poniedziałek rano, klient zdąży już obejrzeć oferty konkurencji. Wdrażamy Wirtualnego Asystenta Inwestycji, który zna na pamięć Twój prospekt, rzuty mieszkań i aktualny cennik. Odpowiada klientom w 1 minutę o każdej porze dnia i nocy. Odsiewa „ciekawskich”, a osobom realnie zainteresowanym zakupem od razu proponuje termin w kalendarzu doradcy. Po spotkaniu, system w 15 minut wygeneruje spersonalizowaną, piękną ofertę PDF gotową do wysłania.",
       },
       {
-        title: "Usługi B2B",
-        points: [
-          "Kwalifikacja przychodzących zapytań",
-          "Wstępny wywiad przed spotkaniem",
-          "Oszczędność czasu dla działu handlowego",
-        ],
+        title: "Usługi B2B i Consulting",
+        description:
+          "Sprzedaż usług wymaga zbudowania zaufania i dokładnego zbadania potrzeb klienta przed pierwszym spotkaniem. Nasz Błyskawiczny Kwalifikator Leadów odzywa się do każdego nowego zapytania z reklam w ciągu 60 sekund. Przeprowadza naturalną, inteligentną konwersację, aby ustalić budżet, skalę problemu i oczekiwania. Na biurko Twojego zespołu trafiają wyłącznie wyselekcjonowani klienci, z którymi warto rozmawiać. Koniec z marnowaniem czasu na telefony do osób, które „tylko klikały z ciekawości”.",
       },
     ],
   },

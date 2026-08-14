@@ -89,8 +89,9 @@ export default function IndustriesSection({ content }: { content: CoudersContent
             })}
           </div>
 
-          {/* Dynamic display area */}
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 md:col-span-3">
+          {/* Dynamic display area — fixed height so tab switches never jump
+              the section's height; the paragraph scrolls internally instead. */}
+          <div className="relative h-[400px] overflow-hidden rounded-2xl border border-white/10 sm:h-[380px] md:col-span-3">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -98,33 +99,32 @@ export default function IndustriesSection({ content }: { content: CoudersContent
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.4, ease: EASE }}
-                className="relative flex min-h-[280px] flex-col justify-center p-6 sm:p-10"
+                className="absolute inset-0 flex flex-col p-6 sm:p-10"
                 style={{ background: GRADIENTS[active % GRADIENTS.length] }}
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#C06C4C"
-                  strokeWidth="1.4"
-                  className="h-10 w-10"
-                  aria-hidden="true"
-                >
-                  {ICONS[active % ICONS.length]}
-                </svg>
-                <p
-                  className="mt-5 text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl"
-                  style={{ fontFamily: "var(--font-display), sans-serif" }}
-                >
-                  {item.title}
-                </p>
-                <ul className="mt-5 space-y-2.5">
-                  {item.points.map((point) => (
-                    <li key={point} className="flex items-start gap-2.5 text-sm text-zinc-300 sm:text-[15px]">
-                      <span className="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-[#C06C4C]" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
+                <div className="flex flex-none items-center gap-4">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#C06C4C"
+                    strokeWidth="1.4"
+                    className="h-9 w-9 flex-none"
+                    aria-hidden="true"
+                  >
+                    {ICONS[active % ICONS.length]}
+                  </svg>
+                  <p
+                    className="text-lg font-semibold tracking-[-0.02em] text-white sm:text-2xl"
+                    style={{ fontFamily: "var(--font-display), sans-serif" }}
+                  >
+                    {item.title}
+                  </p>
+                </div>
+                <div className="mt-5 flex-1 overflow-y-auto pr-1">
+                  <p className="text-pretty text-sm leading-relaxed text-zinc-300 sm:text-[15px]">
+                    {item.description}
+                  </p>
+                </div>
               </motion.div>
             </AnimatePresence>
           </div>
