@@ -1835,11 +1835,16 @@ main {
 /* Header/footer chrome, standardized light across every route (was
    previously a dark override here; site-wide light mode retired the
    need for a separate .couders-light experiment class). */
-.sub-shell .nav,
-.sub-shell .nav--scrolled {
+.sub-shell .nav {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px) saturate(120%);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out),
+    background 0.4s var(--ease-out), backdrop-filter 0.4s var(--ease-out);
+}
+.sub-shell .nav--scrolled {
+  border-bottom-color: rgba(15, 23, 42, 0.1);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
 }
 .sub-shell .nav__brand,
 .sub-shell .nav__links a {

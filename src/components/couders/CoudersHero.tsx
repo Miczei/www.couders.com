@@ -48,7 +48,7 @@ export default function CoudersHero({
         <FluidMorph
           debugProgress={debugProgress}
           ariaLabel={content.morphAria}
-          className="w-[min(72vw,620px)]"
+          className="w-[min(72vw,620px)] -mb-10 sm:-mb-14"
           onReveal={() => setLogoReveal(true)}
           light={light}
         />
@@ -65,7 +65,7 @@ export default function CoudersHero({
           {content.h1}
         </motion.h1>
 
-        <div className="mt-8 w-full max-w-4xl px-6">
+        <div className="mt-5 w-full max-w-4xl px-6">
           <HeroChat ready={logoReveal} light={light} />
         </div>
 

@@ -61,7 +61,7 @@ export default function ThreePillars({
           {content.h2}
         </motion.h2>
 
-        <div className="mt-10 grid grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-3 sm:gap-4">
+        <div className="mt-10 grid grid-cols-1 items-stretch gap-3 sm:mt-14 sm:grid-cols-3 sm:gap-4">
           {content.items.map((item, i) => {
             const open = openIndex === i;
             return (
@@ -78,14 +78,14 @@ export default function ThreePillars({
                     open
                       ? `z-20 border-[#0EA5E9]/60 shadow-2xl sm:w-[130%] ${light ? "bg-white" : "bg-[#0A0A0B]"} ${OPEN_ANCHOR_CLASS[i]}`
                       : light
-                        ? "z-0 border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
-                        : "z-0 border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
+                        ? "z-0 h-full border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
+                        : "z-0 h-full border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
                   }`}
                 >
                   <button
                     type="button"
                     onClick={() => setOpenIndex(open ? null : i)}
-                    className="flex flex-col text-left"
+                    className="flex flex-1 flex-col text-left"
                   >
                     <span
                       className={`bg-clip-text font-mono text-sm text-transparent ${
@@ -113,7 +113,7 @@ export default function ThreePillars({
                       {item.teaser}
                     </p>
                     {!open && (
-                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#0EA5E9]">
+                      <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-[#0EA5E9]">
                         {content.detailsLabel}
                       </span>
                     )}
