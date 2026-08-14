@@ -1863,6 +1863,61 @@ main {
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+/* The page wrapper carries .sub-shell + .couders-shell + .couders-light
+   together. .sub-shell's generic dark nav/footer overrides (further below
+   in this file) tie in specificity with the rules above and win on source
+   order alone — that's what was turning the header dark on scroll and
+   leaving white/illegible nav+footer text. These compound selectors outrank
+   every .sub-shell rule unconditionally, so the header/footer stay
+   permanently white with dark text at every scroll position, without
+   touching Navbar.tsx/Footer.tsx (still shared by the dark sub-shell pages). */
+.couders-shell.couders-light .nav,
+.couders-shell.couders-light .nav--scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px) saturate(120%);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+.couders-shell.couders-light .nav__brand {
+  color: #0f172a;
+}
+.couders-shell.couders-light .nav__links a {
+  color: #334155;
+}
+.couders-shell.couders-light .nav__links a:hover,
+.couders-shell.couders-light .nav__links a.nav__link--active {
+  color: #0ea5e9;
+}
+.couders-shell.couders-light .lang-toggle .lang {
+  color: #64748b;
+}
+.couders-shell.couders-light .lang-toggle .lang:hover,
+.couders-shell.couders-light .lang-toggle .lang--active {
+  color: #0ea5e9;
+}
+.couders-shell.couders-light .lang-toggle .lang-sep {
+  color: rgba(15, 23, 42, 0.25);
+}
+.couders-shell.couders-light .nav__burger span {
+  background: #0f172a;
+}
+.couders-shell.couders-light .footer {
+  background: #ffffff;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+.couders-shell.couders-light .footer .nav__brand {
+  color: #0f172a;
+}
+.couders-shell.couders-light .footer__tagline,
+.couders-shell.couders-light .footer__meta {
+  color: #64748b;
+}
+.couders-shell.couders-light .footer__links a {
+  color: #334155;
+}
+.couders-shell.couders-light .footer__links a:hover {
+  color: #0ea5e9;
+}
+
 @keyframes couders-marquee {
   from {
     transform: translateX(0);
