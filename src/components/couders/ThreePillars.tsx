@@ -1,24 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { CoudersContent } from "@/i18n/couders";
 import type { Locale } from "@/i18n/config";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-
-// Each card expands anchored to its own edge — left card grows from the
-// left, center from the middle, right card from the right — instead of
-// converging on one shared spot. The wrapper cell keeps a fixed min-height
-// so growing a card never resizes the grid track or its siblings; the card
-// itself goes `absolute` once open and overlaps whatever's below it, so the
-// footer/next section never gets pushed down either.
-const OPEN_ANCHOR_CLASS = [
-  "sm:left-0 sm:right-auto",
-  "sm:left-1/2 sm:right-auto sm:-translate-x-1/2",
-  "sm:left-auto sm:right-0",
-];
 
 export default function ThreePillars({
   content,
@@ -31,19 +20,27 @@ export default function ThreePillars({
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const solutionsHref = `/${locale}/methodology`;
+  const openItem = openIndex !== null ? content.items[openIndex] : null;
+  const closeLabel = locale === "pl" ? "Zamknij" : "Close";
 
-  // A section with its own z-index creates a stacking context: a z-20 card
-  // inside a z-10 section still loses to a *sibling* z-10 section that comes
-  // later in the DOM (the marquee), because descendant z-index never leaks
-  // out to compete with sibling stacking contexts. Bumping this section's
-  // own z-index above the marquee's while a card is open is what actually
-  // lets the expanded card float above it instead of getting painted under.
+  // Standard modal hygiene, matching the deep-dive modal on /methodology:
+  // Escape closes it, and background scroll is locked while it's open.
+  useEffect(() => {
+    if (!openItem) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenIndex(null);
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [openItem]);
+
   return (
     <section
       id="pillars"
-      className={`relative px-5 py-16 sm:px-6 sm:py-24 md:py-32 ${light ? "bg-white" : "bg-black"} ${
-        openIndex !== null ? "z-40" : "z-10"
-      }`}
+      className={`relative z-10 px-5 py-16 sm:px-6 sm:py-24 md:py-32 ${light ? "bg-white" : "bg-black"}`}
     >
       <div className="mx-auto max-w-6xl">
         <p
@@ -66,118 +63,103 @@ export default function ThreePillars({
           {content.h2}
         </motion.h2>
 
-        {/* Click-outside-to-close backdrop. Sibling of the cards (not a
-            wrapper), so hit-testing alone already keeps clicks on the open
-            card from reaching it; stopPropagation on the card is a defensive
-            second layer. z-10 sits above closed cards (z-0) and below the
-            open one (z-20), and the section's own z-40-while-open bump (see
-            below) lifts this whole layer, backdrop included, above the rest
-            of the page. */}
-        {openIndex !== null && (
-          <div
-            aria-hidden="true"
-            onClick={() => setOpenIndex(null)}
-            className="fixed inset-0 z-10 bg-slate-900/20 backdrop-blur-[2px] transition-opacity duration-300"
-          />
-        )}
-
-        <div className="mt-10 grid grid-cols-1 items-stretch gap-3 sm:mt-14 sm:grid-cols-3 sm:gap-4">
-          {content.items.map((item, i) => {
-            const open = openIndex === i;
-            return (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-70px" }}
-                transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
-                className="relative min-h-[230px] sm:min-h-[250px]"
-              >
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className={`absolute inset-x-0 top-0 flex flex-col rounded-2xl border p-6 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:p-8 ${
-                    open
-                      ? `z-20 border-[#0EA5E9]/60 shadow-2xl sm:w-[130%] ${light ? "bg-white" : "bg-[#0A0A0B]"} ${OPEN_ANCHOR_CLASS[i]}`
-                      : light
-                        ? "z-0 h-[230px] sm:h-[250px] border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
-                        : "z-0 h-[230px] sm:h-[250px] border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
-                  }`}
+        {/* Plain in-flow grid cards — CSS Grid stretches every cell in a row
+            to match the tallest one by default, so h-full on each card is
+            all that's needed for guaranteed equal heights, regardless of
+            teaser length. No absolute positioning, no manual pixel heights. */}
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-14 md:grid-cols-3">
+          {content.items.map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-70px" }}
+              transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
+              onClick={() => setOpenIndex(i)}
+              className={`flex h-full cursor-pointer flex-col justify-between rounded-2xl border p-8 transition-shadow hover:shadow-lg ${
+                light
+                  ? "border-slate-200 bg-white"
+                  : "border-white/10 bg-[#0A0A0B] hover:border-[#0EA5E9]/40"
+              }`}
+            >
+              <div className="flex flex-col gap-4">
+                <span className={`text-sm font-medium ${light ? "text-slate-500" : "text-zinc-500"}`}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3
+                  className={`text-xl font-bold leading-tight ${light ? "text-slate-900" : "text-[#F5F5F7]"}`}
+                  style={{ fontFamily: "var(--font-display), sans-serif" }}
                 >
-                  {/* Top: number + title, static height, no flex-grow. */}
-                  <div className="mb-4">
-                    <span
-                      className={`bg-clip-text font-mono text-sm text-transparent ${
-                        light
-                          ? "bg-gradient-to-b from-slate-900 via-slate-600 to-slate-400"
-                          : "bg-gradient-to-b from-white via-[#C7CCD6] to-[#6E7178]"
-                      }`}
-                      aria-hidden="true"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3
-                      className={`mt-4 text-lg font-semibold tracking-[-0.01em] transition-transform duration-500 sm:text-xl ${
-                        open ? "scale-[1.03]" : ""
-                      } ${light ? "text-slate-900" : "text-[#F5F5F7]"}`}
-                      style={{ fontFamily: "var(--font-display), sans-serif", transformOrigin: "left" }}
-                    >
-                      {item.title}
-                    </h3>
-                  </div>
-
-                  {/* Middle: description. The ONLY element that gets flex-grow —
-                      it absorbs the leftover height so the CTA below always
-                      lands on the same line regardless of teaser length. */}
-                  <div className="flex-grow">
-                    <p
-                      className={`text-sm leading-relaxed sm:text-[15px] ${
-                        light ? "text-slate-600" : "text-zinc-400"
-                      }`}
-                    >
-                      {item.teaser}
-                    </p>
-                  </div>
-
-                  {/* Bottom: CTA, pinned via mt-auto against the flex-grow above. */}
-                  {!open && (
-                    <div className="mt-auto pt-4">
-                      <button
-                        type="button"
-                        onClick={() => setOpenIndex(i)}
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-[#0EA5E9]"
-                      >
-                        {content.detailsLabel}
-                      </button>
-                    </div>
-                  )}
-
-                  <div
-                    className={`grid transition-all duration-500 ease-in-out ${
-                      open ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      <p
-                        className={`text-sm leading-relaxed sm:text-[15px] ${
-                          light ? "text-slate-700" : "text-zinc-300"
-                        }`}
-                      >
-                        {item.expanded}
-                      </p>
-                      <Link
-                        href={solutionsHref}
-                        className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-600"
-                      >
-                        {content.ctaLabel}
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+                  {item.title}
+                </h3>
+                <p className={`leading-relaxed ${light ? "text-slate-600" : "text-zinc-400"}`}>
+                  {item.teaser}
+                </p>
+              </div>
+              <div className="pt-8">
+                <span className="inline-block font-medium text-sky-500 transition-colors hover:text-sky-600">
+                  {content.detailsLabel}
+                </span>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
+
+      {/* Deep-dive modal, portaled straight to <body>: sidesteps every
+          ancestor stacking-context/z-index fight since it's no longer a
+          descendant of this section (or any other homepage section) at all. */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {openItem && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                onClick={() => setOpenIndex(null)}
+                className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm sm:p-6"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: EASE }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="no-scrollbar max-h-[85vh] w-full max-w-lg overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl sm:p-8"
+                >
+                  <div className="flex items-start justify-between gap-6">
+                    <h3
+                      className="text-2xl font-semibold tracking-[-0.02em] text-slate-900"
+                      style={{ fontFamily: "var(--font-display), sans-serif" }}
+                    >
+                      {openItem.title}
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={() => setOpenIndex(null)}
+                      aria-label={closeLabel}
+                      className="rounded-full border border-slate-300 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500 transition-colors hover:border-slate-900 hover:text-slate-900"
+                    >
+                      {closeLabel}
+                    </button>
+                  </div>
+                  <p className="mt-4 text-sm leading-relaxed text-slate-700 sm:text-[15px]">
+                    {openItem.expanded}
+                  </p>
+                  <Link
+                    href={solutionsHref}
+                    className="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-600"
+                  >
+                    {content.ctaLabel}
+                  </Link>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </section>
   );
 }
