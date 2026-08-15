@@ -126,6 +126,13 @@ export default function Navbar({
             {item.label}
           </Link>
         ))}
+        <Link
+          href={contactItem.href}
+          aria-current={cur(contactItem.path)}
+          className="rounded-lg bg-sky-500 px-4 py-2 font-medium text-white transition-colors hover:bg-sky-600"
+        >
+          {contactItem.label}
+        </Link>
       </nav>
 
       <div className="nav__right">
@@ -150,13 +157,6 @@ export default function Navbar({
             EN
           </Link>
         </div>
-        <Link
-          href={contactItem.href}
-          aria-current={cur(contactItem.path)}
-          className="rounded-lg bg-sky-500 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-sky-600"
-        >
-          {contactItem.label}
-        </Link>
       </div>
     </header>
 

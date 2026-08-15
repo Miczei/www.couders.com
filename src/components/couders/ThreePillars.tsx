@@ -99,44 +99,42 @@ export default function ThreePillars({
                     open
                       ? `z-20 border-[#0EA5E9]/60 shadow-2xl sm:w-[130%] ${light ? "bg-white" : "bg-[#0A0A0B]"} ${OPEN_ANCHOR_CLASS[i]}`
                       : light
-                        ? "z-0 h-full border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
-                        : "z-0 h-full border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
+                        ? "z-0 bottom-0 h-full border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
+                        : "z-0 bottom-0 h-full border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
                   }`}
                 >
                   <button
                     type="button"
                     onClick={() => setOpenIndex(open ? null : i)}
-                    className="flex flex-1 flex-col justify-between text-left"
+                    className="flex flex-1 flex-col text-left"
                   >
-                    <div>
-                      <span
-                        className={`bg-clip-text font-mono text-sm text-transparent ${
-                          light
-                            ? "bg-gradient-to-b from-slate-900 via-slate-600 to-slate-400"
-                            : "bg-gradient-to-b from-white via-[#C7CCD6] to-[#6E7178]"
-                        }`}
-                        aria-hidden="true"
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <h3
-                        className={`mt-4 text-lg font-semibold tracking-[-0.01em] transition-transform duration-500 sm:text-xl ${
-                          open ? "scale-[1.03]" : ""
-                        } ${light ? "text-slate-900" : "text-[#F5F5F7]"}`}
-                        style={{ fontFamily: "var(--font-display), sans-serif", transformOrigin: "left" }}
-                      >
-                        {item.title}
-                      </h3>
-                      <p
-                        className={`mt-3 text-sm leading-relaxed sm:text-[15px] ${
-                          light ? "text-slate-600" : "text-zinc-400"
-                        }`}
-                      >
-                        {item.teaser}
-                      </p>
-                    </div>
+                    <span
+                      className={`bg-clip-text font-mono text-sm text-transparent ${
+                        light
+                          ? "bg-gradient-to-b from-slate-900 via-slate-600 to-slate-400"
+                          : "bg-gradient-to-b from-white via-[#C7CCD6] to-[#6E7178]"
+                      }`}
+                      aria-hidden="true"
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h3
+                      className={`mt-4 text-lg font-semibold tracking-[-0.01em] transition-transform duration-500 sm:text-xl ${
+                        open ? "scale-[1.03]" : ""
+                      } ${light ? "text-slate-900" : "text-[#F5F5F7]"}`}
+                      style={{ fontFamily: "var(--font-display), sans-serif", transformOrigin: "left" }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      className={`mt-3 text-sm leading-relaxed sm:text-[15px] ${
+                        light ? "text-slate-600" : "text-zinc-400"
+                      }`}
+                    >
+                      {item.teaser}
+                    </p>
                     {!open && (
-                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#0EA5E9]">
+                      <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-[#0EA5E9]">
                         {content.detailsLabel}
                       </span>
                     )}
