@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { CoudersContent } from "@/i18n/couders";
 import type { Locale } from "@/i18n/config";
 
@@ -117,45 +117,50 @@ export default function ThreePillars({
                   </div>
                 </motion.div>
 
-                <AnimatePresence>
-                  {open && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.3, ease: EASE }}
-                      onClick={(e) => e.stopPropagation()}
-                      className={`absolute z-50 w-[90vw] rounded-2xl border p-8 shadow-2xl transition-all duration-300 md:w-[250%] ${
-                        EXPAND_ANCHOR_CLASS[i]
-                      } ${light ? "border-slate-200 bg-white" : "border-white/10 bg-[#0A0A0B]"}`}
-                    >
-                      <span className={`text-sm font-medium ${light ? "text-slate-500" : "text-zinc-500"}`}>
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <h3
-                        className={`mt-4 text-xl font-bold leading-tight ${
-                          light ? "text-slate-900" : "text-[#F5F5F7]"
-                        }`}
-                        style={{ fontFamily: "var(--font-display), sans-serif" }}
-                      >
-                        {item.title}
-                      </h3>
-                      <p
-                        className={`mt-4 text-sm leading-relaxed sm:text-[15px] ${
-                          light ? "text-slate-700" : "text-zinc-300"
-                        }`}
-                      >
-                        {item.expanded}
-                      </p>
-                      <Link
-                        href={solutionsHref}
-                        className="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-600"
-                      >
-                        {content.ctaLabel}
-                      </Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Always mounted — visibility toggled via pure CSS classes,
+                    not conditional `&&` rendering. Mounting/unmounting the
+                    node on every open/close is what caused the flash;
+                    animating opacity/scale/translate on an always-present
+                    element gives the browser a real transition to run.
+                    pointer-events-none while inactive is load-bearing: this
+                    layer sits at z-50 above the closed cards, so without it
+                    it would silently swallow their click-to-open handler
+                    even at opacity-0. */}
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className={`absolute z-50 w-full rounded-2xl border p-8 shadow-2xl transition-all duration-300 ease-out md:w-[115%] ${
+                    EXPAND_ANCHOR_CLASS[i]
+                  } ${light ? "border-slate-200 bg-white" : "border-white/10 bg-[#0A0A0B]"} ${
+                    open
+                      ? "translate-y-0 scale-100 opacity-100 pointer-events-auto"
+                      : "-translate-y-2 scale-95 opacity-0 pointer-events-none"
+                  }`}
+                >
+                  <span className={`text-sm font-medium ${light ? "text-slate-500" : "text-zinc-500"}`}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3
+                    className={`mt-4 text-xl font-bold leading-tight ${
+                      light ? "text-slate-900" : "text-[#F5F5F7]"
+                    }`}
+                    style={{ fontFamily: "var(--font-display), sans-serif" }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p
+                    className={`mt-4 text-sm leading-relaxed sm:text-[15px] ${
+                      light ? "text-slate-700" : "text-zinc-300"
+                    }`}
+                  >
+                    {item.expanded}
+                  </p>
+                  <Link
+                    href={solutionsHref}
+                    className="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-sky-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-600"
+                  >
+                    {content.ctaLabel}
+                  </Link>
+                </div>
               </div>
             );
           })}
