@@ -103,11 +103,8 @@ export default function ThreePillars({
                         : "z-0 h-full border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
                   }`}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(open ? null : i)}
-                    className="flex flex-1 flex-col text-left"
-                  >
+                  {/* Top: number + title, static height, no flex-grow. */}
+                  <div className="mb-4">
                     <span
                       className={`bg-clip-text font-mono text-sm text-transparent ${
                         light
@@ -126,19 +123,33 @@ export default function ThreePillars({
                     >
                       {item.title}
                     </h3>
+                  </div>
+
+                  {/* Middle: description. The ONLY element that gets flex-grow —
+                      it absorbs the leftover height so the CTA below always
+                      lands on the same line regardless of teaser length. */}
+                  <div className="flex-grow">
                     <p
-                      className={`mt-3 text-sm leading-relaxed sm:text-[15px] ${
+                      className={`text-sm leading-relaxed sm:text-[15px] ${
                         light ? "text-slate-600" : "text-zinc-400"
                       }`}
                     >
                       {item.teaser}
                     </p>
-                    {!open && (
-                      <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-medium text-[#0EA5E9]">
+                  </div>
+
+                  {/* Bottom: CTA, pinned via mt-auto against the flex-grow above. */}
+                  {!open && (
+                    <div className="mt-auto pt-4">
+                      <button
+                        type="button"
+                        onClick={() => setOpenIndex(i)}
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-[#0EA5E9]"
+                      >
                         {content.detailsLabel}
-                      </span>
-                    )}
-                  </button>
+                      </button>
+                    </div>
+                  )}
 
                   <div
                     className={`grid transition-all duration-500 ease-in-out ${
