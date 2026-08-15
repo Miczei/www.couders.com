@@ -99,8 +99,8 @@ export default function ThreePillars({
                     open
                       ? `z-20 border-[#0EA5E9]/60 shadow-2xl sm:w-[130%] ${light ? "bg-white" : "bg-[#0A0A0B]"} ${OPEN_ANCHOR_CLASS[i]}`
                       : light
-                        ? "z-0 h-full border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
-                        : "z-0 h-full border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
+                        ? "z-0 h-[230px] sm:h-[250px] border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
+                        : "z-0 h-[230px] sm:h-[250px] border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
                   }`}
                 >
                   {/* Top: number + title, static height, no flex-grow. */}
