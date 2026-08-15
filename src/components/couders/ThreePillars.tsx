@@ -127,14 +127,14 @@ export default function ThreePillars({
                       {item.title}
                     </h3>
                     <p
-                      className={`mt-3 text-sm leading-relaxed sm:text-[15px] ${
+                      className={`mt-3 flex-1 text-sm leading-relaxed sm:text-[15px] ${
                         light ? "text-slate-600" : "text-zinc-400"
                       }`}
                     >
                       {item.teaser}
                     </p>
                     {!open && (
-                      <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-[#0EA5E9]">
+                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#0EA5E9]">
                         {content.detailsLabel}
                       </span>
                     )}

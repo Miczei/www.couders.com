@@ -129,7 +129,7 @@ export default function Navbar({
         <Link
           href={contactItem.href}
           aria-current={cur(contactItem.path)}
-          className="rounded-lg bg-sky-500 px-4 py-2 font-medium text-white transition-colors hover:bg-sky-600"
+          className="inline-flex items-center justify-center rounded-lg bg-sky-500 px-4 py-2 font-medium leading-none text-white transition-colors hover:bg-sky-600"
         >
           {contactItem.label}
         </Link>
