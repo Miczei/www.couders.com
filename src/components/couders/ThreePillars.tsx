@@ -99,8 +99,8 @@ export default function ThreePillars({
                     open
                       ? `z-20 border-[#0EA5E9]/60 shadow-2xl sm:w-[130%] ${light ? "bg-white" : "bg-[#0A0A0B]"} ${OPEN_ANCHOR_CLASS[i]}`
                       : light
-                        ? "z-0 bottom-0 h-full border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
-                        : "z-0 bottom-0 h-full border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
+                        ? "z-0 h-full border-slate-200 bg-black/[0.02] hover:border-[#0EA5E9]/50 sm:w-full"
+                        : "z-0 h-full border-white/10 bg-black/40 hover:border-[#0EA5E9]/40 sm:w-full"
                   }`}
                 >
                   <button
@@ -127,14 +127,14 @@ export default function ThreePillars({
                       {item.title}
                     </h3>
                     <p
-                      className={`mt-3 flex-1 text-sm leading-relaxed sm:text-[15px] ${
+                      className={`mt-3 text-sm leading-relaxed sm:text-[15px] ${
                         light ? "text-slate-600" : "text-zinc-400"
                       }`}
                     >
                       {item.teaser}
                     </p>
                     {!open && (
-                      <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#0EA5E9]">
+                      <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-medium text-[#0EA5E9]">
                         {content.detailsLabel}
                       </span>
                     )}

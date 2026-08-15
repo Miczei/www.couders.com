@@ -129,7 +129,7 @@ export default function Navbar({
         <Link
           href={contactItem.href}
           aria-current={cur(contactItem.path)}
-          className="inline-flex items-center justify-center rounded-lg bg-sky-500 px-4 py-2 font-medium leading-none text-white transition-colors hover:bg-sky-600"
+          className="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2 font-medium leading-none text-white transition-colors hover:bg-sky-600"
         >
           {contactItem.label}
         </Link>
@@ -208,7 +208,7 @@ export default function Navbar({
         href={contactItem.href}
         aria-current={cur(contactItem.path)}
         onClick={() => setMobileOpen(false)}
-        className="mt-4 inline-flex items-center justify-center rounded-lg bg-sky-500 px-5 py-2.5 text-center text-[15px] font-medium text-white transition-colors hover:bg-sky-600"
+        className="mt-4 inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-2.5 text-center text-[15px] font-medium text-white transition-colors hover:bg-sky-600"
       >
         {contactItem.label}
       </Link>
