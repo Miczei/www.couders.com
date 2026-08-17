@@ -1,0 +1,317 @@
+"use client";
+
+import { useMemo, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
+import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+/**
+ * Sixteen hours of a closed office, scrubbed by scroll.
+ *
+ * "24/7" and "68% zapytań po godzinach" are numbers nobody feels. Here the
+ * clock runs from 17:00 to 09:00, the room actually goes dark, and every
+ * inquiry that lands is stamped either handled-now or would-have-waited. The
+ * argument is made by the gap between the two counters, not by a claim.
+ *
+ * Self-contained: drop the file in and render <NightShift />.
+ */
+
+type Inquiry = {
+  /** Minutes past 17:00. The window is 16h = 960 min. */
+  at: number;
+  time: string;
+  channel: string;
+  text: string;
+  /** Needed a human either way — kept so the section isn't overselling. */
+  human?: boolean;
+};
+
+const SPAN = 960;
+
+const INQUIRIES: Inquiry[] = [
+  { at: 42, time: "17:42", channel: "Formularz", text: "Prośba o wycenę, 54 m²" },
+  { at: 96, time: "18:36", channel: "WhatsApp", text: "Czy robicie też instalacje?" },
+  { at: 158, time: "19:38", channel: "Telefon", text: "Nieodebrane — oddzwonienie" },
+  { at: 205, time: "20:25", channel: "E-mail", text: "Zapytanie ofertowe, 3 lokale", human: true },
+  { at: 287, time: "21:47", channel: "WhatsApp", text: "Termin pomiaru na przyszły tydzień" },
+  { at: 347, time: "22:47", channel: "WhatsApp", text: "Wykończenie 78 m² pod klucz" },
+  { at: 401, time: "23:41", channel: "Formularz", text: "Pytanie o gwarancję" },
+  { at: 512, time: "01:32", channel: "E-mail", text: "Reklamacja — pilne", human: true },
+  { at: 604, time: "03:04", channel: "Formularz", text: "Prośba o katalog" },
+  { at: 733, time: "05:13", channel: "WhatsApp", text: "Czy pracujecie w soboty?" },
+  { at: 795, time: "06:15", channel: "Telefon", text: "Nieodebrane — oddzwonienie" },
+  { at: 868, time: "07:28", channel: "E-mail", text: "Potwierdzenie terminu" },
+];
+
+/** 0 at 17:00 → 1 at 09:00. Dusk lands ~19:30, dawn ~06:00. */
+function skyAt(p: number) {
+  const dusk = 0.16;
+  const dawn = 0.82;
+  let night: number;
+  if (p < dusk) night = p / dusk;
+  else if (p > dawn) night = 1 - (p - dawn) / (1 - dawn);
+  else night = 1;
+  const n = Math.max(0, Math.min(1, night));
+  // Warm evening ink, never fully black — a pure black band on a white site
+  // reads as a broken image.
+  const top = mix([255, 255, 255], [11, 16, 26], n);
+  const bottom = mix([250, 250, 250], [22, 30, 44], n);
+  return { n, top, bottom };
+}
+
+function mix(a: number[], b: number[], t: number) {
+  return a.map((v, i) => Math.round(v + (b[i] - v) * t));
+}
+
+function rgb(c: number[]) {
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+
+function clockAt(p: number) {
+  const mins = Math.round(p * SPAN);
+  const h = Math.floor((17 * 60 + mins) / 60) % 24;
+  const m = (17 * 60 + mins) % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+
+export default function NightShift({
+  /** Freeze the night at a fixed point, 0..1. Leave undefined in production. */
+  debugProgress,
+}: {
+  debugProgress?: number;
+} = {}) {
+  const root = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const frozen = debugProgress !== undefined;
+  const [p, setP] = useState(frozen ? debugProgress! : reduced ? 1 : 0);
+
+  useIsomorphicLayoutEffect(() => {
+    const el = root.current;
+    if (!el || reduced || frozen) return;
+
+    const ctx = gsap.context(() => {
+      const st = ScrollTrigger.create({
+        trigger: el,
+        start: "top top",
+        end: "+=2600",
+        pin: "[data-stage]",
+        scrub: 0.5,
+        onUpdate: (self) => setP(self.progress),
+      });
+      return () => st.kill();
+    }, el);
+
+    return () => ctx.revert();
+  }, [reduced, frozen]);
+
+  const sky = useMemo(() => skyAt(p), [p]);
+  const landed = INQUIRIES.filter((q) => q.at / SPAN <= p);
+  const handled = landed.filter((q) => !q.human).length;
+  // Counting inquiries either way gives 6 against 7, which reads as "the
+  // assistant saved one message" — the opposite of the point. What actually
+  // differs is the waiting: without anyone on shift every one of these sits
+  // untouched until the office opens, and that time adds up fast.
+  const waitMinutes = landed.reduce((sum, q) => sum + (SPAN - q.at), 0);
+  const waitLabel =
+    waitMinutes >= 60
+      ? `${Math.floor(waitMinutes / 60)} h`
+      : `${waitMinutes} min`;
+  const onNight = sky.n > 0.45;
+  const ink = onNight ? "#F2F5F8" : "#0b0b0c";
+  const dim = onNight ? "rgba(242,245,248,0.52)" : "rgba(11,12,12,0.5)";
+
+  return (
+    <section ref={root} className="relative" aria-label="Zapytania w godzinach zamknięcia biura">
+      <div
+        data-stage
+        className="relative flex min-h-screen items-center overflow-hidden py-24"
+        style={{
+          background: `linear-gradient(180deg, ${rgb(sky.top)} 0%, ${rgb(sky.bottom)} 100%)`,
+          color: ink,
+        }}
+      >
+        {/* Stars fade in with the dark, never on their own timer. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            opacity: Math.max(0, sky.n - 0.55) * 2.2,
+            backgroundImage:
+              "radial-gradient(1.2px 1.2px at 14% 22%, rgba(255,255,255,0.9), transparent), radial-gradient(1px 1px at 68% 14%, rgba(255,255,255,0.8), transparent), radial-gradient(1.4px 1.4px at 82% 34%, rgba(255,255,255,0.75), transparent), radial-gradient(1px 1px at 32% 12%, rgba(255,255,255,0.65), transparent), radial-gradient(1px 1px at 52% 28%, rgba(255,255,255,0.6), transparent), radial-gradient(1.2px 1.2px at 91% 18%, rgba(255,255,255,0.7), transparent)",
+          }}
+        />
+
+        <div className="relative mx-auto w-full max-w-[1240px] px-6">
+          <header className="mb-10 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p
+                className="font-mono text-[11px] uppercase tracking-[0.22em]"
+                style={{ color: dim }}
+              >
+                Jedna doba · biuro czynne 8:00–17:00
+              </p>
+              <h2
+                className="mt-4 max-w-[18ch] text-balance text-[clamp(1.9rem,4.2vw,3.2rem)] font-bold leading-[1.02] tracking-[-0.035em]"
+                style={{ fontFamily: "var(--font-display), sans-serif" }}
+              >
+                Klienci nie przestają pisać, kiedy gasicie światło.
+              </h2>
+            </div>
+
+            <div className="shrink-0 text-right">
+              <div className="font-mono text-[clamp(2.4rem,5vw,4rem)] font-medium tabular-nums leading-none tracking-tight">
+                {clockAt(p)}
+              </div>
+              <div
+                className="mt-2 font-mono text-[10.5px] uppercase tracking-[0.2em]"
+                style={{ color: dim }}
+              >
+                {sky.n > 0.5 ? "biuro zamknięte" : p > 0.9 ? "otwarcie" : "po godzinach"}
+              </div>
+            </div>
+          </header>
+
+          {/* ---------- phones: the rail as a stack ----------
+              Twelve absolutely-positioned cards across 340px of rail is an
+              unreadable pile, so narrow screens get the same events as a list
+              that grows from the top instead. */}
+          <ul className="mt-10 flex flex-col gap-2 md:hidden">
+            {landed
+              .slice(-4)
+              .reverse()
+              .map((q) => (
+                <li
+                  key={q.time + q.text}
+                  className="flex items-start gap-3 rounded-lg px-3 py-2.5"
+                  style={{
+                    background: onNight ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.7)",
+                    boxShadow: onNight
+                      ? "inset 0 0 0 1px rgba(255,255,255,0.09)"
+                      : "inset 0 0 0 1px rgba(0,0,0,0.07)",
+                  }}
+                >
+                  <span className="mt-px font-mono text-[11px] tabular-nums">{q.time}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[13px] leading-snug">{q.text}</span>
+                    <span
+                      className="mt-1 block font-mono text-[9.5px] uppercase tracking-[0.12em]"
+                      style={{ color: q.human ? "#F0B45E" : "#22E0C8" }}
+                    >
+                      {q.channel} · {q.human ? "do człowieka" : "obsłużone"}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            {landed.length > 4 && (
+              <li className="pl-1 font-mono text-[10.5px] uppercase tracking-[0.16em]" style={{ color: dim }}>
+                + {landed.length - 4} wcześniej tej nocy
+              </li>
+            )}
+            {landed.length === 0 && (
+              <li className="font-mono text-[10.5px] uppercase tracking-[0.16em]" style={{ color: dim }}>
+                Biuro właśnie się zamknęło. Przewiń.
+              </li>
+            )}
+          </ul>
+
+          {/* ---------- the night, as one rail ---------- */}
+          <div className="relative mt-14 hidden h-[190px] sm:h-[210px] md:block">
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 top-[96px] h-px"
+              style={{ background: onNight ? "rgba(255,255,255,0.16)" : "rgba(0,0,0,0.12)" }}
+            />
+            <div
+              aria-hidden="true"
+              className="absolute left-0 top-[96px] h-px bg-gradient-to-r from-[#0EA5E9] to-[#22E0C8]"
+              style={{ width: `${p * 100}%` }}
+            />
+            {/* Playhead */}
+            <div
+              aria-hidden="true"
+              className="absolute top-[80px] h-[33px] w-px"
+              style={{ left: `${p * 100}%`, background: "#22E0C8" }}
+            />
+
+            {INQUIRIES.map((q) => {
+              const x = q.at / SPAN;
+              const shown = x <= p;
+              const fresh = shown && p - x < 0.045;
+              const up = INQUIRIES.indexOf(q) % 2 === 0;
+              return (
+                <div
+                  key={q.time + q.text}
+                  className="absolute w-[138px] -translate-x-1/2 transition-all duration-500 ease-out motion-reduce:transition-none"
+                  style={{
+                    left: `${x * 100}%`,
+                    top: up ? 0 : 116,
+                    opacity: shown ? 1 : 0,
+                    transform: `translateX(-50%) translateY(${shown ? 0 : up ? 10 : -10}px)`,
+                  }}
+                >
+                  <div
+                    className="rounded-lg px-2.5 py-2 text-left backdrop-blur-sm"
+                    style={{
+                      background: onNight ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.7)",
+                      boxShadow: fresh
+                        ? "0 0 0 1px rgba(34,224,200,0.7), 0 0 22px -4px rgba(34,224,200,0.6)"
+                        : onNight
+                          ? "inset 0 0 0 1px rgba(255,255,255,0.10)"
+                          : "inset 0 0 0 1px rgba(0,0,0,0.07)",
+                    }}
+                  >
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="font-mono text-[10.5px] tabular-nums">{q.time}</span>
+                      <span
+                        className="truncate font-mono text-[9.5px] uppercase tracking-[0.12em]"
+                        style={{ color: dim }}
+                      >
+                        {q.channel}
+                      </span>
+                    </div>
+                    <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug">{q.text}</p>
+                    <p
+                      className="mt-1.5 font-mono text-[9.5px] uppercase tracking-[0.1em]"
+                      style={{ color: q.human ? "#F0B45E" : "#22E0C8" }}
+                    >
+                      {q.human ? "→ do człowieka" : "obsłużone"}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* ---------- the two counters ---------- */}
+          <div className="mt-16 grid gap-8 border-t pt-8 sm:grid-cols-2"
+               style={{ borderColor: onNight ? "rgba(255,255,255,0.14)" : "rgba(0,0,0,0.10)" }}>
+            <div>
+              <div className="font-mono text-[clamp(2.2rem,4.5vw,3.4rem)] font-medium tabular-nums leading-none text-[#22E0C8]">
+                {String(handled).padStart(2, "0")}
+              </div>
+              <p className="mt-3 text-[14.5px] font-medium">Załatwione, zanim ktokolwiek wstał</p>
+              <p className="mt-1 text-[13.5px] leading-relaxed" style={{ color: dim }}>
+                Odpowiedź, wycena, termin. Rano tylko do zatwierdzenia.
+              </p>
+            </div>
+            <div>
+              <div
+                className="font-mono text-[clamp(2.2rem,4.5vw,3.4rem)] font-medium tabular-nums leading-none"
+                style={{ color: onNight ? "rgba(242,245,248,0.38)" : "rgba(11,12,12,0.32)" }}
+              >
+                {waitLabel}
+              </div>
+              <p className="mt-3 text-[14.5px] font-medium">
+                Tyle łącznie czekaliby, gdyby nie było nikogo
+              </p>
+              <p className="mt-1 text-[13.5px] leading-relaxed" style={{ color: dim }}>
+                Każde z tych zapytań leżałoby do otwarcia biura. Tyle ciszy wystarczy,
+                żeby ktoś w międzyczasie napisał gdzie indziej.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
