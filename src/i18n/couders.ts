@@ -28,6 +28,14 @@ export type CoudersTimelineEvent = {
   label: string;
 };
 
+export type CoudersMetric = {
+  value: string;
+  title: string;
+  body: string;
+  /** true => the value renders in solid sky-500 instead of the slate gradient. */
+  accent: boolean;
+};
+
 export type CoudersContent = {
   hero: {
     h1: string;
@@ -68,6 +76,12 @@ export type CoudersContent = {
     eyebrow: string;
     h2: string;
     items: CoudersIndustry[];
+  };
+  metrics: {
+    h2Lead: string;
+    h2Tail: string;
+    subtitle: string;
+    items: CoudersMetric[];
   };
   cta: {
     h2: string;
@@ -197,6 +211,32 @@ const en: CoudersContent = {
       },
     ],
   },
+  metrics: {
+    h2Lead: "Numbers that change the",
+    h2Tail: "rules of the game in B2B sales.",
+    subtitle:
+      "Our systems don't just look modern. Above all, they deliver measurable results from day one of deployment.",
+    items: [
+      {
+        value: "0.8s",
+        title: "Average response time",
+        body: "Your client gets a substantive offer from your knowledge base before they can even close the browser tab.",
+        accent: false,
+      },
+      {
+        value: "+40%",
+        title: "More B2B meetings",
+        body: "The system ruthlessly filters out idle browsers and automatically books only the hot leads.",
+        accent: true,
+      },
+      {
+        value: "24/7",
+        title: "Full availability",
+        body: "Lead capture, quoting, and qualification run reliably on weekends, holidays, and through the night.",
+        accent: false,
+      },
+    ],
+  },
   cta: {
     h2: "Let's build a demo on your company's data.",
     button: "Book a 15-minute demo",
@@ -322,6 +362,32 @@ const pl: CoudersContent = {
         title: "Usługi B2B i Consulting",
         description:
           "Sprzedaż usług wymaga zbudowania zaufania i dokładnego zbadania potrzeb klienta przed pierwszym spotkaniem. Nasz Błyskawiczny Kwalifikator Leadów odzywa się do każdego nowego zapytania z reklam w ciągu 60 sekund. Przeprowadza naturalną, inteligentną konwersację, aby ustalić budżet, skalę problemu i oczekiwania. Na biurko Twojego zespołu trafiają wyłącznie wyselekcjonowani klienci, z którymi warto rozmawiać. Koniec z marnowaniem czasu na telefony do osób, które „tylko klikały z ciekawości”.",
+      },
+    ],
+  },
+  metrics: {
+    h2Lead: "Liczby, które zmieniają",
+    h2Tail: "zasady gry w sprzedaży B2B.",
+    subtitle:
+      "Nasze systemy nie tylko wyglądają nowocześnie. One przede wszystkim dowożą mierzalne wyniki od pierwszego dnia wdrożenia.",
+    items: [
+      {
+        value: "0.8s",
+        title: "Średni czas odpowiedzi",
+        body: "Twój klient otrzymuje merytoryczną ofertę z bazy wiedzy, zanim zdąży zamknąć kartę przeglądarki.",
+        accent: false,
+      },
+      {
+        value: "+40%",
+        title: "Więcej spotkań B2B",
+        body: "System bezlitośnie odsiewa z nudów pytających i automatycznie kalendarzuje tylko gorące leady.",
+        accent: true,
+      },
+      {
+        value: "24/7",
+        title: "Pełna dostępność",
+        body: "Zbieranie leadów, ofertowanie i kwalifikacja działają niezawodnie w weekendy, święta i w nocy.",
+        accent: false,
       },
     ],
   },

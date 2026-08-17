@@ -4,6 +4,7 @@ import CoudersHero from "@/components/couders/CoudersHero";
 import ProblemSection from "@/components/couders/ProblemSection";
 import ThreePillars from "@/components/couders/ThreePillars";
 import LogoTicker from "@/components/couders/LogoTicker";
+import MetricsSection from "@/components/couders/MetricsSection";
 import IndustriesSection from "@/components/couders/IndustriesSection";
 import CtaSection from "@/components/couders/CtaSection";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -36,6 +37,7 @@ export default async function Home({
         <IndustriesSection content={couders.industries} light />
         <ProblemSection content={couders.problem} light />
         <LogoTicker content={couders.logoTicker} light />
+        <MetricsSection content={couders.metrics} />
         <CtaSection
           content={couders.cta}
           email={dict.sections.contact.email}
