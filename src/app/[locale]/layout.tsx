@@ -96,7 +96,9 @@ export default async function LocaleLayout({
         <ChatProvider locale={locale}>
           <MatrixRain />
           <SmoothScroll>{children}</SmoothScroll>
-          <ChatLauncher />
+          <div data-site-chrome>
+            <ChatLauncher />
+          </div>
         </ChatProvider>
       </body>
     </html>
