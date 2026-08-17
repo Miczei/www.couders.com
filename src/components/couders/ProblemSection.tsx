@@ -1,177 +1,102 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { CoudersContent } from "@/i18n/couders";
+import type { CoudersContent, CoudersTimelineEvent } from "@/i18n/couders";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-function MockPanel({
-  label,
-  labelTone,
-  delay,
-  chip,
-  light,
-  children,
-}: {
-  label: string;
-  labelTone: "muted" | "accent";
-  delay: number;
-  chip?: string;
-  light?: boolean;
-  children: React.ReactNode;
-}) {
+function TimelineRow({ time, label, tone }: CoudersTimelineEvent & { tone: "muted" | "accent" }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-70px" }}
-      transition={{ duration: 0.7, delay, ease: EASE }}
-      className={`relative flex flex-col gap-4 rounded-2xl border p-5 backdrop-blur-md sm:p-7 ${
-        light ? "border-slate-200 bg-black/[0.03]" : "border-white/10 bg-white/[0.04]"
-      }`}
-    >
-      {chip && (
-        <span
-          className={`absolute -right-3 -top-3 z-10 rounded-full border px-3 py-1.5 text-[11px] font-medium shadow-lg backdrop-blur-md sm:-right-4 sm:-top-4 ${
-            light ? "border-[#0EA5E9]/40 bg-white text-[#9A4E30]" : "border-[#0EA5E9]/40 bg-black/90 text-[#E8B8A2]"
-          }`}
-        >
-          {chip}
-        </span>
-      )}
-      <p
-        className={`font-mono text-[10px] uppercase tracking-[0.22em] ${
-          labelTone === "accent" ? (light ? "text-[#9A4E30]" : "text-[#E8B8A2]") : light ? "text-slate-500" : "text-zinc-500"
+    <div className="flex gap-3">
+      <span
+        className={`mt-1.5 h-1.5 w-1.5 flex-none rounded-full ${
+          tone === "accent" ? "bg-sky-500" : "bg-slate-400"
         }`}
-      >
-        {label}
-      </p>
-      <div className="flex flex-col gap-3">{children}</div>
-    </motion.div>
-  );
-}
-
-function ClientBubble({ text, light }: { text: string; light?: boolean }) {
-  return (
-    <div
-      className={`max-w-[90%] self-start whitespace-pre-wrap rounded-2xl rounded-bl-sm px-4 py-3 text-[13.5px] leading-relaxed ${
-        light ? "bg-black/[0.05] text-slate-700" : "bg-white/[0.07] text-zinc-300"
-      }`}
-    >
-      {text}
-    </div>
-  );
-}
-
-function ConnectorOrb({ light }: { light?: boolean }) {
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 md:block"
-    >
-      <motion.span
-        animate={{ scale: [1, 1.12, 1], opacity: [0.7, 1, 0.7] }}
-        transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-        className={`flex h-12 w-12 items-center justify-center rounded-full border border-[#0EA5E9]/50 shadow-[0_0_36px_rgba(14,165,233,0.55)] ${
-          light ? "bg-white" : "bg-black"
-        }`}
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#0EA5E9"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-5 w-5"
-          aria-hidden="true"
-        >
-          <path d="M5 12h14M13 6l6 6-6 6" />
-        </svg>
-      </motion.span>
-    </div>
-  );
-}
-
-export default function ProblemSection({
-  content,
-  light,
-}: {
-  content: CoudersContent["problem"];
-  light?: boolean;
-}) {
-  return (
-    <section
-      id="problem"
-      className={`relative z-10 overflow-hidden px-5 py-16 sm:px-6 sm:py-24 md:py-32 ${
-        light ? "bg-white" : "bg-black"
-      }`}
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          backgroundImage: `radial-gradient(circle, ${
-            light ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.16)"
-          } 1px, transparent 1px)`,
-          backgroundSize: "28px 28px",
-          maskImage: "radial-gradient(ellipse 65% 55% at 50% 45%, black, transparent)",
-          WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 45%, black, transparent)",
-        }}
       />
-
-      <div className="relative mx-auto max-w-5xl text-center">
-        <p
-          className={`font-mono text-[10px] uppercase tracking-[0.26em] sm:text-[11px] sm:tracking-[0.32em] ${
-            light ? "text-slate-500" : "text-zinc-500"
-          }`}
-        >
-          {content.eyebrow}
+      <div>
+        <p className={`font-mono text-xs font-semibold ${tone === "accent" ? "text-sky-600" : "text-slate-500"}`}>
+          {time}
         </p>
+        <p className={`mt-0.5 text-sm leading-relaxed ${tone === "accent" ? "text-slate-800" : "text-slate-500"}`}>
+          {label}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default function ProblemSection({ content }: { content: CoudersContent["problem"]; light?: boolean }) {
+  return (
+    <section id="problem" className="relative bg-white px-5 py-20 sm:px-6 md:py-28">
+      <div className="mx-auto max-w-6xl">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, ease: EASE }}
-          className={`mx-auto mt-4 max-w-4xl text-balance text-3xl font-bold tracking-[-0.03em] sm:text-4xl md:text-5xl lg:text-6xl ${
-            light ? "text-slate-900" : "text-white"
-          }`}
+          className="max-w-3xl text-balance text-3xl font-bold tracking-tighter text-slate-900 md:text-5xl"
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
           {content.h2}
         </motion.h2>
+        <p className="mt-4 max-w-2xl text-lg text-slate-600">{content.subtitle}</p>
 
-        <div className="relative mt-10 grid grid-cols-1 gap-4 text-left sm:mt-14 md:grid-cols-2">
-          <ConnectorOrb light={light} />
-
-          <MockPanel label={content.leftLabel} labelTone="muted" delay={0.05} light={light}>
-            <ClientBubble text={content.clientMessage} light={light} />
-            <p
-              className={`flex items-center gap-2 text-xs sm:text-[13px] ${
-                light ? "text-rose-600" : "text-rose-400/90"
-              }`}
-            >
-              <span className="h-1.5 w-1.5 flex-none rounded-full bg-rose-400 shadow-[0_0_6px_rgba(251,113,133,0.7)]" />
-              {content.officeStatus}
-            </p>
-          </MockPanel>
-
-          <MockPanel
-            label={content.rightLabel}
-            labelTone="accent"
-            delay={0.15}
-            chip={content.metricChip}
-            light={light}
+        <div className="grid grid-cols-1 items-stretch gap-8 py-12 lg:grid-cols-2">
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-70px" }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="flex flex-col rounded-3xl border border-slate-200 bg-slate-100/70 p-8 opacity-80"
           >
-            <ClientBubble text={content.clientMessage} light={light} />
-            <div
-              className={`max-w-[90%] self-end whitespace-pre-wrap rounded-2xl rounded-br-sm border border-[#0EA5E9]/30 bg-[#0EA5E9]/15 px-4 py-3 text-[13.5px] leading-relaxed ${
-                light ? "text-slate-900" : "text-zinc-100"
-              }`}
-            >
-              {content.aiMessage}
+            <span className="inline-flex w-fit items-center rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600">
+              {content.leftBadge}
+            </span>
+            <div className="mt-6 flex flex-col gap-5">
+              {content.leftEvents.map((event) => (
+                <TimelineRow key={event.time} time={event.time} label={event.label} tone="muted" />
+              ))}
             </div>
-          </MockPanel>
+            <p className="mt-4 rounded-xl border border-red-200/50 bg-red-100/50 p-3 text-sm font-medium text-red-500">
+              {content.leftOutcome}
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-70px" }}
+            transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
+            className="relative flex flex-col overflow-hidden rounded-3xl border-2 border-sky-400/30 bg-white p-8 shadow-[0_20px_50px_rgba(14,165,233,0.1)]"
+          >
+            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-600">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-sky-500" />
+              </span>
+              {content.rightBadge}
+            </span>
+            <div className="mt-6 flex flex-col gap-5">
+              {content.rightEvents.map((event) => (
+                <TimelineRow key={event.time} time={event.time} label={event.label} tone="accent" />
+              ))}
+            </div>
+            <p className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-sky-200/60 bg-sky-50 p-3 text-sm font-semibold text-sky-700">
+              <span>{content.rightOutcome}</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4 flex-none"
+                aria-hidden="true"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>

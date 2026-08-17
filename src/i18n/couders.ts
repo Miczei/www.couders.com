@@ -23,6 +23,11 @@ export type CoudersIndustry = {
   description: string;
 };
 
+export type CoudersTimelineEvent = {
+  time: string;
+  label: string;
+};
+
 export type CoudersContent = {
   hero: {
     h1: string;
@@ -43,14 +48,14 @@ export type CoudersContent = {
     marqueeAria: string;
   };
   problem: {
-    eyebrow: string;
     h2: string;
-    leftLabel: string;
-    rightLabel: string;
-    clientMessage: string;
-    officeStatus: string;
-    aiMessage: string;
-    metricChip: string;
+    subtitle: string;
+    leftBadge: string;
+    leftEvents: CoudersTimelineEvent[];
+    leftOutcome: string;
+    rightBadge: string;
+    rightEvents: CoudersTimelineEvent[];
+    rightOutcome: string;
   };
   pillars: {
     eyebrow: string;
@@ -123,16 +128,22 @@ const en: CoudersContent = {
       "Logos of supported AI technologies: OpenAI, Anthropic, Google Gemini, Meta Llama, Manus, OpenClaw, Ollama, LangChain, Copilot, n8n and Pinecone",
   },
   problem: {
-    eyebrow: "The problem",
-    h2: "Your client won't wait until Monday. Agent responds immediately.",
-    leftLabel: "No Response",
-    rightLabel: "Response in 1 Minute",
-    clientMessage:
-      "Friday, 9:30 PM: Hi, I'm looking for a machine under 150k PLN. Is model X available?",
-    officeStatus: "Office reply: Monday, 10:00 AM (client already bought from a competitor)",
-    aiMessage:
-      "Friday, 9:31 PM: Hi there! Model X is available, and within that budget we also have a better option, model Y. Sending over the spec sheet. Would you like to discuss it in a short meeting on Monday?",
-    metricChip: "Response time: 1 min",
+    h2: "Your client won't wait until Monday.",
+    subtitle:
+      "While your competition sleeps or takes the weekend off, your digital assistant closes deals and books meetings in the blink of an eye.",
+    leftBadge: "TRADITIONAL MODEL",
+    leftEvents: [
+      { time: "9:42 PM (Sat)", label: "Client sends a question about a project quote." },
+      { time: "9:15 AM (Mon)", label: "Sales rep replies 35 hours later." },
+    ],
+    leftOutcome: "Status: The client bought from a competitor who responded faster.",
+    rightBadge: "MODERN AI AGENT",
+    rightEvents: [
+      { time: "9:42:00 PM (Sat)", label: "Client sends a question about a project quote." },
+      { time: "9:42:01 PM (Sat)", label: "AI analyzes the specification from the company's internal database." },
+      { time: "9:42:02 PM (Sat)", label: "Reply sent, PDF proposal generated, meeting booked on the calendar." },
+    ],
+    rightOutcome: "Status: Demo presentation booked for Tuesday, 10:00 AM.",
   },
   pillars: {
     eyebrow: "Product",
@@ -245,16 +256,22 @@ const pl: CoudersContent = {
       "Logotypy wspieranych technologii AI: OpenAI, Anthropic, Google Gemini, Meta Llama, Manus, OpenClaw, Ollama, LangChain, Copilot, n8n i Pinecone",
   },
   problem: {
-    eyebrow: "Problem",
-    h2: "Twój klient nie czeka do poniedziałku. Agent odpowiada natychmiast.",
-    leftLabel: "Brak odpowiedzi",
-    rightLabel: "Odpowiedź w 1 minutę",
-    clientMessage:
-      "Piątek, 21:30: Witam, szukam maszyny do 150 tys. PLN. Czy model X jest dostępny?",
-    officeStatus: "Odpowiedź biura: Poniedziałek, 10:00 (klient kupił już u konkurencji)",
-    aiMessage:
-      "Piątek, 21:31: Dzień dobry! Model X jest dostępny, a w tym budżecie mamy też lepszą opcję Y. Podsyłam specyfikację. Czy chciałby Pan omówić to na krótkim spotkaniu w poniedziałek?",
-    metricChip: "Czas reakcji: 1 min",
+    h2: "Twój klient nie czeka do poniedziałku.",
+    subtitle:
+      "Gdy Twoja konkurencja śpi lub odpoczywa, Twój cyfrowy asystent domyka sprzedaż i umawia spotkania w ułamku sekundy.",
+    leftBadge: "TRADYCYJNY MODEL",
+    leftEvents: [
+      { time: "21:42 (Sobota)", label: "Klient wysyła pytanie o wycenę projektu." },
+      { time: "09:15 (Poniedziałek)", label: "Handlowiec odpisuje po 35 godzinach." },
+    ],
+    leftOutcome: "Status: Klient kupił u konkurencji, która odpowiedziała szybciej.",
+    rightBadge: "NOWOCZESNY AGENT AI",
+    rightEvents: [
+      { time: "21:42 (Sobota)", label: "Klient wysyła pytanie o wycenę projektu." },
+      { time: "21:42:01 (Sobota)", label: "AI analizuje specyfikację z wewnętrznej bazy danych firmy." },
+      { time: "21:42:02 (Sobota)", label: "Odpowiedź wysłana, oferta PDF wygenerowana, spotkanie w kalendarzu zarezerwowane." },
+    ],
+    rightOutcome: "Status: Umówiona prezentacja demo na wtorek 10:00.",
   },
   pillars: {
     eyebrow: "Produkt",
