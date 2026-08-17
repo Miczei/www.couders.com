@@ -1,21 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import FluidMorph from "./FluidMorph";
 import HeroChat from "./HeroChat";
 import AmbientGlow from "./AmbientGlow";
+import ShaderBackdrop from "./ShaderBackdrop";
 import type { CoudersContent } from "@/i18n/couders";
 import type { Locale } from "@/i18n/config";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+// Only the experimental hero splits its headline, so keep GSAP's SplitText out
+// of the production bundle. ssr:false is safe here because the non-experimental
+// branch still renders a real server-side <h1> for crawlers.
+const SplitHeadline = dynamic(() => import("./SplitHeadline"), { ssr: false });
 
 export default function CoudersHero({
   content,
   locale,
   debugProgress,
   light,
+  experimental,
 }: {
   content: CoudersContent["hero"];
   locale: Locale;
@@ -23,6 +31,10 @@ export default function CoudersHero({
   /** Homepage-only light-theme experiment — see page.tsx. Defaults to the
    *  normal dark hero everywhere else (including /lab). */
   light?: boolean;
+  /** Premium motion layer: live mesh-gradient shader instead of the blurred
+   *  AmbientGlow blobs, and a per-glyph SplitText reveal instead of the block
+   *  fade on the H1. Opt-in from /lab until it's signed off for production. */
+  experimental?: boolean;
 }) {
   const reduced = useReducedMotion();
   const still = debugProgress !== undefined || !!reduced;
@@ -31,16 +43,27 @@ export default function CoudersHero({
   // phase instead of waiting for it — zero dead pause, zero extra delay.
   const [logoReveal, setLogoReveal] = useState(still);
 
+  const h1Class = `mt-1 max-w-xl text-balance px-6 text-center text-xl font-semibold tracking-[-0.03em] sm:max-w-2xl sm:text-2xl lg:w-max lg:max-w-none lg:whitespace-nowrap lg:text-3xl ${
+    light ? "text-slate-900" : "text-white"
+  }`;
+  const h1Style = { fontFamily: "var(--font-display), sans-serif" };
+
   return (
     <section className={`relative z-10 overflow-hidden ${light ? "bg-white" : "bg-black"}`}>
-      <AmbientGlow
-        className="left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2"
-        color="rgba(14,165,233,0.12)"
-      />
-      <AmbientGlow
-        className="bottom-0 right-[6%] h-[420px] w-[420px]"
-        color="rgba(90,120,150,0.1)"
-      />
+      {experimental ? (
+        <ShaderBackdrop light={light} />
+      ) : (
+        <>
+          <AmbientGlow
+            className="left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2"
+            color="rgba(14,165,233,0.12)"
+          />
+          <AmbientGlow
+            className="bottom-0 right-[6%] h-[420px] w-[420px]"
+            color="rgba(90,120,150,0.1)"
+          />
+        </>
+      )}
       {/* pt clears the fixed navbar on phones (burger + brand row is ~60px
           tall); ≥768px the header is a single slim row so 64px is the floor —
           don't reduce md:pt below that or the H1 slides under the navbar. */}
@@ -53,17 +76,24 @@ export default function CoudersHero({
           light={light}
         />
 
-        <motion.h1
-          initial={still ? false : { opacity: 0, y: 20 }}
-          animate={logoReveal ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.7, delay: 0, ease: EASE }}
-          className={`mt-1 max-w-xl text-balance px-6 text-center text-xl font-semibold tracking-[-0.03em] sm:max-w-2xl sm:text-2xl lg:w-max lg:max-w-none lg:whitespace-nowrap lg:text-3xl ${
-            light ? "text-slate-900" : "text-white"
-          }`}
-          style={{ fontFamily: "var(--font-display), sans-serif" }}
-        >
-          {content.h1}
-        </motion.h1>
+        {experimental ? (
+          <SplitHeadline
+            text={content.h1}
+            ready={logoReveal}
+            className={h1Class}
+            style={h1Style}
+          />
+        ) : (
+          <motion.h1
+            initial={still ? false : { opacity: 0, y: 20 }}
+            animate={logoReveal ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.7, delay: 0, ease: EASE }}
+            className={h1Class}
+            style={h1Style}
+          >
+            {content.h1}
+          </motion.h1>
+        )}
 
         <div className="mt-5 w-full max-w-4xl px-6">
           <HeroChat ready={logoReveal} light={light} />
