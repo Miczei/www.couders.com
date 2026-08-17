@@ -162,7 +162,7 @@ const en: CoudersContent = {
   pillars: {
     eyebrow: "Product",
     h2: "Three ways it works.",
-    detailsLabel: "See details →",
+    detailsLabel: "See details",
     ctaLabel: "Find out more ➔",
     items: [
       {
@@ -316,7 +316,7 @@ const pl: CoudersContent = {
   pillars: {
     eyebrow: "Produkt",
     h2: "Trzy sposoby, jak to działa.",
-    detailsLabel: "Poznaj szczegóły →",
+    detailsLabel: "Poznaj szczegóły",
     ctaLabel: "Dowiedz się więcej ➔",
     items: [
       {

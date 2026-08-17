@@ -7,7 +7,7 @@ import {
   useMotionValue,
   type HTMLMotionProps,
 } from "framer-motion";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 /**
  * Cursor-tracked radial glow, Aceternity/Linear style.

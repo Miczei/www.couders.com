@@ -2,15 +2,22 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useSpotlight } from "@/components/ui/SpotlightCard";
 import type { CoudersContent, CoudersPillar } from "@/i18n/couders";
 import type { Locale } from "@/i18n/config";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-
-// Bento layout: card 1 is a large featured block, card 2 is standard,
-// card 3 is a wide block spanning the full row underneath.
-const CARD_SPAN_CLASS = ["md:col-span-2", "md:col-span-1", "md:col-span-3"];
 
 function PillarCard({
   item,
@@ -23,8 +30,6 @@ function PillarCard({
   href: string;
   detailsLabel: string;
 }) {
-  // The card is a Link, so it can't be a SpotlightCard (a motion.div); the
-  // hook gives the same glow while keeping the anchor semantics intact.
   const { onMouseMove, glow } = useSpotlight();
 
   return (
@@ -33,30 +38,46 @@ function PillarCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.2, duration: 0.5, ease: EASE }}
-      className={CARD_SPAN_CLASS[index]}
     >
-      <Link
-        href={href}
+      <Card
         onMouseMove={onMouseMove}
-        className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] border border-slate-200/50 bg-white/60 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-sky-400/50 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] md:p-10"
+        className="group relative h-full overflow-hidden rounded-[2rem] border-slate-200/50 bg-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-sky-400/50 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
       >
         {glow}
-        <div className="relative">
-          <span className="mb-6 block text-sm font-semibold tracking-widest text-sky-500">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-          <h3
-            className="mb-4 text-2xl font-bold tracking-tight text-slate-900"
-            style={{ fontFamily: "var(--font-display), sans-serif" }}
-          >
-            {item.title}
-          </h3>
-          <p className="max-w-2xl leading-relaxed text-slate-600">{item.teaser}</p>
+        <div className="relative flex h-full flex-col">
+          <CardHeader>
+            <Badge
+              variant="secondary"
+              className="w-fit bg-sky-50 tracking-widest text-sky-600 hover:bg-sky-50"
+            >
+              {String(index + 1).padStart(2, "0")}
+            </Badge>
+            <CardTitle
+              className="pt-2 text-2xl font-bold tracking-tight text-slate-900"
+              style={{ fontFamily: "var(--font-display), sans-serif" }}
+            >
+              {item.title}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex-1">
+            <CardDescription className="text-base leading-relaxed text-slate-600">
+              {item.teaser}
+            </CardDescription>
+          </CardContent>
+          <CardFooter>
+            <Button
+              asChild
+              variant="ghost"
+              className="h-auto p-0 font-medium text-slate-400 hover:bg-transparent hover:text-sky-500"
+            >
+              <Link href={href}>
+                {detailsLabel}
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </Button>
+          </CardFooter>
         </div>
-        <span className="relative mt-auto inline-flex items-center gap-2 pt-8 font-medium text-slate-400 transition-colors group-hover:text-sky-500">
-          {detailsLabel}
-        </span>
-      </Link>
+      </Card>
     </motion.div>
   );
 }
