@@ -1,20 +1,28 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 /**
- * Sixteen hours of a closed office, scrubbed by scroll.
+ * Sixteen hours of a closed office, as a time-lapse.
  *
  * "24/7" and "68% zapytań po godzinach" are numbers nobody feels. Here the
  * clock runs from 17:00 to 09:00, the room actually goes dark, and every
  * inquiry that lands is stamped either handled-now or would-have-waited. The
  * argument is made by the gap between the two counters, not by a claim.
  *
+ * It plays itself on entry rather than tracking the scroll. A night compressed
+ * into ten seconds is a time-lapse, and time-lapses play — making someone
+ * crank a scroll wheel to advance the clock puts a chore between them and the
+ * point.
+ *
  * Self-contained: drop the file in and render <NightShift />.
  */
+
+/** Seconds the whole night takes to play. */
+const RUN = 9.5;
 
 type Inquiry = {
   /** Minutes past 17:00. The window is 16h = 960 min. */
@@ -84,6 +92,24 @@ export default function NightShift({
   const reduced = useReducedMotion();
   const frozen = debugProgress !== undefined;
   const [p, setP] = useState(frozen ? debugProgress! : reduced ? 1 : 0);
+  const [done, setDone] = useState(frozen || !!reduced);
+  const tween = useRef<gsap.core.Tween | null>(null);
+
+  const play = useCallback(() => {
+    tween.current?.kill();
+    setDone(false);
+    const clock = { v: 0 };
+    setP(0);
+    tween.current = gsap.to(clock, {
+      v: 1,
+      duration: RUN,
+      // Linear on purpose: this is a clock. Easing the small hours would be a
+      // lie about when the messages actually landed.
+      ease: "none",
+      onUpdate: () => setP(clock.v),
+      onComplete: () => setDone(true),
+    });
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     const el = root.current;
@@ -92,17 +118,19 @@ export default function NightShift({
     const ctx = gsap.context(() => {
       const st = ScrollTrigger.create({
         trigger: el,
-        start: "top top",
-        end: "+=2600",
-        pin: "[data-stage]",
-        scrub: 0.5,
-        onUpdate: (self) => setP(self.progress),
+        start: "top 62%",
+        once: true,
+        onEnter: play,
       });
       return () => st.kill();
     }, el);
 
-    return () => ctx.revert();
-  }, [reduced, frozen]);
+    return () => {
+      ctx.revert();
+      tween.current?.kill();
+      tween.current = null;
+    };
+  }, [reduced, frozen, play]);
 
   const sky = useMemo(() => skyAt(p), [p]);
   const landed = INQUIRIES.filter((q) => q.at / SPAN <= p);
@@ -123,7 +151,6 @@ export default function NightShift({
   return (
     <section ref={root} className="relative" aria-label="Zapytania w godzinach zamknięcia biura">
       <div
-        data-stage
         className="relative flex min-h-screen items-center overflow-hidden py-24"
         style={{
           background: `linear-gradient(180deg, ${rgb(sky.top)} 0%, ${rgb(sky.bottom)} 100%)`,
@@ -209,7 +236,7 @@ export default function NightShift({
             )}
             {landed.length === 0 && (
               <li className="font-mono text-[10.5px] uppercase tracking-[0.16em]" style={{ color: dim }}>
-                Biuro właśnie się zamknęło. Przewiń.
+                Biuro właśnie się zamknęło.
               </li>
             )}
           </ul>
@@ -309,6 +336,37 @@ export default function NightShift({
                 żeby ktoś w międzyczasie napisał gdzie indziej.
               </p>
             </div>
+          </div>
+
+          <div className="mt-10 flex justify-end">
+            {!reduced && (
+              <button
+                type="button"
+                onClick={play}
+                aria-hidden={!done}
+                tabIndex={done ? 0 : -1}
+                className={`group flex items-center gap-2.5 rounded-full border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] transition-all duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#22E0C8] motion-reduce:transition-none ${
+                  done ? "opacity-100" : "pointer-events-none opacity-0"
+                }`}
+                style={{
+                  borderColor: onNight ? "rgba(255,255,255,0.22)" : "rgba(0,0,0,0.14)",
+                  color: dim,
+                }}
+              >
+                <svg
+                  viewBox="0 0 16 16"
+                  className="h-3.5 w-3.5 transition-transform duration-500 group-hover:-rotate-180 motion-reduce:transition-none"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  aria-hidden="true"
+                >
+                  <path d="M13.5 8a5.5 5.5 0 1 1-1.7-3.97" strokeLinecap="round" />
+                  <path d="M13.2 1.6v3.1h-3.1" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Odtwórz noc jeszcze raz
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -45,11 +45,11 @@ export default async function Page({
           Wasz obecny hero zostaje. To jest to, co ma iść pod nim.
         </h1>
         <p className="mt-5 max-w-[52ch] text-[15.5px] leading-relaxed text-slate-500">
-          Dwie sekcje sterowane przewijaniem. Każda to jeden plik, który wchodzi
-          na stronę osobno.
+          Dwie sekcje. Każda odtwarza się sama, kiedy wjedzie w kadr, i każda
+          to jeden plik, który wchodzi na stronę osobno.
         </p>
         <span className="mt-12 font-mono text-[10.5px] uppercase tracking-[0.28em] text-slate-400">
-          przewiń powoli ↓
+          przewiń w dół ↓
         </span>
       </section>
 

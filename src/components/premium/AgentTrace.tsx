@@ -1,22 +1,24 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 /**
- * Scroll-scrubbed replay of the assistant handling one real inquiry: the
- * conversation on the left, what it was actually doing between replies on the
- * right.
+ * Replay of the assistant handling one real inquiry: the conversation on the
+ * left, what it was actually doing between replies on the right.
  *
  * A diagram claims the product works. This shows the work — which is the
- * whole point when what you sell is judgement, not a form. Scroll is the
- * transport: the visitor sets the pace, so a skimmer gets the shape in two
- * seconds and someone evaluating you can stop on any single step.
+ * whole point when what you sell is judgement, not a form.
  *
- * Self-contained: no page-level CSS, no shared state, its own fonts inherited
- * from wherever it's dropped. Paste the file in, render <AgentTrace />.
+ * It plays itself once it scrolls into view and never holds the page: a
+ * visitor here is checking out a supplier, not admiring a website, and
+ * freezing the scroll to make them earn the content costs more than it buys.
+ * The replay button covers whoever looked up halfway through.
+ *
+ * Self-contained: no page-level CSS, no shared state, fonts inherited from
+ * wherever it's dropped. Paste the file in, render <AgentTrace />.
  */
 
 type Step = {
@@ -25,7 +27,12 @@ type Step = {
   detail: string;
   /** Chat message index revealed at this step, if any. */
   reveals?: number;
+  /** Seconds to wait before this step. Defaults to the steady tick. */
+  gap?: number;
 };
+
+/** Steady tick between steps, in seconds. */
+const TICK = 0.34;
 
 const STEPS: Step[] = [
   { clock: "22:47:00", label: "Wiadomość przychodzi", detail: "WhatsApp · +48 601 ··· 342", reveals: 0 },
@@ -36,7 +43,9 @@ const STEPS: Step[] = [
   { clock: "22:47:02", label: "Odpisuję", detail: "Widełki + zastrzeżenie, że to szacunek", reveals: 1 },
   { clock: "22:47:03", label: "Zaglądam do kalendarza", detail: "Wolne pomiary: czw 10:00, pt 14:30" },
   { clock: "22:47:03", label: "Proponuję dwa terminy", detail: "Zawsze dwa — jeden to ultimatum", reveals: 2 },
-  { clock: "22:51:18", label: "Klient wybiera", detail: "Czwartek, 10:00", reveals: 3 },
+  // Four real minutes pass here while the client decides. Holding the replay
+  // for a beat is the only way that gap is legible at all.
+  { clock: "22:51:18", label: "Klient wybiera", detail: "Czwartek, 10:00", reveals: 3, gap: 1.15 },
   { clock: "22:51:19", label: "Rezerwuję termin", detail: "Kalendarz zespołu · pomiar 78 m²", reveals: 4 },
   { clock: "22:51:19", label: "Zakładam lead w CRM", detail: "Transkrypt, wycena, adres, źródło" },
   { clock: "22:51:20", label: "Budzę zespół rano, nie teraz", detail: "Powiadomienie zaplanowane na 8:00" },
@@ -88,52 +97,44 @@ export default function AgentTrace({
         ? STEPS.length - 1
         : -1,
   );
+  const [done, setDone] = useState(frozen || !!reduced);
+  const tl = useRef<gsap.core.Timeline | null>(null);
+
+  const play = useCallback(() => {
+    tl.current?.kill();
+    setActive(-1);
+    setDone(false);
+    const t = gsap.timeline({ onComplete: () => setDone(true) });
+    STEPS.forEach((s, i) => {
+      t.call(() => setActive(i), undefined, `+=${i === 0 ? 0.25 : (s.gap ?? TICK)}`);
+    });
+    t.to({}, { duration: 0.5 });
+    tl.current = t;
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     const el = root.current;
     if (!el || reduced || frozen) return;
 
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-
-      // Pinning a tall two-column layout on a phone traps the reader, so below
-      // 900px the section just plays through on entry instead.
-      mm.add("(min-width: 900px)", () => {
-        const st = ScrollTrigger.create({
-          trigger: el,
-          start: "top top",
-          end: `+=${STEPS.length * 190}`,
-          pin: "[data-stage]",
-          scrub: 0.6,
-          onUpdate: (self) => {
-            const i = Math.floor(self.progress * (STEPS.length + 0.4)) - 1;
-            setActive(Math.max(-1, Math.min(STEPS.length - 1, i)));
-          },
-        });
-        return () => st.kill();
+      // Fires once the section is properly in frame, not the instant its top
+      // edge clips the viewport — otherwise it plays out above the fold and
+      // the visitor arrives to a finished still.
+      const st = ScrollTrigger.create({
+        trigger: el,
+        start: "top 62%",
+        once: true,
+        onEnter: play,
       });
-
-      mm.add("(max-width: 899px)", () => {
-        const st = ScrollTrigger.create({
-          trigger: el,
-          start: "top 65%",
-          once: true,
-          onEnter: () => {
-            let i = -1;
-            const tick = () => {
-              i += 1;
-              setActive(i);
-              if (i < STEPS.length - 1) window.setTimeout(tick, 420);
-            };
-            tick();
-          },
-        });
-        return () => st.kill();
-      });
+      return () => st.kill();
     }, el);
 
-    return () => ctx.revert();
-  }, [reduced, frozen]);
+    return () => {
+      ctx.revert();
+      tl.current?.kill();
+      tl.current = null;
+    };
+  }, [reduced, frozen, play]);
 
   const visibleMsgs = CHAT.filter((_, mi) =>
     STEPS.some((s, si) => s.reveals === mi && si <= active),
@@ -146,7 +147,7 @@ export default function AgentTrace({
       className="relative bg-white text-[#0b0b0c]"
       aria-label="Zapis obsługi jednego zapytania"
     >
-      <div data-stage className="flex min-h-screen items-center py-24">
+      <div className="flex min-h-screen items-center py-24">
         <div className="mx-auto w-full max-w-[1240px] px-6">
           <header className="mb-12 flex flex-wrap items-end justify-between gap-6">
             <div>
@@ -184,7 +185,7 @@ export default function AgentTrace({
               <div className="flex min-h-[340px] flex-col justify-end gap-3">
                 {visibleMsgs.length === 0 && (
                   <p className="my-auto text-center text-[13.5px] text-slate-400">
-                    Przewiń, żeby odtworzyć rozmowę.
+                    Wtorek wieczorem. Zaraz przyjdzie wiadomość.
                   </p>
                 )}
                 {visibleMsgs.map((m, i) => (
@@ -263,11 +264,41 @@ export default function AgentTrace({
             </div>
           </div>
 
-          <p className="mt-8 max-w-[62ch] text-[15px] leading-relaxed text-slate-500">
-            Dwanaście decyzji w trzy sekundy, o 22:47, bez nikogo przy biurku. Rano
-            zespół nie dostaje nieodebranego połączenia, tylko umówiony pomiar
-            i lead z pełnym kontekstem.
-          </p>
+          <div className="mt-8 flex flex-wrap items-end justify-between gap-6">
+            <p className="max-w-[62ch] text-[15px] leading-relaxed text-slate-500">
+              Dwanaście decyzji w trzy sekundy, o 22:47, bez nikogo przy biurku. Rano
+              zespół nie dostaje nieodebranego połączenia, tylko umówiony pomiar
+              i lead z pełnym kontekstem.
+            </p>
+
+            {!reduced && (
+              <button
+                type="button"
+                onClick={play}
+                // Held out of the tab order and hidden from the reader until
+                // the replay ends: offering "again" over something still
+                // running is just noise.
+                aria-hidden={!done}
+                tabIndex={done ? 0 : -1}
+                className={`group flex shrink-0 items-center gap-2.5 rounded-full border border-black/10 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-slate-500 transition-all duration-500 hover:border-black/25 hover:text-[#0b0b0c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0EA5E9] motion-reduce:transition-none ${
+                  done ? "opacity-100" : "pointer-events-none opacity-0"
+                }`}
+              >
+                <svg
+                  viewBox="0 0 16 16"
+                  className="h-3.5 w-3.5 transition-transform duration-500 group-hover:-rotate-180 motion-reduce:transition-none"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  aria-hidden="true"
+                >
+                  <path d="M13.5 8a5.5 5.5 0 1 1-1.7-3.97" strokeLinecap="round" />
+                  <path d="M13.2 1.6v3.1h-3.1" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Odtwórz jeszcze raz
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </section>
