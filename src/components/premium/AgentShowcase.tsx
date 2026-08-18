@@ -60,7 +60,7 @@ const AGENTS: Agent[] = [
     no: "03",
     title: "Błyskawiczny Kwalifikator Leadów",
     teaser: "Odzywa się do leadów z reklam w minutę. Odsiewa ciekawskich.",
-    claim: "Pięć zgłoszeń z reklamy. Dwa warte telefonu.",
+    claim: "Cztery zgłoszenia z reklamy. Dwa warte telefonu.",
     Demo: DemoFunnel,
   },
   {

@@ -15,26 +15,35 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 type Msg = { from: "client" | "agent"; text: string; time: string };
 
 const CHAT: Msg[] = [
-  { from: "client", time: "22:47", text: "Ile kosztuje wykończenie 78 m² pod klucz?" },
-  {
-    from: "agent",
-    time: "22:47",
-    text: "Przy 78 m² w pakiecie standard to orientacyjnie 144 300 zł netto. Dokładna wycena po pomiarze.",
-  },
-  { from: "agent", time: "22:47", text: "Pomiar bezpłatny. Czwartek 10:00 czy piątek 14:30?" },
-  { from: "client", time: "22:51", text: "Czwartek" },
-  { from: "agent", time: "22:51", text: "Zapisane. Potwierdzenie poszło SMS-em." },
+  { from: "client", time: "22:47", text: "Dobry wieczór, interesuje mnie wykończenie mieszkania. Ile to mniej więcej kosztuje?" },
+  // The real assistant on couders.com narrows before it answers — it asks for
+  // an offer number or an address rather than guessing. Same move here: a bot
+  // that quotes a price off a one-line question is a bot nobody believes.
+  { from: "agent", time: "22:47", text: "Dobry wieczór. Cena zależy głównie od metrażu i zakresu prac. Jaki to metraż i czy mówimy o stanie deweloperskim, czy o remoncie?" },
+  { from: "client", time: "22:48", text: "78 m², stan deweloperski, pod klucz" },
+  { from: "agent", time: "22:48", text: "Przy 78 m² w pakiecie standard wychodzi orientacyjnie 144 300 zł netto, czyli 1 850 zł za metr. W tej kwocie są materiały z naszej listy, robocizna i nadzór." },
+  { from: "client", time: "22:49", text: "A jeśli chcę lepsze płytki niż te z listy?" },
+  // Admitting a limit is the most persuasive thing a sales bot does.
+  { from: "agent", time: "22:49", text: "Wtedy różnicę w cenie materiału dopisujemy do kosztorysu, robocizna zostaje bez zmian. Konkretnej kwoty nie podam — to już liczy kosztorysant." },
+  { from: "client", time: "22:50", text: "A ile to trwa?" },
+  { from: "agent", time: "22:50", text: "Przy tym metrażu zwykle 10–12 tygodni od podpisania umowy." },
+  { from: "agent", time: "22:50", text: "Wiążącą wycenę dajemy po bezpłatnym pomiarze. Mogę przekazać zapytanie do biura — proszę o numer telefonu." },
+  { from: "client", time: "22:51", text: "601 234 342" },
+  { from: "agent", time: "22:51", text: "Dziękuję. Zapytanie jest już w biurze, ktoś odezwie się rano. Zapis rozmowy dołączyłem." },
 ];
 
 const WORK = [
-  "Sprawdzam, kto pisze — nowy kontakt",
-  "Sięgam po cennik: 1 850 zł/m²",
-  "Liczę: 78 × 1 850 = 144 300 zł",
-  "Zaglądam do kalendarza pomiarów",
-  "Rezerwuję czwartek, 10:00",
-  "Zakładam lead z transkryptem",
+  "Sprawdzam, kto pisze — nowy kontakt, brak w CRM",
+  "Rozpoznaję intencję: wycena wykończenia",
+  "Brakuje metrażu i zakresu — dopytuję, zamiast zgadywać",
+  "Sięgam po cennik: pakiet standard 1 850 zł/m²",
+  "Liczę: 78 × 1 850 = 144 300 zł netto",
+  "Czytam kartę usługi — co wchodzi w pakiet",
+  "Płytki spoza listy wykraczają poza cennik — nie zmyślam",
+  "Sprawdzam typowy czas realizacji: 10–12 tygodni",
+  "Klient jest gotowy — proszę o numer telefonu",
+  "Zakładam lead z transkryptem i przekazuję do biura",
 ];
-
 const POP = { type: "spring" as const, stiffness: 520, damping: 30, mass: 0.85 };
 
 export default function DemoChat() {
@@ -53,13 +62,13 @@ export default function DemoChat() {
         setTyping(false);
         setN(i + 1);
         i += 1;
-        timers.push(window.setTimeout(next, 900));
+        timers.push(window.setTimeout(next, 620));
       };
       // Only the assistant "types" — a client bubble appearing after dots on
       // the assistant's side would be nonsense.
       if (msg.from === "agent") {
         setTyping(true);
-        timers.push(window.setTimeout(show, 750));
+        timers.push(window.setTimeout(show, 620));
       } else {
         show();
       }
@@ -76,7 +85,7 @@ export default function DemoChat() {
         <p className="mb-3 font-mono text-[9.5px] uppercase tracking-[0.18em] text-slate-400">
           WhatsApp · wtorek 22:47
         </p>
-        <div className="flex min-h-[240px] flex-col justify-end gap-2">
+        <div className="flex max-h-[336px] min-h-[300px] flex-col justify-end gap-2 overflow-hidden">
           <AnimatePresence initial={false}>
             {CHAT.slice(0, n).map((m, i) => (
               <motion.div
