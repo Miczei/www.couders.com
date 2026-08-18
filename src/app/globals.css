@@ -2929,3 +2929,46 @@ main {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
+/* ============================================================
+   Premium direction study — scoped to /lab/premium only.
+   Nothing here leaks into the live site: every token is defined
+   under .premium-shell and consumed via var() inside that subtree.
+   ============================================================ */
+.premium-shell {
+  /* Warm paper rather than #fff. The slight warmth is what lets the cool
+     sky/teal thread read as ink on stock instead of one more blue-on-white
+     SaaS page — and it stops the shader from washing out at the edges. */
+  --p-paper: #f7f6f3;
+  --p-ink: #101215;
+  --p-muted: #6a6f75;
+  --p-hair: rgba(16, 18, 21, 0.12);
+
+  --font-display: var(--p-font-display), "Space Grotesk", system-ui, sans-serif;
+  --font-body: var(--p-font-body), system-ui, sans-serif;
+  --font-mono: var(--p-font-mono), ui-monospace, monospace;
+  --font-mark: var(--font-logo), cursive;
+
+  background: var(--p-paper);
+  color: var(--p-ink);
+  font-family: var(--font-body);
+}
+
+/* Tailwind's font-mono is a bare stack; point it at the scoped face instead.
+   Scoped selector, so it can't reach any other route. */
+.premium-shell .font-mono {
+  font-family: var(--font-mono);
+}
+
+.premium-ground {
+  background: var(--p-paper);
+}
+
+/* The study runs on paper. MatrixRain and the dark chat launcher are mounted
+   by the shared [locale] layout, above and below this subtree, so they can't
+   be reached by a descendant selector — :has() on the body is the only hook
+   that works without conditionals in a layout the whole site shares. */
+body:has(.premium-shell) .matrix-rain,
+body:has(.premium-shell) [data-site-chrome] {
+  display: none;
+}
