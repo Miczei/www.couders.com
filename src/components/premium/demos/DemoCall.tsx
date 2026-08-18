@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import type { ShowcaseContent } from "@/i18n/showcase";
 
 /**
  * Agent 02 — the phone receptionist. Motion character: urgent, then calm.
@@ -13,22 +14,12 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
  * is exactly what the caller feels.
  */
 
-type Turn = { who: "Klient" | "Asystent"; text: string };
-
-const TALK: Turn[] = [
-  { who: "Asystent", text: "Dobry wieczór, Couders, słucham?" },
-  { who: "Klient", text: "Dzwonię w sprawie montażu w przyszłym miesiącu." },
-  { who: "Asystent", text: "Sprawdzam terminy. Wtorek dziewiąta albo środa wpół do drugiej." },
-  { who: "Klient", text: "Wtorek." },
-  { who: "Asystent", text: "Zapisane. Potwierdzenie wyślę SMS-em." },
-];
-
 const BARS = 22;
 
-export default function DemoCall() {
+export default function DemoCall({ c }: { c: ShowcaseContent["call"] }) {
   const reduced = useReducedMotion();
   const [phase, setPhase] = useState<"ring" | "live" | "done">(reduced ? "done" : "ring");
-  const [turn, setTurn] = useState(reduced ? TALK.length : 0);
+  const [turn, setTurn] = useState(reduced ? c.turns.length : 0);
   const [secs, setSecs] = useState(reduced ? 128 : 0);
 
   useEffect(() => {
@@ -37,10 +28,10 @@ export default function DemoCall() {
     timers.push(
       window.setTimeout(() => {
         setPhase("live");
-        TALK.forEach((_, i) =>
+        c.turns.forEach((_, i) =>
           timers.push(window.setTimeout(() => setTurn(i + 1), 900 + i * 1050)),
         );
-        timers.push(window.setTimeout(() => setPhase("done"), 900 + TALK.length * 1050));
+        timers.push(window.setTimeout(() => setPhase("done"), 900 + c.turns.length * 1050));
       }, 1500),
     );
     const tick = window.setInterval(() => setSecs((s) => s + 1), 1000);
@@ -48,7 +39,7 @@ export default function DemoCall() {
       timers.forEach(window.clearTimeout);
       window.clearInterval(tick);
     };
-  }, [reduced]);
+  }, [reduced, c]);
 
   const ringing = phase === "ring";
   const mmss = `${String(Math.floor(secs / 60)).padStart(2, "0")}:${String(secs % 60).padStart(2, "0")}`;
@@ -94,10 +85,10 @@ export default function DemoCall() {
         </motion.div>
 
         <p className="relative mt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
-          {ringing ? "Połączenie przychodzące" : phase === "live" ? "Rozmowa trwa" : "Rozłączono"}
+          {ringing ? c.incoming : phase === "live" ? c.live : c.ended}
         </p>
         <p className="relative mt-1.5 font-mono text-[15px] tabular-nums">
-          {ringing ? "+48 601 ··· 342" : mmss}
+          {ringing ? c.number : mmss}
         </p>
 
         {/* Waveform replaces the rings — same visual budget, opposite mood. */}
@@ -128,15 +119,15 @@ export default function DemoCall() {
       <div className="flex flex-col gap-4">
         <div className="min-h-[168px] rounded-2xl bg-white p-4 ring-1 ring-slate-200/70 sm:p-5">
           <p className="mb-3 font-mono text-[9.5px] uppercase tracking-[0.18em] text-slate-400">
-            Zapis rozmowy
+            {c.transcriptTitle}
           </p>
           {turn === 0 ? (
             <p className="py-6 text-center text-[13px] text-slate-400">
-              Sobota, 21:40. Biuro zamknięte od pięciu godzin.
+              {c.idle}
             </p>
           ) : (
             <ul className="flex flex-col gap-2">
-              {TALK.slice(0, turn).map((t, i) => (
+              {c.turns.slice(0, turn).map((t, i) => (
                 <motion.li
                   key={i}
                   initial={reduced ? false : { opacity: 0, y: 6 }}
@@ -146,7 +137,7 @@ export default function DemoCall() {
                 >
                   <span
                     className="font-mono text-[9.5px] uppercase tracking-[0.12em]"
-                    style={{ color: t.who === "Asystent" ? "#0284c7" : "#94a3b8" }}
+                    style={{ color: i % 2 === 0 ? "#0284c7" : "#94a3b8" }}
                   >
                     {t.who}
                   </span>
@@ -170,10 +161,10 @@ export default function DemoCall() {
               </span>
               <span className="min-w-0">
                 <span className="block text-[13.5px] font-medium text-slate-900">
-                  Wtorek, 9:00 — pomiar u klienta
+                  {c.outcomeTitle}
                 </span>
                 <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-sky-700">
-                  SMS potwierdzający wysłany · transkrypt w karcie klienta
+                  {c.outcomeNote}
                 </span>
               </span>
             </motion.div>

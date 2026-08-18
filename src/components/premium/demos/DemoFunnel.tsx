@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import type { ShowcaseContent } from "@/i18n/showcase";
 
 /**
  * Agent 03 — the lead qualifier. Motion character: fast and decisive.
@@ -16,83 +17,36 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
  * lead worth calling, because that is the only event worth celebrating.
  */
 
-type Lead = {
-  who: string;
-  source: string;
-  answers: [string, string, string];
-  pass: boolean;
-  verdict: string;
-  at: string;
-};
-
-const QUESTIONS = ["Jaki budżet?", "Kiedy chcecie zacząć?", "Kto podejmuje decyzję?"];
-
-const LEADS: Lead[] = [
-  {
-    who: "Marek W.",
-    source: "reklama na Facebooku",
-    answers: ["Do 15 tysięcy", "Jeszcze nie wiem", "Sam się rozglądam"],
-    pass: false,
-    verdict: "Za mały budżet, brak terminu",
-    at: "52 s",
-  },
-  {
-    who: "Anna K.",
-    source: "reklama w Google",
-    answers: ["Około 180 tysięcy", "W tym kwartale", "Ja i prezes"],
-    pass: true,
-    verdict: "Budżet i termin się zgadzają",
-    at: "1 min 07 s",
-  },
-  {
-    who: "Tomasz R.",
-    source: "reklama na Facebooku",
-    answers: ["Nie odpowiedział", "—", "—"],
-    pass: false,
-    verdict: "Nie odpisał na trzy wiadomości",
-    at: "1 min 44 s",
-  },
-  {
-    who: "Biuro Nowak",
-    source: "reklama w Google",
-    answers: ["90 tysięcy", "Za dwa tygodnie", "Właściciel"],
-    pass: true,
-    verdict: "Gotowy do rozmowy, termin bliski",
-    at: "2 min 31 s",
-  },
-];
-
-export default function DemoFunnel() {
+export default function DemoFunnel({ c }: { c: ShowcaseContent["funnel"] }) {
   const reduced = useReducedMotion();
   // Each lead runs: ask q1, q2, q3, verdict. Four ticks per lead.
-  const [tick, setTick] = useState(reduced ? LEADS.length * 4 : 0);
+  const [tick, setTick] = useState(reduced ? c.leads.length * 4 : 0);
 
   useEffect(() => {
     if (reduced) return;
-    const total = LEADS.length * 4;
+    const total = c.leads.length * 4;
     const timers = Array.from({ length: total }, (_, i) =>
       window.setTimeout(() => setTick(i + 1), 500 + i * 620),
     );
     return () => timers.forEach(window.clearTimeout);
-  }, [reduced]);
+  }, [reduced, c]);
 
-  const idx = Math.min(LEADS.length - 1, Math.floor(tick / 4));
+  const idx = Math.min(c.leads.length - 1, Math.floor(tick / 4));
   const within = tick - idx * 4; // 0..4 — how far through the current lead
-  const lead = LEADS[idx];
-  const settled = LEADS.slice(0, Math.floor(tick / 4));
+  const lead = c.leads[idx];
+  const settled = c.leads.slice(0, Math.floor(tick / 4));
   const kept = settled.filter((l) => l.pass);
   const dropped = settled.filter((l) => !l.pass);
-  const done = tick >= LEADS.length * 4;
+  const done = tick >= c.leads.length * 4;
 
   return (
     <div>
       {/* The one-liner the first version was missing. Without it the panel is
           a diagram of a process the reader has not been told about. */}
       <p className="max-w-[68ch] text-[14.5px] leading-relaxed text-slate-600">
-        Ktoś klika Waszą reklamę i zostawia numer. Zwykle oddzwaniacie za kilka
-        godzin — <strong className="font-medium text-slate-900">agent odzywa się w minutę</strong> i
-        zadaje trzy pytania. Do handlowca trafiają tylko ci, którzy na nie
-        odpowiedzą sensownie.
+        {c.introHead}
+        <strong className="font-medium text-slate-900">{c.introStrong}</strong>
+        {c.introTail}
       </p>
 
       <div className="mt-6 grid gap-5 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.85fr)]">
@@ -100,10 +54,10 @@ export default function DemoFunnel() {
         <div className="rounded-2xl bg-white p-4 ring-1 ring-slate-200/70 sm:p-5">
           <div className="flex items-baseline justify-between gap-3">
             <p className="font-mono text-[9.5px] uppercase tracking-[0.18em] text-slate-400">
-              Rozmowa z leadem
+              {c.convTitle}
             </p>
             <p className="font-mono text-[10px] tabular-nums text-sky-700">
-              {done ? "koniec" : lead.at}
+              {done ? c.doneLabel : lead.at}
             </p>
           </div>
 
@@ -116,10 +70,12 @@ export default function DemoFunnel() {
               className="mt-4"
             >
               <p className="text-[13.5px] font-medium text-slate-900">{lead.who}</p>
-              <p className="mt-0.5 text-[12px] text-slate-500">z {lead.source}</p>
+              <p className="mt-0.5 text-[12px] text-slate-500">
+                {c.fromLabel} {lead.source}
+              </p>
 
               <ul className="mt-4 flex min-h-[168px] flex-col gap-3">
-                {QUESTIONS.map((q, i) => {
+                {c.questions.map((q, i) => {
                   const asked = within > i;
                   return (
                     <motion.li
@@ -159,7 +115,7 @@ export default function DemoFunnel() {
                   color: lead.pass ? "#0369a1" : "#64748b",
                 }}
               >
-                {lead.pass ? "→ Warto zadzwonić: " : "→ Odsiany: "}
+                {lead.pass ? c.keptPrefix : c.droppedPrefix}
                 {lead.verdict}
               </motion.p>
             </motion.div>
@@ -170,7 +126,7 @@ export default function DemoFunnel() {
         <div className="flex flex-col gap-3">
           <div className="rounded-2xl bg-sky-50/70 p-4 ring-1 ring-sky-200/60">
             <p className="flex items-baseline justify-between text-[12.5px] font-medium text-sky-800">
-              Warci telefonu
+              {c.keptTitle}
               <span className="font-mono text-[17px] tabular-nums">
                 {String(kept.length).padStart(2, "0")}
               </span>
@@ -192,7 +148,7 @@ export default function DemoFunnel() {
 
           <div className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200/70">
             <p className="flex items-baseline justify-between text-[12.5px] font-medium text-slate-500">
-              Nie teraz
+              {c.droppedTitle}
               <span className="font-mono text-[17px] tabular-nums">
                 {String(dropped.length).padStart(2, "0")}
               </span>
@@ -215,8 +171,7 @@ export default function DemoFunnel() {
       </div>
 
       <p className="mt-5 text-[13.5px] leading-relaxed text-slate-500">
-        Cztery zgłoszenia z reklamy, dwa warte rozmowy. Handlowiec dzwoni tylko
-        do tych dwóch i zna już ich budżet oraz termin.
+{c.footer}
       </p>
     </div>
   );

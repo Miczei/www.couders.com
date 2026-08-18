@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useSpotlight } from "@/components/ui/SpotlightCard";
+import type { ShowcaseAgent, ShowcaseContent } from "@/i18n/showcase";
 import DemoChat from "./demos/DemoChat";
 import DemoCall from "./demos/DemoCall";
 import DemoFunnel from "./demos/DemoFunnel";
@@ -32,55 +33,19 @@ import DemoOffer from "./demos/DemoOffer";
  * what keeps the glow identical to the live cards.
  */
 
-type Agent = {
-  no: string;
-  title: string;
-  teaser: string;
-  /** Headline over the replay — the argument this agent makes. */
-  claim: string;
-  Demo: () => React.JSX.Element;
-};
-
-const AGENTS: Agent[] = [
-  {
-    no: "01",
-    title: "Firmowy Asystent Sprzedaży",
-    teaser: "Zna katalog i cennik. Zbiera leady, gdy Ty śpisz.",
-    claim: "Zobaczcie, co robi między jedną a drugą odpowiedzią.",
-    Demo: DemoChat,
-  },
-  {
-    no: "02",
-    title: "Recepcjonista AI przez telefon",
-    teaser: "Odbiera wieczorami, w nocy i w weekendy. Nikt nie słyszy sygnału w pustkę.",
-    claim: "Telefon dzwoni o 21:40 w sobotę. Ktoś odbiera.",
-    Demo: DemoCall,
-  },
-  {
-    no: "03",
-    title: "Błyskawiczny Kwalifikator Leadów",
-    teaser: "Odzywa się do leadów z reklam w minutę. Odsiewa ciekawskich.",
-    claim: "Cztery zgłoszenia z reklamy. Dwa warte telefonu.",
-    Demo: DemoFunnel,
-  },
-  {
-    no: "04",
-    title: "Generator Ofert B2B",
-    teaser: "Firmowa oferta PDF u klienta w piętnaście minut po spotkaniu.",
-    claim: "Oferta u klienta, zanim ostygnie kawa po spotkaniu.",
-    Demo: DemoOffer,
-  },
-];
-
 function AgentCard({
   agent,
   index,
   active,
+  pickLabel,
+  pickedLabel,
   onPick,
 }: {
-  agent: Agent;
+  agent: ShowcaseAgent;
   index: number;
   active: boolean;
+  pickLabel: string;
+  pickedLabel: string;
   onPick: () => void;
 }) {
   const { onMouseMove, glow } = useSpotlight();
@@ -126,7 +91,7 @@ function AgentCard({
             active ? "text-sky-600" : "text-slate-400 group-hover:text-sky-500"
           }`}
         >
-          {active ? "Pokazane niżej" : "Zobacz jego zmianę"}
+          {active ? pickedLabel : pickLabel}
           <span
             aria-hidden="true"
             className={`transition-transform duration-300 ${active ? "rotate-90" : "group-hover:translate-x-1"}`}
@@ -139,10 +104,19 @@ function AgentCard({
   );
 }
 
-export default function AgentShowcase() {
+export default function AgentShowcase({ content }: { content: ShowcaseContent }) {
   const reduced = useReducedMotion();
   const [pick, setPick] = useState(0);
-  const agent = AGENTS[pick];
+  const agent = content.agents[pick];
+
+  // Index-keyed rather than named on the content: the copy is translated, the
+  // sequence of agents is not something a translator should be able to break.
+  const DEMOS = [
+    <DemoChat key="chat" c={content.chat} />,
+    <DemoCall key="call" c={content.call} />,
+    <DemoFunnel key="funnel" c={content.funnel} />,
+    <DemoOffer key="offer" c={content.offer} />,
+  ];
 
   return (
     <section
@@ -151,26 +125,27 @@ export default function AgentShowcase() {
     >
       <div className="mx-auto max-w-7xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-400">
-          Produkt
+          {content.eyebrow}
         </p>
         <h2
           className="mt-4 max-w-[18ch] text-balance text-[clamp(2rem,4.4vw,3.4rem)] font-bold leading-[1.02] tracking-[-0.035em] text-slate-900"
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
-          Cztery sposoby, jak to działa.
+          {content.h2}
         </h2>
         <p className="mt-5 max-w-[52ch] text-[16px] leading-relaxed text-slate-600">
-          Wybierzcie agenta, a pod spodem odtworzy jedną swoją zmianę. Bez
-          przechodzenia na inną stronę.
+          {content.lead}
         </p>
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {AGENTS.map((a, i) => (
+          {content.agents.map((a, i) => (
             <AgentCard
               key={a.no}
               agent={a}
               index={i}
               active={i === pick}
+              pickLabel={content.pick}
+              pickedLabel={content.picked}
               onPick={() => setPick(i)}
             />
           ))}
@@ -184,7 +159,7 @@ export default function AgentShowcase() {
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -top-2 hidden h-4 w-4 rotate-45 rounded-[3px] border-l border-t border-sky-400/70 bg-white/70 backdrop-blur-xl transition-[left] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none lg:block"
-            style={{ left: `calc(${(pick + 0.5) * 25}% - 0.5rem)` }}
+            style={{ left: `calc(${((pick + 0.5) / content.agents.length) * 100}% - 0.5rem)` }}
           />
 
           <div className="overflow-hidden rounded-[2rem] border border-sky-400/40 bg-white/60 shadow-[0_8px_40px_rgb(14,165,233,0.10)] backdrop-blur-xl">
@@ -210,15 +185,14 @@ export default function AgentShowcase() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <agent.Demo />
+                {DEMOS[pick]}
               </motion.div>
             </div>
           </div>
         </div>
 
         <p className="mt-6 max-w-[60ch] text-[14px] leading-relaxed text-slate-500">
-          Zapisy są przykładowe. Na wdrożeniu wypełniamy je Waszymi rozmowami,
-          Waszym cennikiem i Waszym kalendarzem.
+          {content.note}
         </p>
       </div>
     </section>

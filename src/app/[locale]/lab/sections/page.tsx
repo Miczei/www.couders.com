@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import GlassNav from "@/components/premium/GlassNav";
+import { getShowcase } from "@/i18n/showcase";
 import AgentShowcase from "@/components/premium/AgentShowcase";
 import AgentRoster from "@/components/premium/AgentRoster";
 import AgentTrace from "@/components/premium/AgentTrace";
@@ -60,7 +61,7 @@ export default async function Page({
 
       {/* Newest first. The showcase is the merge of the live "Trzy sposoby"
           cards with the roster's click-to-open replay. */}
-      <AgentShowcase />
+      <AgentShowcase content={getShowcase("pl")} />
       <AgentRoster />
       <OpsDeck />
       <AgentTrace debugProgress={freeze(q.trace)} />
