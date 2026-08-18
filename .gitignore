@@ -32,3 +32,9 @@ next-env.d.ts
 
 # generated media (large Higgsfield assets — keep out of git, host on CDN)
 /public/*.mp4
+
+# macOS file-sync duplicates ("Foo 2.tsx"). They are never intentional and
+# have been committed by accident before.
+*[[:space:]]2.tsx
+*[[:space:]]2.html
+*[[:space:]]2.ts
