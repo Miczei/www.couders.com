@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { useSpotlight } from "@/components/ui/SpotlightCard";
 import type { ShowcaseAgent, ShowcaseContent } from "@/i18n/showcase";
 import DemoChat from "./demos/DemoChat";
@@ -22,6 +22,11 @@ import DemoOffer from "./demos/DemoOffer";
  * sells and it appears in neither the site nor the offer PDF, which means the
  * one agent that answers at 21:40 on a Saturday is currently invisible to
  * buyers.
+ *
+ * The replay does not start until the cards are actually on screen. Each demo
+ * begins its timers on mount, so mounting is what gets gated — a chat that
+ * plays out while the visitor is still reading the hero has already finished
+ * by the time they arrive, which is worse than no animation at all.
  *
  * Each agent gets its own animation rather than a shared timeline template.
  * Four services that work in genuinely different ways cannot all be a list of
@@ -109,6 +114,11 @@ export default function AgentShowcase({ content }: { content: ShowcaseContent })
   const [pick, setPick] = useState(0);
   const agent = content.agents[pick];
 
+  const cardsRef = useRef<HTMLDivElement>(null);
+  // Fires a little before the cards are fully in frame, so the first bubble
+  // lands just as the reader settles on the section rather than after.
+  const started = useInView(cardsRef, { once: true, margin: "0px 0px -18% 0px" });
+
   // Index-keyed rather than named on the content: the copy is translated, the
   // sequence of agents is not something a translator should be able to break.
   const DEMOS = [
@@ -137,7 +147,7 @@ export default function AgentShowcase({ content }: { content: ShowcaseContent })
           {content.lead}
         </p>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div ref={cardsRef} className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {content.agents.map((a, i) => (
             <AgentCard
               key={a.no}
@@ -178,15 +188,26 @@ export default function AgentShowcase({ content }: { content: ShowcaseContent })
               </AnimatePresence>
             </div>
 
-            <div className="p-6 sm:p-8">
-              <motion.div
-                key={pick}
-                initial={reduced ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                {DEMOS[pick]}
-              </motion.div>
+            {/* min-height reserved so the panel does not jump when the demo
+                mounts on scroll-in. */}
+            <div className="min-h-[400px] p-6 sm:p-8">
+              {started || reduced ? (
+                <motion.div
+                  key={pick}
+                  initial={reduced ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {DEMOS[pick]}
+                </motion.div>
+              ) : (
+                // Never an empty bordered box: if the observer somehow never
+                // fires, this reads as an intentional state rather than a
+                // section that failed to load.
+                <p className="flex h-full min-h-[340px] items-center justify-center text-center font-mono text-[10.5px] uppercase tracking-[0.2em] text-slate-300">
+                  {content.waiting}
+                </p>
+              )}
             </div>
           </div>
         </div>

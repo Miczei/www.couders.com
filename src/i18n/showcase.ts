@@ -36,6 +36,8 @@ export type ShowcaseContent = {
   lead: string;
   pick: string;
   picked: string;
+  /** Shown in the panel before the replay starts. */
+  waiting: string;
   note: string;
   agents: ShowcaseAgent[];
 
@@ -97,6 +99,7 @@ const pl: ShowcaseContent = {
   lead: "Wybierzcie agenta, a pod spodem odtworzy jedną swoją zmianę. Bez przechodzenia na inną stronę.",
   pick: "Zobacz jego zmianę",
   picked: "Pokazane niżej",
+  waiting: "Przewiń niżej, żeby zobaczyć zapis zmiany.",
   note: "Zapisy są przykładowe. Na wdrożeniu wypełniamy je Waszymi rozmowami, Waszym cennikiem i Waszym kalendarzem.",
 
   agents: [
@@ -263,6 +266,7 @@ const en: ShowcaseContent = {
   lead: "Pick an agent and it replays one of its shifts below. Without leaving this page.",
   pick: "See its shift",
   picked: "Shown below",
+  waiting: "Scroll a little further to watch the shift.",
   note: "These are sample transcripts. On rollout we fill them with your conversations, your pricing and your calendar.",
 
   agents: [
