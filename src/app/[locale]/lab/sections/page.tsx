@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import GlassNav from "@/components/premium/GlassNav";
+import AgentShowcase from "@/components/premium/AgentShowcase";
 import AgentRoster from "@/components/premium/AgentRoster";
 import AgentTrace from "@/components/premium/AgentTrace";
 import NightShift from "@/components/premium/NightShift";
@@ -40,7 +41,7 @@ export default async function Page({
 
       <section className="flex min-h-[58svh] flex-col items-center justify-center px-6 text-center">
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-400">
-          Studium sekcji · cztery propozycje
+          Studium sekcji · pięć propozycji
         </p>
         <h1
           className="mt-5 max-w-[22ch] text-balance text-[clamp(1.6rem,3.6vw,2.6rem)] font-bold leading-[1.05] tracking-[-0.03em]"
@@ -57,7 +58,9 @@ export default async function Page({
         </span>
       </section>
 
-      {/* Newest first: the roster is the one built straight off the offer. */}
+      {/* Newest first. The showcase is the merge of the live "Trzy sposoby"
+          cards with the roster's click-to-open replay. */}
+      <AgentShowcase />
       <AgentRoster />
       <OpsDeck />
       <AgentTrace debugProgress={freeze(q.trace)} />
