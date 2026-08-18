@@ -11,9 +11,13 @@ import GlassStage from "./GlassStage";
  * would actually watch.
  *
  * Enterprise buyers are not moved by adjectives, they are moved by evidence
- * that something is running. A panel with a live event log, a response-time
- * trace and channel health does that in a way no headline can — it looks like
- * the inside of the product rather than an ad for it.
+ * that something is running. An event log, a volume trace and channel health
+ * do that in a way no headline can — it looks like the inside of the product
+ * rather than an ad for it.
+ *
+ * Deliberately no millisecond figures: latency is a number the buyer has to be
+ * taught to read, and it invites the one question you do not want them asking
+ * on a marketing page. What each message *resulted in* lands immediately.
  *
  * Everything here is a scripted replay, not real telemetry, and the caption
  * says so. Faking a live feed on a marketing page is a lie a buyer will
@@ -24,26 +28,29 @@ import GlassStage from "./GlassStage";
 
 type Event = {
   time: string;
-  channel: "WhatsApp" | "Telefon" | "E-mail" | "Formularz";
+  // No phone: the offer is explicit that Couders does not build voice or
+  // call bots. Every channel here is written.
+  channel: "WhatsApp" | "Messenger" | "E-mail" | "Formularz";
   text: string;
-  ms: number;
+  /** What the assistant actually did — not how many milliseconds it took. */
+  did: string;
   human?: boolean;
 };
 
 const FEED: Event[] = [
-  { time: "23:38:12", channel: "Formularz", text: "Wycena — 54 m², Wilanów", ms: 820 },
-  { time: "23:41:07", channel: "WhatsApp", text: "Pytanie o gwarancję", ms: 640 },
-  { time: "23:52:44", channel: "Telefon", text: "Nieodebrane → oddzwonienie zaplanowane", ms: 1120 },
-  { time: "00:14:03", channel: "E-mail", text: "Zapytanie ofertowe, 3 lokale", ms: 2400, human: true },
-  { time: "00:31:29", channel: "WhatsApp", text: "Zmiana terminu pomiaru", ms: 710 },
-  { time: "01:02:55", channel: "Formularz", text: "Prośba o katalog materiałów", ms: 590 },
-  { time: "01:32:18", channel: "E-mail", text: "Reklamacja — eskalacja", ms: 3100, human: true },
-  { time: "02:10:41", channel: "WhatsApp", text: "Wykończenie 78 m² pod klucz", ms: 680 },
-  { time: "03:04:16", channel: "Formularz", text: "Pytanie o terminy realizacji", ms: 760 },
-  { time: "04:22:38", channel: "Telefon", text: "Nieodebrane → SMS z ofertą", ms: 940 },
+  { time: "23:38", channel: "Formularz", text: "Wycena — 54 m², Wilanów", did: "Odpisał z widełkami" },
+  { time: "23:41", channel: "WhatsApp", text: "Pytanie o gwarancję", did: "Odpisał i zapisał kontakt" },
+  { time: "23:52", channel: "Messenger", text: "Czy robicie też instalacje?", did: "Odpisał" },
+  { time: "00:14", channel: "E-mail", text: "Zapytanie ofertowe, 3 lokale", did: "Oddał człowiekowi", human: true },
+  { time: "00:31", channel: "WhatsApp", text: "Zmiana terminu pomiaru", did: "Przełożył termin" },
+  { time: "01:02", channel: "Formularz", text: "Prośba o katalog materiałów", did: "Wysłał katalog" },
+  { time: "01:32", channel: "E-mail", text: "Reklamacja — eskalacja", did: "Oddał człowiekowi", human: true },
+  { time: "02:10", channel: "WhatsApp", text: "Wykończenie 78 m² pod klucz", did: "Wycenił i umówił pomiar" },
+  { time: "03:04", channel: "Formularz", text: "Pytanie o terminy realizacji", did: "Odpisał" },
+  { time: "04:22", channel: "Messenger", text: "Czy pracujecie w soboty?", did: "Odpisał" },
 ];
 
-const CHANNELS = ["WhatsApp", "Telefon", "E-mail", "Formularz"] as const;
+const CHANNELS = ["WhatsApp", "Messenger", "E-mail", "Formularz"] as const;
 
 /** Visible rows in the log. Older ones slide out of the top. */
 const WINDOW = 5;
@@ -100,17 +107,16 @@ export default function OpsDeck() {
   const rows = seen.slice(-WINDOW).reverse();
   const handled = seen.filter((e) => !e.human).length;
   const escalated = seen.filter((e) => e.human).length;
-  const avg = seen.length
-    ? Math.round(seen.reduce((s, e) => s + e.ms, 0) / seen.length)
-    : 0;
+  const booked = seen.filter((e) => e.did.includes("umówił")).length;
 
-  // Sparkline over response times so far, newest on the right.
-  const trace = seen.slice(-18);
-  const max = Math.max(1200, ...trace.map((e) => e.ms));
+  // Cumulative volume through the night, newest on the right. A count of
+  // handled messages is something a buyer can picture; a latency chart is
+  // something they have to be taught to read.
+  const trace = seen;
   const path = trace
-    .map((e, k) => {
+    .map((_, k) => {
       const x = trace.length === 1 ? 100 : (k / (trace.length - 1)) * 100;
-      const y = 30 - (e.ms / max) * 26;
+      const y = 30 - ((k + 1) / FEED.length) * 26;
       return `${k === 0 ? "M" : "L"} ${x.toFixed(2)} ${y.toFixed(2)}`;
     })
     .join(" ");
@@ -121,7 +127,7 @@ export default function OpsDeck() {
       className="relative bg-white py-24 text-[#0b0b0c] md:py-32"
       aria-label="Pulpit pracy asystenta"
     >
-      <div className="mx-auto max-w-[1120px] px-6">
+      <div className="mx-auto max-w-[980px] px-6">
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-400">
           Pulpit · noc z wtorku na środę
         </p>
@@ -133,7 +139,7 @@ export default function OpsDeck() {
         </h2>
       </div>
 
-      <div className="mt-12 px-6">
+      <div className="mx-auto mt-12 max-w-[980px] px-6">
         <GlassStage dark>
           <div className="relative bg-[#07090D] text-[#E9EDF4]">
             <div
@@ -196,10 +202,10 @@ export default function OpsDeck() {
                           </span>
                         </span>
                         <span
-                          className="font-mono text-[11px] tabular-nums"
+                          className="whitespace-nowrap font-mono text-[10.5px] uppercase tracking-[0.1em]"
                           style={{ color: e.human ? "#F0B45E" : "#22E0C8" }}
                         >
-                          {e.human ? "→ człowiek" : `${e.ms} ms`}
+                          {e.did}
                         </span>
                       </motion.li>
                     ))}
@@ -213,7 +219,7 @@ export default function OpsDeck() {
                   {[
                     { v: String(handled).padStart(2, "0"), l: "obsłużone", c: "#22E0C8" },
                     { v: String(escalated).padStart(2, "0"), l: "do człowieka", c: "#F0B45E" },
-                    { v: avg ? `${avg}` : "—", l: "śr. ms", c: "#E9EDF4" },
+                    { v: String(booked).padStart(2, "0"), l: "umówione", c: "#E9EDF4" },
                   ].map((s) => (
                     <div key={s.l}>
                       <div
@@ -231,7 +237,7 @@ export default function OpsDeck() {
 
                 <div>
                   <p className="mb-2 font-mono text-[9.5px] uppercase tracking-[0.16em] text-white/35">
-                    Czas odpowiedzi
+                    Narastająco przez noc
                   </p>
                   <svg
                     viewBox="0 0 100 32"
@@ -261,7 +267,7 @@ export default function OpsDeck() {
                     {trace.length > 0 && (
                       <circle
                         cx="100"
-                        cy={30 - (trace[trace.length - 1].ms / max) * 26}
+                        cy={30 - (trace.length / FEED.length) * 26}
                         r="1.6"
                         fill="#22E0C8"
                         vectorEffect="non-scaling-stroke"
@@ -301,7 +307,7 @@ export default function OpsDeck() {
         </GlassStage>
       </div>
 
-      <div className="mx-auto mt-8 flex max-w-[1120px] flex-wrap items-end justify-between gap-6 px-6">
+      <div className="mx-auto mt-8 flex max-w-[980px] flex-wrap items-end justify-between gap-6 px-6">
         <p className="max-w-[58ch] text-[15px] leading-relaxed text-slate-500">
           Odtworzenie jednej nocy, nie podgląd na żywo — dane są przykładowe.
           Na wdrożeniu ten sam pulpit pokazuje Wasz własny ruch.

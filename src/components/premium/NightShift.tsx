@@ -53,8 +53,8 @@ const INQUIRIES: Inquiry[] = [
   {
     at: 158,
     time: "19:38",
-    channel: "Telefon",
-    text: "Nieodebrane — oddzwonienie",
+    channel: "Messenger",
+    text: "Czy montujecie też oświetlenie?",
   },
   {
     at: 205,
@@ -93,8 +93,8 @@ const INQUIRIES: Inquiry[] = [
   {
     at: 795,
     time: "06:15",
-    channel: "Telefon",
-    text: "Nieodebrane — oddzwonienie",
+    channel: "Messenger",
+    text: "Prośba o referencje z okolicy",
   },
   { at: 868, time: "07:28", channel: "E-mail", text: "Potwierdzenie terminu" },
 ];
