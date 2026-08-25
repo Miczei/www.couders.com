@@ -76,7 +76,14 @@ export type Dictionary = {
       emailLabel: string;
       email: string;
     };
-    footer: { tagline: string; rights: string };
+    footer: {
+      tagline: string;
+      rights: string;
+      terms: string;
+      privacy: string;
+      faq: string;
+      sitemap: string;
+    };
   };
   meta: { title: string; description: string };
 };
@@ -301,6 +308,10 @@ const en: Dictionary = {
     footer: {
       tagline: "Bespoke AI systems.",
       rights: "All rights reserved.",
+      terms: "Terms of Service",
+      privacy: "Privacy Policy",
+      faq: "FAQ",
+      sitemap: "Sitemap",
     },
   },
   meta: {
@@ -530,6 +541,10 @@ const pl: Dictionary = {
     footer: {
       tagline: "Systemy AI na zamówienie.",
       rights: "Wszelkie prawa zastrzeżone.",
+      terms: "Regulamin",
+      privacy: "Polityka prywatności",
+      faq: "FAQ",
+      sitemap: "Mapa strony",
     },
   },
   meta: {
