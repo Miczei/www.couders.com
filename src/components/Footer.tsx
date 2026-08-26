@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import SocialLinks from "@/components/SocialLinks";
 
 /**
  * Footer — server component. Caps the page with brand, cross-silo links, and
@@ -45,12 +46,21 @@ export default function Footer({
           © {year} Couders. {f.rights}
         </div>
 
-        <nav className="footer__legal" aria-label={legalLabel}>
-          <Link href={`${home}/faq`}>{f.faq}</Link>
-          <Link href={`${home}/terms`}>{f.terms}</Link>
-          <Link href={`${home}/privacy`}>{f.privacy}</Link>
-          <a href="/sitemap.xml">{f.sitemap}</a>
-        </nav>
+        <div className="footer__bottomRight">
+          {/* Social first, then the text links. The chat launcher is fixed in
+              the bottom-right corner and covers roughly a 92px square there,
+              so whatever ends this row last has to be something narrow enough
+              to stay clear of it: the icons sat under the launcher between
+              820px and 1280px, the text links do not. */}
+          <SocialLinks locale={locale} />
+
+          <nav className="footer__legal" aria-label={legalLabel}>
+            <Link href={`${home}/faq`}>{f.faq}</Link>
+            <Link href={`${home}/terms`}>{f.terms}</Link>
+            <Link href={`${home}/privacy`}>{f.privacy}</Link>
+            <a href="/sitemap.xml">{f.sitemap}</a>
+          </nav>
+        </div>
       </div>
     </footer>
   );

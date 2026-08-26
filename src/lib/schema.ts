@@ -1,4 +1,4 @@
-import { SITE_URL } from "./site";
+import { SITE_URL, SOCIAL_PROFILES } from "./site";
 import type { Locale } from "@/i18n/config";
 import type { PageContent } from "@/i18n/pages";
 import type { AboutContent } from "@/i18n/about";
@@ -103,6 +103,8 @@ export function buildAboutSchema(locale: Locale, about: AboutContent) {
       name: "Kraków, Poland",
     },
     areaServed: ["Europe", "North America", "Asia-Pacific"],
+    // Ties this domain's brand to the same brand on other platforms.
+    sameAs: SOCIAL_PROFILES.map((p) => p.url),
   };
 
   const breadcrumb = {

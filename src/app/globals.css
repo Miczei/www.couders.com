@@ -3336,3 +3336,62 @@ body:has(.premium-shell) [data-site-chrome] {
   margin-right: auto;
   color: var(--d-muted);
 }
+
+/* Social icons in the footer's bottom bar, right-aligned next to the utility
+   links (the layout most agency footers use). Grouped with those links rather
+   than given their own rule, so the row keeps one hairline instead of two
+   stacked a few pixels apart. */
+.footer__bottomRight {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer__social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  color: var(--muted);
+  transition: color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+}
+
+.footer__social a:hover {
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* The icon is the whole target, so the focus ring has to be drawn on the link
+   itself: an SVG child gives the browser nothing visible to outline. */
+.footer__social a:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+.sub-shell .footer__social a {
+  color: #64748b;
+}
+
+.sub-shell .footer__social a:hover {
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
+}
+
+@media (max-width: 768px) {
+  .footer__bottomRight {
+    flex-direction: column;
+    gap: 14px;
+  }
+}
