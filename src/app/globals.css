@@ -2985,7 +2985,7 @@ body:has(.premium-shell) [data-site-chrome] {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 32px;
+  margin-top: 20px;
   padding-top: 24px;
   border-top: 1px solid var(--line);
 }
@@ -3337,15 +3337,15 @@ body:has(.premium-shell) [data-site-chrome] {
   color: var(--d-muted);
 }
 
-/* Social icons in the footer's bottom bar, right-aligned next to the utility
-   links (the layout most agency footers use). Grouped with those links rather
-   than given their own rule, so the row keeps one hairline instead of two
-   stacked a few pixels apart. */
-.footer__bottomRight {
+/* Social icons on their own line, right-aligned under the footer nav. The
+   list is meant to grow, so it wraps rather than compressing, and it sits
+   above the bottom bar: the chat launcher is fixed in the bottom-right corner
+   and covers roughly a 92px square there, which is low enough that this row
+   clears it while the bottom bar's own right edge does not. */
+.footer__socialRow {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 24px;
+  justify-content: flex-end;
+  margin-top: 24px;
 }
 
 .footer__social {
@@ -3390,8 +3390,8 @@ body:has(.premium-shell) [data-site-chrome] {
 }
 
 @media (max-width: 768px) {
-  .footer__bottomRight {
-    flex-direction: column;
-    gap: 14px;
+  .footer__socialRow {
+    justify-content: center;
+    margin-top: 18px;
   }
 }

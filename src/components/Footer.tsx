@@ -41,26 +41,25 @@ export default function Footer({
         </nav>
       </div>
 
+      {/* Social gets a line of its own rather than sharing the utility row:
+          it reads as its own thing, and the list is meant to grow. No rule
+          above it, so the footer keeps a single hairline instead of stacking
+          two a few pixels apart. */}
+      <div className="shell footer__socialRow">
+        <SocialLinks locale={locale} />
+      </div>
+
       <div className="shell footer__bottom">
         <div className="footer__meta">
           © {year} Couders. {f.rights}
         </div>
 
-        <div className="footer__bottomRight">
-          {/* Social first, then the text links. The chat launcher is fixed in
-              the bottom-right corner and covers roughly a 92px square there,
-              so whatever ends this row last has to be something narrow enough
-              to stay clear of it: the icons sat under the launcher between
-              820px and 1280px, the text links do not. */}
-          <SocialLinks locale={locale} />
-
-          <nav className="footer__legal" aria-label={legalLabel}>
-            <Link href={`${home}/faq`}>{f.faq}</Link>
-            <Link href={`${home}/terms`}>{f.terms}</Link>
-            <Link href={`${home}/privacy`}>{f.privacy}</Link>
-            <a href="/sitemap.xml">{f.sitemap}</a>
-          </nav>
-        </div>
+        <nav className="footer__legal" aria-label={legalLabel}>
+          <Link href={`${home}/faq`}>{f.faq}</Link>
+          <Link href={`${home}/terms`}>{f.terms}</Link>
+          <Link href={`${home}/privacy`}>{f.privacy}</Link>
+          <a href="/sitemap.xml">{f.sitemap}</a>
+        </nav>
       </div>
     </footer>
   );
