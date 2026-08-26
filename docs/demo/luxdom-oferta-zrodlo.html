@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pl">
+<head><meta charset="utf-8"><title>e-Recepcjonista dla Lux Dom</title>
+<style>
+  @page { size: A4; margin: 15mm 14mm 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: "DejaVu Sans", sans-serif; font-size: 8.9pt; line-height: 1.36;
+    color: #16211F; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  h1, h2, h3 { font-family: "DejaVu Serif", serif; margin: 0; }
+  h1 { font-size: 17pt; line-height: 1.12; letter-spacing: -.3pt; }
+  h2 { font-size: 11.8pt; margin: 0 0 5px; padding-bottom: 4px; border-bottom: 1.5px solid #0F6B5F; color: #0B4D44; }
+  h3 { font-size: 10pt; margin: 0 0 3px; font-family: "DejaVu Sans", sans-serif; }
+  p { margin: 0 0 7px; }
+
+  .top { display: flex; justify-content: space-between; align-items: flex-end;
+         border-bottom: 2.5px solid #0F6B5F; padding-bottom: 6px; margin-bottom: 8px; }
+  .brand { font-size: 13pt; font-weight: bold; letter-spacing: 3pt; color: #0F6B5F; }
+  .meta { font-size: 7.6pt; color: #5C6B67; text-align: right; line-height: 1.45; }
+
+  .lead { font-size: 9.3pt; color: #33443F; margin: 5px 0 9px; max-width: 155mm; }
+  .lead b { color: #16211F; }
+
+  section { margin-bottom: 8px; }
+  ul { margin: 0 0 0 14px; padding: 0; }
+  li { margin-bottom: 2.6px; }
+  li b { color: #0B4D44; }
+
+  .two { display: flex; gap: 11px; }
+  .two > div { flex: 1; }
+
+  .box { border: 1px solid #CBD6D1; border-left: 3px solid #0F6B5F; background: #F5F8F7;
+         padding: 7px 10px; border-radius: 2px; }
+  .box.warn { border-left-color: #8A6516; background: #FBF7EF; }
+  .box.crit { border-left-color: #A8382A; background: #FBF2F0; }
+  .box h3 { color: #0B4D44; }
+  .box.warn h3 { color: #6E5111; }
+  .box ul { margin-left: 13px; }
+  .box li { font-size: 8.3pt; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8pt; margin-top: 3px; }
+  th { text-align: left; background: #0F6B5F; color: #fff; padding: 4px 6px; font-weight: bold;
+       font-size: 8pt; letter-spacing: .3pt; }
+  td { padding: 2.9px 6px; border-bottom: .7px solid #DDE5E2; vertical-align: top; }
+  tr:nth-child(even) td { background: #F6F9F8; }
+  td.f { font-weight: bold; width: 27%; color: #16211F; }
+  td.d { width: 33%; color: #6A5410; }
+  td.w { width: 40%; color: #0B4D44; }
+
+  .phases { display: flex; gap: 7px; margin-top: 5px; }
+  .ph { flex: 1; border: 1px solid #CBD6D1; border-radius: 2px; padding: 7px 8px; background: #fff; }
+  .ph .n { font-family: "DejaVu Serif", serif; font-size: 8pt; color: #0F6B5F; font-weight: bold; }
+  .ph .t { font-size: 7.6pt; color: #5C6B67; margin-bottom: 3px; }
+  .ph .b { font-size: 8.2pt; }
+
+  .guar { display: flex; flex-wrap: wrap; gap: 6px; }
+  .g { flex: 1 1 30%; border: 1px solid #CBD6D1; border-radius: 2px; padding: 6px 8px; font-size: 8.1pt; }
+  .g b { display: block; color: #0B4D44; font-size: 9pt; margin-bottom: 1px; }
+
+  footer { position: fixed; bottom: 5mm; left: 14mm; right: 14mm; border-top: 1px solid #CBD6D1;
+           padding-top: 4px; font-size: 7.2pt; color: #6E7C78; display: flex; justify-content: space-between; }
+  .page2 { page-break-before: always; }
+</style></head>
+<body>
+
+<div class="top">
+  <div>
+    <div class="brand">COUDERS</div>
+    <div style="font-size:8pt;color:#5C6B67;margin-top:2px">Systemy AI dla firm</div>
+  </div>
+  <div class="meta">
+    Przygotowane dla<br><b style="color:#16211F;font-size:9pt">Lux Dom sp. z o.o.</b><br>
+    zarządzanie nieruchomościami
+  </div>
+</div>
+
+<h1>e-Recepcjonista<br>dla Lux Dom</h1>
+<p class="lead">Asystent głosowy, który odbiera telefony od mieszkańców przez całą dobę, przyjmuje
+zgłoszenia z numerem sprawy i eskaluje awarie do dyżurnego. Poniżej: <b>co widzieli Państwo
+w demonstracji</b>, a co obejmuje pełne wdrożenie.</p>
+
+<section>
+  <h2>Wersja demonstracyjna, którą Państwo widzieli</h2>
+  <div class="two">
+    <div class="box">
+      <h3>Rozmowa</h3>
+      <ul>
+        <li>Odbiór <b>każdego połączenia</b>, o dowolnej porze, w dowolnej liczbie rozmów jednocześnie</li>
+        <li>Rozpoznanie dzwoniącego po numerze i powitanie z kontekstem jego nieruchomości</li>
+        <li>Informacja o rozmowie z AI i o nagrywaniu w pierwszym zdaniu, zgodnie z art. 50 AI Act</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Działanie</h3>
+      <ul>
+        <li>Przyjęcie zgłoszenia usterki z <b>numerem sprawy</b> i pełnym wywiadem</li>
+        <li>Rozpoznanie, że awaria jest <b>już zgłoszona</b>, zamiast zakładania duplikatu</li>
+        <li>Kwalifikacja awarii krytycznej i natychmiastowe połączenie z dyżurnym technikiem</li>
+        <li>Status sprawy, umówienie wizyty, zamówienie zaświadczenia</li>
+        <li>Odmowa interpretacji prawa i uchwał, z przekazaniem sprawy do administratora</li>
+        <li>Baza wiedzy: rozliczenia, e-kartoteka, podział odpowiedzialności, dokumenty, zebrania</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Czego demo świadomie nie robi</h2>
+  <div class="box warn">
+    <p style="margin:0;font-size:8.8pt">Wersja demonstracyjna obejmuje <b>dwie nieruchomości i dane
+    testowe</b>. Nie jest podłączona do e-kartoteki ani do systemu zgłoszeń, nie wysyła SMS-ów, nie
+    obsługuje poczty ani kampanii wychodzących i nie generuje raportów zarządczych. Wszystko to
+    wchodzi w zakres wdrożenia, opisany w tabeli niżej. Mówimy o tym wprost, bo demo ma pokazywać,
+    jak system rozmawia, a nie udawać gotowy produkt.</p>
+  </div>
+</section>
+
+
+<section>
+  <h2>Demo a pełne wdrożenie</h2>
+  <table>
+    <tr><th>Obszar</th><th>Wersja demonstracyjna</th><th>Pełne wdrożenie</th></tr>
+    <tr><td class="f">Nieruchomości</td><td class="d">Dwie, przykładowe</td><td class="w">Cały portfel Lux Dom</td></tr>
+    <tr><td class="f">Odbiór połączeń</td><td class="d">Numer demonstracyjny, 24/7</td><td class="w">Numer główny, przekierowanie po godzinach lub przy zajętości</td></tr>
+    <tr><td class="f">Rozpoznanie dzwoniącego</td><td class="d">Wybrane numery testowe</td><td class="w">Baza właścicieli i najemców, routing do opiekuna nieruchomości</td></tr>
+    <tr><td class="f">Rejestr zgłoszeń</td><td class="d">Rejestr demonstracyjny</td><td class="w">Zapis do Państwa systemu zgłoszeń, jeden rejestr dla wszystkich kanałów</td></tr>
+    <tr><td class="f">Salda i rozliczenia</td><td class="d">Poza zakresem</td><td class="w">Integracja z e-kartoteką, po decyzji o zakresie danych i weryfikacji tożsamości</td></tr>
+    <tr><td class="f">Potwierdzenia SMS</td><td class="d">Poza zakresem</td><td class="w">SMS z numerem sprawy, nadpis nadawcy LUX DOM</td></tr>
+    <tr><td class="f">Poczta i formularz</td><td class="d">Poza zakresem</td><td class="w">Skrzynka biura i formularz obsługiwane tą samą bazą wiedzy</td></tr>
+    <tr><td class="f">Kampanie wychodzące</td><td class="d">Poza zakresem</td><td class="w">Wyłączenia wody, przeglądy, odczyty liczników, zebrania, miękka windykacja</td></tr>
+      <tr><td class="f">Transkrypty i streszczenia</td><td class="d">Tak</td><td class="w">Tak, z rejestrem, wyszukiwaniem i powiązaniem ze sprawą</td></tr>
+    <tr><td class="f">Raport zarządczy</td><td class="d">Poza zakresem</td><td class="w">Co miesiąc, w podziale na wspólnoty, gotowy na zebranie roczne</td></tr>
+    </table>
+</section>
+
+<div class="page2">
+  <div class="top">
+    <div><div class="brand">COUDERS</div></div>
+    <div class="meta">Zakres wdrożenia</div>
+  </div>
+
+  <section>
+  <h2>Dlaczego to ma znaczenie dla zarządcy</h2>
+  <p>Mieszkaniec, który nie może się dodzwonić, nie pisze reklamacji. On mówi o tym na zebraniu
+  rocznym, a zebranie decyduje o tym, kto zarządza nieruchomością w kolejnym roku. Przy portfelu
+  liczonym w setkach nieruchomości <b>utrzymanie nawet jednej wspólnoty rocznie</b> zwraca koszt
+  całego systemu, zanim policzymy godziny odzyskane przez administratorów.</p>
+  <p>Drugi efekt widać od pierwszego dnia: każda rozmowa zostawia ślad. Zgłoszenie z adresem,
+  lokalem, kategorią i streszczeniem trafia do rejestru, zamiast do notatki na kartce.</p>
+</section>
+
+
+  <section>
+    <h2>Plan wdrożenia</h2>
+    <div class="phases">
+      <div class="ph"><div class="n">FAZA 0</div><div class="t">dni 1&ndash;5</div>
+        <div class="b">Audyt ruchu telefonicznego, mapa nieruchomości i opiekunów, ścieżki alarmowe, decyzje o danych.</div></div>
+      <div class="ph"><div class="n">FAZA 1</div><div class="t">dni 6&ndash;15</div>
+        <div class="b">Pilot na jednym numerze, na realnym ruchu poza godzinami pracy biura. Raport skuteczności.</div></div>
+      <div class="ph"><div class="n">FAZA 2</div><div class="t">tyg. 4&ndash;6</div>
+        <div class="b">Przejęcie głównej linii, routing po adresie, integracje, panel zgłoszeń, raport miesięczny.</div></div>
+      <div class="ph"><div class="n">FAZA 3</div><div class="t">tyg. 7&ndash;10</div>
+        <div class="b">Poczta i formularz, kampanie wychodzące, pilotaż miękkiej windykacji.</div></div>
+    </div>
+    <p style="font-size:8.4pt;color:#5C6B67;margin-top:6px">Każda faza kończy się bramką: konkretem,
+    który akceptują Państwo przed przejściem dalej. Bez akceptacji nie fakturujemy kolejnego etapu.</p>
+  </section>
+
+  <section>
+    <h2>Co gwarantujemy w umowie</h2>
+    <div class="guar">
+      <div class="g"><b>Każde połączenie odebrane</b>Do trzech sekund, bez sygnału zajętości, niezależnie od liczby jednoczesnych rozmów.</div>
+      <div class="g"><b>Dostępność 99,5% miesięcznie</b>Przy awarii ruch automatycznie wraca na dotychczasowy numer.</div>
+      <div class="g"><b>Ślad po każdej rozmowie</b>Nagranie, transkrypt, streszczenie, kategoria, adres i lokal, podjęta akcja.</div>
+      <div class="g"><b>Eskalacja awarii do 60 sekund</b>Od zakwalifikowania do powiadomienia dyżurnego, z potwierdzeniem odbioru.</div>
+      <div class="g"><b>Zero zmyślania</b>Agent odpowiada wyłącznie z zatwierdzonej bazy wiedzy. Poza nią przekazuje sprawę człowiekowi.</div>
+      <div class="g"><b>Zgodność i własność danych</b>Dane w Unii, umowa powierzenia, retencja po Państwa stronie. Nagrania nie zasilają modeli.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Czego potrzebujemy od Państwa, żeby zacząć</h2>
+    <div class="box crit">
+      <ul style="margin:0 0 0 13px">
+        <li>Statystyki centrali telefonicznej i próbka nagrań z ostatniego miesiąca</li>
+        <li>Lista nieruchomości z przypisanymi administratorami</li>
+        <li>Ścieżki alarmowe dla awarii krytycznych, per nieruchomość</li>
+        <li>Kontakt do dostawcy e-kartoteki, do rozmowy o dostępie do danych</li>
+        <li>Decyzja, jakie informacje agent może podawać przez telefon, a jakie kieruje do portalu</li>
+      </ul>
+    </div>
+    <p style="margin-top:8px">Faza 0 rusza w ciągu tygodnia od tych materiałów. Pierwszy pilot na
+    realnym ruchu działa <b>dziesięć dni roboczych później</b>.</p>
+  </section>
+
+  <footer><span>Couders &middot; e-Recepcjonista dla Lux Dom</span><span>couders.com</span></footer>
+</div>
+
+</body></html>
