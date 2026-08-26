@@ -7,6 +7,7 @@ import ChatProvider from "@/components/chat/ChatProvider";
 import ChatLauncher from "@/components/chat/ChatLauncher";
 import { getDictionary } from "@/i18n/dictionaries";
 import { locales, defaultLocale, type Locale } from "@/i18n/config";
+import { SITE_URL } from "@/lib/site";
 
 // Next.js's generated route types check generateStaticParams's return type
 // against this page's params, which widens to `string`. Narrow it back to
@@ -46,9 +47,6 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 export const dynamicParams = false;
-
-// TODO: replace with the real production domain once chosen.
-const SITE_URL = "https://nova-studio.example";
 
 export async function generateMetadata({
   params,

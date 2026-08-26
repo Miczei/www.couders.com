@@ -2838,7 +2838,7 @@ main {
   font-family: var(--font-display), sans-serif;
   font-weight: 500;
   font-size: 1.02rem;
-  color: #fff;
+  color: var(--d-text);
 }
 
 .sol__faq summary::-webkit-details-marker {
@@ -2971,4 +2971,368 @@ main {
 body:has(.premium-shell) .matrix-rain,
 body:has(.premium-shell) [data-site-chrome] {
   display: none;
+}
+
+/* ============================================================
+   Footer bottom bar — copyright on the left, utility links on the
+   right, mirroring the layout used by most agency sites. Unlike
+   .footer__links above it, this row is NOT hidden on phones: the
+   legal documents have to stay reachable from every page.
+   ============================================================ */
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 13px;
+}
+
+.footer__legal a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s var(--ease-out);
+}
+
+.footer__legal a:hover {
+  color: var(--fg);
+}
+
+.sub-shell .footer__bottom {
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+.sub-shell .footer__legal a {
+  color: #64748b;
+}
+
+.sub-shell .footer__legal a:hover {
+  color: #0ea5e9;
+}
+
+@media (max-width: 768px) {
+  .footer__bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+  }
+
+  .footer__legal {
+    justify-content: center;
+    gap: 18px;
+  }
+}
+
+/* ============================================================
+   Legal documents (/terms, /privacy) — a sticky table of contents
+   beside a single measured column of text. Deliberately plain: these
+   pages are read, printed and archived, not scrolled through.
+   ============================================================ */
+.legal__head {
+  max-width: 62ch;
+}
+
+.legal__updated {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--d-soft);
+}
+
+.legal__body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--d-line);
+}
+
+@media (min-width: 1024px) {
+  .legal__body {
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 64px;
+  }
+}
+
+.legal__toc {
+  font-size: 14px;
+}
+
+@media (min-width: 1024px) {
+  .legal__toc {
+    position: sticky;
+    top: 104px; /* clears the fixed navbar */
+    align-self: start;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+  }
+}
+
+.legal__tocTitle {
+  font-family: var(--font-display), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--d-soft);
+  margin-bottom: 14px;
+}
+
+.legal__toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-left: 1px solid var(--d-line);
+}
+
+.legal__toc li {
+  padding-left: 16px;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+}
+
+.legal__toc a {
+  color: var(--d-muted);
+  text-decoration: none;
+  line-height: 1.45;
+  transition: color 0.2s var(--ease-out);
+}
+
+.legal__toc a:hover {
+  color: #0ea5e9;
+}
+
+.legal__doc {
+  max-width: 74ch;
+}
+
+.legal__section {
+  scroll-margin-top: 104px; /* anchor jumps clear the fixed navbar */
+}
+
+.legal__section + .legal__section {
+  margin-top: 44px;
+}
+
+.legal__h2 {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--d-text);
+  margin: 0 0 16px;
+}
+
+.legal__p {
+  color: var(--d-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0 0 14px;
+}
+
+.legal__p:last-child {
+  margin-bottom: 0;
+}
+
+.legal__ul {
+  margin: 0 0 14px;
+  padding-left: 20px;
+  list-style: disc;
+  color: var(--d-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.legal__ul li + li {
+  margin-top: 8px;
+}
+
+.legal__ul li::marker {
+  color: #0ea5e9;
+}
+
+/* Identity card: who runs the site / who the data controller is. */
+.legal__identity {
+  margin: 18px 0 6px;
+  padding: 22px 24px;
+  border: 1px solid var(--d-line);
+  border-radius: 14px;
+  background: var(--d-panel);
+}
+
+.legal__identity dl {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .legal__identity dl {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+.legal__identity dt {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--d-soft);
+  margin-bottom: 6px;
+}
+
+.legal__identity dd {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--d-text);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.legal__identity a {
+  color: #0ea5e9;
+  text-decoration: none;
+}
+
+.legal__identity a:hover {
+  text-decoration: underline;
+}
+
+.legal__ctaBody {
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--d-muted);
+}
+
+/* ============================================================
+   FAQ page (/faq) — category jump row plus native <details> lists.
+   ============================================================ */
+.faq__head {
+  max-width: 62ch;
+}
+
+.faq__jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0 56px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--d-line);
+}
+
+.faq__jump a {
+  padding: 8px 16px;
+  border: 1px solid var(--d-line-strong);
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--d-muted);
+  text-decoration: none;
+  transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out),
+    background 0.2s var(--ease-out);
+}
+
+.faq__jump a:hover {
+  color: #0ea5e9;
+  border-color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.06);
+}
+
+.faq__cat {
+  scroll-margin-top: 104px;
+}
+
+.faq__cat + .faq__cat {
+  margin-top: 56px;
+}
+
+.faq__catH2 {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  letter-spacing: -0.025em;
+  color: var(--d-text);
+  margin: 0 0 22px;
+}
+
+.faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--d-line);
+  border: 1px solid var(--d-line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.faq__list details {
+  background: var(--d-panel);
+}
+
+.faq__list summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.faq__list summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq__list summary::after {
+  content: "+";
+  color: var(--d-soft);
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.faq__list details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+/* The H3 keeps the document outline crawlable; inside <summary> it has to
+   drop back to body-copy sizing so it reads as a question, not a heading. */
+.faq__q {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: 1.02rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--d-text);
+  margin: 0;
+}
+
+.faq__a {
+  padding: 0 24px 22px;
+  color: var(--d-muted);
+  font-size: 0.97rem;
+  line-height: 1.75;
+  max-width: 72ch;
+}
+
+.faq__ctaBody {
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--d-muted);
 }
