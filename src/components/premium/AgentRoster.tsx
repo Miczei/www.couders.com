@@ -39,7 +39,7 @@ const ROLES: Role[] = [
     promise: "Koniec z klientami utraconymi po godzinach",
     rollout: "Wdrożenie od 7 dni",
     adds: [
-      "Odpowiada natychmiast — całą dobę, też w święta",
+      "Odpowiada natychmiast, całą dobę, też w święta",
       "Zbiera kontakt, zanim ktoś zdąży się rozmyślić",
       "Gorący lead trafia na Twojego maila od razu",
       "Rano czeka uporządkowana lista rozmów",
@@ -60,10 +60,10 @@ const ROLES: Role[] = [
     rollout: "Wdrożenie od 14 dni",
     badge: "Najczęściej wybierany",
     adds: [
-      "Sam umawia spotkania — sprawdza kalendarz i rezerwuje",
+      "Sam umawia spotkania: sprawdza kalendarz i rezerwuje",
       "Każdy lead ląduje w CRM z kompletem informacji",
       "Rozmawia po polsku, angielsku, niemiecku i dziesiątkach innych",
-      "Zna Wasze katalogi i regulaminy — cytuje je klientom",
+      "Zna Wasze katalogi i regulaminy, cytuje je klientom",
       "Kwalifikuje: odsiewa ciekawskich, poważnych kieruje do Was",
     ],
     shift: [
@@ -77,19 +77,19 @@ const ROLES: Role[] = [
   {
     no: "03",
     name: "Autonomiczny Agent",
-    promise: "Firma rośnie. Liczba etatów — nie",
+    promise: "Firma rośnie. Liczba etatów nie",
     rollout: "Wycena po analizie procesów",
     adds: [
       "Segreguje i odpowiada na firmową skrzynkę przed Waszą kawą",
       "Prowadzi sprawy od zgłoszenia do zamknięcia",
-      "Spina Wasze narzędzia — dane same płyną tam, gdzie trzeba",
-      "Dziesięć spraw czy tysiąc — koszt zostaje przewidywalny",
+      "Spina Wasze narzędzia, dane same płyną tam, gdzie trzeba",
+      "Dziesięć spraw czy tysiąc, koszt zostaje przewidywalny",
       "Raportuje, co zrobił, bez zaglądania mu przez ramię",
     ],
     shift: [
       { at: "05:00", via: "Skrzynka", did: "Przejrzał 41 maili, odpisał na 28" },
       { at: "05:40", via: "Proces", did: "Przyjął zgłoszenie serwisowe i wszczął sprawę" },
-      { at: "06:15", via: "Proces", did: "Domknął reklamację — zwrot zgłoszony w systemie" },
+      { at: "06:15", via: "Proces", did: "Domknął reklamację, zwrot zgłoszony w systemie" },
       { at: "07:02", via: "Integracje", did: "Zsynchronizował trzy narzędzia bez Waszego udziału" },
       { at: "08:00", via: "Raport", did: "Wysłał raport z nocy: co zrobił i czego nie ruszył" },
     ],
@@ -121,7 +121,7 @@ export default function AgentRoster() {
           Wybierzcie, kogo zatrudniacie. Zobaczcie jego zmianę.
         </h2>
         <p className="mt-5 max-w-[54ch] text-[15.5px] leading-relaxed text-slate-500">
-          Każde kolejne stanowisko robi wszystko to, co poprzednie — i coś
+          Każde kolejne stanowisko robi wszystko to, co poprzednie, i coś
           jeszcze. Nie wymieniacie pracownika, tylko poszerzacie mu zakres.
         </p>
 

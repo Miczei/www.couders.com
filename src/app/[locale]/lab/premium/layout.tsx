@@ -30,7 +30,7 @@ const mono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Couders — kierunek premium",
+  title: "Couders: kierunek premium",
   robots: { index: false, follow: false },
 };
 

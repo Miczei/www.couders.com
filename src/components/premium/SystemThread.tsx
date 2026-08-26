@@ -86,7 +86,7 @@ export default function SystemThread() {
         </h2>
         <p className="mt-6 max-w-[52ch] text-[17px] leading-relaxed text-[color:var(--p-muted)]">
           Nic nie czeka na poniedziałek i nic nie ginie między skrzynką a CRM-em.
-          Asystent odbiera, kwalifikuje i przekazuje dalej — a Wy dostajecie tylko
+          Asystent odbiera, kwalifikuje i przekazuje dalej, a Wy dostajecie tylko
           to, przy czym naprawdę jesteście potrzebni.
         </p>
 

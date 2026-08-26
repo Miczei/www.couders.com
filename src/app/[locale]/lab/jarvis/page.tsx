@@ -12,7 +12,7 @@ import OpsDeck from "@/components/premium/OpsDeck";
  * that can move to the live page on its own.
  */
 export const metadata: Metadata = {
-  title: "Couders — obecność",
+  title: "Couders: obecność",
   robots: { index: false, follow: false },
 };
 
@@ -29,7 +29,7 @@ export default function Page() {
           className="mt-5 max-w-[24ch] text-balance text-[clamp(1.6rem,3.6vw,2.6rem)] font-bold leading-[1.05] tracking-[-0.03em]"
           style={{ fontFamily: "var(--font-display), sans-serif" }}
         >
-          Zamiast opowiadać o systemie — pokazać, że działa.
+          Zamiast opowiadać o systemie, pokazać, że działa.
         </h1>
         <p className="mt-5 max-w-[54ch] text-[15.5px] leading-relaxed text-slate-500">
           Dwie sekcje: żywa powierzchnia, która reaguje na kursor i mówi, oraz

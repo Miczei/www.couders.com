@@ -51,7 +51,7 @@ export default function PremiumHero() {
           className="mt-7 max-w-[54ch] text-center text-[17.5px] leading-relaxed text-[color:var(--p-muted)]"
         >
           Asystent AI, który odbiera telefon, czyta maile i odpisuje na formularze
-          o każdej porze — a rano zostawia Wam gotowe leady zamiast listy nieodebranych.
+          o każdej porze, a rano zostawia Wam gotowe leady zamiast listy nieodebranych.
         </motion.p>
 
         <motion.div

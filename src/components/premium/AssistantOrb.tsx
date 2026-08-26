@@ -30,7 +30,7 @@ type Line = { text: string; hold: number };
 const SCRIPT: Line[] = [
   { text: "Słucham. Pytanie z formularza, 23:41.", hold: 2.6 },
   { text: "Klient pyta o gwarancję na wykończenie.", hold: 2.8 },
-  { text: "Sprawdzam warunki — pięć lat na prace, dwa na materiały.", hold: 3.4 },
+  { text: "Sprawdzam warunki: pięć lat na prace, dwa na materiały.", hold: 3.4 },
   { text: "Odpisuję i proponuję rozmowę w czwartek.", hold: 3.0 },
   { text: "Gotowe. Lead czeka rano w CRM.", hold: 2.8 },
 ];
@@ -217,7 +217,7 @@ export default function AssistantOrb() {
 
       <div className="mx-auto mt-8 flex max-w-[1120px] flex-wrap items-end justify-between gap-6 px-6">
         <p className="max-w-[58ch] text-[15px] leading-relaxed text-slate-500">
-          Ruszcie myszką nad kulą — pochyli się w Waszą stronę. To ta sama
+          Ruszcie myszką nad kulą, a pochyli się w Waszą stronę. To ta sama
           zasada, na której stoi cały produkt: system reaguje, zanim ktokolwiek
           o cokolwiek poprosi.
         </p>

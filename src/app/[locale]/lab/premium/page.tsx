@@ -21,7 +21,7 @@ export default function Page() {
 
       <footer className="border-t border-[color:var(--p-hair)] py-10">
         <div className="mx-auto flex max-w-[1240px] flex-col gap-2 px-6 font-mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--p-muted)] sm:flex-row sm:items-center sm:justify-between">
-          <span>Couders — studium kierunku</span>
+          <span>Couders: studium kierunku</span>
           <span>Nieindeksowane. Liczby są przykładowe.</span>
         </div>
       </footer>

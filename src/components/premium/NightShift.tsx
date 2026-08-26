@@ -80,7 +80,7 @@ const INQUIRIES: Inquiry[] = [
     at: 512,
     time: "01:32",
     channel: "E-mail",
-    text: "Reklamacja — pilne",
+    text: "Reklamacja: pilne",
     human: true,
   },
   { at: 604, time: "03:04", channel: "Formularz", text: "Prośba o katalog" },

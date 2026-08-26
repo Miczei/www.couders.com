@@ -269,7 +269,7 @@ export default function MacbookComparison({ dict }: { dict: Dictionary }) {
                       <span className="vs__dot vs__dot--r" />
                       <span className="vs__dot vs__dot--y" />
                       <span className="vs__dot vs__dot--g" />
-                      <span className="vs__title">Hero.tsx — nova-studio</span>
+                      <span className="vs__title">Hero.tsx · nova-studio</span>
                     </div>
                     <div className="vs__body">
                       <div className="vs__activity">

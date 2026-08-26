@@ -38,13 +38,13 @@ type Event = {
 };
 
 const FEED: Event[] = [
-  { time: "23:38", channel: "Formularz", text: "Wycena — 54 m², Wilanów", did: "Odpisał z widełkami" },
+  { time: "23:38", channel: "Formularz", text: "Wycena 54 m², Wilanów", did: "Odpisał z widełkami" },
   { time: "23:41", channel: "WhatsApp", text: "Pytanie o gwarancję", did: "Odpisał i zapisał kontakt" },
   { time: "23:52", channel: "Messenger", text: "Czy robicie też instalacje?", did: "Odpisał" },
   { time: "00:14", channel: "E-mail", text: "Zapytanie ofertowe, 3 lokale", did: "Oddał człowiekowi", human: true },
   { time: "00:31", channel: "WhatsApp", text: "Zmiana terminu pomiaru", did: "Przełożył termin" },
   { time: "01:02", channel: "Formularz", text: "Prośba o katalog materiałów", did: "Wysłał katalog" },
-  { time: "01:32", channel: "E-mail", text: "Reklamacja — eskalacja", did: "Oddał człowiekowi", human: true },
+  { time: "01:32", channel: "E-mail", text: "Reklamacja: eskalacja", did: "Oddał człowiekowi", human: true },
   { time: "02:10", channel: "WhatsApp", text: "Wykończenie 78 m² pod klucz", did: "Wycenił i umówił pomiar" },
   { time: "03:04", channel: "Formularz", text: "Pytanie o terminy realizacji", did: "Odpisał" },
   { time: "04:22", channel: "Messenger", text: "Czy pracujecie w soboty?", did: "Odpisał" },
@@ -294,7 +294,7 @@ export default function OpsDeck() {
                           />
                           <span className="text-[13px] text-white/75">{c}</span>
                           <span className="ml-auto font-mono text-[9.5px] uppercase tracking-[0.14em] text-white/30">
-                            {seen.filter((e) => e.channel === c).length || "—"}
+                            {seen.filter((e) => e.channel === c).length || "0"}
                           </span>
                         </li>
                       );
@@ -309,7 +309,7 @@ export default function OpsDeck() {
 
       <div className="mx-auto mt-8 flex max-w-[980px] flex-wrap items-end justify-between gap-6 px-6">
         <p className="max-w-[58ch] text-[15px] leading-relaxed text-slate-500">
-          Odtworzenie jednej nocy, nie podgląd na żywo — dane są przykładowe.
+          Odtworzenie jednej nocy, nie podgląd na żywo. Dane są przykładowe.
           Na wdrożeniu ten sam pulpit pokazuje Wasz własny ruch.
         </p>
 

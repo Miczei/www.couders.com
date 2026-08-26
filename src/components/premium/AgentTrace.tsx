@@ -36,13 +36,13 @@ const TICK = 0.34;
 
 const STEPS: Step[] = [
   { clock: "22:47:00", label: "Wiadomość przychodzi", detail: "WhatsApp · +48 601 ··· 342", reveals: 0 },
-  { clock: "22:47:00", label: "Sprawdzam, kto pisze", detail: "Nowy kontakt — nie ma go w CRM" },
+  { clock: "22:47:00", label: "Sprawdzam, kto pisze", detail: "Nowy kontakt, nie ma go w CRM" },
   { clock: "22:47:01", label: "Czytam, o co chodzi", detail: "Wycena wykończenia, 78 m², pod klucz" },
   { clock: "22:47:01", label: "Sięgam po cennik", detail: "Pakiet standard · 1 850 zł/m²" },
   { clock: "22:47:02", label: "Liczę", detail: "78 × 1 850 = 144 300 zł netto" },
   { clock: "22:47:02", label: "Odpisuję", detail: "Widełki + zastrzeżenie, że to szacunek", reveals: 1 },
   { clock: "22:47:03", label: "Zaglądam do kalendarza", detail: "Wolne pomiary: czw 10:00, pt 14:30" },
-  { clock: "22:47:03", label: "Proponuję dwa terminy", detail: "Zawsze dwa — jeden to ultimatum", reveals: 2 },
+  { clock: "22:47:03", label: "Proponuję dwa terminy", detail: "Zawsze dwa, bo jeden to ultimatum", reveals: 2 },
   // Four real minutes pass here while the client decides. Holding the replay
   // for a beat is the only way that gap is legible at all.
   { clock: "22:51:18", label: "Klient wybiera", detail: "Czwartek, 10:00", reveals: 3, gap: 1.15 },
@@ -62,7 +62,7 @@ const CHAT: Msg[] = [
   {
     from: "agent",
     time: "22:47",
-    text: "Dobry wieczór. Przy 78 m² w pakiecie standard to orientacyjnie 144 300 zł netto. Dokładna wycena po pomiarze — czasem schodzi niżej, przy nietypowym układzie potrafi wyjść drożej.",
+    text: "Dobry wieczór. Przy 78 m² w pakiecie standard to orientacyjnie 144 300 zł netto. Dokładna wycena po pomiarze. Czasem schodzi niżej, przy nietypowym układzie potrafi wyjść drożej.",
   },
   {
     from: "agent",
@@ -73,7 +73,7 @@ const CHAT: Msg[] = [
   {
     from: "agent",
     time: "22:51",
-    text: "Zapisane — czwartek 10:00. Potwierdzenie wysłałem SMS-em. Do zobaczenia.",
+    text: "Zapisane, czwartek 10:00. Potwierdzenie wysłałem SMS-em. Do zobaczenia.",
   },
 ];
 
@@ -160,7 +160,7 @@ export default function AgentTrace({
     >
       <div className="mx-auto max-w-[1120px] px-6">
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-400">
-          Wtorek, 22:47 — biuro zamknięte od pięciu godzin
+          Wtorek, 22:47 · biuro zamknięte od pięciu godzin
         </p>
         <h2
           className="mt-4 max-w-[20ch] text-balance text-[clamp(1.8rem,3.8vw,2.9rem)] font-bold leading-[1.03] tracking-[-0.035em]"

@@ -18,7 +18,7 @@ import OpsDeck from "@/components/premium/OpsDeck";
  * is. This page exists to judge what comes *after* it.
  */
 export const metadata: Metadata = {
-  title: "Couders — sekcje",
+  title: "Couders: sekcje",
   robots: { index: false, follow: false },
 };
 
