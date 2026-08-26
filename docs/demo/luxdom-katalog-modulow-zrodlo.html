@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>Moduły rozszerzające</title>
+<style>
+  @page { size: A4; margin: 14mm 13mm 13mm; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"DejaVu Sans",sans-serif; font-size:8.3pt; line-height:1.34;
+         color:#16211F; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  h1,h2 { font-family:"DejaVu Serif",serif; margin:0; }
+  h1 { font-size:17pt; line-height:1.1; letter-spacing:-.2pt; }
+  h2 { font-size:11pt; color:#0B4D44; margin:0 0 6px; padding-bottom:3px; border-bottom:1.5px solid #0F6B5F; }
+  h2 span { font-family:"DejaVu Sans",sans-serif; font-size:7.2pt; color:#6E7C78; float:right;
+            font-weight:normal; padding-top:3px; letter-spacing:.2pt; }
+  p { margin:0 0 6px; }
+
+  .top { display:flex; justify-content:space-between; align-items:flex-end;
+         border-bottom:2.5px solid #0F6B5F; padding-bottom:6px; margin-bottom:9px; }
+  .brand { font-size:12pt; font-weight:bold; letter-spacing:3pt; color:#0F6B5F; }
+  .meta { font-size:7.4pt; color:#5C6B67; text-align:right; line-height:1.4; }
+  .lead { font-size:9pt; color:#33443F; margin:5px 0 10px; }
+  .lead b { color:#16211F; }
+
+  section { margin-bottom:9px; }
+  .grid { display:flex; flex-wrap:wrap; gap:5px; }
+  .c { flex:1 1 calc(50% - 3px); border:1px solid #CBD6D1; border-left:2.5px solid #0F6B5F;
+       border-radius:2px; padding:5px 7px; background:#F8FAF9; }
+  .c b { display:block; color:#0B4D44; font-size:8.6pt; margin-bottom:1px; }
+  .c i { font-style:normal; display:block; font-size:6.9pt; color:#7A8A85; margin-top:2px;
+         letter-spacing:.2pt; text-transform:uppercase; }
+  .c.hot { border-left-color:#A8382A; background:#FCF6F4; }
+  .c.hot b { color:#8C2E22; }
+  .c.br { border-left-color:#8A6516; background:#FBF8F1; }
+  .c.br b { color:#6E5111; }
+
+  .rec { border:1px solid #0F6B5F; border-radius:2px; padding:8px 10px; background:#EAF3F0; }
+  .rec h3 { font-family:"DejaVu Serif",serif; font-size:10pt; margin:0 0 4px; color:#0B4D44; }
+  .rec ol { margin:0 0 0 15px; padding:0; }
+  .rec li { margin-bottom:2.5px; }
+  .rec li b { color:#0B4D44; }
+
+  footer { position:fixed; bottom:5mm; left:13mm; right:13mm; border-top:1px solid #CBD6D1;
+           padding-top:4px; font-size:7pt; color:#6E7C78; display:flex; justify-content:space-between; }
+  .pb { page-break-before:always; }
+</style></head><body>
+
+<div class="top">
+  <div><div class="brand">COUDERS</div>
+    <div style="font-size:7.6pt;color:#5C6B67;margin-top:2px">e-Recepcjonista &middot; katalog modułów</div></div>
+  <div class="meta">Lux Dom sp. z o.o.<br>zarządzanie nieruchomościami</div>
+</div>
+
+<h1>Co możemy dołożyć<br>w wersji wdrożeniowej</h1>
+<p class="lead">Wersja demonstracyjna pokazuje rdzeń: agent odbiera, rozumie sprawę i zakłada zgłoszenie.
+Poniżej moduły, które dokładamy na wdrożeniu. Każdy jest osobny, <b>można je włączać etapami</b>
+i wyceniać pojedynczo. Kolorem wyróżniliśmy te, które przy Państwa skali dają największy zwrot.</p>
+
+<section>
+  <h2>Kanały, którymi mieszkaniec się z Państwem kontaktuje <span>INBOUND</span></h2>
+  <div class="grid">
+    <div class="c hot"><b>Numer dedykowany dla każdej wspólnoty</b>Mieszkaniec dzwoni pod numer swojego osiedla, więc agent od pierwszej sekundy zna adres i nie pyta o nic zbędnego. Wspólnota dostaje własną infolinię, którą można wpisać do planu gospodarczego.<i>Wymaga: pula numerów</i></div>
+    <div class="c"><b>Skrzynka biura jako pełny kanał</b>Ten sam agent czyta pocztę biura i administratorów, odpowiada na powtarzalne pytania albo zakłada sprawę z tym samym numerem, co telefon.<i>Wymaga: dostęp do poczty</i></div>
+    <div class="c hot"><b>WhatsApp ze zdjęciem usterki</b>Mieszkaniec robi zdjęcie zacieku i wysyła. Agent zakłada zgłoszenie z załącznikiem, technik jedzie wiedząc, co zastanie.<i>Wymaga: WhatsApp Business</i></div>
+    <div class="c"><b>Rozpoznanie usterki ze zdjęcia</b>System wstępnie klasyfikuje, czy to zalanie, pęknięcie czy usterka kosmetyczna, i proponuje priorytet do zatwierdzenia.<i>Wymaga: kanał ze zdjęciami</i></div>
+    <div class="c"><b>SMS przychodzący</b>Krótkie zgłoszenie tekstem, obsługiwane tak samo jak telefon. Dla osób, które nie chcą rozmawiać.<i>Wymaga: bramka SMS</i></div>
+    <div class="c"><b>Czat na stronie i w portalu</b>Ten sam mózg i ta sama baza wiedzy w oknie czatu na Państwa stronie oraz w e-kartotece.<i>Wymaga: dostęp do strony</i></div>
+  </div>
+</section>
+
+<section>
+  <h2>Powiadomienia i kampanie wychodzące <span>OUTBOUND</span></h2>
+  <div class="grid">
+    <div class="c hot"><b>SMS transakcyjny z nadpisem LUX DOM</b>Potwierdzenie przyjęcia sprawy, zmiana statusu, informacja o usunięciu awarii. Mieszkaniec ma dowód w telefonie i nie dzwoni po raz drugi.<i>Wymaga: bramka SMS, nadpis nadawcy</i></div>
+    <div class="c hot"><b>Kampania do budynku lub klatki</b>Wyłączenie wody, przegląd kominiarski, deratyzacja, zmiana terminu wywozu. Jedno kliknięcie zamiast kartki na drzwiach, z potwierdzeniem dostarczenia.<i>Wymaga: baza kontaktów</i></div>
+    <div class="c br"><b>Kampania głosowa dla seniorów</b>Ci sami mieszkańcy, którzy nie czytają SMS-ów, odbierają telefon. Agent dzwoni, mówi wolno, powtarza i odnotowuje, kto odebrał.<i>Wymaga: zgody kontaktowe</i></div>
+    <div class="c"><b>Potwierdzanie wizyt technika</b>Obdzwonka dzień wcześniej z prośbą o potwierdzenie. Puste przejazdy znikają, a technik ma pewny dostęp do lokalu.<i>Wymaga: kalendarz wizyt</i></div>
+    <div class="c"><b>Odczyty liczników</b>Przypomnienie z linkiem do formularza, ponowienie dla tych, którzy nie podali, i lista braków dla administratora.<i>Wymaga: system odczytów</i></div>
+    <div class="c"><b>Obsługa zebrania rocznego</b>Zaproszenia, zbieranie potwierdzeń obecności, przypomnienie o pełnomocnictwach i raport frekwencji przed terminem.<i>Wymaga: lista właścicieli</i></div>
+    <div class="c br"><b>Miękka windykacja zaliczek</b>Agent dzwoni w sprawie zaległości, ustala deklarowany termin wpłaty, przyjmuje wniosek o raty i przekazuje do księgowości. Bez nacisku, bez emocji, z zapisem rozmowy.<i>Wymaga: dane o saldach</i></div>
+    <div class="c"><b>Ankieta po zamknięciu sprawy</b>Krótkie pytanie o ocenę naprawy. Z tego powstaje twardy dowód jakości na zebranie wspólnoty.<i>Wymaga: status zamknięcia</i></div>
+  </div>
+</section>
+
+<footer><span>Couders &middot; e-Recepcjonista &middot; katalog modułów</span><span>couders.com</span></footer>
+
+<div class="pb">
+<div class="top">
+  <div><div class="brand">COUDERS</div></div>
+  <div class="meta">Integracje i automatyzacje</div>
+</div>
+
+<section>
+  <h2>Integracje i webhooki <span>SYSTEMY</span></h2>
+  <div class="grid">
+    <div class="c hot"><b>Dwukierunkowa integracja z systemem zgłoszeń</b>Agent zakłada sprawę, technik zamyka ją w Państwa systemie, a mieszkaniec dostaje powiadomienie automatycznie. Jeden rejestr, zero przepisywania.<i>Wymaga: API systemu zgłoszeń</i></div>
+    <div class="c hot"><b>e-kartoteka i księgowość</b>Odczyt salda, stanu rozliczeń i danych lokalu w trakcie rozmowy, po weryfikacji tożsamości. Zakres danych ustalają Państwo.<i>Wymaga: API dostawcy</i></div>
+    <div class="c"><b>Automatyczne zlecenie do firmy serwisowej</b>Zgłoszenie windy idzie do serwisu windowego, kotłowni do serwisu kotłowni, zgodnie z umową dla konkretnego budynku. Bez pośrednictwa administratora.<i>Wymaga: wykaz umów serwisowych</i></div>
+    <div class="c"><b>Kalendarze techników i administratorów</b>Agent widzi wolne terminy i wpisuje wizytę bezpośrednio do kalendarza, razem z adresem i numerem sprawy.<i>Wymaga: Google lub Microsoft 365</i></div>
+    <div class="c"><b>Webhook wychodzący do dowolnego systemu</b>Każde zdarzenie, od nowego zgłoszenia po zakończoną rozmowę, może wysłać dane tam, gdzie ich Państwo potrzebują. Także do systemów, których jeszcze nie ma.<i>Wymaga: adres odbiorczy</i></div>
+    <div class="c"><b>Status sprawy na Państwa stronie</b>Mieszkaniec wpisuje numer zgłoszenia i widzi etap realizacji, bez logowania i bez telefonu.<i>Wymaga: miejsce na stronie</i></div>
+  </div>
+</section>
+
+<section>
+  <h2>Rozbudowa scenariusza rozmowy <span>AGENT</span></h2>
+  <div class="grid">
+    <div class="c"><b>Osobni specjaliści od typów spraw</b>Inny scenariusz do awarii, inny do rozliczeń, inny do dokumentów. Każdy zna tylko swój wycinek, więc rzadziej się myli i odpowiada szybciej.<i>Wymaga: mapa tematów</i></div>
+    <div class="c hot"><b>Deterministyczna ścieżka awaryjna</b>Przy awarii krytycznej zgłoszenie i połączenie z dyżurnym wykonują się zawsze, także gdy któryś system nie odpowiada. To gwarancja, a nie skłonność.<i>Wymaga: ścieżki alarmowe</i></div>
+    <div class="c br"><b>Ukraiński i angielski</b>Agent rozpoznaje język rozmówcy i przechodzi na niego. Przy liczbie najemców w Warszawie to realny odsetek połączeń, które dziś kończą się niczym.<i>Wymaga: tłumaczenie bazy wiedzy</i></div>
+    <div class="c"><b>Tryb dla osób starszych</b>Wolniejsze tempo, dłuższe pauzy, cierpliwe powtarzanie i brak wchodzenia w słowo. Włączany automatycznie po sposobie mówienia.<i>Wymaga: strojenie na nagraniach</i></div>
+    <div class="c"><b>Weryfikacja tożsamości kodem SMS</b>Zanim padnie kwota lub dane lokalu, rozmówca potwierdza tożsamość kodem na numer z kartoteki.<i>Wymaga: bramka SMS, kartoteka</i></div>
+    <div class="c"><b>Przekazanie rozmowy z kontekstem</b>Pracownik odbiera już wiedząc, kto dzwoni i o co chodzi, bo dostaje streszczenie zanim podniesie słuchawkę.<i>Wymaga: kanał do zespołu</i></div>
+  </div>
+</section>
+
+<section>
+  <h2>Automatyzacje, które widać w wynikach <span>LOGIKA</span></h2>
+  <div class="grid">
+    <div class="c hot"><b>Wykrywanie burzy zgłoszeń</b>Gdy z jednego adresu dzwoni pięć osób w kwadrans, system rozpoznaje awarię zbiorczą, alarmuje zarząd i od razu informuje kolejnych dzwoniących, że sprawa jest znana i obsługiwana.<i>Wymaga: rejestr zgłoszeń</i></div>
+    <div class="c"><b>Powitanie z kontekstem trwającej awarii</b>Mieszkaniec słyszy informację o awarii i terminie naprawy, zanim zdąży zapytać. Rozmowa trwa dwadzieścia sekund zamiast trzech minut.<i>Wymaga: status awarii</i></div>
+    <div class="c"><b>Łączenie duplikatów w jedną sprawę</b>Czterdzieści telefonów o tej samej awarii daje jedno zgłoszenie i czterdzieści powiadomień po naprawie, a nie czterdzieści zleceń dla technika.<i>Wbudowane</i></div>
+    <div class="c"><b>Eskalacja po czasie</b>Brak reakcji na awarię w ustalonym czasie podnosi sprawę wyżej i powiadamia kolejną osobę z listy. SLA pilnuje się samo.<i>Wymaga: lista dyżurów</i></div>
+    <div class="c"><b>Wykrywanie usterek powtarzalnych</b>Ten sam pion, ta sama awaria trzeci raz w kwartale. System to widzi i sygnalizuje problem systemowy, zanim zrobi się z niego remont awaryjny.<i>Wymaga: historia zgłoszeń</i></div>
+    <div class="c"><b>Poranne podsumowanie dla administratora</b>Mail o ósmej: co wydarzyło się w nocy, co czeka na decyzję, co zostało zamknięte. Zamiast odsłuchiwania poczty głosowej.<i>Wbudowane</i></div>
+  </div>
+</section>
+
+<footer><span>Couders &middot; e-Recepcjonista &middot; katalog modułów</span><span>couders.com</span></footer>
+</div>
+
+<div class="pb">
+<div class="top">
+  <div><div class="brand">COUDERS</div></div>
+  <div class="meta">Nadzór, zgodność, kolejność</div>
+</div>
+
+<section>
+  <h2>Raporty i nadzór <span>ZARZĄD</span></h2>
+  <div class="grid">
+    <div class="c hot"><b>Raport miesięczny dla każdej wspólnoty</b>Ile zgłoszeń, jakich, w jakim czasie obsłużonych, ile rozmów poza godzinami pracy. Gotowy dokument na zebranie roczne, w którym decyduje się o Państwa kontrakcie.<i>Wbudowane we wdrożeniu</i></div>
+    <div class="c"><b>Podgląd na żywo</b>Bieżące rozmowy, otwarte sprawy, czasy reakcji i obłożenie, na jednym ekranie w biurze.<i>Wbudowane we wdrożeniu</i></div>
+    <div class="c"><b>Wyszukiwarka po rozmowach</b>Każde nagranie i transkrypt do przeszukania po adresie, lokalu, dacie albo słowie kluczowym. Przydaje się w sporze i przy reklamacji.<i>Wbudowane we wdrożeniu</i></div>
+    <div class="c"><b>Alerty progowe</b>Przekroczony czas reakcji, nietypowa liczba zgłoszeń z budynku, spadek skuteczności obsługi. Powiadomienie zanim zauważy to mieszkaniec.<i>Wymaga: ustalenia progów</i></div>
+    <div class="c"><b>Panel dla rady wspólnoty</b>Członkowie rady widzą sprawy swojej nieruchomości bez dzwonienia do biura. Mniej telefonów od najbardziej wymagającej grupy.<i>Wymaga: decyzji o zakresie</i></div>
+    <div class="c"><b>Eksport do Excela i narzędzi analitycznych</b>Wszystkie dane po Państwa stronie, w formacie, który da się wrzucić do arkusza albo do systemu raportowego.<i>Wbudowane we wdrożeniu</i></div>
+  </div>
+</section>
+
+<section>
+  <h2>Zgodność i bezpieczeństwo <span>RODO, AI ACT</span></h2>
+  <div class="grid">
+    <div class="c"><b>Weryfikacja przed podaniem danych</b>Dane finansowe i informacje o lokalu tylko po potwierdzeniu tożsamości. Zakres tego, co agent może powiedzieć przez telefon, ustalają Państwo.<i>Konfigurowalne</i></div>
+    <div class="c"><b>Retencja i maskowanie</b>Czas przechowywania nagrań i transkryptów ustalają Państwo. Dane wrażliwe mogą być maskowane w zapisie.<i>Konfigurowalne</i></div>
+    <div class="c"><b>Ochrona przed podszywaniem</b>Wykrywanie prób wyciągnięcia danych o cudzym lokalu oraz numery zablokowane i uprzywilejowane.<i>Wbudowane we wdrożeniu</i></div>
+    <div class="c"><b>Dane w Unii, umowa powierzenia</b>Przetwarzanie w UE, pełna umowa powierzenia z wykazem podprocesorów. Nagrania nie zasilają żadnych modeli.<i>Standard</i></div>
+  </div>
+</section>
+
+<section>
+  <div class="rec">
+    <h3>Co proponujemy włączyć w pierwszej kolejności</h3>
+    <ol>
+      <li><b>SMS transakcyjny z nadpisem LUX DOM.</b> Najtańszy moduł o największym wpływie: mieszkaniec przestaje dzwonić po raz drugi, bo ma potwierdzenie w telefonie.</li>
+      <li><b>Wykrywanie burzy zgłoszeń i powitanie z kontekstem awarii.</b> Wieczór z pękniętym pionem przestaje być kryzysem wizerunkowym i staje się argumentem na zebraniu.</li>
+      <li><b>Dwukierunkowa integracja z systemem zgłoszeń.</b> Od tego momentu nikt niczego nie przepisuje ręcznie, a rejestr jest kompletny.</li>
+      <li><b>Raport miesięczny per wspólnota.</b> Dokument, który wykłada się na stół w marcu, kiedy zapadają decyzje o zarządcy.</li>
+      <li><b>Kampanie do budynku.</b> Wyłączenia wody i przeglądy przestają generować falę telefonów, bo mieszkańcy wiedzą wcześniej.</li>
+    </ol>
+    <p style="margin:6px 0 0;font-size:7.8pt;color:#4A5A56">Pozostałe moduły dokładamy w kolejnych
+    kwartałach, w tempie, które Państwo ustalają. Każdy jest wyceniany osobno i uruchamiany bez
+    przerywania pracy pozostałych.</p>
+  </div>
+</section>
+
+<footer><span>Couders &middot; e-Recepcjonista &middot; katalog modułów</span><span>couders.com</span></footer>
+</div>
+
+</body></html>
