@@ -3,8 +3,7 @@ import GlassNav from "@/components/premium/GlassNav";
 import { getShowcase } from "@/i18n/showcase";
 import AgentShowcase from "@/components/premium/AgentShowcase";
 import AgentRoster from "@/components/premium/AgentRoster";
-import AgentTrace from "@/components/premium/AgentTrace";
-import NightShift from "@/components/premium/NightShift";
+import FrozenSections from "./FrozenSections";
 import OpsDeck from "@/components/premium/OpsDeck";
 
 /**
@@ -23,19 +22,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/** ?trace=0..1 / ?night=0..1 freeze a section at one point, for inspecting a
- *  single frame without waiting for playback. Same convention as /lab's ?p=. */
-function freeze(v: string | string[] | undefined) {
-  if (typeof v !== "string" || v === "" || Number.isNaN(Number(v))) return undefined;
-  return Math.min(1, Math.max(0, Number(v)));
-}
-
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const q = await searchParams;
+export default function Page() {
   return (
     <main className="bg-white text-[#0b0b0c]">
       <GlassNav />
@@ -64,8 +51,7 @@ export default async function Page({
       <AgentShowcase content={getShowcase("pl")} />
       <AgentRoster />
       <OpsDeck />
-      <AgentTrace debugProgress={freeze(q.trace)} />
-      <NightShift debugProgress={freeze(q.night)} />
+      <FrozenSections />
 
       <footer className="border-t border-black/[0.08] bg-white py-10">
         <div className="mx-auto max-w-[1000px] px-6 font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">
