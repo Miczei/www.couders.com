@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>Nawigacja demo</title>
+<style>
+  @page { size: A4; margin: 13mm 12mm 12mm; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"DejaVu Sans",sans-serif; font-size:8.4pt; line-height:1.36;
+         color:#16211F; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  h1,h2 { font-family:"DejaVu Serif",serif; margin:0; }
+  h1 { font-size:17pt; line-height:1.1; }
+  h2 { font-size:11pt; color:#0B4D44; margin:0 0 5px; padding-bottom:3px; border-bottom:1.5px solid #0F6B5F; }
+  h2 span { font-family:"DejaVu Sans",sans-serif; font-size:7.2pt; color:#6E7C78; float:right; font-weight:normal; padding-top:3px; }
+  p { margin:0 0 5px; }
+
+  .top { display:flex; justify-content:space-between; align-items:flex-end;
+         border-bottom:2.5px solid #0F6B5F; padding-bottom:5px; margin-bottom:8px; }
+  .brand { font-size:12pt; font-weight:bold; letter-spacing:3pt; color:#0F6B5F; }
+  .meta { font-size:7.4pt; color:#5C6B67; text-align:right; }
+  .lead { font-size:9pt; color:#33443F; margin:4px 0 9px; }
+  .lead b { color:#16211F; }
+  section { margin-bottom:8px; }
+
+  .step { display:grid; grid-template-columns:52px minmax(0,1fr); border-bottom:1px solid #E2E9E6; }
+  .step:last-child { border-bottom:0; }
+  .step .t { font-family:"DejaVu Mono","DejaVu Sans Mono",monospace; font-size:7.6pt; color:#0F6B5F;
+             padding:6px 6px 6px 0; font-weight:bold; }
+  .step .b { padding:6px 0; }
+  .step .b b { color:#0B4D44; }
+  .step .b .say { display:block; margin-top:2px; padding:3px 7px; background:#F1F6F4;
+                  border-left:2px solid #0F6B5F; font-style:italic; color:#274741; }
+  .step.hot .t { color:#A8382A; }
+  .step.hot .b b { color:#8C2E22; }
+
+  .grid { display:flex; flex-wrap:wrap; gap:5px; }
+  .c { flex:1 1 calc(50% - 3px); border:1px solid #CBD6D1; border-left:2.5px solid #0F6B5F;
+       border-radius:2px; padding:5px 7px; background:#F8FAF9; }
+  .c b { display:block; color:#0B4D44; font-size:8.6pt; margin-bottom:1px; }
+  .c.br { border-left-color:#8A6516; background:#FBF8F1; } .c.br b { color:#6E5111; }
+  .c.crit { border-left-color:#A8382A; background:#FCF6F4; } .c.crit b { color:#8C2E22; }
+
+  .qa > div { border-bottom:1px solid #E2E9E6; padding:4px 0; }
+  .qa .q { font-weight:bold; color:#16211F; }
+  .qa .a { color:#3C4C48; }
+
+  ul { margin:0 0 0 14px; padding:0; } li { margin-bottom:2.5px; }
+  .chk li { list-style:none; margin-left:-14px; }
+  .chk li::before { content:"\25A1  "; color:#0F6B5F; }
+
+  footer { position:fixed; bottom:5mm; left:12mm; right:12mm; border-top:1px solid #CBD6D1;
+           padding-top:4px; font-size:7pt; color:#6E7C78; display:flex; justify-content:space-between; }
+  .pb { page-break-before:always; }
+</style></head><body>
+
+<div class="top">
+  <div><div class="brand">COUDERS</div>
+    <div style="font-size:7.6pt;color:#5C6B67;margin-top:2px">e-Recepcjonista &middot; nawigacja demo</div></div>
+  <div class="meta">Lux Dom sp. z o.o.<br>ściąga dla prowadzącego</div>
+</div>
+
+<h1>Jak poprowadzić to spotkanie</h1>
+<p class="lead">To jest kartka dla Ciebie, nie dla klienta. Zasada nadrzędna: <b>nie opowiadaj, tylko
+dzwoń.</b> Każda minuta spędzona na tłumaczeniu, jak to działa, jest minutą odebraną scenom, w których
+zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każdej scenie rób sekundę ciszy.</p>
+
+<section>
+  <h2>Zanim wejdziesz <span>15 MINUT WCZEŚNIEJ</span></h2>
+  <ul class="chk">
+    <li>Numery uczestników wpisane w arkuszu i w węźle n8n, w formacie +48XXXXXXXXX</li>
+    <li>Workflow w n8n na Active, jeden testowy telefon wykonany i odebrany</li>
+    <li>Arkusz otwarty na drugim ekranie, wiersz przykładowy skasowany</li>
+    <li>Skrzynka z powiadomieniami otwarta na telefonie leżącym na stole, ekranem do góry</li>
+    <li>Dwa telefony naładowane, drugi z ustawionym głośnym dzwonkiem</li>
+    <li>Nagrania zapasowe scen w telefonie, na wypadek zasięgu w sali</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Przebieg <span>OKOŁO 40 MINUT</span></h2>
+
+  <div class="step">
+    <div class="t">0–2</div>
+    <div class="b"><b>Otwarcie bez słowa o technologii.</b> Zacznij od ich problemu, nie od produktu.
+      <span class="say">„Zanim cokolwiek pokażę, jedno pytanie: ile telefonów dziennie wpada do Państwa biura i ilu z nich nikt nie odbiera? Bo o tym jest to spotkanie."</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="t">2–5</div>
+    <div class="b"><b>Scena pierwsza: rozpoznanie.</b> Poproś jedną osobę, żeby zadzwoniła ze swojego
+      telefonu. Agent wita ją po imieniu i pyta o jej nieruchomość. Nic nie komentuj przez pierwsze
+      dziesięć sekund, niech wybrzmi.
+      <span class="say">„Nie podawał Pan nazwiska. System rozpoznał numer i wie, o którym budynku mówimy."</span>
+    </div>
+  </div>
+
+  <div class="step hot">
+    <div class="t">5–9</div>
+    <div class="b"><b>Scena druga: awaria krytyczna. To jest gwóźdź spotkania.</b> Zgłoś zalanie.
+      Włącz stoper w telefonie, gdy padnie słowo „zalanie". Zatrzymaj, gdy zadzwoni drugi telefon
+      na stole. Pokaż ekran stopera.
+      <span class="say">„Osiem sekund od zgłoszenia do telefonu u dyżurnego. Umowa mówi o sześćdziesięciu."</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="t">9–12</div>
+    <div class="b"><b>Scena trzecia: ta sama awaria drugi raz.</b> Zadzwoń jeszcze raz z innego telefonu
+      i zgłoś to samo. Agent nie zakłada nowej sprawy, tylko podaje numer istniejącej i termin technika.
+      <span class="say">„Pęknięty pion to nie jedno zgłoszenie, tylko czterdzieści telefonów w kwadrans. Tu powstaje jedna sprawa i czterdzieści powiadomień po naprawie."</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="t">12–15</div>
+    <div class="b"><b>Scena czwarta: granica.</b> Zapytaj agenta, czy możesz zabudować balkon. Odmawia
+      interpretacji i przyjmuje wniosek. <b>Nie pomijaj tej sceny</b>, nawet gdy goni czas.
+      <span class="say">„Państwa realne ryzyko to nie jest bot, który nie odbierze. To bot, który powie coś, co mieszkaniec zacytuje w piśmie. Dlatego on tego nie robi."</span>
+    </div>
+  </div>
+
+  <div class="step hot">
+    <div class="t">15–19</div>
+    <div class="b"><b>Oddaj im telefon i zamilcz.</b> Cztery minuty, w których dzwonią sami, bez scenariusza.
+      To jest moment, w którym zapada decyzja. Nie podpowiadaj, nie ratuj, nie tłumacz.
+      <span class="say">„Proszę zapytać o cokolwiek. Naprawdę o cokolwiek."</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="t">19–25</div>
+    <div class="b"><b>Co zostaje po rozmowie.</b> Przełącz na arkusz i pokaż wiersze, które powstały
+      w trakcie spotkania. Potem telefon ze skrzynką i mailem do administratora.
+      <span class="say">„To jest ta część, której dzisiaj Państwo nie mają. Nie chodzi o to, że ktoś odebrał, tylko że po rozmowie został ślad z adresem, lokalem i opisem."</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="t">25–35</div>
+    <div class="b"><b>Rozmowa o wdrożeniu.</b> Tu wchodzi katalog modułów i rozmowa o tym, co dokładamy.
+      Szczegóły na następnej stronie.</div>
+  </div>
+
+  <div class="step">
+    <div class="t">35–40</div>
+    <div class="b"><b>Domknięcie z konkretem.</b> Nie kończ na „prześlemy ofertę".
+      <span class="say">„Do końca marca odbędą się zebrania na stu sześćdziesięciu nieruchomościach. Na każdym padnie pytanie o kontakt z administracją. Proponuję pilot na jednym numerze: dziesięć dni roboczych i mają Państwo dane, a nie prezentację."</span>
+    </div>
+  </div>
+</section>
+
+<footer><span>Couders &middot; nawigacja demo &middot; Lux Dom</span><span>tylko do użytku wewnętrznego</span></footer>
+
+<div class="pb">
+<div class="top">
+  <div><div class="brand">COUDERS</div></div>
+  <div class="meta">Upsell, obiekcje, plan awaryjny</div>
+</div>
+
+<section>
+  <h2>Gdzie wtrącić moduły płatne <span>MINUTA 25–35</span></h2>
+  <p>Nie wyliczaj katalogu. Każdy moduł podpinaj do sceny, która przed chwilą się wydarzyła. Wtedy
+  brzmi jak dokończenie czegoś, co widzieli, a nie jak sprzedaż dodatków.</p>
+  <div class="grid">
+    <div class="c br"><b>SMS, po scenie ze zgłoszeniem</b>
+      „Zauważyli Państwo, że agent podał numer sprawy głosem. Na wdrożeniu wychodzi też SMS-em, z nadpisem LUX DOM. To jest najtańszy moduł i ten, który najmocniej zbija liczbę powtórnych telefonów, bo mieszkaniec ma potwierdzenie w telefonie."
+      <br><br><b style="color:#8C2E22;font-size:8pt">Jeśli zapytają, czemu SMS nie przyszedł teraz:</b>
+      „Bramka wymaga weryfikacji firmy i rejestracji nadpisu nadawcy, żeby wiadomość wyglądała na Państwa, a nie na losowy numer. Tego nie da się zrobić na demo."</div>
+
+    <div class="c br"><b>Numer per wspólnota, po scenie z rozpoznaniem</b>
+      „Rozpoznaliśmy numer dzwoniącego. Da się to zrobić jeszcze prościej: każda wspólnota dostaje własny numer, więc agent zna adres od pierwszej sekundy. I to jest jedyna pozycja, którą można wpisać wspólnocie do planu gospodarczego, czyli przenieść koszt tam, gdzie powstaje wartość."</div>
+
+    <div class="c br"><b>Kampanie wychodzące, po scenie z duplikatem</b>
+      „Tu obsłużyliśmy falę telefonów. Można ją w ogóle wygasić: przy wyłączeniu wody czy przeglądzie system uprzedza budynek SMS-em albo telefonicznie, i te czterdzieści telefonów nigdy nie powstaje."</div>
+
+    <div class="c br"><b>Raport per wspólnota, przy arkuszu</b>
+      „Z tego samego rejestru robi się raport miesięczny dla każdej wspólnoty. Ile zgłoszeń, jakich, w jakim czasie obsłużonych. To jest dokument, który kładzie się na stole w marcu, kiedy zapada decyzja o zarządcy."</div>
+
+    <div class="c"><b>Integracja z e-kartoteką, tylko gdy sami zapytają o salda</b>
+      „Agent nie podaje kwot i to jest świadoma decyzja na demo. Na wdrożeniu wchodzi integracja i weryfikacja tożsamości, a zakres tego, co można powiedzieć przez telefon, ustalają Państwo."
+      <br><b style="color:#8C2E22;font-size:8pt">Nie obiecuj terminu tej integracji.</b> Zależy od dostawcy e-kartoteki, nie od nas.</div>
+
+    <div class="c"><b>Języki, gdy padnie temat najemców</b>
+      „Agent może rozpoznawać język rozmówcy i przechodzić na ukraiński albo angielski. Przy liczbie najemców w Warszawie to realny procent połączeń, które dziś kończą się niczym."</div>
+  </div>
+</section>
+
+<section>
+  <h2>Czego nie mów <span>WAŻNIEJSZE NIŻ TO, CO MÓWISZ</span></h2>
+  <ul>
+    <li><b>Nie mów „sztuczna inteligencja" co drugie zdanie.</b> Mów „system", „agent", „infolinia". Zarządca kupuje odebrany telefon, nie technologię.</li>
+    <li><b>Nie obiecuj terminu integracji z e-kartoteką.</b> Zależy od cudzego API. Mów o audycie technicznym.</li>
+    <li><b>Nie podawaj ceny, dopóki nie zapytają.</b> A gdy zapytają, odpowiadaj widełkami i pytaniem o skalę, nie liczbą.</li>
+    <li><b>Nie tłumacz, jak to działa pod spodem.</b> Nikt tego nie kupuje, a każde zdanie o tym zabiera czas scenom.</li>
+    <li><b>Nie udawaj, że demo jest produkcją.</b> Dwie nieruchomości i dane testowe. Powiedziane wprost buduje zaufanie, wykryte samo je niszczy.</li>
+  </ul>
+</section>
+
+<footer><span>Couders &middot; nawigacja demo &middot; Lux Dom</span><span>tylko do użytku wewnętrznego</span></footer>
+</div>
+
+<div class="pb">
+<div class="top">
+  <div><div class="brand">COUDERS</div></div>
+  <div class="meta">Obiekcje, plan awaryjny, domknięcie</div>
+</div>
+
+<section>
+  <h2>Obiekcje, jednym zdaniem <span>ODPOWIADAJ KRÓTKO</span></h2>
+  <div class="qa">
+    <div><span class="q">Nasi mieszkańcy to osoby starsze, nie będą gadać z robotem.</span>
+      <span class="a">Dziś rozmawiają z sygnałem zajętości, a to gorsze doświadczenie niż jakikolwiek automat. Do tego każdy, kto poprosi o człowieka, dostaje człowieka od razu.</span></div>
+    <div><span class="q">A jak powie coś głupiego?</span>
+      <span class="a">Widzieli to Państwo przed chwilą: na pytanie o balkon odmówił i przekazał sprawę. Odpowiada wyłącznie z bazy, którą Państwo zatwierdzają.</span></div>
+    <div><span class="q">Mamy już e-kartotekę i aplikację.</span>
+      <span class="a">Portal obsługuje tego, kto sam się zaloguje. Telefon obsługuje tego, kto ma awarię o dwudziestej drugiej. To on pisze opinie.</span></div>
+    <div><span class="q">Mamy dyżur po godzinach.</span>
+      <span class="a">I płacą za niego Państwo. Pytanie brzmi, ile z nocnych zgłoszeń rano trafia do systemu z adresem i opisem, a ile ginie.</span></div>
+    <div><span class="q">Czy to znaczy, że zwalniamy ludzi z biura?</span>
+      <span class="a">Nie. Ci sami ludzie przestają odpowiadać po raz tysięczny na pytanie o numer konta i zaczynają robić windykację i kontakt z radami.</span></div>
+    <div><span class="q">Ile to kosztuje?</span>
+      <span class="a">Zależy od skali i od tego, które moduły włączamy. Proponuję najpierw pilot na jednym numerze, po nim rozmawiamy o liczbach na Państwa danych.</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Gdy coś nie zadziała <span>PLAN AWARYJNY</span></h2>
+  <div class="grid">
+    <div class="c crit"><b>Agent nie rozpoznaje numeru</b>Nie tłumacz się i nie grzeb w ustawieniach. „Rozpoznawanie działa na numerach wpisanych do bazy, tego nie zdążyłem dodać." Zadzwoń z numeru, który jest w arkuszu.</div>
+    <div class="c crit"><b>n8n nie odpowiada</b>Agent dalej rozmawia i odpowiada z bazy wiedzy, traci tylko zapis. Puść nagranie sceny ze zgłoszeniem i wróć do rozmowy. Nie diagnozuj przy kliencie.</div>
+    <div class="c crit"><b>Ktoś pyta o SMS, którego nie ma</b>Odpowiedź jest wyżej, w module SMS. Powiedz o nadpisie nadawcy i przejdź dalej. Nie tłumacz się dłużej niż jednym zdaniem.</div>
+    <div class="c crit"><b>Zła jakość połączenia w sali</b>Przejdź na nagrania. Masz je w telefonie. Lepsze nagranie niż szarpana rozmowa przez hotelowe wi-fi.</div>
+  </div>
+</section>
+
+<section>
+  <h2>Wyjdź z tym, nie z „prześlemy ofertę" <span>DOMKNIĘCIE</span></h2>
+  <ul>
+    <li><b>Zaproponuj pilot</b> na jednym numerze, poza godzinami pracy biura, dziesięć dni roboczych.</li>
+    <li><b>Poproś o cztery rzeczy:</b> statystyki centrali za ostatni miesiąc, listę nieruchomości z administratorami, ścieżki alarmowe dla awarii, kontakt do dostawcy e-kartoteki.</li>
+    <li><b>Umów konkretny termin</b> na przekazanie tych materiałów, jeszcze przy stole. Nie „odezwiemy się".</li>
+    <li><b>Zostaw dwie kartki:</b> porównanie demo z wdrożeniem oraz katalog modułów.</li>
+  </ul>
+</section>
+
+<footer><span>Couders &middot; nawigacja demo &middot; Lux Dom</span><span>tylko do użytku wewnętrznego</span></footer>
+</div>
+
+</body></html>
