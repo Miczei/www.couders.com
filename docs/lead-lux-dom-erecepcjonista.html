@@ -1,0 +1,801 @@
+<title>Recepcja 24/7 dla Lux Dom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
+
+<style>
+  :root {
+    --ground: #EDF0EE;
+    --panel: #F9FBF9;
+    --panel-2: #E3E9E5;
+    --ink: #13201E;
+    --ink-soft: #4C5B57;
+    --ink-faint: #7A8A85;
+    --line: #D0D9D4;
+    --line-strong: #B6C3BD;
+    --accent: #0F6B5F;
+    --accent-ink: #0B4D44;
+    --accent-wash: #DBEAE5;
+    --brass: #8A6516;
+    --brass-wash: #EFE6D0;
+    --crit: #A8382A;
+    --crit-wash: #F2DDD9;
+    --warn: #91650F;
+    --ok: #2C7457;
+    --shadow: 0 1px 2px rgba(19, 32, 30, .06), 0 8px 24px -16px rgba(19, 32, 30, .35);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0D1513;
+      --panel: #14201D;
+      --panel-2: #1B2A26;
+      --ink: #E7EDEA;
+      --ink-soft: #9FB1AB;
+      --ink-faint: #74857F;
+      --line: #243530;
+      --line-strong: #33473F;
+      --accent: #5FC9B5;
+      --accent-ink: #8FDCCC;
+      --accent-wash: #143029;
+      --brass: #D6AB4F;
+      --brass-wash: #2C2415;
+      --crit: #E68272;
+      --crit-wash: #33201C;
+      --warn: #D3A340;
+      --ok: #63C79A;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px -18px rgba(0, 0, 0, .9);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0D1513;
+    --panel: #14201D;
+    --panel-2: #1B2A26;
+    --ink: #E7EDEA;
+    --ink-soft: #9FB1AB;
+    --ink-faint: #74857F;
+    --line: #243530;
+    --line-strong: #33473F;
+    --accent: #5FC9B5;
+    --accent-ink: #8FDCCC;
+    --accent-wash: #143029;
+    --brass: #D6AB4F;
+    --brass-wash: #2C2415;
+    --crit: #E68272;
+    --crit-wash: #33201C;
+    --warn: #D3A340;
+    --ok: #63C79A;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px -18px rgba(0, 0, 0, .9);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(18px, 4vw, 48px) 96px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0 56px;
+  }
+
+  @media (min-width: 1060px) {
+    .wrap { grid-template-columns: 214px minmax(0, 1fr); }
+  }
+
+  /* ---------- masthead ---------- */
+
+  .masthead {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid var(--line);
+    padding: clamp(40px, 7vw, 76px) 0 clamp(28px, 4vw, 44px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .kicker {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    align-items: center;
+  }
+
+  .kicker .dot { color: var(--line-strong); }
+
+  h1 {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(34px, 5.6vw, 58px);
+    line-height: 1.04;
+    letter-spacing: -.022em;
+    margin: 0;
+    text-wrap: balance;
+    max-width: 19ch;
+  }
+
+  .standfirst {
+    font-size: clamp(17px, 2.1vw, 20.5px);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .standfirst strong { color: var(--ink); font-weight: 600; }
+
+  .stampline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .stamp {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px;
+    letter-spacing: .04em;
+    padding: 5px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
+    color: var(--ink-soft);
+    background: var(--panel);
+  }
+
+  .stamp b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- nav ---------- */
+
+  nav.toc {
+    display: none;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 1060px) {
+    nav.toc {
+      display: block;
+      position: sticky;
+      top: 0;
+      align-self: start;
+      padding-top: 52px;
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+  }
+
+  nav.toc .toc-head {
+    text-transform: uppercase;
+    letter-spacing: .13em;
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 12px;
+  }
+
+  nav.toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  nav.toc a { color: var(--ink-soft); text-decoration: none; display: flex; gap: 9px; }
+  nav.toc a:hover { color: var(--accent); }
+  nav.toc a span { color: var(--ink-faint); }
+  nav.toc a:hover span { color: var(--accent); }
+
+  /* ---------- body flow ---------- */
+
+  main { min-width: 0; padding-top: 52px; display: flex; flex-direction: column; gap: 60px; }
+
+  section { display: flex; flex-direction: column; gap: 18px; scroll-margin-top: 24px; }
+
+  h2 {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(25px, 3.4vw, 33px);
+    line-height: 1.15;
+    letter-spacing: -.016em;
+    margin: 0;
+    text-wrap: balance;
+    max-width: 24ch;
+  }
+
+  h2 .num {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: .1em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  h3 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .005em;
+    margin: 0;
+  }
+
+  p { margin: 0; max-width: 68ch; }
+  p + p { margin-top: -4px; }
+
+  a { color: var(--accent-ink); text-underline-offset: 3px; }
+  a:focus-visible, nav.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  ul.plain { margin: 0; padding-left: 1.15em; max-width: 68ch; display: flex; flex-direction: column; gap: 7px; }
+  ul.plain li::marker { color: var(--accent); }
+
+  .lead-note {
+    border-left: 2px solid var(--accent);
+    padding: 2px 0 2px 16px;
+    color: var(--ink-soft);
+    max-width: 66ch;
+    font-size: 15.5px;
+  }
+
+  .lead-note strong { color: var(--ink); }
+
+  /* ---------- fact grid ---------- */
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(178px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+  .fact { background: var(--panel); padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+  .fact .v { font-family: "Source Serif 4", Georgia, serif; font-size: 26px; font-weight: 600; letter-spacing: -.01em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .fact .k { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-faint); }
+
+  /* ---------- tables ---------- */
+
+  .scroller { overflow-x: auto; border: 1px solid var(--line); border-radius: 3px; background: var(--panel); }
+
+  table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 14.5px; }
+  caption { text-align: left; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); padding: 12px 16px 0; }
+  th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: .09em; color: var(--ink-faint); font-weight: 500; background: var(--panel-2); border-bottom: 1px solid var(--line-strong); white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tfoot td { font-weight: 600; background: var(--panel-2); border-top: 1px solid var(--line-strong); }
+
+  .pill { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10.5px; letter-spacing: .05em; padding: 3px 8px; border-radius: 2px; white-space: nowrap; display: inline-block; }
+  .pill.auto { background: var(--accent-wash); color: var(--accent-ink); }
+  .pill.hybrid { background: var(--brass-wash); color: var(--brass); }
+  .pill.human { background: var(--crit-wash); color: var(--crit); }
+
+  /* ---------- cards ---------- */
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 14px; }
+
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 3px; padding: 18px 20px; display: flex; flex-direction: column; gap: 9px; box-shadow: var(--shadow); }
+  .card .tag { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+  .card p { font-size: 14.5px; color: var(--ink-soft); }
+  .card.crit { border-left: 3px solid var(--crit); }
+  .card.ok { border-left: 3px solid var(--ok); }
+  .card.acc { border-left: 3px solid var(--accent); }
+  .card.br { border-left: 3px solid var(--brass); }
+
+  /* ---------- transcript ---------- */
+
+  .transcript { background: var(--panel); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; box-shadow: var(--shadow); }
+  .transcript .bar { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 10px 16px; background: var(--panel-2); border-bottom: 1px solid var(--line); font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: .06em; color: var(--ink-soft); }
+  .transcript .bar .live { color: var(--crit); }
+  .turns { display: flex; flex-direction: column; }
+  .turn { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+  .turn:last-child { border-bottom: 0; }
+  .turn .who { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); padding-top: 4px; }
+  .turn.agent .who { color: var(--accent); }
+  .transcript .out { padding: 12px 16px; background: var(--accent-wash); font-size: 13.5px; font-family: "IBM Plex Mono", ui-monospace, monospace; color: var(--accent-ink); display: flex; flex-wrap: wrap; gap: 6px 16px; }
+
+  /* ---------- phases ---------- */
+
+  .phases { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+  .phase { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 0; border-bottom: 1px solid var(--line); background: var(--panel); }
+  .phase:last-child { border-bottom: 0; }
+  .phase .when { padding: 16px 18px; background: var(--panel-2); border-right: 1px solid var(--line); font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11.5px; letter-spacing: .05em; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px; }
+  .phase .when b { color: var(--accent); font-size: 13px; letter-spacing: .08em; }
+  .phase .what { padding: 16px 20px; display: flex; flex-direction: column; gap: 8px; }
+  .phase .what p { font-size: 14.5px; color: var(--ink-soft); }
+  .phase .what .gate { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11.5px; color: var(--ink-faint); }
+  .phase .what .gate b { color: var(--ink); font-weight: 600; }
+
+  @media (max-width: 560px) {
+    .phase { grid-template-columns: 1fr; }
+    .phase .when { border-right: 0; border-bottom: 1px solid var(--line); flex-direction: row; gap: 12px; align-items: baseline; }
+    .turn { grid-template-columns: 1fr; gap: 2px; }
+  }
+
+  /* ---------- q&a ---------- */
+
+  .qa { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+  .qa > div { background: var(--panel); padding: 16px 20px; display: flex; flex-direction: column; gap: 7px; }
+  .qa .q { font-weight: 600; font-size: 15px; }
+  .qa .q::before { content: "„"; color: var(--brass); font-family: "Source Serif 4", Georgia, serif; }
+  .qa .q::after { content: "”"; color: var(--brass); font-family: "Source Serif 4", Georgia, serif; }
+  .qa .a { font-size: 14.5px; color: var(--ink-soft); max-width: 74ch; }
+
+  /* ---------- checklist ---------- */
+
+  .checklist { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 10px 28px; }
+  .checklist div { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; font-size: 14.5px; padding-bottom: 10px; border-bottom: 1px dashed var(--line); }
+  .checklist div::before { content: "□"; color: var(--accent); font-size: 15px; line-height: 1.5; }
+
+  /* ---------- footer ---------- */
+
+  footer { grid-column: 1 / -1; border-top: 1px solid var(--line); margin-top: 72px; padding-top: 24px; font-size: 13px; color: var(--ink-faint); display: flex; flex-direction: column; gap: 12px; }
+  footer ol { margin: 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 5px; max-width: 78ch; }
+  footer a { color: var(--ink-soft); }
+
+  .disclaimer { background: var(--brass-wash); border: 1px solid var(--line); border-left: 3px solid var(--brass); border-radius: 3px; padding: 14px 18px; font-size: 14px; color: var(--ink-soft); max-width: 74ch; }
+  .disclaimer b { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="kicker">
+      <span>Notatka handlowa</span><span class="dot">/</span><span>Lux Dom sp. z o.o.</span><span class="dot">/</span><span>e-recepcjonista</span><span class="dot">/</span><span>26.08.2026</span>
+    </div>
+    <h1>Ich mieszkańcy skarżą się, że nikt nie odbiera. To jest cały nasz pitch.</h1>
+    <p class="standfirst">Lux Dom zarządza <strong>ponad 160 nieruchomościami o łącznej powierzchni blisko 2 mln m²</strong> w Warszawie, Piasecznie i Gdańsku, ma dwa tytuły Zarządcy Roku i publicznie widoczny problem: powracający w opiniach zarzut, że do administracji nie da się dodzwonić ani doprosić o odpowiedź na maila. Dla firmy, którą wspólnota może wymienić jedną uchwałą na zebraniu rocznym, to nie jest niedogodność. To jest ryzyko utraty kontraktów.</p>
+    <div class="stampline">
+      <span class="stamp">Segment: <b>zarządzanie nieruchomościami</b></span>
+      <span class="stamp">Wolumen kontaktu: <b>bardzo wysoki</b></span>
+      <span class="stamp">Sezon decyzyjny: <b>I kwartał</b></span>
+      <span class="stamp">Dopasowanie produktu: <b>9/10</b></span>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Spis treści">
+    <div class="toc-head">W tym dokumencie</div>
+    <ol>
+      <li><a href="#firma"><span>01</span> Kim są</a></li>
+      <li><a href="#pieniadz"><span>02</span> Gdzie im ucieka pieniądz</a></li>
+      <li><a href="#ruch"><span>03</span> Anatomia ruchu</a></li>
+      <li><a href="#zakres"><span>04</span> Co bierze na siebie agent</a></li>
+      <li><a href="#gwarancje"><span>05</span> Co gwarantujemy</a></li>
+      <li><a href="#scenariusze"><span>06</span> Cztery sceny</a></li>
+      <li><a href="#integracje"><span>07</span> Integracje i ryzyko</a></li>
+      <li><a href="#prawo"><span>08</span> AI Act i RODO</a></li>
+      <li><a href="#plan"><span>09</span> Plan wdrożenia</a></li>
+      <li><a href="#roi"><span>10</span> Model ROI</a></li>
+      <li><a href="#cennik"><span>11</span> Rama cenowa</a></li>
+      <li><a href="#obiekcje"><span>12</span> Obiekcje</a></li>
+      <li><a href="#spotkanie"><span>13</span> Na spotkanie</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section id="firma">
+      <h2><span class="num">01</span>Kim jest Lux Dom</h2>
+      <p>Spółka z Warszawy, na rynku od 2002 roku. Zarządza i administruje nieruchomościami mieszkaniowymi, głównie wspólnotami, dodatkowo obiektami komercyjnymi, biurowymi i magazynowymi. Cztery filary usługi: administracja, obsługa techniczna, księgowość wspólnot i obsługa prawna, do tego zarządzanie najmem oraz ekspertyzy, opinie prawne i prowadzenie postępowań sądowych.</p>
+
+      <div class="facts">
+        <div class="fact"><span class="v">160+</span><span class="k">nieruchomości</span></div>
+        <div class="fact"><span class="v">~2 mln</span><span class="k">m² w zarządzie</span></div>
+        <div class="fact"><span class="v">25</span><span class="k">licencjonowanych zarządców</span></div>
+        <div class="fact"><span class="v">100+</span><span class="k">pracowników</span></div>
+        <div class="fact"><span class="v">2002</span><span class="k">rok założenia</span></div>
+        <div class="fact"><span class="v">3</span><span class="k">rynki: Wwa, Piaseczno, Gdańsk</span></div>
+      </div>
+
+      <h3>Stan cyfryzacji, czyli z czym musimy współistnieć</h3>
+      <ul class="plain">
+        <li><b>e-kartoteka</b> (system eDom Zarządzanie) dla każdego właściciela: salda, archiwum dokumentów wspólnoty, głosowanie elektroniczne nad uchwałami. Sprzedawana jako standard, nie dodatek.</li>
+        <li><b>Aplikacja mobilna</b> od 2019 roku, w sklepach pod nazwą Fliko: wgląd w wybrane informacje o lokalu z telefonu.</li>
+        <li><b>Dyżur telefoniczny dla mieszkańców</b> poza godzinami biura, deklarowany w oknie 18:00–10:00 i w weekendy, do zgłaszania awarii.</li>
+        <li><b>Dwa numery kontaktowe i jedna skrzynka</b> zbiorcza (22 292 19 15, 512 031 805, biuro@lux-dom.pl), plus rozproszone kontakty do administratorów poszczególnych nieruchomości.</li>
+      </ul>
+
+      <div class="lead-note"><strong>Wniosek dla nas:</strong> to nie jest firma, którą trzeba przekonywać do technologii. Oni już kupili portal i aplikację, już płacą za dyżur nocny i już mówią klientom „jesteśmy dostępni”. Nie sprzedajemy im idei dostępności. Sprzedajemy im <strong>dotrzymanie obietnicy, którą sami złożyli</strong>, i to na kanale, którego portal nie obsługuje: na telefonie.</div>
+
+      <div class="disclaimer"><b>Uwaga o źródłach.</b> Domena lux-dom.pl jest zablokowana przez politykę sieciową tej sesji, więc dane pochodzą z wyszukiwarki, katalogów firm, ogłoszeń o pracę i serwisów z opiniami (spis na końcu). Wszystkie liczby o firmie traktujcie jako mocne przybliżenie do potwierdzenia na spotkaniu, nie jako wyciąg z ich systemu.</div>
+    </section>
+
+    <section id="pieniadz">
+      <h2><span class="num">02</span>Gdzie w tym biznesie ucieka pieniądz</h2>
+      <p>Zarządca zarabia stawkę od metra kwadratowego miesięcznie. Przychód jest z góry znany, prawie sztywny, a cała gra toczy się o dwie rzeczy: koszt obsługi jednego metra i to, czy wspólnota zostanie na kolejny rok. Obie te rzeczy rozstrzygają się na telefonie.</p>
+
+      <div class="cards">
+        <div class="card crit">
+          <span class="tag">Ryzyko 1 · churn</span>
+          <h3>Wspólnota wymienia zarządcę uchwałą</h3>
+          <p>Zebranie ogółu właścicieli odbywa się raz w roku, ustawowo do końca marca. Wtedy padają uchwały o zmianie zarządcy, a argumentem numer jeden bywa nie stawka, tylko zdanie „nie da się do nich dodzwonić”. Jeden utracony budynek 10 000 m² przy stawce 1 zł/m² to 120 000 zł przychodu rocznie, którego już nie odzyskacie.</p>
+        </div>
+        <div class="card br">
+          <span class="tag">Ryzyko 2 · koszt przerwań</span>
+          <h3>Administrator jest droższy niż infolinia</h3>
+          <p>Telefon od mieszkańca trafia najczęściej nie do BOK, tylko wprost do administratora prowadzącego nieruchomość. To najdroższa godzina w firmie zużyta na pytanie o numer konta. Do tego dochodzi koszt powrotu do przerwanego zadania, liczony w kilkunastu minutach za każdym razem.</p>
+        </div>
+        <div class="card acc">
+          <span class="tag">Ryzyko 3 · szczyty</span>
+          <h3>Ruch jest skokowy, obsada płaska</h3>
+          <p>Awaria ciepła w jednym budynku to nie jedno zgłoszenie, tylko czterdzieści w ciągu dwudziestu minut. Rozliczenie roczne mediów to tysiące pytań o korektę w trzy tygodnie. Człowiek obsługuje jedną rozmowę naraz, więc w szczycie linia jest po prostu zajęta, a mieszkaniec słyszy dokładnie to, co potem napisze w opinii.</p>
+        </div>
+        <div class="card ok">
+          <span class="tag">Szansa · wzrost</span>
+          <h3>Argument przetargowy przy nowych wspólnotach</h3>
+          <p>Wspólnota wybierając zarządcę porównuje stawki, które i tak są podobne. „Infolinia mieszkańca 24/7, każde zgłoszenie z numerem sprawy i potwierdzeniem SMS” to konkret, którego konkurencja nie ma w ofercie. To narzędzie zdobywania metrów, nie tylko oszczędzania.</p>
+        </div>
+      </div>
+
+      <div class="lead-note">Najmocniejszy kąt sprzedażowy w całej tej rozmowie: <strong>to nie musi być ich koszt.</strong> Obsługa 24/7 może wejść do planu gospodarczego wspólnoty jako pozycja usługi, tak jak ochrona czy serwis wind. Przy 160 nieruchomościach nawet 100 zł miesięcznie od wspólnoty to 16 000 zł miesięcznie po ich stronie. Zarządca kupuje jeden system, a odsprzedaje go sto sześćdziesiąt razy jako podniesienie standardu.</div>
+    </section>
+
+    <section id="ruch">
+      <h2><span class="num">03</span>Anatomia ruchu przychodzącego u zarządcy</h2>
+      <p>To jest szkielet, na którym budujemy scenariusz agenta. Udziały są modelem branżowym, nie ich statystyką: pierwszym zadaniem po podpisaniu jest przepięcie tej tabeli na ich realne nagrania z centrali.</p>
+
+      <div class="scroller">
+        <table>
+          <caption>Typologia zgłoszeń i kwalifikacja do automatyzacji</caption>
+          <thead>
+            <tr><th>Typ sprawy</th><th>Udział*</th><th>Co dzwoniący naprawdę chce</th><th>Tryb</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Rozliczenia i płatności</td><td class="num">25–35%</td><td>Saldo, wysokość zaliczki, numer konta, rozliczenie wody i ciepła, korekta, wezwanie do zapłaty</td><td><span class="pill auto">agent zamyka</span></td></tr>
+            <tr><td>Awarie i usterki</td><td class="num">20–30%</td><td>Woda, ogrzewanie, winda, domofon, brama, oświetlenie, zalanie od sąsiada</td><td><span class="pill hybrid">agent przyjmuje i klasyfikuje</span></td></tr>
+            <tr><td>Sprawy administracyjne lokalu</td><td class="num">10–15%</td><td>Odczyt licznika, zmiana liczby osób, zmiana właściciela lub najemcy, piloty, karty, miejsce postojowe</td><td><span class="pill auto">agent zamyka</span></td></tr>
+            <tr><td>Dokumenty i zaświadczenia</td><td class="num">8–12%</td><td>Zaświadczenie o niezaleganiu do notariusza lub banku, uchwały, protokoły, sprawozdanie</td><td><span class="pill auto">agent przyjmuje zlecenie</span></td></tr>
+            <tr><td>Zgody i wnioski</td><td class="num">5–8%</td><td>Remont, klimatyzacja, zabudowa balkonu, przeprowadzka, wynajem części wspólnej</td><td><span class="pill hybrid">agent zbiera wniosek</span></td></tr>
+            <tr><td>„Proszę o mojego administratora”</td><td class="num">8–12%</td><td>Kontakt do konkretnej osoby prowadzącej nieruchomość</td><td><span class="pill auto">agent routuje po adresie</span></td></tr>
+            <tr><td>Kontrahenci i instytucje</td><td class="num">5–8%</td><td>Serwisy, dostawcy, notariusze, banki, pośrednicy przy transakcji lokalu</td><td><span class="pill hybrid">agent kwalifikuje</span></td></tr>
+            <tr><td>Zarząd i rada wspólnoty</td><td class="num">3–5%</td><td>Sprawy właścicielskie, uchwały, plan gospodarczy, sprawy sporne</td><td><span class="pill human">natychmiast do człowieka</span></td></tr>
+            <tr><td>Skargi i sprawy prawne</td><td class="num">2–4%</td><td>Eskalacja, zapowiedź pisma, żądanie rozmowy z zarządem</td><td><span class="pill human">natychmiast do człowieka</span></td></tr>
+            <tr><td>Zapytanie nowej wspólnoty</td><td class="num">&lt;1%</td><td>Szukają zarządcy, porównują oferty</td><td><span class="pill human">alarm do sprzedaży</span></td></tr>
+            <tr><td>Telemarketing i pomyłki</td><td class="num">3–6%</td><td>Nic</td><td><span class="pill auto">agent odsiewa</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13.5px;color:var(--ink-faint)">* Model rozkładu dla zarządcy wspólnot tej skali. Do zastąpienia ich danymi w pierwszym tygodniu wdrożenia.</p>
+
+      <h3>Sezonowość, którą trzeba zaadresować w ofercie</h3>
+      <ul class="plain">
+        <li><b>Styczeń–marzec:</b> rozliczenie roczne mediów, nowe zaliczki, sprawozdania, zebrania właścicieli. Absolutny szczyt ruchu i jednocześnie moment, w którym zapada decyzja o zmianie zarządcy.</li>
+        <li><b>Sezon grzewczy:</b> ciepło, wilgoć, awarie instalacji. Ruch nocny i weekendowy rośnie najmocniej.</li>
+        <li><b>Lato:</b> remonty części wspólnych, urlopy w biurze, czyli najmniejsza obsada przy niemałym ruchu.</li>
+      </ul>
+      <p>Wniosek: system, który dokłada pojemność dokładnie wtedy, gdy jej brakuje, i nie kosztuje nic w miesiącach spokojnych. Człowieka nie da się zatrudnić na marzec.</p>
+    </section>
+
+    <section id="zakres">
+      <h2><span class="num">04</span>Co bierze na siebie e-recepcjonista</h2>
+      <p>Dzielimy zakres na trzy warstwy, bo każda ma inną gwarancję i inne ryzyko. Warstwa pierwsza działa bez człowieka i to ją gwarantujemy twardo. Druga to triage, w którym wartością jest właściwa decyzja w kilka sekund. Trzecia to ruch wychodzący, czyli miejsce, gdzie system zaczyna zarabiać, a nie tylko oszczędzać.</p>
+
+      <div class="cards">
+        <div class="card acc">
+          <span class="tag">Warstwa 1 · bez człowieka</span>
+          <h3>Rozmowa zamknięta od początku do końca</h3>
+          <p>Odbiór po pierwszym sygnale, o każdej porze, w dowolnej liczbie równoległych rozmów. Rozpoznanie dzwoniącego po numerze i przypisanie do nieruchomości oraz lokalu. Informacje operacyjne: numer konta, godziny biura, terminy odczytów, harmonogram wywozu, jak zalogować się do e-kartoteki, gdzie znaleźć uchwałę. Przyjęcie zgłoszenia usterki z pełnym wywiadem i nadaniem numeru sprawy. Status sprawy już zgłoszonej. Umówienie technika, odbioru kluczy lub spotkania z administratorem prosto w kalendarz. Zamówienie zaświadczenia z terminem odbioru. Potwierdzenie SMS-em po każdej rozmowie.</p>
+        </div>
+        <div class="card br">
+          <span class="tag">Warstwa 2 · triage i eskalacja</span>
+          <h3>Decyzja, kogo obudzić i jak szybko</h3>
+          <p>Awaria krytyczna, czyli gaz, zalanie, brak wody, prądu lub ciepła w budynku, uwięzienie w windzie: agent nie przyjmuje zgłoszenia „do jutra”, tylko od razu uruchamia ścieżkę alarmową przypisaną do tej konkretnej nieruchomości i dzwoni do dyżurnego, aż ktoś odbierze. Rada wspólnoty i zarząd mają własny priorytet. Skargi, sprawy sporne i zapowiedzi pism agent przyjmuje bez improwizowania i eskaluje z etykietą ryzyka. Zapytanie nowej wspólnoty to natychmiastowy alert do sprzedaży, bo ten jeden telefon jest wart więcej niż cały miesiąc oszczędności.</p>
+        </div>
+        <div class="card ok">
+          <span class="tag">Warstwa 3 · ruch wychodzący</span>
+          <h3>Kiedy to zaczyna zarabiać</h3>
+          <p>Powiadomienie budynku o wyłączeniu wody czy przeglądzie, telefonicznie i SMS-em, zamiast kartki na klatce. Przypomnienia o odczytach liczników i o zebraniu rocznym wraz ze zbieraniem potwierdzeń obecności i pełnomocnictw. Miękka windykacja zaległych zaliczek: przypomnienie, ustalenie terminu wpłaty, przekazanie do księgowości. Potwierdzanie wizyt techników, czyli koniec pustych przejazdów. Krótka ankieta po zamknięciu usterki, z której powstaje raport jakości obsługi na zebranie wspólnoty.</p>
+        </div>
+      </div>
+
+      <div class="lead-note">Świadomie <strong>nie</strong> oddajemy agentowi: interpretacji prawa i uchwał, negocjacji stawek, decyzji o kosztach remontu, rozstrzygania sporów sąsiedzkich i podawania kwot zadłużenia bez potwierdzonej tożsamości. Ta lista jest w ofercie celowo, bo zarządca boi się przede wszystkim tego, że automat powie mieszkańcowi coś, co potem zacytuje w piśmie do sądu.</div>
+    </section>
+
+    <section id="gwarancje">
+      <h2><span class="num">05</span>Co gwarantujemy, a co jest celem</h2>
+      <p>Rozdzielenie tych dwóch kolumn jest najważniejszą rzeczą w całej ofercie. Gwarantujemy tylko to, co zależy wyłącznie od nas i co da się zmierzyć w ich własnym raporcie. Reszta to cele, które ustalamy wspólnie i przeglądamy co miesiąc. Zarządca, który słyszał już niejedną obietnicę od dostawcy oprogramowania, kupuje właśnie tę uczciwość.</p>
+
+      <div class="scroller">
+        <table>
+          <caption>Zobowiązania twarde, wpisywalne do umowy</caption>
+          <thead>
+            <tr><th>Zobowiązanie</th><th>Miara</th><th>Jak weryfikowane</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Każde połączenie odebrane</td><td class="num">100%, do 3 sekund</td><td>Raport centrali, zero sygnału zajętości niezależnie od liczby jednoczesnych rozmów</td></tr>
+            <tr><td>Dostępność usługi</td><td class="num">99,5% / miesiąc</td><td>Monitoring z alertem; przy awarii ruch automatycznie wraca na dotychczasowy numer</td></tr>
+            <tr><td>Ślad po każdej rozmowie</td><td class="num">100% rozmów</td><td>Nagranie, transkrypt, streszczenie, kategoria, adres i lokal, podjęta akcja. Zero zgłoszeń na karteczkach</td></tr>
+            <tr><td>Eskalacja awarii krytycznej</td><td class="num">≤ 60 sekund</td><td>Od zakwalifikowania do powiadomienia dyżurnego, z potwierdzeniem odbioru i ponowieniem</td></tr>
+            <tr><td>Zero zmyślania</td><td class="num">reguła twarda</td><td>Agent odpowiada wyłącznie z zatwierdzonej bazy wiedzy; poza nią mówi, że przekazuje sprawę</td></tr>
+            <tr><td>Ścieżka do człowieka</td><td class="num">zawsze dostępna</td><td>Na żądanie, w każdym momencie rozmowy, bez labiryntu tonowego</td></tr>
+            <tr><td>Zgodność</td><td class="num">od pierwszej sekundy</td><td>Informacja o AI i o nagrywaniu w otwarciu rozmowy, umowa powierzenia, dane w UE, retencja ustalana przez klienta</td></tr>
+            <tr><td>Pilot na produkcji</td><td class="num">10 dni roboczych</td><td>Działający agent na jednym numerze, na ich realnym ruchu, z raportem skuteczności</td></tr>
+            <tr><td>Brak uwięzienia</td><td class="num">bezterminowo</td><td>Numer, nagrania, baza wiedzy i rejestr zgłoszeń są ich własnością, eksport na żądanie</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="scroller">
+        <table>
+          <caption>Cele mierzone wspólnie, przeglądane co miesiąc</caption>
+          <thead>
+            <tr><th>Wskaźnik</th><th>Start (mies. 1)</th><th>Po dostrojeniu (mies. 3)</th><th>Dojrzały (mies. 6)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Rozmowy zamknięte bez człowieka</td><td class="num">40–55%</td><td class="num">55–70%</td><td class="num">65–75%</td></tr>
+            <tr><td>Czas pierwszej reakcji na zgłoszenie</td><td class="num">sekundy</td><td class="num">sekundy</td><td class="num">sekundy</td></tr>
+            <tr><td>Zgłoszenia poza godzinami obsłużone od razu</td><td class="num">80%+</td><td class="num">90%+</td><td class="num">95%+</td></tr>
+            <tr><td>Przerwania pracy administratorów</td><td class="num">−30%</td><td class="num">−50%</td><td class="num">−60%</td></tr>
+            <tr><td>Zaległości odzyskane po kampanii przypomnień</td><td class="num">pilot</td><td class="num">mierzone</td><td class="num">stały proces</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="scenariusze">
+      <h2><span class="num">06</span>Cztery sceny, które sprzedają to spotkanie</h2>
+      <p>Nie opowiadamy o możliwościach systemu. Odtwarzamy cztery sytuacje, które ich zespół zna na pamięć.</p>
+
+      <div class="transcript">
+        <div class="bar"><span>Scena 1 · sobota 21:40 · brak ciepłej wody, klatka B</span><span class="live">● rozmowa trwa</span></div>
+        <div class="turns">
+          <div class="turn agent"><span class="who">Agent</span><span>Dobry wieczór, infolinia Lux Dom. Rozmawia Pani z asystentem głosowym, rozmowa jest nagrywana. W czym mogę pomóc?</span></div>
+          <div class="turn"><span class="who">Mieszkanka</span><span>Nie mamy ciepłej wody od trzech godzin. Ulica Sarmacka 12, mieszkanie 34.</span></div>
+          <div class="turn agent"><span class="who">Agent</span><span>Widzę, że to nie pierwsze zgłoszenie z tego adresu dzisiaj. Sprawa jest już u dyżurnego technika jako awaria węzła cieplnego, przyjęta o 20:12. Ekipa jest umówiona na miejscu na 22:30.</span></div>
+          <div class="turn"><span class="who">Mieszkanka</span><span>Czyli mam czekać do rana?</span></div>
+          <div class="turn agent"><span class="who">Agent</span><span>Nie. Wyślę Pani SMS-em numer sprawy i powiadomię o zakończeniu naprawy, jak tylko technik zamknie zgłoszenie. Jeżeli do 23:30 nic się nie zmieni, sprawa sama wróci do dyżurnego jako niezamknięta.</span></div>
+        </div>
+        <div class="out"><span>zgłoszenie #4471 · dopięte do istniejącej awarii</span><span>SMS wysłany</span><span>brak drugiego wyjazdu ekipy</span></div>
+      </div>
+
+      <div class="cards">
+        <div class="card crit">
+          <span class="tag">Scena 2 · czterdzieści telefonów naraz</span>
+          <h3>Ta sama awaria, ta sama godzina</h3>
+          <p>Pękła rura w pionie. W dwadzieścia minut dzwoni czterdziestu mieszkańców. Człowiek odbierze trzech, reszta usłyszy sygnał zajętości i napisze o tym w internecie. Agent odbiera czterdzieści rozmów równolegle, każdą wiąże z tym samym zgłoszeniem, każdemu podaje ten sam, aktualny status i wysyła powiadomienie o usunięciu awarii. <b>Ten jeden wieczór to cały argument retencyjny na marcowe zebranie.</b></p>
+        </div>
+        <div class="card acc">
+          <span class="tag">Scena 3 · notariusz, wtorek 9:15</span>
+          <h3>Zaświadczenie o niezaleganiu</h3>
+          <p>Dzwoni pośrednik przed aktem notarialnym. Agent rozpoznaje typ sprawy, potwierdza lokal i właściciela, zakłada zlecenie do księgowości z terminem, podaje realny czas przygotowania i wysyła potwierdzenie mailem. Administrator dowiaduje się o sprawie z gotowego zlecenia, a nie z telefonu w środku innej pracy.</p>
+        </div>
+        <div class="card ok">
+          <span class="tag">Scena 4 · luty, rozliczenie wody</span>
+          <h3>Szczyt, który zawsze boli</h3>
+          <p>Poszły rozliczenia roczne i ruch rośnie kilkukrotnie. Agent tłumaczy strukturę rozliczenia na danych konkretnego lokalu, przyjmuje reklamację odczytu jako sprawę z numerem, a do księgowości trafia uporządkowana lista korekt zamiast trzystu maili. Tu pokazujemy raport: ile spraw, jakich, z których budynków.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="integracje">
+      <h2><span class="num">07</span>Integracje i gdzie leży ryzyko projektu</h2>
+      <p>Nie sprzedajemy integracji, której nie widzieliśmy. Kluczowe ryzyko techniczne: <b>e-kartoteka jest systemem zewnętrznego dostawcy</b>, więc dostęp do danych o saldach i lokalach zależy od cudzego API. Dlatego zakres dzielimy na to, co działa niezależnie, i to, co jest opcją z planem zapasowym.</p>
+
+      <div class="scroller">
+        <table>
+          <caption>Mapa integracji i warianty awaryjne</caption>
+          <thead>
+            <tr><th>Element</th><th>Podejście podstawowe</th><th>Plan B, jeśli podstawowe odpada</th><th>Ryzyko</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Telefonia</td><td>SIP trunk lub numer równoległy, przekierowanie po X sygnałach, poza godzinami i przy zajętości</td><td>Osobny numer infolinii promowany na klatkach i w e-kartotece</td><td><span class="pill auto">niskie</span></td></tr>
+            <tr><td>Baza nieruchomości, lokali i opiekunów</td><td>Import z ich systemu, synchronizacja nocna</td><td>Arkusz eksportowany cyklicznie, wystarczy do routingu</td><td><span class="pill auto">niskie</span></td></tr>
+            <tr><td>Salda i rozliczenia (e-kartoteka / eDom)</td><td>API dostawcy, odczyt po weryfikacji tożsamości</td><td>Agent nie podaje kwot głosowo, tylko wysyła link do e-kartoteki lub kieruje do księgowości</td><td><span class="pill human">wysokie, do audytu</span></td></tr>
+            <tr><td>Zgłoszenia usterek</td><td>Zapis do ich helpdesku lub modułu zgłoszeń</td><td>Nasz panel zgłoszeń z eksportem i powiadomieniami, wdrażany w cenie</td><td><span class="pill hybrid">średnie</span></td></tr>
+            <tr><td>Kalendarze i poczta</td><td>Google Workspace lub Microsoft 365</td><td>Zaproszenia mailowe bez integracji</td><td><span class="pill auto">niskie</span></td></tr>
+            <tr><td>SMS</td><td>Bramka z nadpisem nadawcy „LUX DOM”</td><td>Powiadomienia mailem</td><td><span class="pill auto">niskie</span></td></tr>
+            <tr><td>Aplikacja mieszkańca (Fliko)</td><td>Integracja, jeśli dostawca udostępnia API</td><td>Kanał pomijany w fazie pierwszej</td><td><span class="pill hybrid">średnie</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="lead-note">Zdanie do wypowiedzenia na spotkaniu wprost: <strong>„Zakres, który gwarantujemy, nie zależy od tego, czy dostawca e-kartoteki otworzy nam API. Integracja z saldami jest opcją, a nie fundamentem, i wycenimy ją dopiero po audycie technicznym.”</strong> To rozbraja najczęstszy powód, dla którego takie wdrożenia się rozjeżdżają, i buduje wiarygodność szybciej niż jakikolwiek slajd.</div>
+    </section>
+
+    <section id="prawo">
+      <h2><span class="num">08</span>AI Act i RODO, czyli argument, którego konkurencja nie ma</h2>
+      <p>Od 2 sierpnia 2026 roku obowiązują przepisy przejrzystości z artykułu 50 unijnego AI Act. Firma używająca voicebota musi zadbać, żeby rozmówca najpóźniej przy pierwszej interakcji wiedział, że rozmawia z systemem AI. Obowiązek dotyczy nie tylko dostawcy technologii, ale też firmy, która jej używa w obsłudze klienta. Dla nas to nie jest przeszkoda, tylko powód, żeby wejść na spotkanie z gotową listą.</p>
+      <ul class="plain">
+        <li><b>Ujawnienie w otwarciu rozmowy.</b> Agent przedstawia się jako asystent głosowy i informuje o nagrywaniu. Nie udaje człowieka, nawet zapytany wprost.</li>
+        <li><b>Wyjście do człowieka</b> dostępne na żądanie w każdym momencie, bez konieczności przechodzenia przez menu.</li>
+        <li><b>Umowa powierzenia przetwarzania</b> z wykazem podprocesorów, dane przetwarzane i przechowywane w Unii, retencja nagrań i transkryptów ustalana przez Lux Dom, nie przez nas.</li>
+        <li><b>Dane finansowe mieszkańca</b> to osobna decyzja, którą podejmuje klient: albo weryfikacja tożsamości i odczyt salda głosowo, albo wariant bezpieczniejszy, w którym agent kieruje do e-kartoteki. Na start rekomendujemy wariant drugi.</li>
+        <li><b>Brak treningu na ich danych.</b> Nagrania i transkrypty nie zasilają modeli, służą wyłącznie obsłudze i raportowaniu.</li>
+        <li><b>Rejestr rozmów jako dowód.</b> W sporze z właścicielem lokalu transkrypt z datą jest po ich stronie, nie przeciwko nim.</li>
+      </ul>
+    </section>
+
+    <section id="plan">
+      <h2><span class="num">09</span>Plan wdrożenia</h2>
+      <p>Każda faza kończy się bramką, czyli konkretem, który klient widzi i akceptuje przed przejściem dalej. Jeżeli bramka nie zapala się na zielono, nie idziemy naprzód i nie fakturujemy kolejnego etapu.</p>
+
+      <div class="phases">
+        <div class="phase">
+          <div class="when"><b>Faza 0</b><span>dni 1–5</span></div>
+          <div class="what">
+            <h3>Audyt i decyzje</h3>
+            <p>Statystyki centrali i próbka nagrań, top 50 realnych tematów rozmów, mapa nieruchomości i opiekunów, ścieżki alarmowe dla awarii per budynek, audyt techniczny e-kartoteki, decyzje RODO i zakres danych. Zbieramy też ich obecne koszty dyżuru nocnego.</p>
+            <span class="gate"><b>Bramka:</b> zatwierdzony zakres fazy 1 i podpisane dostępy.</span>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="when"><b>Faza 1</b><span>dni 6–15</span></div>
+          <div class="what">
+            <h3>Pilot na produkcji</h3>
+            <p>Jeden numer, ruch poza godzinami pracy biura. Zakres: informacje operacyjne, przyjęcie usterki z numerem sprawy, eskalacja awarii krytycznej, potwierdzenia SMS, transkrypt i streszczenie każdej rozmowy do skrzynki administratora.</p>
+            <span class="gate"><b>Bramka:</b> raport z realnego ruchu, w tym udział rozmów zamkniętych bez człowieka i lista tematów do dostrojenia.</span>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="when"><b>Faza 2</b><span>tyg. 4–6</span></div>
+          <div class="what">
+            <h3>Pełny ruch przychodzący</h3>
+            <p>Przejęcie głównej linii w godzinach pracy, routing po adresie do właściwego administratora, integracja z kalendarzem i bazą lokali, panel zgłoszeń, raport miesięczny w podziale na nieruchomości. Opcjonalnie moduł sald, jeżeli audyt dał zielone światło.</p>
+            <span class="gate"><b>Bramka:</b> zero połączeń nieodebranych w miesiącu i komplet zgłoszeń w jednym rejestrze.</span>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="when"><b>Faza 3</b><span>tyg. 7–10</span></div>
+          <div class="what">
+            <h3>Pozostałe kanały i ruch wychodzący</h3>
+            <p>Skrzynka biura i formularz na stronie obsługiwane tą samą bazą wiedzy, opcjonalnie WhatsApp. Kampanie wychodzące: powiadomienia o wyłączeniach i przeglądach, przypomnienia o odczytach i zebraniach, pilotaż miękkiej windykacji na jednej wspólnocie.</p>
+            <span class="gate"><b>Bramka:</b> zmierzony efekt kampanii windykacyjnej i decyzja o rozszerzeniu.</span>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="when"><b>Stale</b><span>co miesiąc</span></div>
+          <div class="what">
+            <h3>Dostrajanie i raport zarządczy</h3>
+            <p>Przegląd rozmów przekazanych do ludzi, dopisywanie brakujących odpowiedzi do bazy wiedzy, raport jakości obsługi per wspólnota. Ten raport zarząd Lux Dom kładzie na stole na zebraniu rocznym, a to jest ich twardy argument przy głosowaniu nad zarządcą.</p>
+            <span class="gate"><b>Bramka:</b> comiesięczny przegląd wskaźników z tabeli celów.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="roi">
+      <h2><span class="num">10</span>Model ROI</h2>
+      <p>Poniższy rachunek jest modelem opartym na jawnych założeniach, celowo ostrożnym. Na spotkaniu podmieniamy założenia na ich liczby i przeliczamy przy nich, na żywo. To działa lepiej niż gotowy wynik, bo klient sam widzi, że model nie jest napompowany.</p>
+
+      <div class="scroller">
+        <table>
+          <caption>Założenia wejściowe (do potwierdzenia)</caption>
+          <thead><tr><th>Parametr</th><th>Wartość w modelu</th><th>Skąd</th></tr></thead>
+          <tbody>
+            <tr><td>Lokale w zarządzie</td><td class="num">20 000</td><td>Ostrożne przeliczenie z blisko 2 mln m², z zapasem na powierzchnie komercyjne i garaże</td></tr>
+            <tr><td>Połączenia przychodzące</td><td class="num">5 000 / mies.</td><td>0,25 połączenia na lokal miesięcznie, dolna granica pasma branżowego</td></tr>
+            <tr><td>Czas obsługi jednego połączenia</td><td class="num">5 min</td><td>3 min rozmowy plus 2 min na notatkę, mail i wprowadzenie sprawy</td></tr>
+            <tr><td>Koszt godziny obsługi</td><td class="num">65 zł</td><td>Mieszanka BOK i administratora, licząc pełny koszt pracodawcy</td></tr>
+            <tr><td>Udział rozmów zamykanych przez agenta</td><td class="num">60%</td><td>Cel z tabeli celów po trzecim miesiącu</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="scroller">
+        <table>
+          <caption>Wynik roczny</caption>
+          <thead><tr><th>Pozycja</th><th>Miesięcznie</th><th>Rocznie</th></tr></thead>
+          <tbody>
+            <tr><td>Czas na telefonach dzisiaj</td><td class="num">417 h</td><td class="num">5 004 h</td></tr>
+            <tr><td>Koszt tego czasu</td><td class="num">27 100 zł</td><td class="num">325 000 zł</td></tr>
+            <tr><td>Czas odzyskany przy 60% automatyzacji</td><td class="num">250 h</td><td class="num">3 000 h</td></tr>
+            <tr><td>Oszczędność na obsłudze</td><td class="num">16 250 zł</td><td class="num">195 000 zł</td></tr>
+            <tr><td>Pierwsza linia dyżuru 18:00–10:00 i weekendy</td><td class="num">do 6 000 zł</td><td class="num">do 72 000 zł</td></tr>
+            <tr><td>Utrzymanie jednej wspólnoty 10 000 m² przy stawce 1 zł/m²</td><td class="num">10 000 zł</td><td class="num">120 000 zł</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td>Łączny efekt modelowy</td><td class="num">32 250 zł</td><td class="num">387 000 zł</td></tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="disclaimer"><b>Test wrażliwości, żeby nie dać się złapać.</b> Jeżeli realny wolumen okaże się o połowę niższy, a automatyzacja zatrzyma się na 45%, efekt spada do mniej więcej 150 000 zł rocznie, a zwrot z inwestycji wydłuża się z około czterech miesięcy do siedmiu, dziewięciu. To nadal jest dobra inwestycja i lepiej powiedzieć to samemu, zanim powie to ich dyrektor finansowy.</div>
+
+      <p>Osobno, poza modelem, zostają dwie pozycje trudne do wyceny przed pilotem, a potencjalnie największe: <b>odzyskane zaległości</b> z kampanii przypomnień oraz <b>nowe metry</b> zdobyte dzięki argumentowi o infolinii 24/7 w ofercie przetargowej.</p>
+    </section>
+
+    <section id="cennik">
+      <h2><span class="num">11</span>Rama cenowa</h2>
+      <p>Propozycja wewnętrzna do decyzji przed spotkaniem. Rekomendacja: kotwiczyć cenę do kosztu jednego etatu obsługi, nie do liczby minut, i od razu pokazać wariant per nieruchomość, bo on otwiera rozmowę o odsprzedaży kosztu wspólnotom.</p>
+
+      <div class="scroller">
+        <table>
+          <thead><tr><th>Element</th><th>Widełki</th><th>Uwaga</th></tr></thead>
+          <tbody>
+            <tr><td>Pilot (faza 0 i 1)</td><td class="num">6 000–9 000 zł</td><td>Odliczany w całości od wdrożenia, jeśli wchodzą dalej. Obniża próg decyzji do poziomu, na którym nie trzeba uchwały</td></tr>
+            <tr><td>Wdrożenie pełne</td><td class="num">25 000–45 000 zł</td><td>Górna granica tylko przy integracji z e-kartoteką i modułem sald</td></tr>
+            <tr><td>Abonament</td><td class="num">4 000–9 000 zł / mies.</td><td>Zależnie od pakietu rozmów, z rozliczeniem nadwyżki za minutę</td></tr>
+            <tr><td>Wariant per nieruchomość</td><td class="num">40–60 zł / nieruchomość / mies.</td><td>Przy 160 obiektach: 6 400–9 600 zł miesięcznie. Łatwy do przełożenia na plan gospodarczy wspólnoty</td></tr>
+            <tr><td>Moduły dodatkowe</td><td class="num">wycena osobna</td><td>Kampanie wychodzące, windykacja miękka, kanał mailowy i WhatsApp</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="obiekcje">
+      <h2><span class="num">12</span>Obiekcje, które padną</h2>
+
+      <div class="qa">
+        <div>
+          <span class="q">Nasi mieszkańcy to często osoby starsze. Oni nie będą rozmawiać z robotem.</span>
+          <span class="a">Dzisiaj rozmawiają z sygnałem zajętości, a to jest gorsze doświadczenie niż jakikolwiek automat. Agent mówi wolno, cierpliwie powtarza, nie ponagla i nie ma złego dnia w piątek o siedemnastej. W godzinach pracy biura każdy, kto poprosi o człowieka, dostaje człowieka natychmiast. Na pilocie mierzymy to wprost: ile osób prosi o przełączenie i na jakich tematach.</span>
+        </div>
+        <div>
+          <span class="q">A jak on powie coś głupiego o pieniądzach albo o uchwale?</span>
+          <span class="a">Nie powie, bo nie ma z czego. Agent odpowiada wyłącznie z bazy wiedzy, którą Państwo zatwierdzają, a poza nią ma jedną dozwoloną odpowiedź: że przekazuje sprawę i kto się odezwie. Interpretacji prawa, uchwał i kosztów remontów świadomie mu nie oddajemy, i to jest zapisane w umowie, nie w prezentacji.</span>
+        </div>
+        <div>
+          <span class="q">Mamy e-kartotekę i aplikację. Po co nam jeszcze jeden system?</span>
+          <span class="a">Portal obsługuje mieszkańca, który sam wchodzi i szuka. Telefon obsługuje mieszkańca, który ma awarię o dwudziestej drugiej albo nigdy nie zalogował się do portalu, a takich jest większość i to oni piszą opinie. Nie zastępujemy e-kartoteki, tylko domykamy kanał, w którym dzisiaj powstaje cała szkoda wizerunkowa.</span>
+        </div>
+        <div>
+          <span class="q">Czy to znaczy, że mamy zwolnić ludzi z biura obsługi?</span>
+          <span class="a">Nie i nie tak to sprzedajemy. Ci sami ludzie przestają odpowiadać po raz tysięczny na pytanie o numer konta i zaczynają robić rzeczy, na które dzisiaj nie mają czasu: windykację, kontakt z radami wspólnot, jakość obsługi. Zespół, który poczuje się zagrożony, potrafi skutecznie utopić takie wdrożenie, więc ich rolę ustalamy przed startem, nie po.</span>
+        </div>
+        <div>
+          <span class="q">Mamy już dyżur telefoniczny po godzinach.</span>
+          <span class="a">Macie i za niego płacicie. Pytanie brzmi, ile z tych nocnych zgłoszeń rano trafia do systemu w komplecie, z adresem, numerem lokalu i opisem, a ile ginie po drodze. Agent kosztuje mniej niż dyżur, obsługuje dowolną liczbę rozmów naraz i zostawia ślad po każdej. Dyżurny zostaje tam, gdzie jest niezastąpiony: przy realnej awarii.</span>
+        </div>
+        <div>
+          <span class="q">Co z RODO i nagrywaniem rozmów?</span>
+          <span class="a">Informacja o AI i o nagrywaniu pada w pierwszym zdaniu, co od sierpnia tego roku wynika wprost z artykułu 50 AI Act. Dane przetwarzamy w Unii, na umowie powierzenia, z retencją, którą ustalają Państwo. Nagrania nie zasilają żadnych modeli. W sporze z właścicielem lokalu transkrypt jest Państwa dowodem.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="spotkanie">
+      <h2><span class="num">13</span>Co zrobić przed spotkaniem i o co zapytać</h2>
+
+      <h3>Przygotować</h3>
+      <ul class="plain">
+        <li><b>Agenta demonstracyjnego z ich brandingiem</b> na jednym numerze, znającego trzy realne tematy: zgłoszenie awarii, pytanie o numer konta i prośbę o zaświadczenie o niezaleganiu. Piętnaście minut rozmowy o możliwościach nie zrobi tego, co jeden telefon wykonany przy stole.</li>
+        <li><b>Pokaz równoległości.</b> Dwie osoby dzwonią jednocześnie z dwóch telefonów. To jest moment, w którym zarządca rozumie, o co chodzi, bo zna wieczór z pękniętym pionem.</li>
+        <li><b>Wydruk transkryptu i SMS-a</b> z demo, zostawiony na stole. Zabierają go ze sobą.</li>
+        <li><b>Kalkulator ROI otwarty na żywo</b>, żeby podmieniać ich liczby w trakcie rozmowy.</li>
+      </ul>
+
+      <h3>Zapytać, bo od tego zależy twarda oferta</h3>
+      <div class="checklist">
+        <div>Ile połączeń miesięcznie wchodzi na główny numer i ile z nich zostaje nieodebranych?</div>
+        <div>Jaka centrala i czy jest raport połączeń nieodebranych?</div>
+        <div>Kto obsługuje dyżur 18:00–10:00 i weekendy, i ile to kosztuje miesięcznie?</div>
+        <div>Ilu ludzi siedzi na telefonie i czy telefony trafiają też wprost do administratorów?</div>
+        <div>Ile maili miesięcznie wpada na biuro@ i jaki jest czas odpowiedzi?</div>
+        <div>Czy dostawca e-kartoteki (eDom) udostępnia API i kto jest po ich stronie do kontaktu?</div>
+        <div>W jakim systemie rejestrowane są dziś zgłoszenia usterek?</div>
+        <div>Jakie są ścieżki alarmowe dla awarii krytycznych per nieruchomość?</div>
+        <div>Ile wspólnot odeszło w ostatnich dwóch latach i jaki podawano powód?</div>
+        <div>Ile nowych nieruchomości chcą pozyskać w tym roku?</div>
+        <div>Jaki jest poziom zaległości w zaliczkach i kto się nimi dziś zajmuje?</div>
+        <div>Kto podejmuje decyzję i czy potrzebna jest zgoda wspólnot, czy to decyzja spółki?</div>
+        <div>Kiedy zaczyna się u nich sezon zebrań i jaki jest realny deadline wdrożenia?</div>
+      </div>
+
+      <div class="lead-note"><strong>Zamknięcie do wypowiedzenia na koniec:</strong> „Do końca marca odbędą się zebrania na stu sześćdziesięciu nieruchomościach. Na każdym ktoś zada pytanie o kontakt z administracją. Możemy sprawić, żeby za pół roku odpowiedzią na to pytanie był raport, a nie tłumaczenie. Zaczynamy od jednego numeru i dziesięciu dni.”</div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div><b>Źródła.</b> Domena lux-dom.pl była w tej sesji zablokowana przez politykę sieciową, więc profil firmy złożono z poniższych materiałów. Dane liczbowe o firmie wymagają potwierdzenia u klienta.</div>
+    <ol>
+      <li>Profil firmy i skala działalności, <a href="https://pl.linkedin.com/company/lux-dom-sp-z-o-o">LinkedIn Lux Dom sp. z o.o.</a></li>
+      <li>Opinie mieszkańców, w tym powracające zarzuty o brak kontaktu, <a href="https://pewnylokal.pl/lux-dom-opinie">pewnylokal.pl</a></li>
+      <li>Dane rejestrowe, <a href="https://www.bizraport.pl/krs/0000263547/lux-dom-spolka-z-ograniczona-odpowiedzialnoscia">BizRaport, KRS 0000263547</a> oraz <a href="https://panoramafirm.pl/mazowieckie,,warszawa,aleja_wilanowska,9/lux_dom_sp._z_o.o.-ajjbtt_nlr.html">Panorama Firm</a></li>
+      <li>System e-kartoteka, <a href="https://edomzarzadzanie.pl/e-kartoteka">edomzarzadzanie.pl</a>; aplikacja mieszkańca, <a href="https://fliko.pl/integracje/">fliko.pl</a></li>
+      <li>Ogłoszenie o pracę na stanowisko specjalisty do spraw telefonicznej obsługi klienta, <a href="https://www.pracuj.pl/praca/specjalista-specjalistka-ds-telefonicznej-obslugi-klienta-warszawa-lowcza-26,oferta,1003255184">pracuj.pl</a></li>
+      <li>Obowiązki przejrzystości od 2 sierpnia 2026, artykuł 50 AI Act, <a href="https://www.adwokatura.pl/ogolnoprawne/ai-act-od-2-sierpnia-2026-r-obowiazuja-nowe-zasady-transparentnosci/">Naczelna Rada Adwokacka</a> oraz <a href="https://forsal.pl/gospodarka/prawo/artykuly/11274549,chatbot-nie-bedzie-mogl-udawac-konsultanta-nowe-prawo-juz-od-sierpnia.html">Forsal</a></li>
+    </ol>
+    <div>Couders · notatka wewnętrzna · dane rynkowe zebrane 26 sierpnia 2026</div>
+  </footer>
+
+</div>
