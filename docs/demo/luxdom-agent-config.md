@@ -258,26 +258,70 @@ rozłączać. Sarmacka dwanaście, mieszkanie trzydzieści cztery, tak?
 
 ## 2. Pierwsza wiadomość
 
-Pole **First message**. ElevenLabs podstawia zmienne dynamiczne, więc jedno
-zdanie obsłuży oba przypadki.
-
-**Wariant dla znanego numeru:**
+Pole **First message**. Jeden szablon obsługuje wszystkie przypadki, bo cała
+zmienność siedzi w trzech zmiennych, które wylicza webhook.
 
 ```
-Dobry wieczór, {{caller_name}}, tu Ada, asystent głosowy Lux Dom. Rozmowa jest nagrywana. Dzwoni Pan w sprawie lokalu przy {{property_address}}?
+{{greeting}}{{caller_salutation}}, tu Ada, asystent głosowy Lux Dom, rozmowa jest nagrywana. {{opening_question}}
 ```
 
-**Wariant dla nieznanego numeru (fallback w webhooku):**
+### Jak to brzmi w praktyce
 
+| Sytuacja | Wypowiedź |
+|---|---|
+| Nieznany numer | Dzień dobry, tu Ada, asystent głosowy Lux Dom, rozmowa jest nagrywana. W czym mogę pomóc? |
+| Znany właściciel | Dzień dobry panie Marku, tu Ada, asystent głosowy Lux Dom, rozmowa jest nagrywana. W czym mogę pomóc? |
+| Znany, ma otwarte zgłoszenie | Dobry wieczór panie Marku, tu Ada, asystent głosowy Lux Dom, rozmowa jest nagrywana. Dzwoni Pan w sprawie awarii na Sarmackiej dwanaście? |
+| Członek rady wspólnoty | Dzień dobry pani Anno, tu Ada, asystent głosowy Lux Dom, rozmowa jest nagrywana. Łączę z opiekunem nieruchomości, chwileczkę. |
+
+Trzeci wariant to scena, która sprzedaje demo. Wymaga tylko tego, żeby numery
+uczestników spotkania były w mocku przed spotkaniem.
+
+### Wyliczanie zmiennych (n8n, przed zwróceniem do ElevenLabs)
+
+```js
+const h = new Date().getHours();
+const greeting = h >= 18 || h < 4 ? "Dobry wieczór" : "Dzień dobry";
+
+// Pusty string, gdy numer nieznany albo forma grzecznościowa niepewna.
+// Lepiej nie powiedzieć nic, niż powiedzieć "panie" do kobiety.
+const caller_salutation = caller ? ` ${caller.salutation}` : "";
+
+let opening_question = "W czym mogę pomóc?";
+if (caller?.isBoardMember) {
+  opening_question = "Łączę z opiekunem nieruchomości, chwileczkę.";
+} else if (openTicket) {
+  opening_question = `Dzwoni ${caller.formal} w sprawie ${openTicket.shortLabel}?`;
+}
 ```
-Dzień dobry, tu Ada, asystent głosowy Lux Dom. Rozmowa jest nagrywana. W czym mogę pomóc?
-```
 
-Ujawnienie, że to AI, i informacja o nagrywaniu muszą paść w pierwszej
-wypowiedzi. Od 2 sierpnia 2026 wynika to wprost z artykułu 50 AI Act, a na
-spotkaniu jest to argument sprzedażowy, nie formalność.
+`openTicket.shortLabel` to gotowy do wymówienia opis, na przykład
+`"awarii na Sarmackiej dwanaście"`. Nie sklejaj go w prompcie z surowych pól.
 
----
+### Czego w pierwszej wypowiedzi nie ma i dlaczego
+
+**Nie ma menu.** Żadnego "wybierz jeden, wybierz dwa". Cały sens tego produktu
+polega na tym, że człowiek mówi normalnie, a nie nawiguje po drzewku.
+
+**Nie ma korporacyjnej formułki** typu "rozmowa może być nagrywana w celu
+podnoszenia jakości obsługi". Trzy słowa "rozmowa jest nagrywana" załatwiają
+obowiązek i nie zjadają pięciu sekund.
+
+**Nie ma listy umiejętności.** "Mogę przyjąć zgłoszenie, sprawdzić status,
+umówić wizytę" brzmi jak automat i zachęca do testowania granic zamiast
+załatwienia sprawy.
+
+**Nie ma informacji, że biuro jest zamknięte**, nawet o dwudziestej pierwszej
+czterdzieści. To, że ktokolwiek odebrał w sobotę wieczorem, jest właśnie tym,
+co ma zostać zauważone. Agent powie o godzinach dopiero wtedy, gdy będzie to
+miało znaczenie dla sprawy.
+
+**Nie ma form zależnych od płci przy nieznanym numerze.** "Rozmowa jest
+nagrywana" zamiast "rozmawia Pan z asystentem", bo przy nieznanym numerze nie
+wiadomo, kto dzwoni, a chybiona forma grzecznościowa psuje pierwsze wrażenie
+bardziej niż cokolwiek innego w tej rozmowie.
+
+Cel: poniżej siedmiu sekund. Wariant dla nieznanego numeru mieści się w pięciu.
 
 ## 3. Zmienne dynamiczne
 
@@ -293,6 +337,9 @@ Zwracane przez `conversation initiation webhook` na podstawie numeru dzwoniąceg
 | `current_time` | `sobota, 21:40` | |
 | `office_hours` | `poniedziałek do piątku, 9:00 do 17:00` | |
 | `is_office_hours` | `nie` | |
+| `greeting` | `Dobry wieczór` | wyliczany z godziny, nie z modelu |
+| `caller_salutation` | ` panie Marku` | z wiodącą spacją; pusty, gdy numer nieznany |
+| `opening_question` | `Dzwoni Pan w sprawie awarii na Sarmackiej dwanaście?` | patrz sekcja 2 |
 
 Adres podawaj **już odmieniony**. Model potrafi to zrobić sam, ale w telefonie
 nie ma miejsca na loterię.
