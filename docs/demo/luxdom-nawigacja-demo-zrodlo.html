@@ -3,32 +3,36 @@
 <style>
   @page { size: A4; margin: 13mm 12mm 12mm; }
   * { box-sizing: border-box; }
-  body { margin:0; font-family:"DejaVu Sans",sans-serif; font-size:8.4pt; line-height:1.36;
+  body { margin:0; font-family:"DejaVu Sans",sans-serif; font-size:8.4pt; line-height:1.34;
          color:#16211F; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   h1,h2 { font-family:"DejaVu Serif",serif; margin:0; }
-  h1 { font-size:17pt; line-height:1.1; }
+  h1 { font-size:16.5pt; line-height:1.1; }
   h2 { font-size:11pt; color:#0B4D44; margin:0 0 5px; padding-bottom:3px; border-bottom:1.5px solid #0F6B5F; }
   h2 span { font-family:"DejaVu Sans",sans-serif; font-size:7.2pt; color:#6E7C78; float:right; font-weight:normal; padding-top:3px; }
   p { margin:0 0 5px; }
 
   .top { display:flex; justify-content:space-between; align-items:flex-end;
-         border-bottom:2.5px solid #0F6B5F; padding-bottom:5px; margin-bottom:8px; }
+         border-bottom:2.5px solid #0F6B5F; padding-bottom:5px; margin-bottom:7px; }
   .brand { font-size:12pt; font-weight:bold; letter-spacing:3pt; color:#0F6B5F; }
   .meta { font-size:7.4pt; color:#5C6B67; text-align:right; }
-  .lead { font-size:9pt; color:#33443F; margin:4px 0 9px; }
+  .lead { font-size:8.8pt; color:#33443F; margin:3px 0 8px; }
   .lead b { color:#16211F; }
-  section { margin-bottom:8px; }
+  section { margin-bottom:7px; }
 
-  .step { display:grid; grid-template-columns:52px minmax(0,1fr); border-bottom:1px solid #E2E9E6; }
+  .step { display:grid; grid-template-columns:50px minmax(0,1fr); border-bottom:1px solid #E2E9E6; }
   .step:last-child { border-bottom:0; }
   .step .t { font-family:"DejaVu Mono","DejaVu Sans Mono",monospace; font-size:7.6pt; color:#0F6B5F;
-             padding:6px 6px 6px 0; font-weight:bold; }
-  .step .b { padding:6px 0; }
+             padding:4px 6px 4px 0; font-weight:bold; }
+  .step .b { padding:4px 0; }
   .step .b b { color:#0B4D44; }
   .step .b .say { display:block; margin-top:2px; padding:3px 7px; background:#F1F6F4;
                   border-left:2px solid #0F6B5F; font-style:italic; color:#274741; }
   .step.hot .t { color:#A8382A; }
   .step.hot .b b { color:#8C2E22; }
+  .step .b .note { display:block; margin-top:3px; padding:4px 7px; background:#FBF8F1;
+                   border-left:2.5px solid #8A6516; color:#3C4C48; }
+  .step .b .note b { color:#6E5111; }
+  .step .b .note i { color:#4A3A10; }
 
   .grid { display:flex; flex-wrap:wrap; gap:5px; }
   .c { flex:1 1 calc(50% - 3px); border:1px solid #CBD6D1; border-left:2.5px solid #0F6B5F;
@@ -36,6 +40,7 @@
   .c b { display:block; color:#0B4D44; font-size:8.6pt; margin-bottom:1px; }
   .c.br { border-left-color:#8A6516; background:#FBF8F1; } .c.br b { color:#6E5111; }
   .c.crit { border-left-color:#A8382A; background:#FCF6F4; } .c.crit b { color:#8C2E22; }
+  .c.wide { flex:1 1 100%; }
 
   .qa > div { border-bottom:1px solid #E2E9E6; padding:4px 0; }
   .qa .q { font-weight:bold; color:#16211F; }
@@ -58,17 +63,16 @@
 
 <h1>Jak poprowadzić to spotkanie</h1>
 <p class="lead">To jest kartka dla Ciebie, nie dla klienta. Zasada nadrzędna: <b>nie opowiadaj, tylko
-dzwoń.</b> Każda minuta spędzona na tłumaczeniu, jak to działa, jest minutą odebraną scenom, w których
-zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każdej scenie rób sekundę ciszy.</p>
+dzwoń.</b> Każda minuta tłumaczenia, jak to działa, jest minutą odebraną scenom, w których zarządca
+sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, po każdej scenie rób sekundę ciszy.</p>
 
 <section>
   <h2>Zanim wejdziesz <span>15 MINUT WCZEŚNIEJ</span></h2>
   <ul class="chk">
-    <li>Numery uczestników wpisane w arkuszu i w węźle n8n, w formacie +48XXXXXXXXX</li>
-    <li>Workflow w n8n na Active, jeden testowy telefon wykonany i odebrany</li>
-    <li>Arkusz otwarty na drugim ekranie, wiersz przykładowy skasowany</li>
+    <li>Agent opublikowany (Publish), jeden testowy telefon wykonany, odebrany i dograny do końca</li>
+    <li>Workflow w n8n na Active, arkusz otwarty na drugim ekranie, wiersze testowe skasowane</li>
     <li>Skrzynka z powiadomieniami otwarta na telefonie leżącym na stole, ekranem do góry</li>
-    <li>Dwa telefony naładowane, drugi z ustawionym głośnym dzwonkiem</li>
+    <li>Dwa telefony naładowane, drugi z głośnym dzwonkiem; kartka i długopis na numer sprawy</li>
     <li>Nagrania zapasowe scen w telefonie, na wypadek zasięgu w sali</li>
   </ul>
 </section>
@@ -85,10 +89,18 @@ zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każde
 
   <div class="step">
     <div class="t">2–5</div>
-    <div class="b"><b>Scena pierwsza: rozpoznanie.</b> Poproś jedną osobę, żeby zadzwoniła ze swojego
-      telefonu. Agent wita ją po imieniu i pyta o jej nieruchomość. Nic nie komentuj przez pierwsze
-      dziesięć sekund, niech wybrzmi.
-      <span class="say">„Nie podawał Pan nazwiska. System rozpoznał numer i wie, o którym budynku mówimy."</span>
+    <div class="b"><b>Scena pierwsza: zgłoszenie, które zostaje w systemie.</b> Zadzwoń sam, na oczach
+      sali, z głośnikiem. Zgłoś niedziałający domofon na Klimczaka pięć, lokal dwadzieścia trzy. Agent
+      dopyta o adres i lokal, powtórzy opis i poda numer sprawy cyfra po cyfrze. Zapisz ten numer na
+      kartce. <b>Nie przełączaj jeszcze na arkusz</b> — to zostaw na minutę dziewiętnastą.
+      <span class="say">„Proszę zwrócić uwagę na jedną rzecz: on nie tylko odebrał. Dopytał o lokal, powtórzył opis i nadał sprawie numer. Za chwilę pokażę, gdzie ten numer wylądował."</span>
+      <span class="note"><b>Powiedz to, ale nie pokazuj: rozpoznawanie po numerze.</b> Agent umie
+      rozpoznać dzwoniącego po numerze telefonu — wita po nazwisku, zna adres, lokal i poprzednie
+      zgłoszenia. Dziś wyłączone świadomie: baza testowa ma dwa budynki, więc zadziałałoby dla dwóch
+      osób w sali i wyglądało na ustawkę. <i>„Ten sam agent potrafi rozpoznać Państwa mieszkańca po
+      numerze i od pierwszej sekundy wiedzieć, o którym budynku i lokalu mówimy, bez pytania o adres.
+      Dziś tego nie włączam, bo baza demo ma dwa budynki. Na wdrożeniu podpinamy Państwa bazę lokali
+      i działa dla wszystkich."</i></span>
     </div>
   </div>
 
@@ -97,7 +109,7 @@ zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każde
     <div class="b"><b>Scena druga: awaria krytyczna. To jest gwóźdź spotkania.</b> Zgłoś zalanie.
       Włącz stoper w telefonie, gdy padnie słowo „zalanie". Zatrzymaj, gdy zadzwoni drugi telefon
       na stole. Pokaż ekran stopera.
-      <span class="say">„Osiem sekund od zgłoszenia do telefonu u dyżurnego. Umowa mówi o sześćdziesięciu."</span>
+      <span class="say">„Osiem sekund od zgłoszenia do telefonu u dyżurnego. Umowa mówi o sześćdziesięciu minutach."</span>
     </div>
   </div>
 
@@ -127,9 +139,10 @@ zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każde
 
   <div class="step">
     <div class="t">19–25</div>
-    <div class="b"><b>Co zostaje po rozmowie.</b> Przełącz na arkusz i pokaż wiersze, które powstały
-      w trakcie spotkania. Potem telefon ze skrzynką i mailem do administratora.
-      <span class="say">„To jest ta część, której dzisiaj Państwo nie mają. Nie chodzi o to, że ktoś odebrał, tylko że po rozmowie został ślad z adresem, lokalem i opisem."</span>
+    <div class="b"><b>Co zostaje po rozmowie.</b> Przełącz na arkusz, znajdź numer sprawy zapisany
+      w trzeciej minucie i pokaż wiersz: adres, lokal, opis, kategoria, godzina. Potem telefon
+      ze skrzynką i mailem do administratora.
+      <span class="say">„To jest ta część, której dzisiaj Państwo nie mają. Nie chodzi o to, że ktoś odebrał, tylko że po rozmowie został ślad z adresem, lokalem i opisem — i że ten ślad powstał sam."</span>
     </div>
   </div>
 
@@ -152,7 +165,7 @@ zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każde
 <div class="pb">
 <div class="top">
   <div><div class="brand">COUDERS</div></div>
-  <div class="meta">Upsell, obiekcje, plan awaryjny</div>
+  <div class="meta">Upsell, czego nie mówić</div>
 </div>
 
 <section>
@@ -160,13 +173,27 @@ zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każde
   <p>Nie wyliczaj katalogu. Każdy moduł podpinaj do sceny, która przed chwilą się wydarzyła. Wtedy
   brzmi jak dokończenie czegoś, co widzieli, a nie jak sprzedaż dodatków.</p>
   <div class="grid">
+    <div class="c br wide"><b>Rozpoznawanie dzwoniącego po numerze — wracaj do tego, bo to najmocniejszy argument o wdrożeniu</b>
+      „Zauważyli Państwo, że agent zapytał o adres. Nie musi. Po podłączeniu Państwa bazy lokali rozpoznaje
+      mieszkańca po numerze telefonu: wita go po nazwisku, wie, że dzwoni z Sarmackiej dwanaście, lokal
+      czterdzieści pięć, i widzi, że dwa tygodnie temu zgłaszał tę samą usterkę — więc zamiast pytać
+      o wszystko od nowa, pyta, czy sprawa dotyczy tego samego. Rozmowa skraca się o kilkanaście sekund,
+      a mieszkaniec ma wrażenie, że dzwoni do kogoś, kto go zna."
+      <br><br><b style="color:#8C2E22;font-size:8pt">Jeśli zapytają, czemu nie pokazałeś tego dziś:</b>
+      „Bo baza demo ma dwie nieruchomości i kilka numerów wpisanych ręcznie. Rozpoznałby dwie osoby przy tym
+      stole i słusznie wyglądałoby to na ustawkę. To funkcja, która ma sens dopiero na prawdziwej bazie lokali,
+      i wtedy ją włączamy — nie trzeba nic dopisywać do systemu, wystarczy podpiąć dane."</div>
+
     <div class="c br"><b>SMS, po scenie ze zgłoszeniem</b>
-      „Zauważyli Państwo, że agent podał numer sprawy głosem. Na wdrożeniu wychodzi też SMS-em, z nadpisem LUX DOM. To jest najtańszy moduł i ten, który najmocniej zbija liczbę powtórnych telefonów, bo mieszkaniec ma potwierdzenie w telefonie."
+      „Agent podał numer sprawy głosem. Na wdrożeniu wychodzi też SMS-em, z nadpisem LUX DOM. Najtańszy
+      moduł i ten, który najmocniej zbija liczbę powtórnych telefonów, bo mieszkaniec ma potwierdzenie w telefonie."
       <br><br><b style="color:#8C2E22;font-size:8pt">Jeśli zapytają, czemu SMS nie przyszedł teraz:</b>
       „Bramka wymaga weryfikacji firmy i rejestracji nadpisu nadawcy, żeby wiadomość wyglądała na Państwa, a nie na losowy numer. Tego nie da się zrobić na demo."</div>
 
-    <div class="c br"><b>Numer per wspólnota, po scenie z rozpoznaniem</b>
-      „Rozpoznaliśmy numer dzwoniącego. Da się to zrobić jeszcze prościej: każda wspólnota dostaje własny numer, więc agent zna adres od pierwszej sekundy. I to jest jedyna pozycja, którą można wpisać wspólnocie do planu gospodarczego, czyli przenieść koszt tam, gdzie powstaje wartość."</div>
+    <div class="c br"><b>Numer per wspólnota, zaraz po rozpoznawaniu</b>
+      „Jest jeszcze prostsza wersja tego samego: każda wspólnota dostaje własny numer, więc agent zna adres
+      od pierwszej sekundy, zanim ktokolwiek się odezwie. I to jest jedyna pozycja, którą można wpisać
+      wspólnocie do planu gospodarczego, czyli przenieść koszt tam, gdzie powstaje wartość."</div>
 
     <div class="c br"><b>Kampanie wychodzące, po scenie z duplikatem</b>
       „Tu obsłużyliśmy falę telefonów. Można ją w ogóle wygasić: przy wyłączeniu wody czy przeglądzie system uprzedza budynek SMS-em albo telefonicznie, i te czterdzieści telefonów nigdy nie powstaje."</div>
@@ -187,6 +214,7 @@ zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każde
   <h2>Czego nie mów <span>WAŻNIEJSZE NIŻ TO, CO MÓWISZ</span></h2>
   <ul>
     <li><b>Nie mów „sztuczna inteligencja" co drugie zdanie.</b> Mów „system", „agent", „infolinia". Zarządca kupuje odebrany telefon, nie technologię.</li>
+    <li><b>Nie mów, że czegoś „nie ma", gdy jest wyłączone na demo.</b> Rozpoznawanie po numerze, SMS i raporty są zbudowane. Mów „nie włączyliśmy tego na dziś, bo…" i podaj powód. To dwa różne zdania i klient słyszy różnicę.</li>
     <li><b>Nie obiecuj terminu integracji z e-kartoteką.</b> Zależy od cudzego API. Mów o audycie technicznym.</li>
     <li><b>Nie podawaj ceny, dopóki nie zapytają.</b> A gdy zapytają, odpowiadaj widełkami i pytaniem o skalę, nie liczbą.</li>
     <li><b>Nie tłumacz, jak to działa pod spodem.</b> Nikt tego nie kupuje, a każde zdanie o tym zabiera czas scenom.</li>
@@ -208,6 +236,8 @@ zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każde
   <div class="qa">
     <div><span class="q">Nasi mieszkańcy to osoby starsze, nie będą gadać z robotem.</span>
       <span class="a">Dziś rozmawiają z sygnałem zajętości, a to gorsze doświadczenie niż jakikolwiek automat. Do tego każdy, kto poprosi o człowieka, dostaje człowieka od razu.</span></div>
+    <div><span class="q">Czemu musiał pytać o adres, skoro dzwonię ze swojego numeru?</span>
+      <span class="a">Bo dziś ma bazę z dwoma budynkami. Rozpoznawanie po numerze jest w systemie i włączamy je, kiedy podepniemy Państwa bazę lokali — wtedy wita mieszkańca po nazwisku i zna jego adres, lokal i poprzednie zgłoszenia.</span></div>
     <div><span class="q">A jak powie coś głupiego?</span>
       <span class="a">Widzieli to Państwo przed chwilą: na pytanie o balkon odmówił i przekazał sprawę. Odpowiada wyłącznie z bazy, którą Państwo zatwierdzają.</span></div>
     <div><span class="q">Mamy już e-kartotekę i aplikację.</span>
@@ -224,10 +254,12 @@ zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każde
 <section>
   <h2>Gdy coś nie zadziała <span>PLAN AWARYJNY</span></h2>
   <div class="grid">
-    <div class="c crit"><b>Agent nie rozpoznaje numeru</b>Nie tłumacz się i nie grzeb w ustawieniach. „Rozpoznawanie działa na numerach wpisanych do bazy, tego nie zdążyłem dodać." Zadzwoń z numeru, który jest w arkuszu.</div>
+    <div class="c crit"><b>Agent nie łapie adresu albo prosi o powtórzenie</b>Nie poprawiaj go w pół zdania. Powtórz spokojnie i wolniej, tak jak zrobiłby to mieszkaniec. „Dopytuje, dopóki nie ma pewności — i to jest celowe, bo zgłoszenie bez adresu jest nic nie warte."</div>
+    <div class="c crit"><b>Ktoś pyta, czemu agent go nie zna</b>Odpowiedź jest na stronie drugiej i obok sceny z minuty trzeciej. Krótko: rozpoznawanie po numerze jest zbudowane, wyłączone na demo, wchodzi z bazą lokali. Nie tłumacz się dłużej niż dwoma zdaniami.</div>
     <div class="c crit"><b>n8n nie odpowiada</b>Agent dalej rozmawia i odpowiada z bazy wiedzy, traci tylko zapis. Puść nagranie sceny ze zgłoszeniem i wróć do rozmowy. Nie diagnozuj przy kliencie.</div>
     <div class="c crit"><b>Ktoś pyta o SMS, którego nie ma</b>Odpowiedź jest wyżej, w module SMS. Powiedz o nadpisie nadawcy i przejdź dalej. Nie tłumacz się dłużej niż jednym zdaniem.</div>
     <div class="c crit"><b>Zła jakość połączenia w sali</b>Przejdź na nagrania. Masz je w telefonie. Lepsze nagranie niż szarpana rozmowa przez hotelowe wi-fi.</div>
+    <div class="c crit"><b>Rozmowa rozłącza się od razu po odebraniu</b>Nie powtarzaj tego samego numeru trzy razy przy stole. Przejdź na nagrania, dokończ scenę i wróć do telefonu przy „oddaj im telefon". Awaria pokazana raz to wpadka, pokazana trzy razy to wniosek o produkcie.</div>
   </div>
 </section>
 
@@ -235,7 +267,7 @@ zarządca sam słyszy, że ktoś odbiera. Mów mało, pokazuj dużo, a po każde
   <h2>Wyjdź z tym, nie z „prześlemy ofertę" <span>DOMKNIĘCIE</span></h2>
   <ul>
     <li><b>Zaproponuj pilot</b> na jednym numerze, poza godzinami pracy biura, dziesięć dni roboczych.</li>
-    <li><b>Poproś o cztery rzeczy:</b> statystyki centrali za ostatni miesiąc, listę nieruchomości z administratorami, ścieżki alarmowe dla awarii, kontakt do dostawcy e-kartoteki.</li>
+    <li><b>Poproś o cztery rzeczy:</b> statystyki centrali za ostatni miesiąc, listę nieruchomości z administratorami, ścieżki alarmowe dla awarii, kontakt do dostawcy e-kartoteki. Do tego <b>eksport bazy lokali</b> — to on odblokowuje rozpoznawanie po numerze, więc poproś o niego wprost.</li>
     <li><b>Umów konkretny termin</b> na przekazanie tych materiałów, jeszcze przy stole. Nie „odezwiemy się".</li>
     <li><b>Zostaw dwie kartki:</b> porównanie demo z wdrożeniem oraz katalog modułów.</li>
   </ul>
