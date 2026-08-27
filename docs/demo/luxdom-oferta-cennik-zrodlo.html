@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>Oferta i plan działania</title>
+<style>
+  @page { size: A4; margin: 13mm 12mm 12mm; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"DejaVu Sans",sans-serif; font-size:8.2pt; line-height:1.33;
+         color:#16211F; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  h1,h2,h3 { font-family:"DejaVu Serif",serif; margin:0; }
+  h1 { font-size:17pt; line-height:1.1; letter-spacing:-.2pt; }
+  h2 { font-size:10.5pt; color:#0B4D44; margin:0 0 5px; padding-bottom:3px; border-bottom:1.5px solid #0F6B5F; }
+  h2 span { font-family:"DejaVu Sans",sans-serif; font-size:7.1pt; color:#6E7C78; float:right;
+            font-weight:normal; padding-top:3px; letter-spacing:.2pt; }
+  p { margin:0 0 5px; }
+
+  .top { display:flex; justify-content:space-between; align-items:flex-end;
+         border-bottom:2.5px solid #0F6B5F; padding-bottom:5px; margin-bottom:8px; }
+  .brand { font-size:12pt; font-weight:bold; letter-spacing:3pt; color:#0F6B5F; }
+  .meta { font-size:7.3pt; color:#5C6B67; text-align:right; line-height:1.4; }
+  .lead { font-size:8.7pt; color:#33443F; margin:3px 0 7px; }
+  .lead b { color:#16211F; }
+  section { margin-bottom:6px; }
+
+  .three { display:flex; gap:6px; }
+  .three > div { flex:1; border:1px solid #CBD6D1; border-radius:2px; padding:5px 8px; background:#F8FAF9; }
+  .three .k { font-size:6.9pt; letter-spacing:.4pt; text-transform:uppercase; color:#7A8A85; }
+  .three .v { font-family:"DejaVu Serif",serif; font-size:10pt; color:#0B4D44; margin:1px 0 2px; }
+
+  .pk { display:flex; gap:6px; }
+  .pk > div { flex:1; border:1px solid #CBD6D1; border-radius:2px; padding:7px 9px; background:#fff; }
+  .pk .nm { font-family:"DejaVu Serif",serif; font-size:10pt; color:#0B4D44; }
+  .pk .pr { font-family:"DejaVu Serif",serif; font-size:15pt; color:#16211F; line-height:1.15; margin:2px 0 1px; }
+  .pk .pr small { font-size:7.4pt; color:#6E7C78; font-family:"DejaVu Sans",sans-serif; }
+  .pk ul { margin:3px 0 0 12px; padding:0; font-size:7.5pt; color:#3C4C48; }
+  .pk li { margin-bottom:1.5px; }
+  .pk .best { border:1.5px solid #0F6B5F; background:#EAF3F0; }
+  .pk .tag { float:right; font-size:6.6pt; letter-spacing:.4pt; background:#0F6B5F; color:#fff;
+             padding:1px 5px; border-radius:2px; margin-top:2px; }
+
+  table { width:100%; border-collapse:collapse; }
+  th { background:#0F6B5F; color:#fff; text-align:left; padding:3px 6px; font-size:6.9pt;
+       letter-spacing:.35pt; text-transform:uppercase; font-weight:normal; }
+  td { padding:2.1px 6px; border-bottom:.7px solid #DDE5E2; vertical-align:top; font-size:7.55pt; }
+  tbody tr:nth-child(even) td { background:#F6F9F8; }
+  td.m { width:43%; } td.m b { color:#16211F; }
+  td.p, td.a { width:14%; text-align:right; white-space:nowrap;
+               font-family:"DejaVu Mono","DejaVu Sans Mono",monospace; font-size:7.3pt; color:#0B4D44; }
+  td.a { color:#6E5111; }
+  td.w { width:29%; font-size:6.9pt; color:#7A8A85; }
+  tr.cat td { background:#EAF3F0 !important; color:#0B4D44; font-weight:bold; font-size:7pt;
+              letter-spacing:.4pt; text-transform:uppercase; padding:3px 6px; border-bottom:0; }
+  td.core { color:#7A8A85; }
+
+  .rec { border:1.5px solid #0F6B5F; border-radius:2px; background:#EAF3F0; padding:8px 10px; }
+  .rec h3 { font-size:10pt; color:#0B4D44; margin:0 0 4px; }
+  .sum { display:flex; gap:6px; margin:6px 0 0; }
+  .sum > div { flex:1; background:#fff; border:1px solid #CBD6D1; border-radius:2px; padding:5px 8px; }
+  .sum .k { font-size:6.9pt; letter-spacing:.4pt; text-transform:uppercase; color:#7A8A85; }
+  .sum .v { font-family:"DejaVu Serif",serif; font-size:13pt; color:#16211F; line-height:1.2; }
+  .sum .v small { font-size:7.2pt; color:#6E7C78; font-family:"DejaVu Sans",sans-serif; }
+
+  .box { border:1px solid #CBD6D1; border-left:2.5px solid #0F6B5F; border-radius:2px;
+         padding:6px 8px; background:#F8FAF9; }
+  .box.br { border-left-color:#8A6516; background:#FBF8F1; }
+  .box.crit { border-left-color:#A8382A; background:#FCF6F4; }
+  .box b { color:#0B4D44; }
+  .box.br b { color:#6E5111; } .box.crit b { color:#8C2E22; }
+
+  ul.tight { margin:0 0 0 13px; padding:0; } ul.tight li { margin-bottom:2px; }
+
+  footer { position:fixed; bottom:5mm; left:12mm; right:12mm; border-top:1px solid #CBD6D1;
+           padding-top:4px; font-size:7pt; color:#6E7C78; display:flex; justify-content:space-between; }
+  .pb { page-break-before:always; }
+</style></head><body>
+
+<div class="top">
+  <div><div class="brand">COUDERS</div>
+    <div style="font-size:7.6pt;color:#5C6B67;margin-top:2px">e-Recepcjonista &middot; oferta i plan działania</div></div>
+  <div class="meta">Przygotowane dla<br><b style="color:#16211F;font-size:9pt">Lux Dom sp. z o.o.</b><br>
+    zarządzanie nieruchomościami</div>
+</div>
+
+<h1>Oferta i plan działania</h1>
+<p class="lead">Wszystkie ceny są <b>netto w złotych</b>. Rozliczenie ma trzy składniki i nic poza nimi:
+jednorazowe wdrożenie, stały abonament i zużycie liczone od faktycznego ruchu. Każdy moduł jest wyceniony
+osobno — <b>nie sprzedajemy pakietu, którego nie da się rozebrać</b>.</p>
+
+<section>
+  <h2>Jak to rozliczamy <span>TRZY SKŁADNIKI</span></h2>
+  <div class="three" style="font-size:7.7pt">
+    <div><div class="k">Jednorazowo</div><div class="v">Wdrożenie</div>
+      Projekt, konfiguracja, integracje, testy. Płatne fazami, każda po odbiorze.</div>
+    <div><div class="k">Co miesiąc</div><div class="v">Abonament</div>
+      Utrzymanie, monitoring, wsparcie, zmiany w bazie wiedzy w ramach limitu godzin.</div>
+    <div><div class="k">Za faktyczny ruch</div><div class="v">Zużycie</div>
+      Minuty, SMS-y, numery. Rozliczane z dołu, po koszcie operatora plus marża.</div>
+  </div>
+</section>
+
+<section>
+  <h2>Pakiety abonamentowe <span>MIESIĘCZNIE, NETTO</span></h2>
+  <div class="pk">
+    <div><div class="nm">Pilot</div>
+      <div class="pr">1 200 zł<small> / mies.</small></div>
+      <ul><li>Jeden numer, jedna linia</li><li>Do 300 rozmów miesięcznie</li>
+        <li>Rejestr zgłoszeń i powiadomienia mailowe</li><li>Wsparcie w dni robocze</li>
+        <li>Umowa na 30 dni, bez zobowiązania</li></ul></div>
+    <div class="best"><span class="tag">REKOMENDOWANY</span><div class="nm">Standard</div>
+      <div class="pr">2 900 zł<small> / mies.</small></div>
+      <ul><li>Główna linia biura, do 30 nieruchomości</li><li>Do 2 000 rozmów miesięcznie</li>
+        <li>Routing po adresie i po opiekunie</li><li>Raport miesięczny, panel zgłoszeń</li>
+        <li>4 godziny zmian w bazie wiedzy w miesiącu</li></ul></div>
+    <div><div class="nm">Portfel</div>
+      <div class="pr">5 400 zł<small> / mies.</small></div>
+      <ul><li>Cały portfel, do 200 nieruchomości</li><li>Do 8 000 rozmów miesięcznie</li>
+        <li>Numery dedykowane wspólnotom w cenie routingu</li><li>Wsparcie 7 dni w tygodniu, SLA w umowie</li>
+        <li>8 godzin zmian w bazie wiedzy w miesiącu</li></ul></div>
+  </div>
+</section>
+
+<section>
+  <h2>Wdrożenie rdzenia <span>JEDNORAZOWO, PŁATNE FAZAMI</span></h2>
+  <table>
+    <thead><tr><th>Faza</th><th style="text-align:right">Cena</th><th>Czas</th><th>Bramka, bez której nie fakturujemy dalej</th></tr></thead>
+    <tbody>
+      <tr><td class="m"><b>Faza 0 — Audyt i projekt.</b> Analiza ruchu telefonicznego, mapa nieruchomości i opiekunów, ścieżki alarmowe, zakres danych, scenariusz rozmowy.</td>
+        <td class="p">4 900 zł</td><td class="w">dni 1–5</td><td class="w">Zatwierdzony przez Państwa scenariusz rozmowy i mapa eskalacji</td></tr>
+      <tr><td class="m"><b>Faza 1 — Pilot na jednym numerze.</b> Uruchomienie na realnym ruchu poza godzinami pracy biura, baza wiedzy, rejestr zgłoszeń, eskalacja awarii.</td>
+        <td class="p">8 900 zł</td><td class="w">dni 6–15</td><td class="w">Raport z 30 dni: odebrane połączenia, czasy reakcji, skuteczność</td></tr>
+      <tr><td class="m"><b>Faza 2 — Przejęcie głównej linii.</b> Cały portfel, routing po adresie, rozpoznawanie dzwoniącego, panel zgłoszeń, raport miesięczny, integracje podstawowe.</td>
+        <td class="p">18 000 zł</td><td class="w">tyg. 4–6</td><td class="w">Odbiór na produkcji i dwa tygodnie stabilnej pracy</td></tr>
+      <tr><td class="m"><b>Faza 3 — Kanały i kampanie.</b> Poczta biura, formularz, kampanie wychodzące, pilotaż miękkiej windykacji.</td>
+        <td class="p">wg modułów</td><td class="w">tyg. 7–10</td><td class="w">Wyceniane z tabeli modułów, uruchamiane pojedynczo</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:5px;font-size:7.8pt;color:#4A5A56"><b>Kwota Fazy 1 jest w całości zaliczana na
+  poczet Fazy 2</b>, jeśli decyzja o kontynuacji zapadnie w ciągu 14 dni od raportu z pilota. Pilot
+  jest więc dla Państwa testem, a nie kosztem utopionym.</p>
+</section>
+
+<section>
+  <h2>Zużycie <span>ROZLICZANE Z DOŁU, ZA FAKTYCZNY RUCH</span></h2>
+  <table>
+    <tbody>
+      <tr><td class="m"><b>Minuta rozmowy przychodzącej ponad limit pakietu</b></td><td class="p">0,79 zł</td><td class="w" colspan="2">Rozliczana co sekundę, nie co minutę</td></tr>
+      <tr><td class="m"><b>Minuta kampanii głosowej wychodzącej</b></td><td class="p">0,95 zł</td><td class="w" colspan="2">Tylko połączenia odebrane</td></tr>
+      <tr><td class="m"><b>SMS transakcyjny lub kampanijny</b></td><td class="p">0,16 zł</td><td class="w" colspan="2">Jeden segment, 160 znaków bez polskich liter</td></tr>
+      <tr><td class="m"><b>Numer telefoniczny, miesięcznie za sztukę</b></td><td class="p">39 zł</td><td class="w" colspan="2">W pakiecie Portfel numery wspólnot bez opłaty za routing</td></tr>
+      <tr><td class="m"><b>Rejestracja nadpisu nadawcy LUX DOM</b></td><td class="p">490 zł</td><td class="w" colspan="2">Jednorazowo, wymaga dokumentów firmy, 5–10 dni roboczych</td></tr>
+      <tr><td class="m"><b>Godzina prac dodatkowych poza limitem pakietu</b></td><td class="p">280 zł</td><td class="w" colspan="2">Zmiany w scenariuszu, nowe integracje ad hoc</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:4px;font-size:7.8pt;color:#4A5A56">Przy pilocie na jednym numerze zużycie mieści
+  się zwykle w przedziale <b>400–900 zł miesięcznie</b>. Po trzydziestu dniach podajemy realną kwotę
+  z Państwa własnego ruchu, a nie szacunek.</p>
+</section>
+
+<footer><span>Couders &middot; e-Recepcjonista dla Lux Dom</span><span>ceny netto PLN &middot; couders.com</span></footer>
+
+<div class="pb">
+<div class="top">
+  <div><div class="brand">COUDERS</div></div>
+  <div class="meta">Cennik modułów, część 1</div>
+</div>
+
+<section>
+  <h2>Cennik modułów <span>WDROŻENIE JEDNORAZOWO &middot; ABONAMENT MIESIĘCZNIE</span></h2>
+  <p style="font-size:7.9pt;color:#4A5A56">Abonament modułu dolicza się do pakietu. Moduły oznaczone
+  jako <b>w rdzeniu</b> są zawarte w cenie wdrożenia i nie podnoszą abonamentu.</p>
+  <table>
+    <thead><tr><th>Moduł</th><th style="text-align:right">Wdrożenie</th><th style="text-align:right">Abonament</th><th>Czego wymaga od Państwa</th></tr></thead>
+    <tbody>
+      <tr class="cat"><td colspan="4">Kanały, którymi mieszkaniec się kontaktuje</td></tr>
+      <tr><td class="m"><b>Rozpoznawanie dzwoniącego po numerze.</b> Agent wita po nazwisku, zna adres, lokal i poprzednie zgłoszenia, nie pyta o to, co już wie.</td><td class="p">3 600 zł</td><td class="a">190 zł</td><td class="w">Eksport bazy lokali z numerami</td></tr>
+      <tr><td class="m"><b>Numer dedykowany dla każdej wspólnoty.</b> Agent zna adres od pierwszej sekundy. Pozycja do wpisania w plan gospodarczy wspólnoty.</td><td class="p">1 900 zł</td><td class="a">39 zł / numer</td><td class="w">Decyzja, które wspólnoty</td></tr>
+      <tr><td class="m"><b>Skrzynka biura jako pełny kanał.</b> Agent czyta pocztę i zakłada sprawę z tym samym numerem co telefon.</td><td class="p">5 400 zł</td><td class="a">390 zł</td><td class="w">Dostęp do poczty biura</td></tr>
+      <tr><td class="m"><b>WhatsApp ze zdjęciem usterki.</b> Mieszkaniec wysyła zdjęcie zacieku, technik jedzie wiedząc, co zastanie.</td><td class="p">6 500 zł</td><td class="a">390 zł</td><td class="w">Konto WhatsApp Business</td></tr>
+      <tr><td class="m"><b>Rozpoznanie usterki ze zdjęcia.</b> Wstępna klasyfikacja i propozycja priorytetu do zatwierdzenia.</td><td class="p">4 200 zł</td><td class="a">290 zł</td><td class="w">Kanał ze zdjęciami</td></tr>
+      <tr><td class="m"><b>SMS przychodzący.</b> Zgłoszenie tekstem, obsługiwane tak samo jak telefon.</td><td class="p">2 400 zł</td><td class="a">190 zł</td><td class="w">Bramka SMS</td></tr>
+      <tr><td class="m"><b>Czat na stronie i w e-kartotece.</b> Ta sama baza wiedzy w oknie czatu.</td><td class="p">3 900 zł</td><td class="a">290 zł</td><td class="w">Dostęp do strony</td></tr>
+
+      <tr class="cat"><td colspan="4">Powiadomienia i kampanie wychodzące</td></tr>
+      <tr><td class="m"><b>SMS transakcyjny z nadpisem LUX DOM.</b> Potwierdzenie sprawy i zmiany statusu. Najmocniej zbija liczbę powtórnych telefonów.</td><td class="p">2 400 zł</td><td class="a">290 zł</td><td class="w">Rejestracja nadpisu, 490 zł jednorazowo</td></tr>
+      <tr><td class="m"><b>Kampania SMS do budynku lub klatki.</b> Wyłączenie wody, przegląd, zmiana wywozu — z potwierdzeniem dostarczenia.</td><td class="p">3 800 zł</td><td class="a">390 zł</td><td class="w">Baza kontaktów i zgody</td></tr>
+      <tr><td class="m"><b>Kampania głosowa dla seniorów.</b> Ci, którzy nie czytają SMS-ów, odbierają telefon. Agent mówi wolno i odnotowuje, kto odebrał.</td><td class="p">4 900 zł</td><td class="a">390 zł</td><td class="w">Zgody kontaktowe</td></tr>
+      <tr><td class="m"><b>Potwierdzanie wizyt technika.</b> Obdzwonka dzień wcześniej. Puste przejazdy znikają.</td><td class="p">3 600 zł</td><td class="a">290 zł</td><td class="w">Kalendarz wizyt</td></tr>
+      <tr><td class="m"><b>Odczyty liczników.</b> Przypomnienie, ponowienie i lista braków dla administratora.</td><td class="p">4 600 zł</td><td class="a">290 zł</td><td class="w">System odczytów</td></tr>
+      <tr><td class="m"><b>Obsługa zebrania rocznego.</b> Zaproszenia, potwierdzenia obecności, pełnomocnictwa, raport frekwencji.</td><td class="p">5 200 zł</td><td class="a">290 zł</td><td class="w">Lista właścicieli</td></tr>
+      <tr><td class="m"><b>Miękka windykacja zaliczek.</b> Deklarowany termin wpłaty, wniosek o raty, przekazanie do księgowości. Z zapisem rozmowy.</td><td class="p">7 500 zł</td><td class="a">590 zł</td><td class="w">Dane o saldach, zgoda prawna</td></tr>
+      <tr><td class="m"><b>Ankieta po zamknięciu sprawy.</b> Twardy dowód jakości na zebranie wspólnoty.</td><td class="p">1 800 zł</td><td class="a">90 zł</td><td class="w">Status zamknięcia sprawy</td></tr>
+
+      <tr class="cat"><td colspan="4">Integracje z Państwa systemami</td></tr>
+      <tr><td class="m"><b>Dwukierunkowa integracja z systemem zgłoszeń.</b> Agent zakłada sprawę, technik ją zamyka, mieszkaniec dostaje powiadomienie. Zero przepisywania.</td><td class="p">od 9 800 zł</td><td class="a">390 zł</td><td class="w">API systemu zgłoszeń</td></tr>
+      <tr><td class="m"><b>e-kartoteka i księgowość.</b> Odczyt salda i danych lokalu w rozmowie, po weryfikacji tożsamości. Zakres danych ustalają Państwo.</td><td class="p">od 12 000 zł</td><td class="a">490 zł</td><td class="w">API dostawcy e-kartoteki</td></tr>
+      <tr><td class="m"><b>Automatyczne zlecenie do firmy serwisowej.</b> Winda do serwisu windowego, kotłownia do kotłowni, zgodnie z umową dla budynku.</td><td class="p">4 800 zł</td><td class="a">290 zł</td><td class="w">Wykaz umów serwisowych</td></tr>
+      <tr><td class="m"><b>Kalendarze techników i administratorów.</b> Wizyta wpisywana wprost do kalendarza, z adresem i numerem sprawy.</td><td class="p">3 200 zł</td><td class="a">190 zł</td><td class="w">Google Workspace lub M365</td></tr>
+      <tr><td class="m"><b>Webhook wychodzący do dowolnego systemu.</b> Każde zdarzenie tam, gdzie go Państwo potrzebują. Także w systemach, których jeszcze nie ma.</td><td class="p">1 600 zł</td><td class="a">90 zł</td><td class="w">Adres odbiorczy</td></tr>
+      <tr><td class="m"><b>Status sprawy na Państwa stronie.</b> Mieszkaniec wpisuje numer i widzi etap, bez logowania i bez telefonu.</td><td class="p">2 800 zł</td><td class="a">90 zł</td><td class="w">Miejsce na stronie</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer><span>Couders &middot; e-Recepcjonista dla Lux Dom</span><span>ceny netto PLN &middot; couders.com</span></footer>
+</div>
+
+<div class="pb">
+<div class="top">
+  <div><div class="brand">COUDERS</div></div>
+  <div class="meta">Cennik modułów, część 2</div>
+</div>
+
+<section>
+  <h2>Cennik modułów, ciąg dalszy <span>WDROŻENIE &middot; ABONAMENT</span></h2>
+  <table>
+    <thead><tr><th>Moduł</th><th style="text-align:right">Wdrożenie</th><th style="text-align:right">Abonament</th><th>Czego wymaga od Państwa</th></tr></thead>
+    <tbody>
+      <tr class="cat"><td colspan="4">Rozbudowa scenariusza rozmowy</td></tr>
+      <tr><td class="m"><b>Deterministyczna ścieżka awaryjna.</b> Przy awarii krytycznej zgłoszenie i połączenie z dyżurnym wykonują się zawsze, także gdy któryś system nie odpowiada.</td><td class="p">4 400 zł</td><td class="a">290 zł</td><td class="w">Ścieżki alarmowe per nieruchomość</td></tr>
+      <tr><td class="m"><b>Osobni specjaliści od typów spraw.</b> Inny scenariusz do awarii, inny do rozliczeń, inny do dokumentów. Rzadziej się mylą, odpowiadają szybciej.</td><td class="p">5 800 zł</td><td class="a">290 zł</td><td class="w">Mapa tematów</td></tr>
+      <tr><td class="m"><b>Ukraiński i angielski.</b> Agent rozpoznaje język rozmówcy i przechodzi na niego.</td><td class="p">3 400 zł</td><td class="a">190 zł</td><td class="w">Akceptacja tłumaczeń bazy</td></tr>
+      <tr><td class="m"><b>Tryb dla osób starszych.</b> Wolniejsze tempo, dłuższe pauzy, brak wchodzenia w słowo. Włączany po sposobie mówienia.</td><td class="p">1 900 zł</td><td class="a core">—</td><td class="w">Nagrania do strojenia</td></tr>
+      <tr><td class="m"><b>Weryfikacja tożsamości kodem SMS.</b> Zanim padnie kwota lub dane lokalu, rozmówca potwierdza tożsamość.</td><td class="p">2 900 zł</td><td class="a">190 zł</td><td class="w">Bramka SMS i kartoteka</td></tr>
+      <tr><td class="m"><b>Przekazanie rozmowy z kontekstem.</b> Pracownik odbiera, wiedząc już, kto dzwoni i o co chodzi.</td><td class="p">2 200 zł</td><td class="a">90 zł</td><td class="w">Kanał do zespołu</td></tr>
+
+      <tr class="cat"><td colspan="4">Automatyzacje, które widać w wynikach</td></tr>
+      <tr><td class="m"><b>Wykrywanie burzy zgłoszeń.</b> Pięć telefonów z jednego adresu w kwadrans to awaria zbiorcza: alarm do zarządu i informacja dla kolejnych dzwoniących.</td><td class="p">3 800 zł</td><td class="a">190 zł</td><td class="w">Rejestr zgłoszeń</td></tr>
+      <tr><td class="m"><b>Powitanie z kontekstem trwającej awarii.</b> Rozmowa trwa dwadzieścia sekund zamiast trzech minut.</td><td class="p">2 400 zł</td><td class="a">90 zł</td><td class="w">Status awarii</td></tr>
+      <tr><td class="m"><b>Eskalacja po czasie.</b> Brak reakcji w ustalonym czasie podnosi sprawę wyżej. SLA pilnuje się samo.</td><td class="p">2 600 zł</td><td class="a">190 zł</td><td class="w">Lista dyżurów</td></tr>
+      <tr><td class="m"><b>Wykrywanie usterek powtarzalnych.</b> Ten sam pion trzeci raz w kwartale — sygnał, zanim zrobi się z tego remont awaryjny.</td><td class="p">3 200 zł</td><td class="a">190 zł</td><td class="w">Historia zgłoszeń</td></tr>
+      <tr><td class="m"><b>Łączenie duplikatów w jedną sprawę.</b> Czterdzieści telefonów daje jedno zgłoszenie i czterdzieści powiadomień po naprawie.</td><td class="p core">w rdzeniu</td><td class="a core">—</td><td class="w">Nic</td></tr>
+      <tr><td class="m"><b>Poranne podsumowanie dla administratora.</b> Mail o ósmej: co w nocy, co czeka na decyzję, co zamknięte.</td><td class="p core">w rdzeniu</td><td class="a core">—</td><td class="w">Nic</td></tr>
+
+      <tr class="cat"><td colspan="4">Raporty, nadzór, zgodność</td></tr>
+      <tr><td class="m"><b>Raport miesięczny dla każdej wspólnoty.</b> Dokument, który kładzie się na stole na zebraniu rocznym, kiedy zapada decyzja o zarządcy.</td><td class="p">3 900 zł</td><td class="a">290 zł</td><td class="w">Podział portfela na wspólnoty</td></tr>
+      <tr><td class="m"><b>Podgląd na żywo.</b> Bieżące rozmowy, otwarte sprawy, czasy reakcji na jednym ekranie w biurze.</td><td class="p">4 400 zł</td><td class="a">290 zł</td><td class="w">Nic</td></tr>
+      <tr><td class="m"><b>Wyszukiwarka po rozmowach.</b> Nagrania i transkrypty do przeszukania po adresie, lokalu, dacie, słowie. Przydaje się w sporze.</td><td class="p">3 600 zł</td><td class="a">190 zł</td><td class="w">Decyzja o retencji</td></tr>
+      <tr><td class="m"><b>Alerty progowe.</b> Przekroczony czas reakcji albo nietypowa liczba zgłoszeń z budynku — zanim zauważy to mieszkaniec.</td><td class="p">2 200 zł</td><td class="a">90 zł</td><td class="w">Ustalenie progów</td></tr>
+      <tr><td class="m"><b>Panel dla rady wspólnoty.</b> Rada widzi sprawy swojej nieruchomości bez dzwonienia do biura.</td><td class="p">6 900 zł</td><td class="a">290 zł</td><td class="w">Decyzja o zakresie danych</td></tr>
+      <tr><td class="m"><b>Retencja, maskowanie, umowa powierzenia, ochrona przed podszywaniem.</b> Dane w Unii, nagrania nie zasilają modeli.</td><td class="p core">w rdzeniu</td><td class="a core">—</td><td class="w">Decyzja o okresie retencji</td></tr>
+      <tr><td class="m"><b>Rozszerzony audyt bezpieczeństwa i ocena skutków (DPIA).</b> Na życzenie Państwa działu prawnego lub IOD.</td><td class="p">4 800 zł</td><td class="a core">—</td><td class="w">Kontakt do IOD</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+
+<footer><span>Couders &middot; e-Recepcjonista dla Lux Dom</span><span>ceny netto PLN &middot; couders.com</span></footer>
+</div>
+
+<div class="pb">
+<div class="top">
+  <div><div class="brand">COUDERS</div></div>
+  <div class="meta">Rekomendacja, harmonogram, warunki</div>
+</div>
+
+<section>
+  <h2>Co proponujemy uruchomić <span>ZESTAW REKOMENDOWANY</span></h2>
+  <div class="rec">
+    <h3>Pakiet Zarządca</h3>
+    <p style="margin:0 0 3px">Rdzeń wdrożenia plus pięć modułów, które przy Państwa skali zwracają się
+    najszybciej: potwierdzenie SMS, rozpoznawanie dzwoniącego, gwarantowana ścieżka awaryjna,
+    wykrywanie awarii zbiorczych i raport na zebranie wspólnoty.</p>
+    <table style="margin-top:4px">
+      <tbody>
+        <tr><td class="m">Faza 0 — audyt i projekt</td><td class="p">4 900 zł</td><td class="m">SMS transakcyjny z nadpisem LUX DOM</td><td class="p">2 400 zł</td></tr>
+        <tr><td class="m">Faza 1 — pilot na jednym numerze</td><td class="p">8 900 zł</td><td class="m">Rozpoznawanie dzwoniącego po numerze</td><td class="p">3 600 zł</td></tr>
+        <tr><td class="m">Faza 2 — przejęcie głównej linii</td><td class="p">18 000 zł</td><td class="m">Deterministyczna ścieżka awaryjna</td><td class="p">4 400 zł</td></tr>
+        <tr><td class="m">Wykrywanie burzy zgłoszeń</td><td class="p">3 800 zł</td><td class="m">Raport miesięczny per wspólnota</td><td class="p">3 900 zł</td></tr>
+      </tbody>
+    </table>
+    <div class="sum">
+      <div><div class="k">Wdrożenie razem</div><div class="v">49 900 zł<small> netto</small></div>
+        <div style="font-size:7.2pt;color:#6E7C78;margin-top:1px">Po zaliczeniu pilota na poczet Fazy 2: <b style="color:#0B4D44">41 000 zł</b></div></div>
+      <div><div class="k">Abonament miesięczny</div><div class="v">4 150 zł<small> netto</small></div>
+        <div style="font-size:7.2pt;color:#6E7C78;margin-top:1px">Pakiet Standard 2 900 zł + moduły 1 250 zł</div></div>
+      <div><div class="k">Zużycie, szacunek</div><div class="v">600–1 400 zł<small> / mies.</small></div>
+        <div style="font-size:7.2pt;color:#6E7C78;margin-top:1px">Zweryfikowane po 30 dniach pilota</div></div>
+    </div>
+  </div>
+  <div class="box br" style="margin-top:6px"><b>Wejście minimalne, jeśli chcą Państwo najpierw sprawdzić liczby:</b>
+    Faza 0 i Faza 1, czyli <b>13 800 zł</b> wdrożenia i <b>1 200 zł</b> abonamentu przez trzydzieści dni.
+    Po tym okresie dostają Państwo raport z realnego ruchu i podejmują decyzję. Przy kontynuacji w ciągu
+    14 dni kwota 8 900 zł wraca jako zaliczka na Fazę 2, więc pilot kosztuje realnie 4 900 zł.</div>
+</section>
+
+<section>
+  <h2>Plan działania <span>OD DECYZJI DO PRODUKCJI</span></h2>
+  <table>
+    <thead><tr><th style="width:14%">Termin</th><th>Co się dzieje</th><th style="width:31%">Po czyjej stronie</th></tr></thead>
+    <tbody>
+      <tr><td class="w"><b style="color:#0B4D44">Dzień 0</b></td><td class="m">Decyzja o pilocie i przekazanie materiałów startowych z listy poniżej. Podpisanie umowy powierzenia danych.</td><td class="w">Lux Dom</td></tr>
+      <tr><td class="w"><b style="color:#0B4D44">Dni 1–5</b></td><td class="m">Audyt ruchu, mapa nieruchomości i opiekunów, ścieżki alarmowe, decyzja o zakresie danych, projekt scenariusza rozmowy.</td><td class="w">Couders, dwie sesje po godzinie z Państwa strony</td></tr>
+      <tr><td class="w"><b style="color:#0B4D44">Dni 6–15</b></td><td class="m">Budowa i uruchomienie pilota na jednym numerze, na realnym ruchu poza godzinami pracy biura. Testy z Państwa zespołem.</td><td class="w">Couders</td></tr>
+      <tr><td class="w"><b style="color:#0B4D44">Dni 16–45</b></td><td class="m">Pilot działa na produkcji. Cotygodniowy przegląd nagrań, korekty bazy wiedzy. Na koniec raport z liczbami.</td><td class="w">Wspólnie, 30 minut tygodniowo</td></tr>
+      <tr><td class="w"><b style="color:#0B4D44">Tyg. 7–9</b></td><td class="m">Przejęcie głównej linii, rozpoznawanie po numerze z Państwa bazy lokali, SMS z nadpisem, ścieżka awaryjna, raport per wspólnota.</td><td class="w">Couders, przekazanie bazy lokali po Państwa stronie</td></tr>
+      <tr><td class="w"><b style="color:#0B4D44">Tyg. 10–12</b></td><td class="m">Stabilizacja, strojenie na realnych nagraniach, szkolenie zespołu biura, odbiór końcowy.</td><td class="w">Wspólnie</td></tr>
+      <tr><td class="w"><b style="color:#0B4D44">Kwartał 2</b></td><td class="m">Kolejne moduły w tempie, które Państwo ustalają: poczta biura, kampanie wychodzące, integracja z e-kartoteką, panel dla rad wspólnot.</td><td class="w">Wyceniane pojedynczo z tabeli</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Czego potrzebujemy, żeby ruszyć <span>DZIEŃ 0</span></h2>
+  <div class="box crit">
+    <ul class="tight">
+      <li>Statystyki centrali telefonicznej za ostatni miesiąc i próbka nagrań</li>
+      <li>Lista nieruchomości z przypisanymi administratorami</li>
+      <li>Ścieżki alarmowe dla awarii krytycznych, per nieruchomość</li>
+      <li><b>Eksport bazy lokali z numerami telefonów</b> — to on odblokowuje rozpoznawanie dzwoniącego</li>
+      <li>Kontakt do dostawcy e-kartoteki, do rozmowy o dostępie do danych</li>
+      <li>Decyzja, jakie informacje agent może podawać przez telefon, a jakie kieruje do portalu</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Warunki handlowe <span>OFERTA WAŻNA 30 DNI</span></h2>
+  <div class="three" style="font-size:7.8pt">
+    <div><div class="k">Płatności</div>
+      Wdrożenie: 50% zaliczki przy starcie fazy, 50% po jej odbiorze. Abonament z góry, zużycie z dołu.
+      Termin płatności 14 dni. Wszystkie ceny netto, powiększone o VAT 23%.</div>
+    <div><div class="k">Umowa</div>
+      Minimum 12 miesięcy abonamentu, potem miesięczny okres wypowiedzenia. Przy zobowiązaniu
+      na 24 miesiące <b>rabat 10% na abonamencie</b>. Umowa powierzenia danych w standardzie.</div>
+    <div><div class="k">Gwarancje w umowie</div>
+      Odbiór połączenia do 3 sekund, dostępność 99,5% miesięcznie, eskalacja awarii krytycznej
+      do 60 sekund. Przekroczenie oznacza upust na kolejny miesiąc, zapisany w SLA.</div>
+  </div>
+  <p style="margin-top:5px;font-size:7.9pt;color:#4A5A56">Jeśli po trzydziestu dniach pilota uznają
+  Państwo, że system nie robi tego, co obiecaliśmy, kończymy współpracę bez wypowiedzenia i bez
+  kolejnych faktur. <b>Ryzyko po naszej stronie jest celowe</b> — nie sprzedajemy rocznego
+  zobowiązania przed pierwszym odebranym telefonem.</p>
+</section>
+
+<footer><span>Couders &middot; e-Recepcjonista dla Lux Dom</span><span>ceny netto PLN &middot; couders.com</span></footer>
+</div>
+
+</body></html>
