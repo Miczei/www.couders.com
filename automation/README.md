@@ -1,159 +1,160 @@
-# Automatyczna wysyłka outreachu
+# Wysyłka outreachu
 
-Wysyła sekwencje z `docs/outreach/sekwencje.md` do leadów z arkusza, z limitem
-dziennym, oknem godzinowym, listą wypisanych i podglądem przed wysyłką.
+Dwa tryby. **Domyślny jest lokalny** i nie wymaga żadnego klucza API.
 
-Kod jest w repo, **dane leadów nigdy**: repozytorium jest publiczne, więc
-kolejka żyje w arkuszu Google, do którego skrypt dostaje się przez web app
-Apps Script. Ten sam wzorzec, którego używa już formularz kontaktowy.
+| Tryb | Kiedy | Czego potrzebuje |
+|---|---|---|
+| **Lokalny** (`send-local.mjs`) | teraz | własna skrzynka i hasło aplikacji |
+| Zautomatyzowany (`send-outreach.mjs`) | gdy zechcecie, żeby pisało się samo | arkusz Google, Resend, GitHub Actions |
 
-```
-Arkusz Google            GitHub Actions (co rano, pn-pt)
-  leady        ──────►     send-outreach.mjs  ──────►  Resend  ──────►  skrzynka
-  wypisani                   limit dzienny                              odbiorcy
-  log          ◄──────       okno godzinowe
-  demos                      lista wypisanych
-```
+---
 
-## Uruchomienie (jednorazowo, ok. 30 minut)
-
-### 1. Arkusz
-
-Utwórz arkusz z czterema zakładkami: **leady**, **wypisani**, **log**, **demos**.
-
-W `leady` pierwszy wiersz to nagłówki. Rozpoznawane kolumny:
+# Tryb lokalny
 
 ```
-email  firma  domena  osoba  status  sekwencja  krok  demoUrl  demoExpiry
-fraza  cpc  konkret  first_sent_at  data_kontaktu  kanal  notatka
+Claude w rozmowie              Twój laptop                    Twoja skrzynka
+  szuka leadów        ──►  outbox/paczka.json  ──►  send-local.mjs  ──►  Gmail
+  pisze maile                (przeczytaj je)        co 10-12 min losowo
 ```
 
-Plik `lista-leadow-seed.csv` (wysłany osobno, poza repo) importuje się tu
-wprost: ma już `firma`, `domena`, `osoba` i `status`. Dołóż kolumnę `email`
-po odsłonięciu adresów i kolumnę `sekwencja` z wartością `demo`.
+Claude robi research i pisze treści, Wy je czytacie, skrypt tylko rozsyła.
+Nic się nie generuje w momencie wysyłki, więc każde zdanie, które trafia do
+prospekta, przeszło przez człowieka. Żadnych kluczy API.
 
-W `wypisani`: kolumna A to adresy, kolumna B to całe domeny do zablokowania.
+## Uruchomienie (ok. 20 minut)
 
-### 2. Apps Script
+### 1. Skrzynka
 
-Extensions → Apps Script → wklej `apps-script/queue.gs` → w pierwszej linii
-podmień `TOKEN` na długi losowy ciąg → Deploy → New deployment → **Web app**,
-Execute as **Me**, Access **Anyone** → skopiuj URL kończący się na `/exec`.
+Załóżcie **osobną domenę i skrzynkę** do wysyłki. Nie `couders.com`: jedna
+nieudana kampania psuje reputację domeny, na której stoi strona i firmowa
+poczta. Skrypt to blokuje i trzeba go świadomie obejść.
 
-"Anyone" znaczy "każdy, kto zna URL **i** token". Bez tokenu każde żądanie
-dostaje błąd.
+Gmail wymaga **hasła aplikacji**, nie hasła do konta:
+Konto Google → Bezpieczeństwo → Weryfikacja dwuetapowa (musi być włączona)
+→ Hasła aplikacji → wygeneruj, skopiuj 16 znaków.
 
-### 3. Nadawca
+Ustawcie SPF, DKIM i DMARC na nowej domenie i przez pierwsze dwa tygodnie
+wysyłajcie po kilka wiadomości dziennie, zanim wejdziecie na pełne 20.
 
-Kup **osobną domenę** do wysyłki. Nie `couders.com`: jedna nieudana kampania
-psuje reputację domeny, na której stoi strona i firmowa poczta. Skrypt to
-blokuje i trzeba go świadomie obejść.
-
-Ustaw SPF, DKIM i DMARC, podepnij domenę w [Resend](https://resend.com)
-i rozgrzewaj ją 2-3 tygodnie, zaczynając od kilku wiadomości dziennie.
-Do tego czasu jedźcie LinkedInem i ciepłą siecią.
-
-### 4. GitHub
-
-**Secrets** (Settings → Secrets and variables → Actions → Secrets):
-
-```
-OUTREACH_QUEUE_URL      URL web appa, kończy się na /exec
-OUTREACH_QUEUE_TOKEN    ten sam token co w queue.gs
-RESEND_API_KEY          klucz z resend.com
-```
-
-**Variables** (ta sama strona, zakładka Variables):
-
-```
-OUTREACH_FROM                   "Imię z Couders <imie@nowa-domena.com>"
-OUTREACH_REPLY_TO               adres, na który mają przychodzić odpowiedzi
-OUTREACH_UNSUBSCRIBE_MAILBOX    skrzynka do wypisywania się, realnie czytana
-OUTREACH_SENDER_BLOCK           "Couders, Kraków | NIP ... | couders.com"
-OUTREACH_DAILY_CAP              20
-OUTREACH_TIMEZONE               Europe/Warsaw
-OUTREACH_ENABLED                false   <- główny włącznik, na razie zostaw
-```
-
-### 5. Test
-
-Actions → **Outreach** → Run workflow → `send` odznaczone. Przebieg pokaże
-w logu każdą wiadomość, która by wyszła, i powód pominięcia każdej, która nie.
-Przeczytajcie to jak odbiorca.
-
-Lokalnie to samo:
+### 2. Konfiguracja
 
 ```bash
-cp automation/.env.example automation/.env   # uzupełnij
-set -a && . automation/.env && set +a
-node automation/scripts/send-outreach.mjs            # podgląd
-node automation/scripts/send-outreach.mjs --limit 3  # mniejsza porcja
+cd automation
+npm install
+cp .env.example .env    # uzupełnij SMTP_USER, SMTP_PASS, OUTREACH_FROM, stopkę
 ```
 
-### 6. Start
+### 3. Sprawdzenie
 
-Gdy podgląd wygląda dobrze, ustaw `OUTREACH_ENABLED` na `true`. Od tej chwili
-harmonogram (7:10 UTC, pn-pt) wysyła naprawdę. Pauza to ta sama zmienna z
-powrotem na `false`.
+```bash
+npm run check -- --outbox outbox/przyklad.json --show
+```
+
+Pokaże plan, tempo, szacowany czas i pełną treść każdej wiadomości.
+**Przeczytajcie to jak odbiorca.** Nic nie wychodzi.
+
+### 4. Wysyłka
+
+```bash
+npm run send -- --outbox outbox/nazwa-paczki.json
+```
+
+Skrypt najpierw sprawdza logowanie do skrzynki, potem wysyła pierwszą
+wiadomość i czeka losowo 10-12 minut przed następną. Zostawcie terminal
+otwarty; w logu widać, co poszło i o której będzie następna:
+
+```
+Skrzynka OK: michal@couders-ai.com
+[09:12]  1/15  g.rusak@example.pl                 SPETECH
+           następna za 11:24 (09:23)
+[09:23]  2/15  m.kowalski@example.pl              Baumalog
+           następna za 10:41 (09:34)
+```
+
+Ctrl+C kończy po bieżącej wiadomości. Zamknięcie laptopa, zerwane wifi,
+restart: stan jest zapisywany po **każdej** wysyłce, więc kolejne uruchomienie
+podejmuje pracę dokładnie tam, gdzie stanęła, i nigdy nie wyśle drugi raz do
+tego samego adresu w tej samej paczce.
+
+## Tempo i dlaczego akurat tak
+
+Losowy odstęp 10-12 minut to jedna z trzech rzeczy, które sprawiają, że
+wysyłka wygląda jak człowiek przy klawiaturze, i sama z siebie jest najsłabszą
+z nich:
+
+| Mechanizm | Po co |
+|---|---|
+| Losowy odstęp 10-12 min, co do sekundy | żadne dwie wysyłki nie są w równym odstępie ani na granicy minuty |
+| Okno 8:00-17:00, dni robocze | nikt nie pisze zimnych maili o 4 rano, a taki wzorzec widać od razu |
+| Limit 20 dziennie | to wolumen, nie odstęp, uruchamia większość heurystyk |
+
+Same odstępy przy 200 mailach dziennie i tak skończą się filtrem. Wszystkie
+trzy ustawia się w `.env`.
+
+Przy 20 wiadomościach i średnio 11 minutach przerwy jeden przebieg zajmuje
+około 3,5 godziny, czyli mieści się w jednym przedpołudniu.
 
 ## Bezpieczniki
 
-Skrypt odmawia wysyłki, a nie wysyła "na wszelki wypadek":
+Skrypt woli nie wysłać, niż wysłać coś, czego nie powinien:
 
 | Bezpiecznik | Zachowanie |
 |---|---|
-| Domyślny dry run | Bez `--send` nic nie wychodzi. Harmonogram dodaje ten flag sam |
-| `OUTREACH_ENABLED` | Musi być `true`, inaczej twardy błąd. Drugi, niezależny włącznik |
+| Domyślne sprawdzanie | Bez `--send` nic nie wychodzi |
+| Weryfikacja skrzynki | Złe hasło aplikacji wychodzi na jaw przed pierwszą wysyłką, nie po jedenastu minutach |
+| Stan na dysku | Zapisywany po każdej wysyłce. Restart nie powtarza adresu |
+| Lista wypisanych | `automation/wypisani.txt`, adres albo cała domena, jedna linia na wpis |
+| Limit dzienny | Liczony ze stanu, więc obejmuje wszystkie paczki z danego dnia |
+| Okno godzinowe | Poza godzinami skrypt zatrzymuje się i mówi, kiedy wrócić |
 | Domena główna | Nadawca na `couders.com` jest odrzucany |
-| Limit dzienny | Domyślnie 20 wiadomości na przebieg |
-| Okno godzinowe | Tylko dni robocze, 8:00-17:00 czasu lokalnego |
-| Lista wypisanych | Adres albo cała domena, sprawdzane przed każdą wysyłką |
-| Jedna firma dziennie | Dwie osoby z tej samej domeny nie dostają maila tego samego dnia |
-| Status zamykający | `odpowiedz`, `spotkanie`, `klient`, `odpadl`, `wypisany` zatrzymują sekwencję |
-| Braki w danych | Wiersz bez `cpc` albo bez `demoUrl` jest pomijany z powodem, zamiast wysłać wiadomość z dziurą |
-| Nieuzupełnione pola | Tekst z `{{...}}` albo `[Firma]` nigdy nie wychodzi |
-| Stopka | Identyfikacja nadawcy i sposób wypisania się doklejane automatycznie, plus nagłówek `List-Unsubscribe` |
+| Walidacja paczki | Zły adres, pusty temat, duplikat, `{{pole}}` albo `[Firma]` blokują całą paczkę przed wysyłką |
+| Trzy błędy z rzędu | Przy zerze wysłanych skrypt się zatrzymuje, zamiast tłuc w ścianę |
+| Stopka | Identyfikacja nadawcy, sposób wypisania się i nagłówek `List-Unsubscribe` doklejane automatycznie |
 
-Reguły decyzyjne mają testy:
+Reguły mają testy:
 
 ```bash
-node --test automation/scripts/guards.test.mjs
+cd automation && npm test
 ```
 
-Te same testy blokują wysyłkę w Actions: jeśli logika jest zepsuta, nic nie
-wychodzi.
+## Lista wypisanych
 
-## Sekwencje i szablony
+Jedna linia na wpis, `#` to komentarz:
 
-`templates/` zawiera po jednym pliku na wiadomość. Nazwa pliku nie ma
-znaczenia, liczy się `id` we front matter w formacie `<sekwencja>-<krok>`:
+```
+jan.kowalski@firma.pl      # poprosił mailem 22.09
+konkurencja.pl             # cała domena
+```
 
-| Plik | Kiedy |
-|---|---|
-| `demo-1.md` | dzień 0, link do demo |
-| `demo-2.md` | dzień 3, matematyka kosztu leada |
-| `demo-3.md` | dzień 7, zamknięcie pętli |
-| `zgoda-1.md` | wariant zgodowy, pierwszy kontakt pyta o zgodę zamiast sprzedawać |
+Gdy ktoś odpisze "STOP", dopiszcie go **od razu**. Plik jest w `.gitignore`.
 
-`requires` wymienia pola, bez których wiadomość nie wyjdzie. `threadWith`
-sprawia, że follow-up trafia do tego samego wątku zamiast zakładać nowy.
-Odstępy zmienia `OUTREACH_STEP_DELAYS` (domyślnie `0,3,7` dni).
+## Skąd się biorą paczki
 
-Żeby prowadzić sekwencję zgodową zamiast demo, wpiszcie `zgoda` w kolumnie
-`sekwencja`. Nic więcej nie trzeba zmieniać.
+Z rozmowy z Claude. Format i sposób zamawiania: `outbox/README.md`.
 
-## Prawo
+---
+
+# Tryb zautomatyzowany (opcjonalny)
+
+Gdy zechcecie, żeby leady i teksty powstawały bez Waszego udziału, w repo
+czeka drugi komplet: kolejka w arkuszu Google (`apps-script/queue.gs`),
+szablony sekwencji (`templates/`), wysyłka przez Resend
+(`scripts/send-outreach.mjs`) i harmonogram w GitHub Actions
+(`.github/workflows/outreach.yml`), a do tego generator demo w `n8n/`.
+
+Wymaga trzech kluczy: Anthropic, Resend i tokenu arkusza. Do czasu, aż je
+założycie, ta ścieżka jest wyłączona (`OUTREACH_ENABLED=false`) i nic nie robi.
+
+---
+
+# Prawo
 
 Prawo komunikacji elektronicznej (od listopada 2024) wymaga uprzedniej zgody
-na marketing bezpośredni i obejmuje także firmy. Dlatego w repo jest wariant
-zgodowy, stopka z pełną identyfikacją, nagłówek `List-Unsubscribe` i lista
-wypisanych sprawdzana przy każdej wysyłce.
+na marketing bezpośredni i obejmuje także firmy. Dlatego każda wiadomość
+niesie pełną identyfikację nadawcy, sposób wypisania się i nagłówek
+`List-Unsubscribe`, a lista wypisanych jest sprawdzana przed każdą wysyłką.
+W `templates/zgoda-1.md` jest wariant, w którym pierwszy kontakt pyta o zgodę
+zamiast sprzedawać.
 
 To ogranicza ryzyko, ale go nie zeruje. **Przed masową wysyłką skonsultujcie
 się z kancelarią.** Godzina konsultacji kosztuje mniej niż jedna skarga.
-
-## Zmiana dostawcy poczty
-
-`scripts/lib/mailer.mjs` to jedna funkcja i jedno zapytanie HTTP. Zamiana
-Resend na cokolwiek innego to podmiana tego pliku. Reszta pipeline'u nie wie,
-czym wysyłacie.

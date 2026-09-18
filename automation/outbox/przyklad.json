@@ -1,0 +1,15 @@
+{
+  "batch": "przyklad",
+  "sequence": "demo",
+  "step": 1,
+  "messages": [
+    {
+      "to": "prezes@przyklad-hale.pl",
+      "firma": "Przykład Hale",
+      "osoba": "Michał Testowy",
+      "notatka": "Reklamuje się na 'hale stalowe' (CPC ~13 zł), formularz bez telefonu po 16:00.",
+      "temat": "zapytania po godzinach w Przykład Hale",
+      "tresc": "Dzień dobry Michale,\n\nzajrzałem na stronę Przykład Hale i zatrzymałem się na formularzu zapytania o wycenę hali. Sprawdziłem też, że reklamujecie się na frazę \"hale stalowe\", gdzie kliknięcie kosztuje dziś około 13 zł.\n\nPrzy takiej stawce jedno zapytanie kosztuje Was 400 do 600 zł. Pytanie brzmi, ile z nich dostaje odpowiedź w 5 minut, a ile czeka do rana.\n\nBudujemy asystentów, którzy odpowiadają na każde zapytanie natychmiast, dopytują o rozmiar i termin, i przekazują Wam tylko te, które realnie chcą kupić.\n\n15 minut w przyszłym tygodniu, żeby pokazać to na Waszych zapytaniach?"
+    }
+  ]
+}

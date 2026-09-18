@@ -1,0 +1,14 @@
+{
+  "name": "couders-outreach",
+  "private": true,
+  "type": "module",
+  "description": "Lokalna wysyłka outreachu z własnej skrzynki. Niezależna od builda strony.",
+  "scripts": {
+    "check": "node scripts/send-local.mjs",
+    "send": "node scripts/send-local.mjs --send",
+    "test": "node --test scripts/"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.9"
+  }
+}

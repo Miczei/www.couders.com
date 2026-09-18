@@ -45,3 +45,12 @@ docs/outreach/*.csv
 
 # Lokalna konfiguracja wysyłki (klucze API, token arkusza).
 automation/.env
+
+# Wysyłka lokalna (automation/): zależności, stan wysyłki, paczki z danymi
+# osobowymi i lista wypisanych. Repo jest publiczne, więc nic z tego nie
+# trafia do gita. Wzorcowa paczka outbox/przyklad.json jest wyjątkiem.
+automation/node_modules/
+automation/.state/
+automation/wypisani.txt
+automation/outbox/*.json
+!automation/outbox/przyklad.json
