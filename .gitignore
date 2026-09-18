@@ -38,3 +38,7 @@ next-env.d.ts
 *[[:space:]]2.tsx
 *[[:space:]]2.html
 *[[:space:]]2.ts
+
+# Listy leadów: dane osobowe (imiona, stanowiska, LinkedIn, adresy e-mail).
+# To repo jest publiczne, więc takie pliki NIGDY nie trafiają do gita.
+docs/outreach/*.csv
