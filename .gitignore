@@ -53,4 +53,6 @@ automation/node_modules/
 automation/.state/
 automation/wypisani.txt
 automation/outbox/*.json
+automation/outbox/*.xlsx
+automation/outbox/*.csv
 !automation/outbox/przyklad.json

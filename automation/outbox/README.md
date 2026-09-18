@@ -42,6 +42,36 @@ niepoprawny adres, pusty temat, treść krótszą niż 120 znaków albo dłuższ
 2500, ten sam adres dwa razy, albo nieuzupełnione pole (`{{cokolwiek}}`,
 `[Firma]`). Lepiej stracić minutę na poprawkę niż wysłać 30 maili z dziurą.
 
+## Arkusz z leadami
+
+Do przeglądania i zarządzania leadami służy plik `.xlsx` (też poza repo).
+Zakładka **Leady** to jeden wiersz na lead: dane firmy i osoby, sygnał
+kwalifikujący, fraza reklamowa z CPC, narzędzia wykryte na stronie oraz gotowy
+temat i treść wiadomości. Zakładka **Instrukcja** trzyma założenia, kurs USD
+użyty do przeliczenia CPC i podsumowanie.
+
+Kolumny na żółtym tle (`Status`, `Data wysyłki`, `Notatki`) są Wasze. Reszta to
+dane źródłowe.
+
+### Z arkusza z powrotem do wysyłki
+
+Wysyłacz czyta JSON, nie arkusz. Jeśli poprawicie treść w Excelu:
+
+```bash
+# W Excelu: Plik > Zapisz jako > CSV UTF-8 (zakładka Leady)
+node scripts/csv-to-outbox.mjs ~/Downloads/leady.csv --batch 2026-09-25-hurtownie
+npm run check -- --outbox outbox/2026-09-25-hurtownie.json --show
+```
+
+Konwerter pomija wiersze ze statusem innym niż pusty albo `nowy`, więc nie
+wyśle drugi raz do kogoś, kto już coś dostał. Radzi sobie z przecinkami,
+cudzysłowami i przełamaniami linii wewnątrz treści maila.
+
+**Nazwa paczki musi być nowa.** Skrypt pamięta wysyłki w obrębie paczki, więc
+ta sama nazwa na innej liście oznacza, że uzna nowe wiersze za już wysłane, a
+inna nazwa na tej samej liście oznacza wysyłkę po raz drugi. Konwencja
+`RRRR-MM-DD-segment` wystarcza.
+
 ## Jak zamówić nową paczkę
 
 Napisz w rozmowie z Claude, na przykład:
