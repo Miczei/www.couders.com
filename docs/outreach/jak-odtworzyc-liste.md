@@ -89,6 +89,42 @@ Kolejne frazy do sprawdzenia: `wynajem koparek`, `magazyn wysokiego składowania
 `mieszkania [miasto] deweloper`, `hale namiotowe`, `posadzki przemysłowe`,
 `automatyka bram`, `systemy alarmowe dla firm`.
 
+## Przepis na "perfekcyjny lead" (trzy kroki, sprawdzone)
+
+Tak powstała paczka `2026-09-18-ads-hale`. Każdy krok dokłada inną warstwę
+i dopiero trzeci daje materiał na naprawdę osobistą wiadomość.
+
+**1. Kto płaci za leady** (Semrush, `phrase_adwords`). Firma, która kupuje
+kliknięcia, ma policzalny ból i zna cenę swojego leada. Frazy, które zwróciły
+reklamodawców: `hale stalowe`, `konstrukcje stalowe`, `hale namiotowe`,
+`regały magazynowe`. Wiele fraz zwraca `NOTHING FOUND`, więc trzeba ich
+przejechać kilkanaście, żeby uzbierać pulę.
+
+**2. Kto tam decyduje** (Prospeo, `search_person` z filtrem
+`company.websites.include` na domenach z kroku 1). Jedno zapytanie zamienia
+listę domen w listę nazwisk ze stanowiskami i wielkością firmy.
+
+**3. Czym ta firma żyje** (Prospeo, `enrich_person` pojedynczo). To jest krok,
+który robi różnicę, i ten, o którym łatwo zapomnieć, bo wygląda jak zwykłe
+odsłonięcie adresu. Zwraca przy okazji:
+
+| Dane | Co z tego wynika dla wiadomości |
+|---|---|
+| Opis firmy po polsku | czym naprawdę handlują, ich własnymi słowami |
+| Stack technologiczny strony | czy mają czat, jaki formularz, czy mają Google Ads, czy mierzą konwersję |
+| Historia zatrudnienia osoby | czy jest nowa na stanowisku, czy ma przeszłość techniczną |
+| Słowa kluczowe i telefon | konkrety do zaczepienia |
+
+Przykłady z tej paczki: prezes UNI-FORM był wcześniej programistą .NET
+i Salesforce. Wicedyrektor Das Company prowadziła dział IT, a wcześniej
+pracowała w contact center, a firma ma na stronie czat. Dyrektor w WDX awansował
+pięć miesięcy temu. Żadnej z tych rzeczy nie ma w zwykłej bazie firm, a każda
+daje pierwsze zdanie, którego nie da się wysłać do nikogo innego.
+
+**Uwaga na limity.** Na darmowym planie `bulk_enrich_person` odbija się od
+limitu zapytań. `enrich_person` pojedynczo działa, ale też z przerwami, więc
+paczkę buduje się partiami. Koszt to 1 kredyt za odsłonięty adres.
+
 ## Pipeline docelowy (zbudujcie w n8n, dni 1-3)
 
 ```
