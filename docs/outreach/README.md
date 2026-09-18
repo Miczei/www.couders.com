@@ -11,6 +11,8 @@ Pliki w tym katalogu:
 | `sekwencje.md` | Gotowe teksty: maile, LinkedIn, partnerzy, reaktywacja znajomych |
 | `lista-leadow-seed.csv` | 75 imiennych decydentów z PL w waszym ICP. **Poza repo**, patrz niżej |
 | `jak-odtworzyc-liste.md` | Jak wygenerować kolejne setki leadów tym samym sposobem |
+| `../../n8n/` | Generator demo: workflow'y n8n budujące demo na danych firmy |
+| `../../automation/` | Automatyczna wysyłka sekwencji z limitami i listą wypisanych |
 
 > **Uwaga o danych osobowych.** To repozytorium jest publiczne (GitHub Pages serwuje
 > z niego couders.com). Lista leadów zawiera imiona, stanowiska, pracodawców, miasta
@@ -105,10 +107,13 @@ to. To jest różnica między "opowiadamy" a "pokazujemy" i ona zamyka sprzedaż
 - Odróżnia was od 100% agencji, które wysyłają PDF z ofertą.
 - Jest w pełni automatyzowalny: to sama w sobie wasza reklama ("zbudowaliśmy to o 3 w nocy, maszynowo").
 
-### Automatyzacja (zbudujcie w dniach 1-3, potem skaluje się samo)
-`n8n: wiersz z arkusza → scrape → build agenta → deploy podstrony → wygeneruj tekst maila
-→ zwróć link`. Wtedy 10 demo dziennie to 1,5 h pracy, a nie 10 h. **Zbudujcie to raz
-i zróbcie z tego case study numer jeden** ("nasz własny system pozyskiwania klientów").
+### Automatyzacja (gotowa, do uruchomienia)
+`n8n: wiersz z arkusza → scrape strony → build agenta → link do demo → sekwencja maili`.
+Workflow'y są w `n8n/`, wysyłka w `automation/`, instrukcje uruchomienia w obu
+katalogach. Wtedy 10 demo dziennie to kilkanaście minut pracy, a nie 10 godzin.
+**Zróbcie z tego case study numer jeden** ("nasz własny system pozyskiwania
+klientów"): firma, która pokazuje własną maszynę do zdobywania klientów, nie musi
+tłumaczyć, że umie budować automatyzacje.
 
 ---
 

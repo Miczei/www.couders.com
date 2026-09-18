@@ -74,6 +74,10 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
+        env:
+          # Baked into the client bundle at build time, so the demo pages know
+          # which n8n instance to ask. Public URL, not a secret.
+          NEXT_PUBLIC_DEMO_API: ${{ vars.NEXT_PUBLIC_DEMO_API }}
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

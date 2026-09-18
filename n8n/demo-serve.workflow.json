@@ -1,0 +1,399 @@
+{
+  "name": "Couders — serwer demo",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "demo-config",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "97db7ad7-2bd5-4e68-85b0-e3c82ac5a3a9",
+      "name": "Demo: konfiguracja",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -620,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.COUDERS_QUEUE_URL }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "action",
+              "value": "demos"
+            },
+            {
+              "name": "token",
+              "value": "={{ $env.COUDERS_QUEUE_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "22fa35f0-fab2-4e5c-be2c-f8e2385e1135",
+      "name": "Wczytaj demo (config)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -380,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Serves one demo to the page. The token is the only credential a prospect\n// has, so an unknown or expired one gets a clean \"gone\" rather than a stack\n// trace, and the sheet token never leaves this workflow.\nconst id = String($('Demo: konfiguracja').first().json.query?.id ?? '').trim();\nconst demo = ($json.demos ?? []).find((d) => d.token === id);\n\nif (!demo) {\n  return [{ json: { ok: false, status: 404, error: 'Nie znamy tego demo.' } }];\n}\n\nlet cfg;\ntry {\n  cfg = JSON.parse(demo.config);\n} catch {\n  return [{ json: { ok: false, status: 500, error: 'Konfiguracja demo jest uszkodzona.' } }];\n}\n\nif (cfg.expiresAt && new Date(cfg.expiresAt) < new Date()) {\n  return [{ json: { ok: false, status: 410, error: 'To demo wygasło.', company: cfg.company } }];\n}\n\n// facts and systemPrompt drive the answers; they stay server side so the page\n// cannot be scraped for the whole knowledge base at once.\nreturn [{ json: { ok: true, status: 200, company: cfg.company, tagline: cfg.tagline ?? '',\n                  intro: cfg.intro, suggested: cfg.suggested ?? [], expiresAt: cfg.expiresAt ?? '' } }];\n"
+      },
+      "id": "2222c239-558e-4f03-a38e-640ab4387022",
+      "name": "Złóż konfigurację",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -140,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": "={{ $json.status }}",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              },
+              {
+                "name": "Cache-Control",
+                "value": "public, max-age=60"
+              }
+            ]
+          }
+        }
+      },
+      "id": "8d165620-55f1-4f9d-a7cb-4010af1ff5e5",
+      "name": "Odpowiedz konfiguracją",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        100,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "path": "demo-chat",
+        "httpMethod": "POST",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "133fe70a-ff38-48e9-b5ad-b2226efc03d9",
+      "name": "Demo: rozmowa",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -620,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.COUDERS_QUEUE_URL }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "action",
+              "value": "demos"
+            },
+            {
+              "name": "token",
+              "value": "={{ $env.COUDERS_QUEUE_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "948d52b1-6458-4b2d-9c04-31eea051e815",
+      "name": "Wczytaj demo (chat)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -380,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Builds the Claude request for one visitor message. Two rules matter here:\n// the assistant may only use the facts gathered from the company's own site,\n// and the transcript is capped so a long session cannot grow the bill without\n// bound.\nconst body = $('Demo: rozmowa').first().json.body ?? {};\nconst id = String(body.id ?? '').trim();\nconst demo = ($json.demos ?? []).find((d) => d.token === id);\n\nif (!demo) return [{ json: { error: 'Nie znamy tego demo.', status: 404 } }];\n\nlet cfg;\ntry { cfg = JSON.parse(demo.config); } catch { return [{ json: { error: 'Uszkodzona konfiguracja.', status: 500 } }]; }\n\nif (cfg.expiresAt && new Date(cfg.expiresAt) < new Date()) {\n  return [{ json: { error: 'To demo wygasło.', status: 410 } }];\n}\n\nconst history = Array.isArray(body.messages) ? body.messages : [];\nconst messages = history\n  .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')\n  .slice(-12)\n  .map((m) => ({ role: m.role, content: m.content.slice(0, 2000) }));\n\nif (!messages.length || messages[messages.length - 1].role !== 'user') {\n  return [{ json: { error: 'Brak pytania.', status: 400 } }];\n}\n\nconst knowledge = (cfg.facts ?? [])\n  .map((f, i) => `${i + 1}. Pytanie: ${f.q}\\n   Odpowiedź: ${f.a}`)\n  .join('\\n');\n\nconst system = [\n  cfg.systemPrompt,\n  '',\n  'Wiedza o firmie, wyłącznie na jej podstawie odpowiadasz:',\n  knowledge,\n  '',\n  'Zasady: odpowiadaj krótko, maksymalnie 4 zdania. Nie wymyślaj cen, terminów ani',\n  'parametrów, których nie ma powyżej. Jeśli pytanie wykracza poza tę wiedzę, powiedz',\n  'to wprost i zaproponuj kontakt z zespołem. Odpowiadasz po polsku.',\n].join('\\n');\n\nreturn [{ json: { system, messages } }];\n"
+      },
+      "id": "96bbc9f1-ef03-4f38-85a9-ac75e94df325",
+      "name": "Zbuduj zapytanie",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -140,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2dcf0993-b1a7-46b7-8af3-87fbcde5d7fb",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b6ae07fe-5cc9-4216-81ee-023eae9f2b43",
+      "name": "Czy pytanie jest poprawne",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        100,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $env.ANTHROPIC_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"model\": \"={{ $env.ANTHROPIC_MODEL || 'claude-opus-5' }}\", \"max_tokens\": 1000, \"output_config\": {\"effort\": \"low\"}, \"system\": \"={{ $json.system }}\", \"messages\": \"={{ $json.messages }}\"}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "6aa08524-afd6-48fa-a2ca-d4c19a6e6228",
+      "name": "Zapytaj Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        340,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Claude returns content blocks; the page only needs the text. A refusal or an\n// empty turn must still produce something the visitor can read.\nconst text = ($json.content ?? [])\n  .filter((b) => b.type === 'text')\n  .map((b) => b.text)\n  .join('\\n')\n  .trim();\n\nif ($json.stop_reason === 'refusal' || !text) {\n  return [{ json: { reply: 'Na to nie odpowiem. Napiszcie do zespołu, odezwiemy się.', status: 200 } }];\n}\nreturn [{ json: { reply: text, status: 200 } }];\n"
+      },
+      "id": "fac0cb03-b048-4a15-9fed-7d4bf5bda994",
+      "name": "Wyjmij odpowiedź",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        580,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ reply: $json.reply }) }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "94746201-5821-43b1-9be0-41525ea7be49",
+      "name": "Odpowiedz w czacie",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        820,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ error: $json.error }) }}",
+        "options": {
+          "responseCode": "={{ $json.status }}",
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "fc076e5f-abcb-4ff5-b3f6-618607b10fc3",
+      "name": "Odpowiedz błędem",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        340,
+        560
+      ]
+    }
+  ],
+  "connections": {
+    "Demo: konfiguracja": {
+      "main": [
+        [
+          {
+            "node": "Wczytaj demo (config)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wczytaj demo (config)": {
+      "main": [
+        [
+          {
+            "node": "Złóż konfigurację",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Złóż konfigurację": {
+      "main": [
+        [
+          {
+            "node": "Odpowiedz konfiguracją",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Demo: rozmowa": {
+      "main": [
+        [
+          {
+            "node": "Wczytaj demo (chat)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wczytaj demo (chat)": {
+      "main": [
+        [
+          {
+            "node": "Zbuduj zapytanie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zbuduj zapytanie": {
+      "main": [
+        [
+          {
+            "node": "Czy pytanie jest poprawne",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zapytaj Claude": {
+      "main": [
+        [
+          {
+            "node": "Wyjmij odpowiedź",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wyjmij odpowiedź": {
+      "main": [
+        [
+          {
+            "node": "Odpowiedz w czacie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Czy pytanie jest poprawne": {
+      "main": [
+        [
+          {
+            "node": "Zapytaj Claude",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Odpowiedz błędem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

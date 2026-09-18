@@ -1,0 +1,379 @@
+{
+  "name": "Couders — generator demo",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "triggerAtHour": 6,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "id": "5d13e5ba-a19d-44af-b3ec-f8f32ef4acd1",
+      "name": "Co rano",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -640,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.COUDERS_QUEUE_URL }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "action",
+              "value": "rows"
+            },
+            {
+              "name": "token",
+              "value": "={{ $env.COUDERS_QUEUE_TOKEN }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "59569860-ac6d-4cd0-981a-ab00df8480fa",
+      "name": "Pobierz kolejkę leadów",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -420,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Only rows that are waiting for a demo: a lead nobody has contacted yet that\n// has no demo link on it. The batch stays small on purpose, because each demo\n// costs an API call and produces a page a real prospect will open.\nconst MAX = Number($env.COUDERS_DEMO_BATCH ?? 10);\nconst rows = $json.rows ?? [];\n\nconst wanted = rows.filter((r) => {\n  const status = String(r.status ?? 'nowy').toLowerCase();\n  const domain = String(r.domena ?? '').trim();\n  return status === 'nowy' && !String(r.demoUrl ?? '').trim() && domain;\n});\n\nreturn wanted.slice(0, MAX).map((r) => ({\n  json: {\n    rowId: r.rowId,\n    company: r.firma ?? '',\n    domain: String(r.domena).replace(/^https?:\\/\\//, '').replace(/\\/.*$/, ''),\n    person: r.osoba ?? '',\n  },\n}));\n"
+      },
+      "id": "78e674d4-bd39-4be9-bcd3-f7e31687323f",
+      "name": "Wybierz firmy bez demo",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "a1081dca-d8d5-4a25-89a3-d3ba46cbd48c",
+      "name": "Po jednej firmie",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        20,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $json.domain }}",
+        "options": {
+          "timeout": 30000,
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "9bb9937e-47d8-4200-9a73-8b97b3787f75",
+      "name": "Pobierz stronę firmy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Turns the fetched page into plain text the model can read, keeping only as\n// much as is useful: the first ~12k characters of a company site reliably\n// carry the offer, the catalogue headings and the pricing cues.\n//\n// The lead comes from the loop node rather than from the node before it:\n// inside a batch loop that is the only reference that resolves to the company\n// being processed right now.\nconst lead = $('Po jednej firmie').first().json;\nconst html = String($json.data ?? $json.body ?? '');\n\nconst text = html\n  .replace(/<script[\\s\\S]*?<\\/script>/gi, ' ')\n  .replace(/<style[\\s\\S]*?<\\/style>/gi, ' ')\n  .replace(/<nav[\\s\\S]*?<\\/nav>/gi, ' ')\n  .replace(/<!--[\\s\\S]*?-->/g, ' ')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/&nbsp;/g, ' ')\n  .replace(/&amp;/g, '&')\n  .replace(/&quot;/g, '\"')\n  .replace(/&#39;/g, \"'\")\n  .replace(/\\s+/g, ' ')\n  .trim();\n\nif (text.length < 400) {\n  // Too little to build anything convincing. No demo beats a demo that tells\n  // the prospect you never looked at their business.\n  return [{ json: { ...lead, skip: 'za mało treści na stronie', pageText: '' } }];\n}\n\nreturn [{ json: { ...lead, pageText: text.slice(0, 12000) } }];\n"
+      },
+      "id": "aa0da3b3-6ca1-4066-a718-fbc6b8736f9d",
+      "name": "Wyciągnij treść",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "={{ $env.ANTHROPIC_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"model\": \"={{ $env.ANTHROPIC_MODEL || 'claude-opus-5' }}\", \"max_tokens\": 4000, \"system\": \"Jesteś inżynierem przygotowującym spersonalizowane demo asystenta sprzedaży dla polskiej firmy B2B. Na podstawie treści strony firmy przygotuj konfigurację demo. Odpowiadasz WYŁĄCZNIE obiektem JSON, bez komentarza i bez bloku kodu.\\n\\nSchemat:\\n{\\n  \\\"company\\\": \\\"nazwa firmy tak, jak sama się nazywa\\\",\\n  \\\"tagline\\\": \\\"jedno zdanie o tym, co firma sprzedaje, maks. 90 znaków\\\",\\n  \\\"intro\\\": \\\"pierwsza wiadomość asystenta do klienta tej firmy, 2 zdania, po polsku\\\",\\n  \\\"suggested\\\": [\\\"3 pytania, które realnie zadaje klient tej firmy\\\"],\\n  \\\"facts\\\": [{\\\"q\\\": \\\"pytanie klienta\\\", \\\"a\\\": \\\"odpowiedź wyłącznie na podstawie treści strony\\\"}],\\n  \\\"systemPrompt\\\": \\\"instrukcja dla asystenta: kim jest, co sprzedaje, jak rozmawia\\\",\\n  \\\"emailDetail\\\": \\\"dopełnienie zdania (zna ofertę ...) w dopełniaczu, np. hal stalowych\\\"\\n}\\n\\nZasady:\\n- Od 6 do 10 pozycji w facts, wyłącznie fakty ze strony. Nie zmyślaj cen, terminów ani certyfikatów. Czego nie ma na stronie, tego nie umieszczaj.\\n- Wszystko po polsku, językiem tej branży, bez marketingowego lania wody.\\n- systemPrompt ma kończyć się zdaniem: Jeśli nie znasz odpowiedzi, powiedz to wprost i zaproponuj kontakt z zespołem.\", \"messages\": [{\"role\": \"user\", \"content\": \"=Firma: {{ $json.company }}\\nDomena: {{ $json.domain }}\\n\\nTreść strony:\\n{{ $json.pageText }}\"}]}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "4653d2cd-f175-44e5-a0eb-628476e2e0fa",
+      "name": "Zbuduj konfigurację demo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// The model is asked for bare JSON, but a stray code fence or a sentence of\n// preamble should not cost the whole run. Parse defensively, then insist on\n// the fields the demo page and the e-mail template actually need.\nconst lead = $('Po jednej firmie').first().json;\n\nif ($json.skip) return [{ json: { ...lead, skip: $json.skip } }];\n\nconst raw = $json.content?.[0]?.text ?? '';\n\nfunction extract(s) {\n  const fenced = s.match(/```(?:json)?\\s*([\\s\\S]*?)```/);\n  const candidate = (fenced ? fenced[1] : s).trim();\n  const start = candidate.indexOf('{');\n  const end = candidate.lastIndexOf('}');\n  if (start === -1 || end === -1) return null;\n  try { return JSON.parse(candidate.slice(start, end + 1)); } catch { return null; }\n}\n\nconst cfg = extract(raw);\nconst required = ['company', 'intro', 'suggested', 'facts', 'systemPrompt', 'emailDetail'];\nconst missing = cfg ? required.filter((k) => !cfg[k]) : required;\n\nif (!cfg || missing.length) {\n  return [{ json: { ...lead, skip: 'model nie zwrócił kompletnej konfiguracji: ' + missing.join(', ') } }];\n}\nif (!Array.isArray(cfg.facts) || cfg.facts.length < 3) {\n  return [{ json: { ...lead, skip: 'za mało wiedzy o firmie, demo byłoby puste' } }];\n}\n\n// An unguessable suffix keeps one prospect's demo out of another's hands and\n// stops the target list from being enumerable by walking slugs.\nconst slug = String(cfg.company).toLowerCase()\n  .normalize('NFD').replace(/[̀-ͯ]/g, '')\n  .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24) || 'demo';\nconst token = slug + '-' + Math.random().toString(36).slice(2, 8);\n\nconst days = Number($env.COUDERS_DEMO_TTL_DAYS ?? 7);\nconst expires = new Date(Date.now() + days * 86400000);\nconst base = $env.COUDERS_SITE_URL ?? 'https://couders.com';\n\nreturn [{\n  json: {\n    ...lead,\n    token,\n    demoUrl: base + '/pl/demo/?id=' + token,\n    expiresAt: expires.toISOString(),\n    demoExpiry: expires.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long' }),\n    config: { ...cfg, token, expiresAt: expires.toISOString() },\n  },\n}];\n"
+      },
+      "id": "513bfc63-6ae9-45d1-9f0b-f5a13def7fce",
+      "name": "Sprawdź konfigurację",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c0b54c0a-d6e2-45e0-8090-ebab25f6ad06",
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "594fc3a3-94ef-46a4-bc87-7170ed7b8f8c",
+      "name": "Czy się udało",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COUDERS_QUEUE_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ token: $env.COUDERS_QUEUE_TOKEN, action: 'saveDemo', rowId: $json.rowId, demoToken: $json.token, demoUrl: $json.demoUrl, demoExpiry: $json.demoExpiry, expiresAt: $json.expiresAt, detail: $json.config.emailDetail, config: JSON.stringify($json.config) }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "c1804010-7b0f-4c36-9456-d8def5624e45",
+      "name": "Zapisz demo i link",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1360,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.COUDERS_QUEUE_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ token: $env.COUDERS_QUEUE_TOKEN, action: 'markFailed', rowId: $json.rowId, error: 'demo: ' + $json.skip }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "c617b171-ec78-4bdd-a36b-70e5f695832a",
+      "name": "Zapisz powód pominięcia",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1360,
+        540
+      ]
+    }
+  ],
+  "connections": {
+    "Co rano": {
+      "main": [
+        [
+          {
+            "node": "Pobierz kolejkę leadów",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pobierz kolejkę leadów": {
+      "main": [
+        [
+          {
+            "node": "Wybierz firmy bez demo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wybierz firmy bez demo": {
+      "main": [
+        [
+          {
+            "node": "Po jednej firmie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pobierz stronę firmy": {
+      "main": [
+        [
+          {
+            "node": "Wyciągnij treść",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wyciągnij treść": {
+      "main": [
+        [
+          {
+            "node": "Zbuduj konfigurację demo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zbuduj konfigurację demo": {
+      "main": [
+        [
+          {
+            "node": "Sprawdź konfigurację",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sprawdź konfigurację": {
+      "main": [
+        [
+          {
+            "node": "Czy się udało",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zapisz demo i link": {
+      "main": [
+        [
+          {
+            "node": "Po jednej firmie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Zapisz powód pominięcia": {
+      "main": [
+        [
+          {
+            "node": "Po jednej firmie",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Po jednej firmie": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Pobierz stronę firmy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Czy się udało": {
+      "main": [
+        [
+          {
+            "node": "Zapisz demo i link",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Zapisz powód pominięcia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

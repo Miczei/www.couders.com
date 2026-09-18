@@ -42,3 +42,6 @@ next-env.d.ts
 # Listy leadów: dane osobowe (imiona, stanowiska, LinkedIn, adresy e-mail).
 # To repo jest publiczne, więc takie pliki NIGDY nie trafiają do gita.
 docs/outreach/*.csv
+
+# Lokalna konfiguracja wysyłki (klucze API, token arkusza).
+automation/.env

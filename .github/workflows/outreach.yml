@@ -1,0 +1,75 @@
+# Sends the day's outreach batch from the lead queue.
+#
+# Safe by default in three independent ways:
+#   1. the schedule below only ever runs the sender, which refuses to send
+#      unless the repository variable OUTREACH_ENABLED is exactly "true";
+#   2. a manual run defaults to a dry run and has to be opted out of;
+#   3. the sender enforces its own daily cap, send window and suppression list.
+#
+# Going live is therefore one variable change, and pausing everything is the
+# same change back. No lead data lives in this repository: the queue is a
+# Google Sheet reached through the Apps Script web app in
+# automation/apps-script/queue.gs.
+name: Outreach
+
+on:
+  schedule:
+    # 07:10 UTC, Monday to Friday. That is 09:10 in Warsaw during summer time
+    # and 08:10 in winter, both inside the sender's own send window.
+    - cron: "10 7 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      send:
+        description: "Wyślij naprawdę (domyślnie tylko podgląd)"
+        type: boolean
+        default: false
+      limit:
+        description: "Limit wiadomości w tym przebiegu (puste = dzienny limit)"
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  # Never let a manual run and the schedule send the same batch twice.
+  group: outreach
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # The decision logic decides who gets mail. If it is broken, nothing
+      # should go out, so the tests gate the send rather than reporting later.
+      - name: Test the sending rules
+        run: node --test automation/scripts/guards.test.mjs
+
+      - name: Send
+        env:
+          OUTREACH_QUEUE_URL: ${{ secrets.OUTREACH_QUEUE_URL }}
+          OUTREACH_QUEUE_TOKEN: ${{ secrets.OUTREACH_QUEUE_TOKEN }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          OUTREACH_FROM: ${{ vars.OUTREACH_FROM }}
+          OUTREACH_REPLY_TO: ${{ vars.OUTREACH_REPLY_TO }}
+          OUTREACH_UNSUBSCRIBE_MAILBOX: ${{ vars.OUTREACH_UNSUBSCRIBE_MAILBOX }}
+          OUTREACH_SENDER_BLOCK: ${{ vars.OUTREACH_SENDER_BLOCK }}
+          OUTREACH_ENABLED: ${{ vars.OUTREACH_ENABLED }}
+          OUTREACH_DAILY_CAP: ${{ vars.OUTREACH_DAILY_CAP }}
+          OUTREACH_TIMEZONE: ${{ vars.OUTREACH_TIMEZONE }}
+        run: |
+          args=""
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.send }}" = "true" ]; then
+            args="--send"
+          fi
+          if [ -n "${{ inputs.limit }}" ]; then
+            args="$args --limit ${{ inputs.limit }}"
+          fi
+          echo "Uruchamiam: send-outreach.mjs $args"
+          node automation/scripts/send-outreach.mjs $args
